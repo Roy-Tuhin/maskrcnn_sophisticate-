@@ -1,0 +1,73 @@
+#!/bin/ksh
+adminScripts="/home/was6/BhaskarM/WASAdmin/localScripts/wasAdminScripts"
+
+wasRoot=`cat $adminScripts/was.config.properties| grep wasRoot | cut -f2 -d'='`
+if [ -z "$wasRoot" ]
+then
+  echo "Websphere Application Server root directory is blank"
+  exit -1
+else
+  echo $wasRoot
+fi
+
+customProfileName=`cat $adminScripts/was.config.properties| grep customProfileName | cut -f2 -d'='`
+echo $customProfileName
+if [ -z "$customProfileName" ]
+then
+  echo "Custom profile name is blank"
+  exit -1
+else
+  echo $customProfileName
+fi
+
+adminUserName=`cat $adminScripts/was.config.properties| grep adminUserName | cut -f2 -d'='`
+if [ -z "$adminUserName" ]
+then
+  echo "No Admin User Name specified, using default as wasadmin"
+  adminUserName="wasadmin"
+else
+  echo $adminUserName
+fi
+
+adminPassword=`cat $adminScripts/was.config.properties| grep adminPassword | cut -f2 -d'='`
+if [ -z "$adminPassword" ]
+then
+  echo "No Admin password specified, using default as wasadmin"
+  adminPassword="wasadmin"
+else
+  echo $adminPassword
+fi
+
+appHome=`cat $adminScripts/was.config.properties| grep "appHome[ ]*=" | grep -v "#" | cut -f2 -d'='`
+if [ -z "$appHome" ]
+then
+  echo "APP Home is blank. Exiting"
+  exit -1
+fi
+
+logDir=`cat $adminScripts/was.config.properties| grep logDir | grep -v "#" | cut -f2 -d'='`
+if [ -z "$logDir" ]
+then
+  echo "Log Directory path is blank. So using $appHome/properties/Deployment/logs as default."
+  logDir=$appHome/properties/Deployment/logs
+  echo $logDir
+fi
+
+if [ ! -w $logDir ]
+then
+  echo "Log Directory path doesn't exist or is not writable. Creating directory : $logDir"
+  mkdir $logDir
+else
+  echo "Log directory path is $logDir"
+fi
+
+hostname=`hostname`
+
+echo $hostname
+echo "Starting server configuration for stand alone server..."
+sh $wasRoot/profiles/$customProfileName/bin/wsadmin.sh -lang jython -f getports.py
+sh writeports.sh
+sh $wasRoot/profiles/$customProfileName/bin/wsadmin.sh -lang jython -f standaloneServerCreation.py $hostname -conntype SOAP -user $adminUserName -password $adminPassword
+
+
+

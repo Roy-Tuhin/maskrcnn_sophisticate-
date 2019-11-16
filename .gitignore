@@ -1,0 +1,42 @@
+# Reference: https://stackoverflow.com/questions/987142/make-gitignore-ignore-everything-except-a-few-files
+# Blacklist files/folders in same directory as the .gitignore file
+/*
+
+
+# Whitelist some files
+!.gitignore
+!.gitmodules
+!*.md
+!*.html
+!*.yml
+!*.sh
+!*.txt
+!*.py
+!*.example
+!LICENSE
+
+# !android/
+!apps/
+!auth/
+# !data/
+# !downloads/
+# !logs/
+# !external/
+!practice/
+!readme/
+!scripts/
+!_site/
+!tests/
+# !tools/
+# !cfg/
+# !workspaces/
+
+# **/*.yml
+**/*bk
+**/*.pyc
+**/*__pycache__
+**/*.swp
+**/*.local.*
+**/temp.*
+**/README.html
+**/*.ipynb_checkpoints

@@ -1,0 +1,12 @@
+mkdocs-alabaster
+mkdocs-cinder
+mkdocs-cluster
+mkdocs-material
+mkdocs-windmill
+mkdocs-windmill-dark
+mkdocs-bootstrap
+mkdocs-bootswatch
+mkdocs-bootstrap386
+mkdocs-bootstrap4
+mkdocs-ivory
+mkdocs_gitbook

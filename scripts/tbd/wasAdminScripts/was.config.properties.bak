@@ -1,0 +1,138 @@
+####################################################
+#############  was.config.properties ###############
+####################################################
+#-----------------------------------------------------
+#  Application Server related properties
+#-----------------------------------------------------
+# IBM Websphere Installation root path. Mandatory
+wasRoot=/home/was6/IBM/WebSphere/AppServer1
+#-----------------------------------------------------
+#  Installer related properties
+#-----------------------------------------------------
+Installation directory for the application
+installDir=/home/was6/OnsiteDelivery/DeliveryTesting/July24HUBTest/HUBCOE
+Installer Proprty file
+installerPropertyFile=tcsbancs.hub.properties
+Home directory for the main script files
+scrptHome=/home/was6/BhaskarM/WASAdmin/localScripts
+#--------------------------------------------------------
+# Application Server/s configuration specific properties
+#--------------------------------------------------------
+# Application deployment Mode: Cluster or stand alone. Valid values are [C] for Cluster [S] for Standalone)
+appDepMode=S
+# Flag whether the WebSphere Application Installation is Netword Deployment Version,[Y] for yes, [N ]for No. Mandatory
+wasNDVersion=N
+# Flag indicating the type of profile to be created. Mandatory
+# [D] for deployment manager profile, [C] for custom profile and [B] for both custom and deployment Manager, [A]for AppServer
+profileType=A
+# Flag indicating whether admin security is enabled or disabled. Valid values [Y] for Yes [N] for No
+securityEnabled=N
+#-----------------------------------------------------
+# Deployment Manager profile information
+#-----------------------------------------------------
+# Name of profile in which admin server will be reside. Mandatory if wasNDVersion is [Y] and profileType is either [B] or [D]
+managerProfileName=
+# IP address or hostname of Deployment Manager machine. Mandatory if wasNDVersion is [Y] and profileType is [B], [C] or [D]
+managerHost=
+# SOAP connector port of Deployment Manager machine. Mandatory if wasNDVersion is [Y] and profileType is [C]
+managerPort=
+# Use system generated cell and node names. IF [Y], custom cell and node names will be ignored while profile creation.
+defaultNodeAndCell=Y
+# Name of cell where admin server profile and custom profile configurations are kept. Mandatory
+cellName=
+# User name that will control access to admin server (default:wasadmin). Recommended if securityEnabled is [Y]
+adminUserName=
+# Password of user that will control access to admin server (default:wasadmin). Recommended if securityEnabled is [Y]
+adminPassword=
+#-----------------------------------------------------
+# Custom/Application Server  profile information
+#-----------------------------------------------------
+# Name of profile in which application server/s will be created/reside. Mandatory
+customProfileName=HUBTEST
+# Name of the Node where Custom profiles' Servers resides. Optional (default:),  [B] or [C]
+customNodeName=
+# Java runtime arguments for server. Optional
+jvmArgs=-XX:MaxPermSize=1024m -XX:MaxNewSize=512m -XX:NewSize=512m -Xss1024k
+#-----------------------------------------------------
+# Application Deployment in Cluster Configuration
+#-----------------------------------------------------
+# Name of the Cluster where EAI Online application deployment needs to be targeted. Mandatory if appMode is [C]
+ClusterName=
+# Comma separated list of names of cluster member servers. Mandatory if appMode is [C]
+ManagedServersList=
+# Host IPs of Managed Servers those are members of the Cluster. Mandatory if appMode is [C]
+# Each IP should correspond to the servername mentioned in ManagedServersList
+ManagedServersListenAddressList=
+# Each Node Name should correspond to the servername mentioned in ManagedServersList, Mandatory if appMode is [C]
+CustomNodeNameList=
+#-----------------------------------------------------
+# Application Deployment for Stand alone Managed Server Configuration
+#-----------------------------------------------------
+# Name of the Server where EAI Online application deployment needs to be targeted. Mandatory if appMode is [S]
+#Dont change this value(server1)
+standAloneManagedServer=server1
+# In standalone mode the Listen Host of the Managed server where the application needs to be deployed. Mandatory if appMode is [S]
+standAloneManagedServerListenAddress=172.19.98.15
+#-----------------------------------------------------
+# Virtual Host settings for web server
+#-----------------------------------------------------
+# Comma separated list of Web Server Host Name/s or IP address/es . Optional need not be specified
+webServerHostList=
+# Comma Separated Web Server Port list. Optional need not be specified.
+# But if you have specified webServerHostList then you need to specify its value.
+# Each port should correspond to the comma separated webServerHostList
+webServerPortList=
+#-----------------------------------------------------
+# Database related properties
+#-----------------------------------------------------
+# DB Mode (Standalone - S or Cluster - R). Optional need not be specified.  Defaults to [S]
+DBMSMode=S
+# Database type. Type O for Oracle, type D for DB2..Mandatory
+dbType=D
+# Directory location where database driver jars are kept. Mandatory
+dbDriverJarPath=/home/was6/profiles
+# Hostname/IP of machine where database is hosted. <IP:Port>. Mandatory
+dbAddressString=172.19.98.148:50001
+# Name of database. For Oracle enter SID value and for DB2 enter instance name. Mandatory
+dbName=MSDEV
+# Schema name. For oracle enter the DBA user-id, for DB2 enter current schema name. Mandatory
+dbSchemaName=PAYPERF
+# Enter database UserId for Online Application. Mandatory
+dbOnlineUserId=PAYPERF
+# Enter database Password for Online Application. Mandatory
+dbOnlinePassword=DB2@2009
+#### Server JVM Heap Size related properties ##########3
+# Initial heap size(Positive Integer value in MB). Optional-  256 by default
+initialHeapSize=512
+# Maximum heap size (Positive Integer value in MB). Optional - 512 by default
+maxHeapSize=1024
+#-----------------------------------------------------
+# Application specific configuration
+#-----------------------------------------------------
+# Installation directory/path
+# Please create this directory before installation and grant write permissions to the User Id used for installation. Mandatory
+appHome=/home/was6/OnsiteDelivery/DeliveryTesting/July24HUBTest/HUBCOE/HUB
+#Application Deployment Directory
+deploymentDir=/home/was6/OnsiteDelivery/DeliveryTesting/July24HUBTest/HUBCOE/Properties/HUB
+#Logs directory/path
+#Please create this directory before installation and grant write permissions to the User Id used for installation. Mandatory
+logDir=/home/was6/OnsiteDelivery/DeliveryTesting/July24HUBTest/HUBCOE/logs/HUB
+# Display Name of  Online Application  that will be deployed as an EAR on Application Server. Mandatory
+appName=BancsEAR
+# Display Name of  Online Application  that will be deployed as an EAR on Application Server. Mandatory
+archiveFileName=BancsEAR.ear
+# Application Mode (Production/Development)  Mandatory. Possible values are: [D] for DEBUG(Development Mode), and [E] for ERROR(Production Mode), Optional. Defaults to [E]
+log_mode=E
+#GMT to Local and Site Minder Settings
+gmt_local=Y
+#Support for Site Minder needed, Y for yes, N for no, mandatory
+site_minder=N
+#Line number separator in viewing parsed details, mandatory
+#C for comma, H for hypen
+linenosep=C
+#Appserver type(WS - Websphere)
+appservertype=WS
+# HTTP or HTTPS protocol for Interface. Valid Values are [http] for HTTP [https] for HTTPS. Optional
+sslenbl=
+#-----------------------------------------------------
+#

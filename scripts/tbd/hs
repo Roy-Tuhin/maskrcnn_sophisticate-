@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#echo $1
+cmd="`history | grep  $1`"
+
+echo $cmd

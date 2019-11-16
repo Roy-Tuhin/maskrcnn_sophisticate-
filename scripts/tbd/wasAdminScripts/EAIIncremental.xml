@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<!-- Author: TCS (Tata Consultancy Services)  Limited -->
+
+<!-- Run SetupcmdLine.bat after deployment-->
+<project name="NCSv4Deploy" default="install" basedir="./tmp">
+<!-- Defining customized tasks-->
+<!-- Task which will generate the providerURL-->
+<taskdef name="corbaurl" classname="com.tcs.incremental.CorbaTask" classpath="../installUtility.jar"/>
+<!-- Task which will give the logMode for application -->
+<taskdef name="logmode" classname="com.tcs.incremental.LogMode" classpath="../installUtility.jar"/>
+<!-- Task which will generate the jdbc URL-->
+<taskdef name="dbURLTask" classname="com.tcs.incremental.DBStringTask" classpath="../installUtility.jar"/>
+<!-- Task which will encrypt the batch user password-->
+<taskdef name="enctask" classname="com.tcs.ncs.encryption.GetEncryptdPswd" classpath="../installUtility.jar" />
+<!-- Task to unset property -->
+<taskdef name="unset" classname="ise.antelope.tasks.Unset" classpath="../AntelopeTasks_3.2.10.jar"/>
+
+<!-- Specify the Property File to be used -->
+<property file="../ant.ncs.properties"/>
+
+<!-- generating jdbcURL String-->
+<dbURLTask dbAddressString="${dbAddressString}" dbName="${dbName}" dbType="${dbType}"/>
+
+<unset name="dttime" />
+<tstamp>
+<format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+</tstamp>
+
+<echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+<echo message="${dttime} ************************************************" append="yes" file="../Deployment.log"/>
+
+<!-- Main task of the build file-->
+<target name="install" depends="SyncNCSHOME,BuildFinal,InstallBatch,updateproperties"></target>
+
+<!-- Target to Build and Validate the NCSHOME-->
+<target name="SyncNCSHOME">
+	     <echo message="Analysing NCSHOME..." />
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Starting SYNC of NCSHOME ..." append="yes" file="../Deployment.log"/>
+
+	     <copy todir="${ncsHome}/scripts" overwrite="true">
+			<fileset dir="../../scripts"/>  
+		 </copy>
+	     <copy todir="${ncsHome}/properties" overwrite="true"> 
+			<fileset dir="../../properties"/>  
+		 </copy>
+	     <mkdir dir="${ncsHome}/logs"/>
+	     <mkdir dir="${logDir}/archival"/>
+	     <mkdir dir="${logDir}/housekeep"/>
+            <mkdir dir="${ncsHome}/properties/NCSUserData" />
+	     <copy todir="${ncsHome}/data/ddl" overwrite="true"> 
+			<fileset dir="../../data/ddl"/>  
+		 </copy>
+	     <copy todir="${ncsHome}/data/dml" overwrite="true"> 
+			<fileset dir="../../data/dml"/>  
+		 </copy>
+	     <copy todir="${ncsHome}/reports" overwrite="true" failonerror="false"> 
+			<fileset dir="../../data/reports"/>  
+		 </copy>
+	     <copy todir="${ncsHome}/install" overwrite="true"> 
+			<fileset dir="../../data/ear"/>  
+		 </copy>
+	     <mkdir dir="${ncsHome}/backup"/>
+
+     <mkdir dir="${ncsHome}/backup/tmp"/>
+     <mkdir dir="${ncsHome}/backup/tmp/properties"/>
+     <mkdir dir="${ncsHome}/backup/tmp/batch"/>
+     <copy todir="${ncsHome}/backup/tmp/properties" overwrite="true"> <fileset dir="../../properties"/>  </copy>
+     <copy todir="${ncsHome}/backup/tmp/batch" overwrite="true"> <fileset dir="../../data/batchJar"/>  </copy>
+
+	     <copy file="../../data/ear/NCS.ear" tofile="${ncsHome}/install/Template_NCS.ear" overwrite="true"></copy>
+         <copy file="../../data/batchJar/MCBatch.jar" tofile="${ncsHome}/install/MCBatch.jar" overwrite="true"></copy>
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} SYNC of NCSHOME Done ..." append="yes" file="../Deployment.log"/>
+
+     <echo message="End of Analysing NCSHOME..." />
+</target>
+
+<!-- Target to generate the providerURL and logMode-->	 
+<target name="createProviderURL">
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Generating provider URL ..." append="yes" file="../Deployment.log"/>
+<corbaurl standalone="${standAloneManagedServerListenAddress}" cluster="${ManagedServersListenAddressList}" portlist="${bootstrapPortList}" deptype="${appDepMode}" />
+	<logmode mode="${log_mode}" />
+</target>
+
+<!-- Target for taking backup -->
+<target name="Backup" >
+    <echo message ="Backing up all contents.."/>
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Backing up all contents .." append="yes" file="../Deployment.log"/>
+
+	<copy file="${ncsHome}/install/MCBatch.jar" tofile="${ncsHome}/backup/MCBatch.jar" overwrite="true"></copy>
+	<copy file="${ncsHome}/install/Template_NCS.ear" tofile="${ncsHome}/backup/Template_NCS.ear" overwrite="true"></copy>
+	<copy file="${ncsHome}/install/NCS.ear" tofile="${ncsHome}/backup/NCS.ear" overwrite="true"></copy>
+	<copy file="${ncsHome}/batch/run_batch.sh" tofile="${ncsHome}/backup/run_batch.sh" overwrite="true"></copy>
+	<copy todir="${ncsHome}/backup/xml">
+		<fileset dir="${ncsHome}/batch" includes="**/*.xml"/>
+	</copy>
+	<copy todir="${ncsHome}/backup/ddl" overwrite="true"> 
+		<fileset dir="${ncsHome}/data/ddl"/>  
+	</copy>
+	<copy todir="${ncsHome}/backup/dml" overwrite="true"> 
+		<fileset dir="${ncsHome}/data/dml"/>  
+	</copy>
+	<copy todir="${ncsHome}/backup/scripts" overwrite="true"> 
+		<fileset dir="${ncsHome}/scripts"/>  
+	</copy>
+	<copy todir="${ncsHome}/backup/reports" overwrite="true"> 
+		<fileset dir="${ncsHome}/reports"/>  
+	</copy>
+
+    <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Backing up done .." append="yes" file="../Deployment.log"/>
+
+</target>
+
+<!-- Build Final task-->
+<target name="BuildFinal" depends="extractEar,extractmcejbcall,extractErrorMessages,extractSETFunction,extractBatch,Delete,extractTar,Transfer,BuildTemplateEar,updateWebXml,updateEjbJarXml,BuildBatchJar,BuildEar">
+</target>
+
+
+<!-- extract NCSv4.ear in NCSv4-->
+<target name="extractEar">
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Extracting EAR .." append="yes" file="../Deployment.log"/>
+
+	<property name="earfilelocation" value="../../data/ear" />
+	<copy file="${earfilelocation}/NCS.ear" tofile="NCS.ear" overwrite="true"/>
+	<mkdir dir="${appName}"/>
+	<copy file="NCS.ear" tofile="${appName}/NCS.ear" overwrite="true"/>
+	<unzip src="${appName}/NCS.ear" dest="${appName}" />
+	<delete file="${appName}/NCS.ear"/>
+	
+	<!-- extract NCSv4Web.war in NCSv4Web-->
+	<mkdir dir="NCSWeb"/>
+	<copy file="${appName}/NCSWeb.war" tofile="NCSWeb/NCSWeb.war"/>
+	<unzip src="NCSWeb/NCSWeb.war" dest="NCSWeb" />
+	<delete file="NCSWeb/NCSWeb.war"/>
+	
+	<!-- extract MCraftEJB.jar in MCraftEJB-->
+	<mkdir dir="MCraftEJB"/>
+	<copy file="${appName}/MCraftEJB.jar" tofile="MCraftEJB/MCraftEJB.jar"/>
+	<unzip src="MCraftEJB/MCraftEJB.jar" dest="MCraftEJB" />
+	<delete file="MCraftEJB/MCraftEJB.jar"/>
+	
+	<!-- extract NCSUtils.jar in NCSUtils-->
+	<mkdir dir="NCSUtils"/>                                                
+	<copy file="${appName}/NCSUtils.jar" tofile="NCSUtils/NCSUtils.jar"/>
+	<unzip src="NCSUtils/NCSUtils.jar" dest="NCSUtils" />                
+	<delete file="NCSUtils/NCSUtils.jar"/>                                
+	
+	<!-- extract NCSEJB.jar in NCSEJB-->
+	<mkdir dir="NCSEJB"/>                                                
+	<copy file="${appName}/NCSEJB.jar" tofile="NCSEJB/NCSEJB.jar"/>
+	<unzip src="NCSEJB/NCSEJB.jar" dest="NCSEJB" />                
+	<delete file="NCSEJB/NCSEJB.jar"/>                                
+
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} EAR Extracted .." append="yes" file="../Deployment.log"/>
+
+</target>
+
+<!-- Target For Extracting mcejbcall -->
+<target name="extractmcejbcall">
+	<mkdir dir="mcejbcall"/>
+	<copy file="${appName}/mcejbcall.jar" tofile="mcejbcall/mcejbcall.jar" overwrite="true"/>
+	<unzip src="mcejbcall/mcejbcall.jar" dest="mcejbcall" />                
+	<delete file="mcejbcall/mcejbcall.jar"/>   
+</target>
+
+<!-- Target For Extracting ErrorMessages -->
+<target name="extractErrorMessages">
+	<mkdir dir="ErrorMessages"/>
+	<copy file="${appName}/ErrorMessages.jar" tofile="ErrorMessages/ErrorMessages.jar" overwrite="true"/>
+	<unzip src="ErrorMessages/ErrorMessages.jar" dest="ErrorMessages" />                
+	<delete file="ErrorMessages/ErrorMessages.jar"/>   
+</target>
+
+<!-- Target For Extracting SetFunction -->
+<target name="extractSETFunction">
+	<mkdir dir="SETFunction"/>
+	<copy file="${appName}/SETFunction.jar" tofile="SETFunction/SETFunction.jar" overwrite="true"/>
+	<unzip src="SETFunction/SETFunction.jar" dest="SETFunction" />                
+	<delete file="SETFunction/SETFunction.jar"/>   
+</target>
+
+<!-- Target For Extracting Batch File -->
+<target name="extractBatch">
+	<mkdir dir="MCBatch"/>   	
+	<copy file="${ncsHome}/install/MCBatch.jar" todir="MCBatch" overwrite="true"> </copy>
+	<unzip src="MCBatch/MCBatch.jar" dest="MCBatch" />                
+	<delete file="MCBatch/MCBatch.jar"/>   
+</target>
+
+<!-- Target For Deleting DeprecatedSources -->
+<target name="Delete">
+	<echo message="Deletion task started..."/>
+	<taskdef name="deletefiles" classname="com.tcs.incremental.DeleteTask" classpath="../installUtility.jar"/>
+	<deletefiles pdndir="${basedir}/../../data/patchdlvry/DeprecatedSources/" templateextractdir="${basedir}" logdir="${ncsHome}/logs"/>
+	<echo message="Deletion task stopped..."/>
+</target>
+
+<!-- Target For Extracting Tar File -->
+<target name="extractTar">
+	<echo message="Extracting Tar File..."/>
+
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Extracting patch .." append="yes" file="../Deployment.log"/>
+
+	<mkdir dir="TarExtract"/>
+	<copy file="../../data/patchdlvry/NCS_Patch.tar.gz" tofile="TarExtract/NCS_Patch.tar.gz" overwrite="true"/>
+	<gunzip src="TarExtract/NCS_Patch.tar.gz" dest="TarExtract/intmd.tar" />
+	<untar  src="TarExtract/intmd.tar" dest="TarExtract" />
+	<delete file="TarExtract/NCS_Patch.tar.gz"/>
+	<delete file="TarExtract/intmd.tar" />
+	<delete file="TarExtract/tar" />
+</target>
+
+<!-- Target For Transferring Incremental Files -->
+<target name="Transfer">
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Transferring Incremental Files .." append="yes" file="../Deployment.log"/>
+
+	<echo message="Transfer task Started..."/>
+	<taskdef name="transfertask" classname="com.tcs.incremental.ReadPdn" classpath="../installUtility.jar"/>
+	<transfertask sourcedir="${basedir}/TarExtract" destdir="${basedir}" logdir="${ncsHome}/logs"/>
+</target>
+
+<!--Create Template Ear -->
+<target name="BuildTemplateEar" depends="BuildSETFunction,BuildErrorMessages,Buildmcejbcall">
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Creating Template EAR .." append="yes" file="../Deployment.log"/>
+
+<!-- Building Templated EAR.... -->
+	<!--Create NCSv4Web WAR-->
+    <war destfile="${appName}/NCSWeb.war" webxml="NCSWeb/WEB-INF/web.xml" manifest="NCSWeb/META-INF/MANIFEST.MF" basedir="NCSWeb"/>
+    <jar destfile="${appName}/MCraftEJB.jar" basedir="MCraftEJB" includes="**/**.*" manifest="MCraftEJB/META-INF/MANIFEST.MF"/>
+    <jar destfile="${appName}/NCSEJB.jar" basedir="NCSEJB" includes="**/**.*" manifest="NCSEJB/META-INF/MANIFEST.MF"/>
+    <jar destfile="${appName}/NCSUtils.jar" basedir="NCSUtils" includes="**/**.*" manifest="NCSUtils/META-INF/MANIFEST.MF"/>
+    <copy file="${appName}/NCSUtils.jar" todir="../../data/batchJar/lib/" overwrite="true"></copy>
+    <move file="${appName}/NCSUtils.jar" todir="${appName}" overwrite="true"/>
+    <!--copy todir="${appName}" overwrite="true"> <fileset dir=""/>  </copy-->        
+    <mkdir dir="Output"/>
+    <!-- Create EAR (${earfile}) from EAR folder -->
+    <ear destfile="Output/NCS.ear" appxml="${appName}/META-INF/application.xml">
+        <fileset dir="${appName}"/> <!--includes="*.jar,*.war"/-->
+    </ear>
+    <copy file="Output/NCS.ear" tofile="${ncsHome}/install/Template_NCS.ear" overwrite="true"> </copy>
+    <move file="Output/NCS.ear" todir="../../data/ear/" />
+    <delete file="${appName}/NCSWeb.war" />
+    <delete file="${appName}/MCraftEJB.jar" />
+    <delete file="${appName}/NCSEJB.jar" />
+    <delete file="${appName}/NCSUtils.jar" />
+</target>
+
+<!--Create  SETFunction.jar -->    
+<target name="BuildSETFunction">
+    <jar destfile="SETFunction.jar" basedir="SETFunction" includes="**/**.*" manifest="SETFunction/META-INF/MANIFEST.MF"/>
+   <copy file="SETFunction.jar" todir="${appName}" overwrite="true"> </copy>
+   <copy file="SETFunction.jar" todir="../../data/batchJar/lib/" overwrite="true"> </copy>
+   <delete file="SETFunction.jar" />
+</target>
+
+<!--Create  ErrorMessages.jar -->
+<target name="BuildErrorMessages">
+   <jar destfile="ErrorMessages.jar" basedir="ErrorMessages" includes="**/**.*" manifest="ErrorMessages/META-INF/MANIFEST.MF"/>
+   <copy file="ErrorMessages.jar" todir="${appName}" overwrite="true"> </copy>
+   <copy file="ErrorMessages.jar" todir="../../data/batchJar/lib/" overwrite="true"> </copy>
+   <delete file="ErrorMessages.jar" />
+</target>
+<!--Create  mcejbcall.jar -->
+<target name="Buildmcejbcall">
+   <jar destfile="mcejbcall.jar" basedir="mcejbcall" includes="**/**.*" manifest="mcejbcall/META-INF/MANIFEST.MF"/>
+   <copy file="mcejbcall.jar" todir="${appName}" overwrite="true"> </copy>
+   <copy file="mcejbcall.jar" todir="../../data/batchJar/lib/" overwrite="true"> </copy>
+   <delete file="mcejbcall.jar" />
+</target>
+ 
+<!-- make changes in web.xml file-->
+<target name="updateWebXml"  depends="createProviderURL">
+<!-- Remove System Identifier from web.xml   -->
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Updating web.xml " append="yes" file="../Deployment.log"/>
+
+	<replaceregexp file="NCSWeb/WEB-INF/web.xml"
+				   match="iiop_value" replace="${corbaurl}"	byline="true"/>
+	<replaceregexp file="NCSWeb/WEB-INF/web.xml"
+					match="mcWarPropFile_value" replace="${ncsHome}/properties/war_properties" byline="true"/>
+	<replaceregexp file="NCSWeb/WEB-INF/web.xml"
+					match="mcEnvPropFile_value" replace="${ncsHome}/properties/MCSysProp.properties" byline="true"/>
+	<replaceregexp file="NCSWeb/WEB-INF/web.xml"
+					match="logProps_value" replace="${ncsHome}/properties/config-log.properties" byline="true"/>
+	<replaceregexp file="NCSWeb/WEB-INF/web.xml"
+					match="userDataPath_value" replace="${ncsHome}/properties/NCSUserData" byline="true"/>
+	<replaceregexp file="NCSWeb/WEB-INF/web.xml"
+					match="cntxtfctry"	 replace="com.ibm.websphere.naming.WsnInitialContextFactory" byline="true"/>
+	<replaceregexp file="NCSWeb/WEB-INF/web.xml"
+					match="cacheProps_value" replace="${ncsHome}/properties/oscache.properties"  byline="true"/>
+</target>
+
+<!-- make changes in web.xml file-->
+<target name="updateEjbJarXml" depends="createProviderURL">
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Updating ejb-jar.xml" append="yes" file="../Deployment.log"/>
+
+     <replaceregexp file="MCraftEJB/META-INF/ejb-jar.xml"
+                    match="McraftEjbDir" replace="${ncsHome}/properties" byline="true"/>
+     <replaceregexp file="MCraftEJB/META-INF/ejb-jar.xml"
+                    match="MCraftEjbErr" replace="${ncsHome}/properties/ShortErrorList" byline="true"/>
+     <replaceregexp file="${appName}/META-INF/application.xml"
+                    match="NCSAPPNAME" replace="${appName}" byline="true"/>
+</target>
+
+<!--Create MCBatch.jar -->
+<target name="BuildBatchJar">
+
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Building batch jar" append="yes" file="../Deployment.log"/>
+
+	<copy todir="../../data/batchJar/xml">
+		<fileset dir="MCBatch/xml"/>
+	</copy>
+	<copy todir="../../data/batchJar/lib">
+		<fileset dir="MCBatch/lib">
+			<exclude name="NCSUtils.jar"/>
+			<exclude name="mcejbcall.jar"/>
+			<exclude name="ErrorMessages.jar"/>
+			<exclude name="SETFunction.jar"/>
+		</fileset>
+    </copy>
+
+	<copy todir="MCBatch/lib"><fileset dir="../../data/batchJar/lib">
+	<include name="NCSUtils.jar"/>
+	<include name="mcejbcall.jar"/>
+	<include name="ErrorMessages.jar"/>
+	<include name="SETFunction.jar"/>
+	</fileset></copy>
+	<jar destfile="MCBatch.jar" basedir="MCBatch" includes="**/**.*" manifest="MCBatch/META-INF/MANIFEST.MF"/>
+	<copy file="MCBatch.jar" todir="${ncsHome}/install" />
+	<delete file="MCBatch.jar" />
+	<delete dir="MCBatch/xml" />
+	<delete dir="MCBatch/lib" />
+	<jar destfile="MCBatch.jar" basedir="MCBatch" includes="**/**.*" manifest="MCBatch/META-INF/MANIFEST.MF"/>
+	<copy file="MCBatch.jar" todir="${ncsHome}/batch" overwrite="true"> </copy>
+	<delete file="MCBatch.jar" />
+	<delete dir="MCBatch" />
+</target>
+ 
+ <!-- Making changes in various property files like propfile.env, run_batch.sh,war_properties etc for templated values -->
+<target name="updateproperties">
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Updating properties" append="yes" file="../Deployment.log"/>
+
+        <replaceregexp file="${ncsHome}/batch/run_batch.sh"
+                       match="PROPFILEPATH" replace="${ncsHome}/properties"
+                       byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/batch/run_batch.sh"
+                       match="BATCHLIB" replace="${ncsHome}/batch/lib"
+                       byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/batch/run_batch.sh"
+                       match="BATCHPATH"  replace="${ncsHome}/batch"
+                       byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+		               match="ORACLE_CONNECT_STR"  replace="${jdbcURLProperty}"
+		               byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+                       match="DB2_CONNECT_STR" replace="${jdbcURLProperty}"
+                       byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+                	   match="ORACLE_SID" replace="${dbName}"   
+					   byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env" 
+		               match="DATABASE_NAME"   replace="${dbName}"   
+					   byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+		               match="USER_ID" replace="${dbBatchUserId}"
+		               byline="true" flags="g"/>
+	<enctask  password="${dbBatchPassword}"  directory="${ncsHome}/properties" />	
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+		               match="PASSWORD" replace="${Encryption}"
+		               byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+		               match="NCSHOME" replace="${ncsHome}"
+		               byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+					   match="DBSCHEMA"	 replace="${dbSchemaName}"
+					   byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+						 match="SSLENABL_CARTS" replace="${carts_sslenbl}"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+						 match="CARTSHOST" replace="${cartsHost}"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+						 match="CARTSPORT" replace="${cartsPort}"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+						 match="cntxtfctry_value" replace="com.ibm.websphere.naming.WsnInitialContextFactory"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/propfile.env"
+						 match="iiop_value" replace="${corbaurl}"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/batch-config-log.properties"
+						 match="LOGFILE_PATH" replace="${logDir}"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/batch-config-log.properties"
+                                                 match="APPENDER_MODE" replace="${appenderClassName}"
+                                                 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/batch-config-log.properties"
+                                                 match="COMMENT" replace="${replace}"
+                                                 byline="true" flags="g"/>
+
+        <replaceregexp file="${ncsHome}/properties/batch-config-log.properties"
+						 match="NCS_MODE" replace="${logmode}"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/config-log.properties"
+						 match="LOGFILE_PATH" replace="${logDir}"
+						 byline="true"  flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/config-log.properties"
+						 match="NCS_MODE" replace="${logmode}"
+						 byline="true"  flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/config-log.properties"
+                                                 match="APPENDER_MODE" replace="${appenderClassName}"
+                                                 byline="true"  flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/config-log.properties"
+                                                 match="COMMENT" replace="${replace}"
+                                                 byline="true" flags="g"/>
+
+        <replaceregexp file="${ncsHome}/properties/war_properties"
+						 match="NCSHOME" replace="${ncsHome}"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/war_properties"
+						 match="EAIHOST" replace="${eaihost}"
+						 byline="true"  flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/war_properties"
+						 match="EAIPORT" replace="${eaiport}"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/war_properties"
+						 match="SSLENBL" replace="${sslenbl}"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/war_properties"
+						 match="cntxtfctry_value" replace="com.ibm.websphere.naming.WsnInitialContextFactory"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/war_properties"
+						 match="iiop_value" replace="${corbaurl}"
+						 byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/war_properties"
+						match="CARTSHOST" replace="${cartsHost}"
+		  			    byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/war_properties"
+						match="CARTSPORT" replace="${cartsPort}"
+						byline="true" flags="g"/>
+        <replaceregexp file="${ncsHome}/properties/war_properties"
+						 match="SSLENABL_CARTS" replace="${carts_sslenbl}"
+						 byline="true" flags="g"/>
+</target>
+   
+ <!-- again package the ear in output folder-->
+ <target name="BuildEar">
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Building EAR" append="yes" file="../Deployment.log"/>
+
+    <!--Create NCSv4Web WAR-->
+    <war destfile="${appName}/NCSWeb.war" webxml="NCSWeb/WEB-INF/web.xml" manifest="NCSWeb/META-INF/MANIFEST.MF" basedir="NCSWeb" />
+    <!-- Creates JAR of Utils in localpath/EAR folder -->
+    <jar destfile="${appName}/MCraftEJB.jar" basedir="MCraftEJB" includes="**/**.*" manifest="MCraftEJB/META-INF/MANIFEST.MF"/>
+    <jar destfile="${appName}/NCSEJB.jar" basedir="NCSEJB" includes="**/**.*" manifest="NCSEJB/META-INF/MANIFEST.MF"/>
+    <jar destfile="${appName}/NCSUtils.jar" basedir="NCSUtils" includes="**/**.*" manifest="NCSUtils/META-INF/MANIFEST.MF"/>
+    <copy file="${appName}/NCSUtils.jar" todir="../../data/batchJar/lib/" overwrite="true"> </copy>
+	<mkdir dir="Output"/>
+    <!-- Create EAR (${earfile}) from EAR folder -->
+    <ear destfile="Output/NCS.ear" appxml="${appName}/META-INF/application.xml">
+       <fileset dir="${appName}"/> <!--includes="*.jar,*.war"/-->
+    </ear>
+    <copy file="Output/NCS.ear" todir="${ncsHome}/install/" />
+    <move file="Output/NCS.ear" todir="../../data/installear/" />
+    <delete includeemptydirs="true">
+      <fileset dir="NCSWeb" includes="**/*"/>
+    </delete>
+    <delete dir="NCSWeb"/>
+    <delete includeemptydirs="true">
+      <fileset dir="MCraftEJB" includes="**/*"/>
+    </delete>
+    <delete dir="MCraftEJB"/>
+    <delete includeemptydirs="true">
+      <fileset dir="." includes="**/*"/>
+    </delete>
+	<delete dir="NCSUtils"/>
+    <delete includeemptydirs="true">
+        <fileset dir="." includes="**/*"/>
+    </delete>
+    <delete dir="NCSEJB"/>
+    <delete includeemptydirs="true">
+       <fileset dir="." includes="**/*"/>
+    </delete>	
+
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} EAR Built" append="yes" file="../Deployment.log"/>
+
+</target>
+<!-- Task to install the batch -->
+<target name="InstallBatch" >
+	<copy todir="${ncsHome}/batch/lib" overwrite="true"> 
+		<fileset dir="../../data/batchJar/lib"/>  
+	</copy>
+	<copy todir="${ncsHome}/batch" overwrite="true">    
+		<fileset dir="../../data/batchJar/xml"/>  
+	</copy>
+    <delete dir="../../data/batchJar/lib" />
+    <delete dir="../../data/batchJar/xml" />
+	<copy todir="${ncsHome}/batch" overwrite="true" file="../../data/batchJar/run_batch.sh"/>   
+     <unset name="dttime" />
+       <tstamp>
+        <format property="dttime" pattern="dd-MM-yyyy-hh:mm:ss"/>
+       </tstamp>
+     <echo message="${line.separator}" append="yes" file="../Deployment.log"/>
+     <echo message="${dttime} Batch Installed" append="yes" file="../Deployment.log"/>
+
+</target>
+ 
+<!-- Target to Uninstall the Application from the Application Server by calling wsadmins script -->
+
+<target name="UninstallApp" depends="Backup">
+   <echo message=" Beginning Un-Installation..." />
+<mkdir dir="${ncsHome}/backup/tarBakup"/>
+   <mkdir dir="${ncsHome}/backup/tarBakup/data"/>
+   <mkdir dir="${ncsHome}/backup/tarBakup/data/ddl"/>
+ <copy todir="${ncsHome}/backup/tarBakup/data/ddl" overwrite="true"> <fileset dir="${ncsHome}/data/ddl"/>  </copy>
+   <mkdir dir="${ncsHome}/backup/tarBakup/data/dml"/>
+ <copy todir="${ncsHome}/backup/tarBakup/data/dml" overwrite="true"> <fileset dir="${ncsHome}/data/dml"/>  </copy>
+   <mkdir dir="${ncsHome}/backup/tarBakup/data/ear"/>
+ <copy  file="${ncsHome}/install/Template_NCS.ear" tofile="${ncsHome}/backup/tarBakup/data/ear/NCS.ear" overwrite="true"/>
+   <mkdir dir="${ncsHome}/backup/tarBakup/data/reports"/>
+ <copy todir="${ncsHome}/backup/tarBakup/data/reports" overwrite="true"> <fileset dir="${ncsHome}/reports"/>  </copy>
+   <mkdir dir="${ncsHome}/backup/tarBakup/data/batchJar"/>
+ <copy  file="${ncsHome}/backup/tmp/batch/run_batch.sh" tofile="${ncsHome}/backup/tarBakup/data/batchJar/run_batch.sh" overwrite="true"/>
+ <copy  file="${ncsHome}/backup/tmp/batch/MCBatch.jar" tofile="${ncsHome}/backup/tarBakup/data/batchJar/MCBatch.jar" overwrite="true"/>
+   <mkdir dir="${ncsHome}/backup/tarBakup/scripts"/>
+ <copy todir="${ncsHome}/backup/tarBakup/scripts" overwrite="true"> <fileset dir="${ncsHome}/scripts"/>  </copy>
+   <mkdir dir="${ncsHome}/backup/tarBakup/properties"/>
+ <copy todir="${ncsHome}/backup/tarBakup/properties" overwrite="true"> <fileset dir="${ncsHome}/backup/tmp/properties"/></copy>
+
+   <delete includeemptydirs="true">
+   <fileset dir="${ncsHome}/batch" includes="**/*"/>
+   </delete>
+   <delete dir="${ncsHome}/batch"/>
+   <echo message="Un-Installation Complete ..." />
+</target>
+</project>

@@ -1,0 +1,6 @@
+vmstat 1 5 | while read line; do echo "`date`$line"; done
+vmstat 1 5|awk '{print system ("date +%D\" \"%H:%M:%S|tr -d \"'\n'\"")$0}'
+
+"timestamp.pl"
+#!/usr/bin/perl
+while (<>) { print localtime() . ": $_"; }

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "netstat: 172.19.98.148"
+netstat -nap | grep 172.19.98.148 | wc -l
+echo "netstat: 50003"
+netstat -nap | grep 50003 | wc -l
+echo "lsof: 50003"
+lsof -i | grep 50003| wc -l
+
+#vmstat 1 >vmstatIno.txt
