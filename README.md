@@ -61,6 +61,10 @@ Technotes repo contains markdown (.md) files on different technical items and ma
 ## Howto
 
 
+* [How to clone and create the git repo first time setup](readme/how_to_clone_and_create_the_git_repo_first_time_setup.md)
+* [README.scripts.system.md](readme/README.scripts.system.md)
+
+
 ## Learning Resources
 
 

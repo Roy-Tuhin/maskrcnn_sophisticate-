@@ -1,0 +1,6 @@
+[submodule "scripts/docker/mongo"]
+	path = scripts/docker/mongo
+	url = https://github.com/mangalbhaskar/mongo.git
+[submodule "scripts/docker/cuda"]
+	path = scripts/docker/cuda
+	url = https://gitlab.com/nvidia/container-images/cuda.git

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##----------------------------------------------------------
-### Barebone directory structures for AI System setup
+### Barebone directory structures for Developer toolchain setup
 ##----------------------------------------------------------
 ## TODO:
 ##  - to have it's own user and group management
