@@ -45,7 +45,7 @@ LINUX_ID=$(lsb_release -si) ## Ubuntu, Kali
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )"
 # echo "SCRIPTS_DIR: ${SCRIPTS_DIR}"
 
-source "${SCRIPTS_DIR}/common.sh"
+source "${SCRIPTS_DIR}/lscripts/utils/common.sh"
 source "${SCRIPTS_DIR}/docker/docker.env.sh"
 
 ${DOCKER_CMD} --version

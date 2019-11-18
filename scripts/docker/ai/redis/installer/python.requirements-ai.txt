@@ -1,0 +1,13 @@
+Theano
+
+cloudsight
+clarifai
+watson-developer-cloud
+
+git+https://github.com/crowdai/coco.git#subdirectory=PythonAPI
+
+## cpu version
+#tensorflow>=1.3.0
+
+tensorflow-gpu>=1.3.0
+keras>=2.0.8
