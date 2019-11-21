@@ -1,14 +1,27 @@
-FROM nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
-LABEL maintainer "mangalbhaskar <mangalbhaskar@gmail.com>"
-
 ## References:
 ## https://raw.githubusercontent.com/tensorflow/tensorflow/master/tensorflow/tools/dockerfiles/bashrc
 ## https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/dockerfiles/dockerfiles/devel-gpu-jupyter.Dockerfile
+## https://blog.hasura.io/how-to-write-dockerfiles-for-python-web-apps-6d173842ae1d/
+## https://stackoverflow.com/questions/34213837/dockerfile-output-of-run-instruction-into-a-variable
+## https://stackoverflow.com/questions/20635472/using-the-run-instruction-in-a-dockerfile-with-source-does-not-work
+## https://stackoverflow.com/questions/34911622/dockerfile-set-env-to-result-of-command
+## https://unix.stackexchange.com/questions/117467/how-to-permanently-set-environmental-variables
+## https://github.com/moby/moby/issues/29110
+## https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b
+
+ARG BASE_IMAGE_NAME=${BASE_IMAGE_NAME}
+FROM ${BASE_IMAGE_NAME}
+
+# FROM nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
+LABEL maintainer "mangalbhaskar <mangalbhaskar@gmail.com>"
 
 ## See http://bugs.python.org/issue19846
 ## format changes required for asammdf v3.4.0
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
+
+ARG CUDA_VERSION=${CUDA_VERSION}
+ARG CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}
 
 ARG pyVer
 ARG PYTHON=python${pyVer}
@@ -51,13 +64,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       ${PYTHON}-dev \
       ${PYTHON}-pip \
       swig \
+      grep \
+      vim \
       sudo \
+      libnvinfer5 \
+      libnvinfer-dev \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Link the libcuda stub to the location where tensorflow is searching for it and reconfigure
+# dynamic linker run-time bindings
 # Some TF tools expect a "python" binary
-RUN ln -s $(which ${PYTHON}) /usr/local/bin/python \
-    && ln -s $(which ${PIP}) /usr/bin/pip
+RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
+    /bin/echo "/usr/local/cuda/lib64/stubs" > /etc/ld.so.conf.d/z-cuda-stubs.conf && \
+    ln -s $(which ${PYTHON}) /usr/local/bin/python && \
+    ln -s $(which ${PIP}) /usr/bin/pip && \
+    ldconfig
 
 RUN ${PIP} --no-cache-dir install --upgrade \
     pip \
@@ -67,58 +89,70 @@ RUN ${PIP} --no-cache-dir install \
       virtualenv \
       virtualenvwrapper
 
+# RUN /bin/echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user
+# RUN /bin/echo "${DUSER}:${DUSER}" | chpasswd
 
 ## add docker group and user as same as host group and user ids and names
 RUN addgroup --gid ${DUSER_GRP_ID} ${DUSER_GRP} && \
     useradd -ms /bin/bash ${DUSER} --uid ${DUSER_ID} --gid ${DUSER_GRP_ID} && \
+    /bin/echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user && \
     adduser ${DUSER} sudo
 
 #set main entry point as working directory
 WORKDIR /
-COPY ./installer ./installer
 
-ARG BASH_FILE=/etc/bash.bashrc
-
-## https://blog.hasura.io/how-to-write-dockerfiles-for-python-web-apps-6d173842ae1d/
-# Install app dependencies
-## https://stackoverflow.com/questions/34213837/dockerfile-output-of-run-instruction-into-a-variable
-RUN   chmod a+rwx ${BASH_FILE} && \
-      mkdir -p ${PY_VENV_PATH} && \
-      venv_timestamp=$(date +%Y-%m-%d) && \
-      venv_pyVer=$($(which ${PYTHON}) -c 'import sys; print("-".join(map(str, sys.version_info[:3])))') && \
-      venv_name="py_${venv_pyVer}_${venv_timestamp}" && \
-      mkvirtualenv -p $(which ${PYTHON}) ${venv_name} && \
-      virtualenvpath=$(which virtualenv) && \
-      venvline="source ${virtualenvpath}/virtualenvwrapper.sh" && \
-      grep -qF "${venvline}" "${BASH_FILE}" || echo "${venvline}" >> "${BASH_FILE}" && \
-      source ${BASH_FILE} && \
-      workon ${venv_name} && \
-      ${PIP} --no-cache-dir install \
-        Pillow \
-        h5py \
-        keras_applications \
-        keras_preprocessing \
-        matplotlib \
-        mock \
-        numpy \
-        scipy \
-        sklearn \
-        pandas \
-        future \
-        portpicker \
-        && test "${USE_PYTHON_3_NOT_2}" -eq 1 && true || ${PIP} --no-cache-dir install \
-        enum34 && \
-      ${PIP} install -r installer/python.requirements.txt
-
-# Install bazel
 ARG BASEDIR="softwares"
 ARG BASEPATH="/${BASEDIR}"
 
-ARG BAZEL_VERSION=1.1.0
-ARG BAZEL_URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"
-RUN mkdir -p ${BASEPATH}/bazel \
-    && wget -O /bazel/installer.sh ${BAZEL_URL} \
-    && wget -O /bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" \
-    && chmod +x /bazel/installer.sh \
-    && /bazel/installer.sh \
-    && rm -f /bazel/installer.sh
+RUN mkdir -p ${PY_VENV_PATH} && \
+    mkdir -p ${BASEPATH} && \
+    chown -R ${DUSER}:${DUSER} ${PY_VENV_PATH} && \
+    chown -R ${DUSER}:${DUSER} ${BASEPATH} && \
+    chown -R ${DUSER}:${DUSER} ${BASEPATH}
+
+# ARG BASH_FILE=/etc/bash.bashrc
+ARG BASH_FILE=/home/${DUSER}/.bashrc
+
+# Install bazel needs permission of root to update the /usr/local/bin directory
+ARG BAZEL_URL=${BAZEL_URL}
+RUN mkdir -p ${BASEPATH}/bazel && \
+    wget -O ${BASEPATH}/bazel/installer.sh ${BAZEL_URL} && \
+    wget -O ${BASEPATH}/bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
+    chmod +x ${BASEPATH}/bazel/installer.sh && \
+    ${BASEPATH}/bazel/installer.sh && \
+    rm -f ${BASEPATH}/bazel/installer.sh
+
+## Run processes as non-root user
+USER ${DUSER}
+
+COPY ./installer ${BASEPATH}
+
+## Tensorflow specific configuration
+## https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/dockerfiles/dockerfiles/devel-gpu-jupyter.Dockerfile
+# Configure the build for our CUDA configuration.
+ENV CI_BUILD_PYTHON ${PYTHON}
+ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+ENV TF_NEED_CUDA 1
+ENV TF_NEED_TENSORRT 1
+ENV TF_CUDA_COMPUTE_CAPABILITIES=3.5,5.2,6.0,6.1,7.0
+ENV TF_CUDA_VERSION=${CUDA_VERSION}
+ENV TF_CUDNN_VERSION=${CUDNN_MAJOR_VERSION}
+
+ARG PY_VENV_NAME=${PY_VENV_NAME}
+RUN chmod a+rwx ${BASH_FILE} && \
+    venvline="source /usr/local/bin/virtualenvwrapper.sh" && \
+    grep -qF "${venvline}" "${BASH_FILE}" || echo "${venvline}" >> "${BASH_FILE}" && \
+    venvline="export WORKON_HOME=${PY_VENV_PATH}" && \
+    grep -qF "${venvline}" "${BASH_FILE}" || echo "${venvline}" >> "${BASH_FILE}" && \
+    venvline="export PY_VENV_NAME=${PY_VENV_NAME}" && \
+    grep -qF "${venvline}" "${BASH_FILE}" || echo "${venvline}" >> "${BASH_FILE}" && \
+    venvline="alias lt='ls -lrth'" && \
+    grep -qF "${venvline}" "${BASH_FILE}" || echo "${venvline}" >> "${BASH_FILE}"
+
+## Install python packages inside virtual environment
+RUN export WORKON_HOME=${PY_VENV_PATH} && \
+    source /usr/local/bin/virtualenvwrapper.sh && \
+    mkvirtualenv -p $(which ${PYTHON}) ${PY_VENV_NAME} && \
+    workon ${PY_VENV_NAME} && \
+    ${PIP} --no-cache-dir install -r ${BASEPATH}/python.requirements.txt && \
+    ${PIP} --no-cache-dir install -r ${BASEPATH}/python.requirements-extras.txt

@@ -17,6 +17,9 @@ LABEL maintainer "mangalbhaskar <mangalbhaskar@gmail.com>"
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
+ARG CUDA_VERSION=${CUDA_VERSION}
+ARG CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}
+
 ARG pyVer
 ARG PYTHON=python${pyVer}
 ARG PIP=pip${pyVer}
@@ -61,12 +64,31 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       grep \
       vim \
       sudo \
+      libnvinfer5=5.1.5-1+cuda${CUDA_VERSION} \
+      libnvinfer-dev=5.1.5-1+cuda${CUDA_VERSION} \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
+## Tensorflow specific configuration
+## https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/dockerfiles/dockerfiles/devel-gpu-jupyter.Dockerfile
+# Configure the build for our CUDA configuration.
+
+ENV CI_BUILD_PYTHON ${PYTHON}
+ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+ENV TF_NEED_CUDA 1
+ENV TF_NEED_TENSORRT 1
+ENV TF_CUDA_COMPUTE_CAPABILITIES=3.5,5.2,6.0,6.1,7.0
+ENV TF_CUDA_VERSION=${CUDA_VERSION}
+ENV TF_CUDNN_VERSION=${CUDNN_MAJOR_VERSION}
+
+# Link the libcuda stub to the location where tensorflow is searching for it and reconfigure
+# dynamic linker run-time bindings
 # Some TF tools expect a "python" binary
-RUN ln -s $(which ${PYTHON}) /usr/local/bin/python \
-    && ln -s $(which ${PIP}) /usr/bin/pip
+RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
+    /bin/echo "/usr/local/cuda/lib64/stubs" > /etc/ld.so.conf.d/z-cuda-stubs.conf && \
+    ln -s $(which ${PYTHON}) /usr/local/bin/python && \
+    ln -s $(which ${PIP}) /usr/bin/pip && \
+    ldconfig
 
 RUN ${PIP} --no-cache-dir install --upgrade \
     pip \
@@ -87,8 +109,9 @@ RUN addgroup --gid ${DUSER_GRP_ID} ${DUSER_GRP} && \
 WORKDIR /
 COPY ./installer ./installer
 
-# ARG BASH_FILE=/home/${DUSER}/.bashrc
-ARG BASH_FILE=/etc/bash.bashrc
+# ARG BASH_FILE=/etc/bash.bashrc
+ARG BASH_FILE=/home/${DUSER}/.bashrc
+
 ARG PY_VENV_NAME=${PY_VENV_NAME}
 
 RUN chmod a+rwx ${BASH_FILE} && \
@@ -100,41 +123,27 @@ RUN chmod a+rwx ${BASH_FILE} && \
       venvline="export PY_VENV_NAME=${PY_VENV_NAME}" && \
       grep -qF "${venvline}" "${BASH_FILE}" || echo "${venvline}" >> "${BASH_FILE}"
 
+## Install python packages inside virtual environment
 RUN mkdir -p ${PY_VENV_PATH} && \
       export WORKON_HOME=${PY_VENV_PATH} && \
       source /usr/local/bin/virtualenvwrapper.sh && \
-      mkvirtualenv -p $(which ${PYTHON}) ${PY_VENV_NAME}
+      mkvirtualenv -p $(which ${PYTHON}) ${PY_VENV_NAME} && \
+      workon ${PY_VENV_NAME} && \
+      ${PIP} --no-cache-dir install -r installer/python.requirements.txt && \
+      ${PIP} --no-cache-dir install -r installer/python.requirements-extras.txt
 
-      # mkvirtualenv -p $(which ${PYTHON}) $(/bin/echo $PY_VENV_NAME)
-      # ${PIP} --no-cache-dir install numpy \
-      #   Pillow \
-      #   h5py \
-      #   keras_applications \
-      #   keras_preprocessing \
-      #   matplotlib \
-      #   mock \
-      #   numpy \
-      #   scipy \
-      #   sklearn \
-      #   pandas \
-      #   future \
-      #   portpicker \
-      #   && test "${USE_PYTHON_3_NOT_2}" -eq 1 && true || ${PIP} --no-cache-dir install \
-      #   enum34 && \
-      # ${PIP} install -r installer/python.requirements.txt"
+# Install bazel
+ARG BASEDIR="softwares"
+ARG BASEPATH="/${BASEDIR}"
 
-# # Install bazel
-# ARG BASEDIR="softwares"
-# ARG BASEPATH="/${BASEDIR}"
+ARG BAZEL_VERSION=1.1.0
+ARG BAZEL_URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"
 
-# ARG BAZEL_VERSION=1.1.0
-# ARG BAZEL_URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"
-# RUN mkdir -p ${BASEPATH}/bazel \
-#     && wget -O /bazel/installer.sh ${BAZEL_URL} \
-#     && wget -O /bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" \
-#     && chmod +x /bazel/installer.sh \
-#     && /bazel/installer.sh \
-#     && rm -f /bazel/installer.sh
+RUN mkdir -p ${BASEPATH}/bazel \
+    && wget -O ${BASEPATH}/bazel/installer.sh ${BAZEL_URL} \
+    && wget -O ${BASEPATH}/bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" \
+    && chmod +x ${BASEPATH}/bazel/installer.sh \
+    && ${BASEPATH}/bazel/installer.sh \
+    && rm -f ${BASEPATH}/bazel/installer.sh
 
-
-# USER ${DUSER}
+USER ${DUSER}

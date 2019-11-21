@@ -13,7 +13,7 @@ enum34
 ##
 keras_applications
 keras_preprocessing
-##-----
+##----- above packages as mentioned in tensorflow gpu dockerfile
 numexpr
 sympy
 networkx
@@ -39,6 +39,10 @@ opencv-contrib-python
 mkdocs
 #pdoc
 
+## performance tester, profiler
+locustio
+snakeviz
+
 gevent
 redis
 requests
@@ -50,10 +54,6 @@ arrow
 pymongo
 
 glog
-
-##performance tester, profiler
-locustio
-snakeviz
 
 ## async libs for mongodb and for core python 3.5+
 motor
