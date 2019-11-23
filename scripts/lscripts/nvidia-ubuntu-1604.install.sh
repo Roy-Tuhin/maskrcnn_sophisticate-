@@ -24,7 +24,7 @@ if [ -z "$BASEPATH" ]; then
 fi
 
 # check for Graphics Hardware and System Architecture Details
-source $LINUX_SCRIPT_HOME/gpu.info.sh
+source $LINUX_SCRIPT_HOME/utils/gpu.info.sh
 
 ##----------------------------------------------------------
 ## Nvidia Graphics Card Driver Installation

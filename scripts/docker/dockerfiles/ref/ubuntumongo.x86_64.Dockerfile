@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-MAINTAINER mangalbhaskar
+LABEL maintainer "mangalbhaskar <mangalbhaskar@gmail.com>"
 
 ## https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
 ## https://github.com/hamptonpaulk/php7-dockerized/issues/3

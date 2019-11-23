@@ -1,17 +1,24 @@
 #!/bin/bash
 
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
+source "${SCRIPTS_DIR}/docker.env.aidev.sh"
 
-DOCKER_VOLUMES=""
-
-
-DOCKER_HOME="/home/${USER}"
+docker --version
 
 function local_volumes() {
   ## $(uname -s) i.e. Linux 
-  local volumes="${DOCKER_VOLUMES} -v ${HOME}/.cache:${DOCKER_HOME}/.cache"
+  local volumes="${DOCKER_VOLUMES} -v ${HOME}/.cache:${DOCKER_HOME}/.cache \
+    -v /dev:/dev \
+    -v /media:/media \
+    -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /usr/src:/usr/src \
+    -v /lib/modules:/lib/modules"
   echo "${volumes}"
 }
+
+
+# function port_maps() {}
 
 
 function docker_envvars() {
@@ -25,20 +32,14 @@ function docker_envvars() {
 
   local envvars=""
 
-  envvars="${envvars} -e DOCKER_IMG=${DOCKER_IMG} "
+  # envvars="${envvars} -e DOCKER_IMG=${DOCKER_IMG} "
   envvars="${envvars} -e DISPLAY=${display} "
 
-  envvars="${envvars} -e USER=$USER "
-  envvars="${envvars} -e DOCKER_USER=$USER "
-  envvars="${envvars} -e DOCKER_USER_ID=$USER_ID "
-  envvars="${envvars} -e DOCKER_GRP=$GRP "
-  envvars="${envvars} -e DOCKER_GRP_ID=$GRP_ID "
-
-  ## mongodb user fix
-  envvars="${envvars} -e MONGODB_USER=$MONGODB_USER "
-  envvars="${envvars} -e MONGODB_USER_ID=$MONGODB_USER_ID "
-  envvars="${envvars} -e MONGODB_GRP=$MONGODB_GRP "
-  envvars="${envvars} -e MONGODB_GRP_ID=$MONGODB_GRP_ID "
+  # envvars="${envvars} -e USER=$DUSER "
+  # envvars="${envvars} -e DOCKER_USER=$DUSER "
+  # envvars="${envvars} -e DOCKER_USER_ID=$USER_ID "
+  # envvars="${envvars} -e DOCKER_GRP=$GRP "
+  # envvars="${envvars} -e DOCKER_GRP_ID=$GRP_ID "
 
   echo "${envvars}"
 }
@@ -51,6 +52,7 @@ function restart_policy() {
   echo "${restart}"
 }
 
+
 function main() {
     docker ps -a --format "{{.Names}}" | grep "${DOCKER_CONTAINER_NAME}" 1>/dev/null
     if [ $? == 0 ]; then
@@ -60,22 +62,18 @@ function main() {
 
     docker start ${DOCKER_CONTAINER_NAME} 1>/dev/null
 
-    info $(configs)
-    info $(local_volumes)
+    echo $(local_volumes)
     
     # https://docs.docker.com/network/host/
     ## WARNING: Published ports are discarded when using host network mode
 
     ##TODO: config file throws permission error
-    # ${DOCKER_CMD} run -it -d --privileged \
-    # ${DOCKER_CMD} run \
-    debug "${DOCKER_CMD} run -d \
+    echo "docker run -d -it \
+      --gpus all \
       --name ${DOCKER_CONTAINER_NAME} \
       $(docker_envvars) \
-      $(port_maps) \
       $(local_volumes) \
       $(restart_policy) \
-      -w ${WORK_BASE_PATH} \
       --net host \
       --add-host ${LOCAL_HOST}:127.0.0.1 \
       --add-host ${DOCKER_LOCAL_HOST}:127.0.0.1 \
@@ -83,13 +81,12 @@ function main() {
       --shm-size ${SHM_SIZE} \
       ${DOCKER_IMG}"
 
-    ${DOCKER_CMD} run -d \
+    docker run -d -it \
+      --gpus all \
       --name ${DOCKER_CONTAINER_NAME} \
       $(docker_envvars) \
-      $(port_maps) \
       $(local_volumes) \
       $(restart_policy) \
-      -w ${WORK_BASE_PATH} \
       --net host \
       --add-host ${LOCAL_HOST}:127.0.0.1 \
       --add-host ${DOCKER_LOCAL_HOST}:127.0.0.1 \
@@ -108,9 +105,9 @@ function main() {
         return
     fi
 
-    if [ "${USER}" != "root" ]; then
-      docker exec ${DOCKER_CONTAINER_NAME} /bin/bash -c "${SCRIPTS_BASE_PATH}/docker/docker.adduser.sh"
-      docker exec ${DOCKER_CONTAINER_NAME} /bin/bash -c "chown -R ${USER}:${GRP} ${WORK_BASE_PATH}"
+    if [ "${DUSER}" != "root" ]; then
+      # docker exec ${DOCKER_CONTAINER_NAME} /bin/bash -c "${SCRIPTS_BASE_PATH}/docker/docker.adduser.sh"
+      docker exec ${DOCKER_CONTAINER_NAME} /bin/bash -c "chown -R ${DUSER}:${GRP} ${WORK_BASE_PATH}"
       docker exec ${DOCKER_CONTAINER_NAME} /bin/bash -c "chmod a+w ${WORK_BASE_PATH}"
       ##
       
@@ -134,8 +131,8 @@ function main() {
 
     # docker exec -u ${USER} -it ${DOCKER_CONTAINER_NAME} "${WORK_BASE_PATH}/scripts/bootstrap.sh"
 
-    ok "Finished setting up ${DOCKER_CONTAINER_NAME} docker environment. Now you can enter with: \n source ${SCRIPTS_DIR}/docker/docker.exec.sh"
-    ok "Enjoy!"
+    echo "Finished setting up ${DOCKER_CONTAINER_NAME} docker environment. Now you can enter with: \n source ${SCRIPTS_DIR}/docker/docker.exec.sh"
+    echo "Enjoy!"
 }
 
 

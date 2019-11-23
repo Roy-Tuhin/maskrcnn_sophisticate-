@@ -82,7 +82,7 @@ else
   echo "Runtime Lib is required to install Dev lib and User Guide"
 fi
 
-## TODO: witch to gcc-select
+## TODO: switch to gcc-select
 # # Ubuntu 18.04 LTS
 # if [[ $LINUX_VERSION == "18.04" ]]; then
 #   echo $LINUX_VERSION

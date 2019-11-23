@@ -14,7 +14,7 @@ fi
 source $LSCRIPTS/linuxscripts.config.sh
 
 # check for Graphics Hardware and System Architecture Details
-source $LINUX_SCRIPT_HOME/gpu.info.sh
+source $LINUX_SCRIPT_HOME/utils/gpu.info.sh
 
 if [ -z "$BASEPATH" ]; then
   BASEPATH="$HOME/softwares"

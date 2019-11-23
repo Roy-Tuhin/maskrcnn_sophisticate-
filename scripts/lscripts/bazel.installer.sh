@@ -46,13 +46,13 @@ echo "BASEPATH: $BASEPATH"
 echo "URL: $URL"
 echo "PROG_DIR: $PROG_DIR"
 
-if [ ! -f ${PROG_DIR}/installer.sh ]; then
-  wget -O ${PROG_DIR}/installer.sh ${URL} && \
+if [ ! -f ${PROG_DIR}/installer-${BAZEL_VERSION}.sh ]; then
+  wget -O ${PROG_DIR}/installer-${BAZEL_VERSION}.sh ${URL} && \
   wget -O ${PROG_DIR}/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
-  chmod +x ${PROG_DIR}/installer.sh && \
-  sudo ${PROG_DIR}/installer.sh
+  chmod +x ${PROG_DIR}/installer-${BAZEL_VERSION}.sh && \
+  sudo ${PROG_DIR}/installer-${BAZEL_VERSION}.sh
 else
-  sudo ${PROG_DIR}/installer.sh
+  sudo ${PROG_DIR}/installer-${BAZEL_VERSION}.sh
 fi
 
 # rm -f ${PROG_DIR}/installer.sh

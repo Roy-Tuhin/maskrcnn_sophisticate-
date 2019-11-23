@@ -10,9 +10,9 @@
 ## https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b
 
 ARG BASE_IMAGE_NAME=${BASE_IMAGE_NAME}
+# FROM nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
 FROM ${BASE_IMAGE_NAME}
 
-# FROM nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
 LABEL maintainer "mangalbhaskar <mangalbhaskar@gmail.com>"
 
 ## See http://bugs.python.org/issue19846
@@ -98,34 +98,46 @@ RUN addgroup --gid ${DUSER_GRP_ID} ${DUSER_GRP} && \
     /bin/echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user && \
     adduser ${DUSER} sudo
 
-#set main entry point as working directory
-WORKDIR /
-
-ARG BASEDIR="softwares"
-ARG BASEPATH="/${BASEDIR}"
+ARG DOCKER_BASEPATH="/external4docker"
+ARG WORK_BASE_PATH="${WORK_BASE_PATH}"
+ARG OTHR_BASE_PATHS="${OTHR_BASE_PATHS}"
 
 RUN mkdir -p ${PY_VENV_PATH} && \
-    mkdir -p ${BASEPATH} && \
+    mkdir -p ${DOCKER_BASEPATH} && \
+    mkdir -p ${WORK_BASE_PATH} && \
+    mkdir -p ${OTHR_BASE_PATHS} && \
+    chown -R ${DUSER}:${DUSER} ${WORK_BASE_PATH} && \
+    chown -R ${DUSER}:${DUSER} ${OTHR_BASE_PATHS} && \
+    chmod a+w ${WORK_BASE_PATH} && \
     chown -R ${DUSER}:${DUSER} ${PY_VENV_PATH} && \
-    chown -R ${DUSER}:${DUSER} ${BASEPATH} && \
-    chown -R ${DUSER}:${DUSER} ${BASEPATH}
+    chown -R ${DUSER}:${DUSER} ${DOCKER_BASEPATH}
+
+#set main entry point as working directory
+
+WORKDIR ${WORK_BASE_PATH}
 
 # ARG BASH_FILE=/etc/bash.bashrc
 ARG BASH_FILE=/home/${DUSER}/.bashrc
 
+
+COPY ./installer ${DOCKER_BASEPATH}
+COPY ./config ${DOCKER_BASEPATH}
+
 # Install bazel needs permission of root to update the /usr/local/bin directory
+
+RUN source ${DOCKER_BASEPATH}/installer
+
+
 ARG BAZEL_URL=${BAZEL_URL}
-RUN mkdir -p ${BASEPATH}/bazel && \
-    wget -O ${BASEPATH}/bazel/installer.sh ${BAZEL_URL} && \
-    wget -O ${BASEPATH}/bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
-    chmod +x ${BASEPATH}/bazel/installer.sh && \
-    ${BASEPATH}/bazel/installer.sh && \
-    rm -f ${BASEPATH}/bazel/installer.sh
+RUN mkdir -p ${DOCKER_BASEPATH}/bazel && \
+    wget -O ${DOCKER_BASEPATH}/bazel/installer.sh ${BAZEL_URL} && \
+    wget -O ${DOCKER_BASEPATH}/bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
+    chmod +x ${DOCKER_BASEPATH}/bazel/installer.sh && \
+    ${DOCKER_BASEPATH}/bazel/installer.sh && \
+    rm -f ${DOCKER_BASEPATH}/bazel/installer.sh
 
 ## Run processes as non-root user
 USER ${DUSER}
-
-COPY ./installer ${BASEPATH}
 
 ## Tensorflow specific configuration
 ## https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/dockerfiles/dockerfiles/devel-gpu-jupyter.Dockerfile
@@ -154,5 +166,6 @@ RUN export WORKON_HOME=${PY_VENV_PATH} && \
     source /usr/local/bin/virtualenvwrapper.sh && \
     mkvirtualenv -p $(which ${PYTHON}) ${PY_VENV_NAME} && \
     workon ${PY_VENV_NAME} && \
-    ${PIP} --no-cache-dir install -r ${BASEPATH}/python.requirements.txt && \
-    ${PIP} --no-cache-dir install -r ${BASEPATH}/python.requirements-extras.txt
+    ${PIP} --no-cache-dir install -r ${DOCKER_BASEPATH}/lscripts/python.requirements.txt && \
+    ${PIP} --no-cache-dir install -r ${DOCKER_BASEPATH}/lscripts/python.requirements-extras.txt && \
+    ${PIP} --no-cache-dir install -r ${DOCKER_BASEPATH}/lscripts/python.requirements-ai.txt

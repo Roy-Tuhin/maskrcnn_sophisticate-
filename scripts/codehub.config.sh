@@ -47,6 +47,9 @@
 ## Inspired by:
 ## https://github.com/ApolloAuto/apollo/tree/master/scripts
 
+## Array as sequence
+## https://unix.stackexchange.com/questions/199348/dynamically-create-array-in-bash-with-variables-as-array-name
+
 ##----------------------------------------------------------
 
 
@@ -63,7 +66,7 @@ source "${SCRIPTS_DIR}/config.custom.sh"
 ## This makes script re-entrant and side effects can be avoided.
 ## Otherwise, in the same shell if the script is run again by
 ## changing the values in config, previous values lingers in the shell.
-declare -gA CHUB_DIR_PATHS=()
+declare -ga CHUB_DIR_PATHS=()
 declare -gA CHUB_ENVVARS=()
 
 function create_envvars() {
@@ -86,6 +89,7 @@ function create_envvars() {
     "data/samples"
     "downloads"
     "external"
+    "external4docker"
     "logs"
     "logs/www"
     "logs/www/uploads"
@@ -145,11 +149,13 @@ function create_envvars() {
 
   ### -------
   local codehubdir
-  for codehubdir in "${codehub_dirs[@]}"; do
-    info ${CHUB_ENVVARS['CHUB_HOME']}/${codehubdir}
-    CHUB_DIR_PATHS["${codehubdir}"]="${CHUB_ENVVARS['CHUB_HOME']}/${codehubdir}"
+  # for ((i=0; i<${#codehub_dirs[@]}; ++i)) ; do
+  for i in ${!codehub_dirs[*]}; do
+    codehubdir="${codehub_dirs[$i]}"
+    info "$i===>${CHUB_ENVVARS['CHUB_HOME']}/${codehubdir}"
+    CHUB_DIR_PATHS[$i]="${CHUB_ENVVARS['CHUB_HOME']}/${codehubdir}"
   done
-  debug "CHUB_DIR_PATHS: ${CHUB_DIR_PATHS[@]}"
+  debug "CHUB_DIR_PATHS: ${CHUB_DIR_PATHS[*]}"
 }
 
 
@@ -183,8 +189,9 @@ function create_codehub_dirs() {
   create_base_paths "codehub"
 
   local codehub_dir_path
-  for codehub_dir_path in "${CHUB_DIR_PATHS[@]}"; do
-    info ${codehub_dir_path}
+  for i in ${!CHUB_DIR_PATHS[*]}; do
+    codehub_dir_path=${CHUB_DIR_PATHS[$i]}
+    info "$i--->${codehub_dir_path}"
     if [ ! -d ${codehub_dir_path} ]; then
       sudo mkdir -p ${codehub_dir_path}
       sudo chown -R $(id -un):$(id -gn) ${codehub_dir_path}

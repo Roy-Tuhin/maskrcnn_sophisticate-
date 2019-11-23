@@ -1,7 +1,20 @@
 #!/bin/bash
 
+nvidia-smi -L
+# nvidia-smi -L | wc -l
 
-watch -n 1 nvidia-smi --format=csv --query-gpu=power.draw,utilization.gpu,fan.speed,temperature.gpu
+# watch -n 1 nvidia-smi --format=csv --query-gpu=power.draw,utilization.gpu,fan.speed,temperature.gpu
+
+## https://www.slideshare.net/databricks/monitoring-of-gpu-usage-with-tensorflow-models-using-prometheus
+nvidia-smi --query-gpu=timestamp,name,pci.bus_id,driver_version,pstate,pcie.link.gen.max,pcie.link.gen.current,temperature.gpu,utilization.gpu,utilization.memory,memory.total,memory.free,memory.used --format=csv -l 5
+# nvidia-smi --query-gpu=index,timestamp,power.draw,clocks.sm,clocks.mem,clocks.gr --format=csv
+
+## https://github.com/teh/nvidia-smi-prometheus/blob/master/src/Main.hs
+# nvidia-smi dmon -c 10
+
+
+# chrome://tracing
+
 
 # nvidia-smi --help-query-gpu
 # nvidia-smi -l 1

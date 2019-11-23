@@ -1,6 +1,0 @@
-FROM mangalbhaskar/aimldl:devl-ubuntu-18.04-python3
-
-COPY ./installer ./installer
-
-## Install python virtual environment and wrapper
-# RUN pip3 install -r installer/python.requirements.txt
