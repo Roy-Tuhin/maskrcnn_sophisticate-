@@ -1,4 +1,6 @@
-#!/in/bash
+#!/bin/bash
+
+timestamp=$(date +%Y%m%d_%H%M)
 
 OS="ubuntu18.04"
 CUDA_VERSION=10.0
@@ -7,15 +9,20 @@ CUDNN_MAJOR_VERSION=7
 nvidia_image_tag=${CUDA_VERSION}-cudnn-${CUDNN_VERSION}-devel-${OS}
 #
 VERSION=4
-WHICHONE="aidev"
+WHICHONE="aidev-devel-gpu"
 BASE_IMAGE_NAME="nvidia/cuda:${nvidia_image_tag}"
-TAG="mangalbhaskar/aimldl:${nvidia_image_tag}-${WHICHONE}-${VERSION}"
-DOCKERFILE="${WHICHONE}/Dockerfile"
+TAG="mangalbhaskar/aimldl:${nvidia_image_tag}-$(echo ${WHICHONE}|cut -d'-' -f1)-${VERSION}-${timestamp}"
+DOCKERFILE="dockerfiles/${WHICHONE}.Dockerfile"
 DOCKER_IMG=${TAG}
+
+if [ ! -f ${DOCKERFILE} ];then
+  echo "${DOCKERFILE} does not exits"
+else
+  echo "Docker file to be used: ${DOCKERFILE}"
+fi
 
 #
 pyVer=3
-timestamp=$(date +%Y%m%d_%H%M)
 PY_VENV_PATH="/virtualmachines/virtualenvs"
 PY_VENV_NAME=py_${pyVer}_${timestamp}
 DUSER=${USER}

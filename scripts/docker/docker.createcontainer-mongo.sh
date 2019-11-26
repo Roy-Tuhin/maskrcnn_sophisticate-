@@ -46,7 +46,7 @@ SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )"
 # echo "SCRIPTS_DIR: ${SCRIPTS_DIR}"
 
 source "${SCRIPTS_DIR}/lscripts/utils/common.sh"
-source "${SCRIPTS_DIR}/docker/docker.env.sh"
+source "${SCRIPTS_DIR}/docker/docker.env-mongo.sh"
 
 ${DOCKER_CMD} --version
 
