@@ -27,6 +27,8 @@ LINUX_SCRIPT_HOME="${SCRIPTS_DIR}/${LINUX_SCRIPT_BASE}"
 BASHRC_FILE="${HOME}/.bashrc"
 #echo $BASHRC_FILE
 
+CODEHUB_ENV_FILE="${SCRIPTS_DIR}/config/codehub.env.sh"
+
 ## Virtual Machines, Containers, Python virtual environments
 VM_BASE="virtualmachines"
 VM_HOME="${CHUB_HOME}/$VM_BASE"
@@ -48,3 +50,9 @@ LINUX_ID=$(lsb_release -si) ## Ubuntu, Kali
 source ${LINUX_SCRIPT_HOME}/versions.sh
 source ${LINUX_SCRIPT_HOME}/utils/numthreads.sh
 source ${LINUX_SCRIPT_HOME}/utils/common.sh
+
+## ----
+function update_env_file(){
+  source ${CODEHUB_ENV_FILE}
+  rsync -r ${CODEHUB_ENV_FILE} ${CHUB_CFG}
+}

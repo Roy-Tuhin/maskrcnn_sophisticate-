@@ -9,6 +9,7 @@ source ${SCRIPTS_DIR}/ps1.sh
 
 ## commands
 alias lt='ls -lrth'
+alias l='ls -lrth'
 alias gccselect='source ${LINUX_SCRIPT_HOME}/utils/gcc-select.sh'
 alias getip='source ${LINUX_SCRIPT_HOME}/utils/ip.sh'
 
@@ -25,3 +26,9 @@ alias chublogs="cd ${CHUB_LOGS}"
 alias androidstudio="bash ${CHUB_HOME}/tools/android-studio/bin/studio.sh"
 ### CVS
 alias cvstt='cvs status 2>/dev/null | grep ^File | grep -v Up-to'
+NPM_PACKAGES=/codehub/.npm-packages
+PATH=/home/baaz/.npm-packages/bin:/usr/local/cuda/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/lib/jvm/java-8-openjdk-amd64/bin:/codehub/android/sdk/tools:/codehub/android/sdk/platform-tools:/home/baaz/softwares/blender:/home/baaz/softwares/meshlab/src/distrib
+export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+NPM_PACKAGES=/codehub/.npm-packages
+PATH=/codehub/.npm-packages/bin:/home/baaz/.npm-packages/bin:/usr/local/cuda/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/lib/jvm/java-8-openjdk-amd64/bin:/codehub/android/sdk/tools:/codehub/android/sdk/platform-tools:/home/baaz/softwares/blender:/home/baaz/softwares/meshlab/src/distrib
+export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"

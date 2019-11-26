@@ -14,16 +14,15 @@
 
 # ERROR: locustio 0.13.2 has requirement gevent==1.5a2, but you'll have gevent 1.4.0 which is incompatible.
 
-
 ## quick image test
 ## docker run --name aidev-3a --gpus all --rm -it mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-3 bash
 
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
 
 function build_docker_img_aimldl() {
-  source $SCRIPTS_DIR/docker.env.aidev.sh
+  source $SCRIPTS_DIR/docker.env-aidev.sh
 
-  local CONTEXT="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/ai/${WHICHONE}"
+  local CONTEXT="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/dockerfiles"
 
   echo "CONTEXT: $CONTEXT"
   echo "Building new image with TAG: ${TAG}"
@@ -39,7 +38,6 @@ CUDA_VERSION=${CUDA_VERSION}
 CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}
 nvidia_image_tag=${nvidia_image_tag}
 VERSION=${VERSION}
-WHICHONE=${WHICHONE}
 BASE_IMAGE_NAME=${BASE_IMAGE_NAME}
 TAG=${TAG}
 pyVer=${pyVer}

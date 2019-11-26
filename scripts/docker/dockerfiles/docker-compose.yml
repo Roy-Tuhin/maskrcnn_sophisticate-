@@ -1,0 +1,34 @@
+version: '3.7'
+services: 
+  aidev: 
+    image: "mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-4"
+    # image: "mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v4-151110_000700"
+    ports:
+      - "4040:4040"
+    depends_on:
+      - mongodb
+      - redis
+    deploy:
+      restart_policy:
+        condition: on-failure
+  mongodb:
+    # image: "mongouid:4.1"
+    image: "mangalbhaskar/aimldl:mongodb-v4.1.13-kalilinux-2019.1-v1-151110_000700"
+    ports:
+      - "27017:27017"
+    # volumes:
+    deploy:
+      placement:
+        constraints: [node.role == manager ]
+  redis:
+    image: "redis:5.05"
+    ports:
+      - "6379:6379"
+    # networks:
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+# networks:
+
+# volumes:

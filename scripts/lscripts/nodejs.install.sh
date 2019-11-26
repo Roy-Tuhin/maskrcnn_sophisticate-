@@ -25,11 +25,10 @@
 # E: Package 'python-software-properties' has no installation candidate
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )"
+
+source $SCRIPTS_DIR/config.custom.sh
 
 if [ -z "$NODEJS_VER" ]; then
   NODEJS_VER=9
@@ -38,23 +37,23 @@ fi
 
 echo "LINUX_VERSION:$LINUX_VERSION"
 
-# Ubuntu 16.04 LTS
+## Ubuntu 16.04 LTS
 if [[ $LINUX_VERSION == "16.04" ]]; then
   echo "...$LINUX_VERSION"
   sudo -E apt -q -y install python-software-properties
 fi
 
-# Ubuntu 18.04 LTS
+## Ubuntu 18.04 LTS
 if [[ $LINUX_VERSION == "18.04" ]]; then
   echo $LINUX_VERSION
   sudo -E apt -q -y install software-properties-common
 fi
 
-
-## version moved to central script: version.sh
-# NODEJS_VER=7
-# NODEJS_VER=8
-# NODEJS_VER=9
+## Kali 2019.1
+if [[ $LINUX_ID == "Kali" ]]; then
+  echo $LINUX_VERSION
+  sudo -E apt -q -y install software-properties-common
+fi
 
 curl -sL https://deb.nodesource.com/setup_$NODEJS_VER.x | sudo -E bash -
 sudo -E apt -q -y install nodejs
@@ -62,27 +61,24 @@ npm update -g npm
 npm -v
 node -v
 
-mkdir "${HOME}/.npm-packages"
-touch ${HOME}/.npmrc
-echo prefix=${HOME}/.npm-packages > ${HOME}/.npmrc
+mkdir "${CODEHUB_HOME}/.npm-packages"
+touch ${CODEHUB_HOME}/.npmrc
+echo prefix='${CODEHUB_HOME}/.npm-packages' > ${CODEHUB_HOME}/.npmrc
 
-echo NPM_PACKAGES="$HOME/.npm-packages" >> ${HOME}/.bashrc
-echo PATH="$NPM_PACKAGES/bin:$PATH" >> ${HOME}/.bashrc
+echo NPM_PACKAGES='$CODEHUB_HOME/.npm-packages' >> ${CODEHUB_ENV_FILE}
+echo PATH='$NPM_PACKAGES/bin:$PATH' >> ${CODEHUB_ENV_FILE}
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
-echo 'export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"' >> ${HOME}/.bashrc
+echo "export MANPATH='$NPM_PACKAGES/share/man:$(manpath)'" >> ${CODEHUB_ENV_FILE}
 
-source ${HOME}/.bashrc
+update_env_file
 
 ## cushion if source for bashrc does not happen
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-
-npm install -g less
-npm install -g uglify-js
-npm install -g grunt
-npm install -g gulp
+export MANPATH='$NPM_PACKAGES/share/man:$(manpath)'
 
 ## To install the Yarn package manager, run:
 
 #curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 #echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 #sudo apt update && sudo apt install yarn
+
+# source ${LINUX_SCRIPT_HOME}/nodejs.requirements.sh

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
-source "${SCRIPTS_DIR}/docker.env.aidev.sh"
+source "${SCRIPTS_DIR}/docker.env-aidev.sh"
 
 docker --version
 
