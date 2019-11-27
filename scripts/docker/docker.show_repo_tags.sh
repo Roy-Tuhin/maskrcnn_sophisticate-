@@ -45,7 +45,9 @@ function docker_tags() {
 
 ## https://stackoverflow.com/q/24481564
 for repo in $* ; do
-  echo "$repo:"
-  # curl -s -S "https://registry.hub.docker.com/v2/repositories/library/${repo}/tags/" | jq '."results"[]["name"]' |sort
-  docker_tags ${repo}
+  echo "${repo}:"
+  URL=https://registry.hub.docker.com/v2/repositories/library/${repo}/tags/
+  echo "${URL}"
+  curl -s -S "${URL}" | jq '."results"[]["name"]' |sort
+  # docker_tags ${repo}
 done
