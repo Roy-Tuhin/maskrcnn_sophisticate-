@@ -8,7 +8,6 @@
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
 source "${SCRIPTS_DIR}/docker.env-aidev.sh"
 
-
 if [ ! -z $1 ]; then
   DOCKER_CONTAINER_NAME=$1
 fi

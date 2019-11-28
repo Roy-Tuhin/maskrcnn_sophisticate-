@@ -42,7 +42,6 @@ DOCKER_CMD="docker"
 DOCKER_HOME="/home/${DUSER}"
 DOCKER_BASEPATH="/external4docker"
 
-
 DOCKER_CONTAINER_NAME="${WHICHONE}-${VERSION}"
 
 LOCAL_HOST=`hostname`
@@ -57,11 +56,11 @@ OTHR_BASE_PATHS="/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat /
 DOCKER_VOLUMES=""
 DOCKER_VOLUMES="${DOCKER_VOLUMES} -v ${SCRIPTS_DIR}:${SCRIPTS_BASE_PATH}"
 DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /codehub:/codehub"
-# DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-cod:/aimldl-cod"
+DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-cod:/aimldl-cod"
+DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-dat:/aimldl-dat"
+DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-cfg:/aimldl-cfg"
+DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-rpt:/aimldl-rpt"
 # DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-doc:/aimldl-doc"
-# DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-dat:/aimldl-dat"
-# DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-cfg:/aimldl-cfg"
-# DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-rpt:/aimldl-rpt"
 
 SHM_SIZE=2G
 

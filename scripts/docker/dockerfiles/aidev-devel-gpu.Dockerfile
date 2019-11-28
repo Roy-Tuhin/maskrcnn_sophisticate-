@@ -96,9 +96,10 @@ RUN ${PIP} --no-cache-dir install \
 RUN addgroup --gid ${DUSER_GRP_ID} ${DUSER_GRP} && \
     useradd -ms /bin/bash ${DUSER} --uid ${DUSER_ID} --gid ${DUSER_GRP_ID} && \
     /bin/echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user && \
+    /bin/echo "${DUSER}:${DUSER}" | chpasswd && \
     adduser ${DUSER} sudo
 
-ARG DOCKER_BASEPATH="/external4docker"
+ARG DOCKER_BASEPATH="${DOCKER_BASEPATH}"
 ARG WORK_BASE_PATH="${WORK_BASE_PATH}"
 ARG OTHR_BASE_PATHS="${OTHR_BASE_PATHS}"
 
@@ -112,29 +113,17 @@ RUN mkdir -p ${PY_VENV_PATH} && \
     chown -R ${DUSER}:${DUSER} ${PY_VENV_PATH} && \
     chown -R ${DUSER}:${DUSER} ${DOCKER_BASEPATH}
 
-#set main entry point as working directory
-
+## set main entry point as working directory
 WORKDIR ${WORK_BASE_PATH}
 
-# ARG BASH_FILE=/etc/bash.bashrc
+## ARG BASH_FILE=/etc/bash.bashrc
 ARG BASH_FILE=/home/${DUSER}/.bashrc
-
 
 COPY ./installer ${DOCKER_BASEPATH}
 COPY ./config ${DOCKER_BASEPATH}
 
 # Install bazel needs permission of root to update the /usr/local/bin directory
-
-RUN source ${DOCKER_BASEPATH}/installer
-
-
-ARG BAZEL_URL=${BAZEL_URL}
-RUN mkdir -p ${DOCKER_BASEPATH}/bazel && \
-    wget -O ${DOCKER_BASEPATH}/bazel/installer.sh ${BAZEL_URL} && \
-    wget -O ${DOCKER_BASEPATH}/bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
-    chmod +x ${DOCKER_BASEPATH}/bazel/installer.sh && \
-    ${DOCKER_BASEPATH}/bazel/installer.sh && \
-    rm -f ${DOCKER_BASEPATH}/bazel/installer.sh
+RUN source ${DOCKER_BASEPATH}/lscripts/bazel.installer.sh
 
 ## Run processes as non-root user
 USER ${DUSER}

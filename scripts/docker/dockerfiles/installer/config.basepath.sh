@@ -10,10 +10,8 @@ SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
 CHUB_DIR="codehub"
 CHUB_HOME="/${CHUB_DIR}"
 
-# BASEDIR="softwares"
-# BASEPATH="${HOME}/${BASEDIR}"
-
-BASEDIR="external"
-BASEPATH="${CHUB_HOME}/${BASEDIR}"
+# BASEDIR="external"
+# BASEPATH="${CHUB_HOME}/${BASEDIR}"
 
 DOCKER_BASEPATH="/external4docker"
+BASEPATH=${DOCKER_BASEPATH}

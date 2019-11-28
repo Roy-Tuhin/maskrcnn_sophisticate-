@@ -28,10 +28,22 @@ function bazel_install() {
 
   # # #sudo apt-get upgrade bazel
 
+  ## /codehub/scripts/docker/dockerfiles/aidev-devel-gpu.Dockerfile
+  # # ARG BAZEL_URL=${BAZEL_URL}
+  # # RUN mkdir -p ${DOCKER_BASEPATH}/bazel && \
+  # #     wget -O ${DOCKER_BASEPATH}/bazel/installer.sh ${BAZEL_URL} && \
+  # #     wget -O ${DOCKER_BASEPATH}/bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
+  # #     chmod +x ${DOCKER_BASEPATH}/bazel/installer.sh && \
+  # #     ${DOCKER_BASEPATH}/bazel/installer.sh && \
+  # #     rm -f ${DOCKER_BASEPATH}/bazel/installer.sh
+
+
+
   source $SCRIPTS_DIR/config.custom.sh
 
   local DIR="bazel"
   local PROG_DIR="$BASEPATH/$DIR"
+  mkdir -p ${PROG_DIR}
 
   if [ -z ${BAZEL_VERSION} ]; then
     BAZEL_VERSION=1.1.0
