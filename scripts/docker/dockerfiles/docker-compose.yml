@@ -1,10 +1,10 @@
 ## to be generated dynamically usign shell/python script for creating dynamic variables based user input and system configuration
 # version: '3.7'
-version: '3.3'
+# version: '3.3'
+version: '3'
 services: 
   aidev: 
-    image: "mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-4"
-    # image: "mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v4-151110_000700"
+    image: "mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-4-20191128_1444"
     ports:
       - "4040:4040"
     depends_on:
