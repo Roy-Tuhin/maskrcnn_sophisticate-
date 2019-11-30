@@ -14,53 +14,57 @@
 
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )"
 
-# # echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
-# # curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
+function bazel_install() {
+  echo $SCRIPTS_DIR
 
-# # sudo apt-get update && sudo apt-get install bazel
+  # # echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+  # # curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
 
-# # # Error troubleshooting
-# # # https://askubuntu.com/questions/769467/can-not-install-openjdk-9-jdk-because-it-tries-to-overwrite-file-aready-includ
-# # #sudo apt-get -o Dpkg::Options::="--force-overwrite" install /var/cache/apt/archives/openjdk-9-jdk_9~b114-0ubuntu1_amd64.deb
+  # # sudo apt-get update && sudo apt-get install bazel
 
-# # #sudo apt-get upgrade bazel
+  # # # Error troubleshooting
+  # # # https://askubuntu.com/questions/769467/can-not-install-openjdk-9-jdk-because-it-tries-to-overwrite-file-aready-includ
+  # # #sudo apt-get -o Dpkg::Options::="--force-overwrite" install /var/cache/apt/archives/openjdk-9-jdk_9~b114-0ubuntu1_amd64.deb
 
-# if [ -z $LSCRIPTS ];then
-#   LSCRIPTS="."
-# fi
+  # # #sudo apt-get upgrade bazel
 
-source $SCRIPTS_DIR/config.custom.sh
+  ## /codehub/scripts/docker/dockerfiles/aidev-devel-gpu.Dockerfile
+  # # ARG BAZEL_URL=${BAZEL_URL}
+  # # RUN mkdir -p ${DOCKER_BASEPATH}/bazel && \
+  # #     wget -O ${DOCKER_BASEPATH}/bazel/installer.sh ${BAZEL_URL} && \
+  # #     wget -O ${DOCKER_BASEPATH}/bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
+  # #     chmod +x ${DOCKER_BASEPATH}/bazel/installer.sh && \
+  # #     ${DOCKER_BASEPATH}/bazel/installer.sh && \
+  # #     rm -f ${DOCKER_BASEPATH}/bazel/installer.sh
 
-DIR="bazel"
-PROG_DIR="$BASEPATH/$DIR"
 
-if [ -z ${BAZEL_VERSION} ]; then
-  BAZEL_VERSION=1.1.0
-fi
 
-URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${DIR}-${BAZEL_VERSION}-installer-linux-x86_64.sh"
+  source $SCRIPTS_DIR/config.custom.sh
 
-echo "Number of threads will be used: $NUMTHREADS"
-echo "BASEPATH: $BASEPATH"
-echo "URL: $URL"
-echo "PROG_DIR: $PROG_DIR"
+  local DIR="bazel"
+  local PROG_DIR="$BASEPATH/$DIR"
+  mkdir -p ${PROG_DIR}
 
-if [ ! -f ${PROG_DIR}/installer-${BAZEL_VERSION}.sh ]; then
-  wget -O ${PROG_DIR}/installer-${BAZEL_VERSION}.sh ${URL} && \
-  wget -O ${PROG_DIR}/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
-  chmod +x ${PROG_DIR}/installer-${BAZEL_VERSION}.sh && \
-  sudo ${PROG_DIR}/installer-${BAZEL_VERSION}.sh
-else
-  sudo ${PROG_DIR}/installer-${BAZEL_VERSION}.sh
-fi
+  if [ -z ${BAZEL_VERSION} ]; then
+    BAZEL_VERSION=1.1.0
+  fi
 
-# rm -f ${PROG_DIR}/installer.sh
+  local URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${DIR}-${BAZEL_VERSION}-installer-linux-x86_64.sh"
 
-# mkdir $PROG_DIR/build
+  echo "Number of threads will be used: $NUMTHREADS"
+  echo "BASEPATH: $BASEPATH"
+  echo "URL: $URL"
+  echo "PROG_DIR: $PROG_DIR"
 
-# mkdir /bazel && \
-# wget -O /bazel/installer.sh "https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh" && \
-# wget -O /bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
-# chmod +x /bazel/installer.sh && \
-# /bazel/installer.sh && \
-# rm -f /bazel/installer.sh
+  if [ ! -f ${PROG_DIR}/installer-${BAZEL_VERSION}.sh ]; then
+    wget -O ${PROG_DIR}/installer-${BAZEL_VERSION}.sh ${URL} && \
+    wget -O ${PROG_DIR}/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
+    chmod +x ${PROG_DIR}/installer-${BAZEL_VERSION}.sh && \
+    sudo ${PROG_DIR}/installer-${BAZEL_VERSION}.sh
+  else
+    sudo ${PROG_DIR}/installer-${BAZEL_VERSION}.sh
+  fi
+
+}
+
+bazel_install

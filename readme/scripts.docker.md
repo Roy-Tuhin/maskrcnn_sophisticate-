@@ -38,7 +38,7 @@
   * `OTHR_BASE_PATHS=/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat /aimldl-cfg` - for volume mount with the [aimldl repo](https://github.com/mangalbhaskar/aimldl)
 * **Images**
   * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v5-tf1.13.1-20191130_1909`**
-    * `tensorflow-gpu==1.13.1`
+    * `tensorflow-gpu==1.13.1` and `keras==2.2.3`
   * **`9.0-cudnn-7.6.4.38-devel-ubuntu16.04-aidev-v5-tf1.9.0-20191130_1858`**
     * `tensorflow-gpu==1.9.0` and `keras==2.2.2`
     * Ref: https://github.com/matterport/Mask_RCNN/issues/1808
