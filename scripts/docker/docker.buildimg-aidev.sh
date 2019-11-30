@@ -17,27 +17,27 @@
 ## quick image test
 ## docker run --name aidev-3a --gpus all --rm -it mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-3 bash
 
-SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
-
 function build_docker_img_aimldl() {
-  source $SCRIPTS_DIR/docker.env-aidev.sh
+  local SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
+
+  source $SCRIPTS_DIR/docker.env-aidev.sh $1
+
+  ${DOCKER_CMD} --version
 
   local CONTEXT="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/dockerfiles"
 
   echo "CONTEXT: $CONTEXT"
   echo "Building new image with TAG: ${TAG}"
 
+  mkdir -p ${CONTEXT}/config && \
+    mv ${CONTEXT}/config/* $SCRIPTS_DIR/buildinfo/
 
-  rm -rf ${CONTEXT}/config && \
-    mkdir -p ${CONTEXT}/config
-
-  cat > ${CONTEXT}/config/info.txt <<EOL
+  cat > ${CONTEXT}/config/${WHICHONE}-${timestamp}.info <<EOL
 OS=${OS}
 VERSION=${VERSION}
 CUDA_VERSION=${CUDA_VERSION}
 CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}
-nvidia_image_tag=${nvidia_image_tag}
-VERSION=${VERSION}
+NVIDIA_IMAGE_TAG=${NVIDIA_IMAGE_TAG}
 BASE_IMAGE_NAME=${BASE_IMAGE_NAME}
 TAG=${TAG}
 pyVer=${pyVer}
@@ -49,27 +49,34 @@ BAZEL_VERSION=${BAZEL_VERSION}
 WORK_BASE_PATH=${WORK_BASE_PATH}
 OTHR_BASE_PATHS=${OTHR_BASE_PATHS}
 DOCKER_BASEPATH=${DOCKER_BASEPATH}
+DOCKER_SETUP_PATH=${DOCKER_SETUP_PATH}
+WHICHONE=${WHICHONE}
+DOCKERFILE=${DOCKERFILE}
 MAINTAINER=${MAINTAINER}
 EOL
 
-  docker build \
+  ${DOCKER_CMD} build \
     --build-arg "BASE_IMAGE_NAME=${BASE_IMAGE_NAME}" \
     --build-arg "pyVer=${pyVer}" \
     --build-arg "PY_VENV_PATH=${PY_VENV_PATH}" \
     --build-arg "PY_VENV_NAME=${PY_VENV_NAME}" \
     --build-arg "BAZEL_URL=${BAZEL_URL}" \
-    --build-arg "duser=${DUSER}" \
+    --build-arg "DUSER=${DUSER}" \
     --build-arg "CUDA_VERSION=${CUDA_VERSION}" \
     --build-arg "CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}" \
-    --build-arg duser_grp=$(id -gn ${DUSER}) \
-    --build-arg duser_id=$(id -u ${DUSER}) \
-    --build-arg duser_grp_id=$(id -g ${DUSER}) \
+    --build-arg "DUSER_ID=${DUSER_ID}" \
+    --build-arg "DUSER_GRP=${DUSER_GRP}" \
+    --build-arg "DUSER_GRP_ID=${DUSER_GRP_ID}" \
     --build-arg "WORK_BASE_PATH=${WORK_BASE_PATH}" \
     --build-arg "OTHR_BASE_PATHS=${OTHR_BASE_PATHS}" \
     --build-arg "DOCKER_BASEPATH=${DOCKER_BASEPATH}" \
+    --build-arg "DOCKER_SETUP_PATH=${DOCKER_SETUP_PATH}" \
     --build-arg "MAINTAINER=${MAINTAINER}" \
     -t ${TAG} \
     -f ${DOCKERFILE} ${CONTEXT}
+
+  echo -e "Now you can create container:\n source $(pwd)/docker.createcontainer-aidev.sh ${TAG} ${WHICHONE}"
+  echo "Enjoy!"
 }
 
-build_docker_img_aimldl
+build_docker_img_aimldl $1

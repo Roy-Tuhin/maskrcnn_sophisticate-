@@ -9,6 +9,8 @@
 ## https://github.com/moby/moby/issues/29110
 ## https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b
 
+## aidev minimum development docker enviroment with python virtualenv and virtualwrapper
+
 ARG BASE_IMAGE_NAME=${BASE_IMAGE_NAME}
 # FROM nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
 FROM ${BASE_IMAGE_NAME}
@@ -20,26 +22,23 @@ LABEL maintainer "mangalbhaskar <mangalbhaskar@gmail.com>"
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-ARG CUDA_VERSION=${CUDA_VERSION}
-ARG CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}
-
 ARG pyVer
 ARG PYTHON=python${pyVer}
 ARG PIP=pip${pyVer}
 
 ARG PY_VENV_PATH=${PY_VENV_PATH}
 
-ARG duser
-ENV DUSER $duser
+ARG DUSER
+ENV DUSER $DUSER
 
-ARG duser_id
-ENV DUSER_ID $duser_id
+ARG DUSER_ID
+ENV DUSER_ID $DUSER_ID
 
-ARG duser_grp
-ENV DUSER_GRP $duser_grp
+ARG DUSER_GRP
+ENV DUSER_GRP $DUSER_GRP
 
-ARG duser_grp_id
-ENV DUSER_GRP_ID $duser_grp_id
+ARG DUSER_GRP_ID
+ENV DUSER_GRP_ID $DUSER_GRP_ID
 
 ## Needed for string substitution
 SHELL ["/bin/bash", "-c"]
@@ -89,61 +88,34 @@ RUN ${PIP} --no-cache-dir install \
       virtualenv \
       virtualenvwrapper
 
-# RUN /bin/echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user
-# RUN /bin/echo "${DUSER}:${DUSER}" | chpasswd
-
 ## add docker group and user as same as host group and user ids and names
 RUN addgroup --gid ${DUSER_GRP_ID} ${DUSER_GRP} && \
     useradd -ms /bin/bash ${DUSER} --uid ${DUSER_ID} --gid ${DUSER_GRP_ID} && \
+    /bin/echo "${DUSER}:${DUSER}" | chpasswd && \
+    adduser ${DUSER} sudo && \
     /bin/echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user && \
-    adduser ${DUSER} sudo
+    /bin/echo "%sudo ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/user
 
-ARG BASEPATH="/softwares"
-ARG WORK_BASE_PATH="${WORK_BASE_PATH}"
-ARG OTHR_BASE_PATHS="${OTHR_BASE_PATHS}"
+ARG DOCKER_BASEPATH="${DOCKER_BASEPATH}"
+ARG DOCKER_SETUP_PATH="${DOCKER_SETUP_PATH}"
 
-RUN mkdir -p ${PY_VENV_PATH} && \
-    mkdir -p ${BASEPATH} && \
-    mkdir -p ${WORK_BASE_PATH} && \
-    mkdir -p ${OTHR_BASE_PATHS} && \
-    chown -R ${DUSER}:${DUSER} ${WORK_BASE_PATH} && \
-    chown -R ${DUSER}:${DUSER} ${OTHR_BASE_PATHS} && \
-    chmod a+w ${WORK_BASE_PATH} && \
-    chown -R ${DUSER}:${DUSER} ${PY_VENV_PATH} && \
-    chown -R ${DUSER}:${DUSER} ${BASEPATH}
+RUN mkdir -p ${PY_VENV_PATH} \
+      ${DOCKER_BASEPATH} \
+      ${DOCKER_SETUP_PATH}/installer \
+      ${DOCKER_SETUP_PATH}/config
 
-#set main entry point as working directory
-
-WORKDIR ${WORK_BASE_PATH}
-
-# ARG BASH_FILE=/etc/bash.bashrc
+## ARG BASH_FILE=/etc/bash.bashrc
 ARG BASH_FILE=/home/${DUSER}/.bashrc
 
-# Install bazel needs permission of root to update the /usr/local/bin directory
-ARG BAZEL_URL=${BAZEL_URL}
-RUN mkdir -p ${BASEPATH}/bazel && \
-    wget -O ${BASEPATH}/bazel/installer.sh ${BAZEL_URL} && \
-    wget -O ${BASEPATH}/bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
-    chmod +x ${BASEPATH}/bazel/installer.sh && \
-    ${BASEPATH}/bazel/installer.sh && \
-    rm -f ${BASEPATH}/bazel/installer.sh
+COPY ./installer ${DOCKER_SETUP_PATH}/installer
+COPY ./config ${DOCKER_SETUP_PATH}/config
+
+RUN chown -R ${DUSER}:${DUSER} ${PY_VENV_PATH} \
+      ${DOCKER_BASEPATH} \
+      ${DOCKER_SETUP_PATH}
 
 ## Run processes as non-root user
 USER ${DUSER}
-
-COPY ./installer ${BASEPATH}
-COPY ./config ${BASEPATH}
-
-## Tensorflow specific configuration
-## https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/dockerfiles/dockerfiles/devel-gpu-jupyter.Dockerfile
-# Configure the build for our CUDA configuration.
-ENV CI_BUILD_PYTHON ${PYTHON}
-ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64:$LD_LIBRARY_PATH
-ENV TF_NEED_CUDA 1
-ENV TF_NEED_TENSORRT 1
-ENV TF_CUDA_COMPUTE_CAPABILITIES=3.5,5.2,6.0,6.1,7.0
-ENV TF_CUDA_VERSION=${CUDA_VERSION}
-ENV TF_CUDNN_VERSION=${CUDNN_MAJOR_VERSION}
 
 ARG PY_VENV_NAME=${PY_VENV_NAME}
 RUN chmod a+rwx ${BASH_FILE} && \
@@ -156,7 +128,10 @@ RUN chmod a+rwx ${BASH_FILE} && \
     venvline="alias lt='ls -lrth'" && \
     grep -qF "${venvline}" "${BASH_FILE}" || echo "${venvline}" >> "${BASH_FILE}"
 
-## Install python packages inside virtual environment
+## Create python virtual environment
 RUN export WORKON_HOME=${PY_VENV_PATH} && \
     source /usr/local/bin/virtualenvwrapper.sh && \
     mkvirtualenv -p $(which ${PYTHON}) ${PY_VENV_NAME}
+
+## raise to root user so developer can execute userid fixes
+USER root

@@ -29,17 +29,17 @@ ARG PIP=pip${pyVer}
 
 ARG PY_VENV_PATH=${PY_VENV_PATH}
 
-ARG duser
-ENV DUSER $duser
+ARG DUSER
+ENV DUSER $DUSER
 
-ARG duser_id
-ENV DUSER_ID $duser_id
+ARG DUSER_ID
+ENV DUSER_ID $DUSER_ID
 
-ARG duser_grp
-ENV DUSER_GRP $duser_grp
+ARG DUSER_GRP
+ENV DUSER_GRP $DUSER_GRP
 
-ARG duser_grp_id
-ENV DUSER_GRP_ID $duser_grp_id
+ARG DUSER_GRP_ID
+ENV DUSER_GRP_ID $DUSER_GRP_ID
 
 ## Needed for string substitution
 SHELL ["/bin/bash", "-c"]
@@ -89,29 +89,25 @@ RUN ${PIP} --no-cache-dir install \
       virtualenv \
       virtualenvwrapper
 
-# RUN /bin/echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user
-# RUN /bin/echo "${DUSER}:${DUSER}" | chpasswd
-
 ## add docker group and user as same as host group and user ids and names
 RUN addgroup --gid ${DUSER_GRP_ID} ${DUSER_GRP} && \
     useradd -ms /bin/bash ${DUSER} --uid ${DUSER_ID} --gid ${DUSER_GRP_ID} && \
-    /bin/echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user && \
     /bin/echo "${DUSER}:${DUSER}" | chpasswd && \
-    adduser ${DUSER} sudo
+    adduser ${DUSER} sudo && \
+    /bin/echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user && \
+    /bin/echo "%sudo ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/user
 
 ARG DOCKER_BASEPATH="${DOCKER_BASEPATH}"
+ARG DOCKER_SETUP_PATH="${DOCKER_SETUP_PATH}"
 ARG WORK_BASE_PATH="${WORK_BASE_PATH}"
 ARG OTHR_BASE_PATHS="${OTHR_BASE_PATHS}"
 
-RUN mkdir -p ${PY_VENV_PATH} && \
-    mkdir -p ${DOCKER_BASEPATH} && \
-    mkdir -p ${WORK_BASE_PATH} && \
-    mkdir -p ${OTHR_BASE_PATHS} && \
-    chown -R ${DUSER}:${DUSER} ${WORK_BASE_PATH} && \
-    chown -R ${DUSER}:${DUSER} ${OTHR_BASE_PATHS} && \
-    chmod a+w ${WORK_BASE_PATH} && \
-    chown -R ${DUSER}:${DUSER} ${PY_VENV_PATH} && \
-    chown -R ${DUSER}:${DUSER} ${DOCKER_BASEPATH}
+RUN mkdir -p ${PY_VENV_PATH} \
+      ${DOCKER_BASEPATH} \
+      ${DOCKER_SETUP_PATH}/installer \
+      ${DOCKER_SETUP_PATH}/config \
+      ${WORK_BASE_PATH} \
+      ${OTHR_BASE_PATHS}
 
 ## set main entry point as working directory
 WORKDIR ${WORK_BASE_PATH}
@@ -119,11 +115,19 @@ WORKDIR ${WORK_BASE_PATH}
 ## ARG BASH_FILE=/etc/bash.bashrc
 ARG BASH_FILE=/home/${DUSER}/.bashrc
 
-COPY ./installer ${DOCKER_BASEPATH}
-COPY ./config ${DOCKER_BASEPATH}
+COPY ./installer ${DOCKER_SETUP_PATH}/installer
+COPY ./config ${DOCKER_SETUP_PATH}/config
+
+RUN chown -R ${DUSER}:${DUSER} ${OTHR_BASE_PATHS} \
+      ${WORK_BASE_PATH}  \
+      ${PY_VENV_PATH} \
+      ${DOCKER_BASEPATH} \
+      ${DOCKER_SETUP_PATH} && \
+    chmod a+w ${WORK_BASE_PATH} \
+      ${OTHR_BASE_PATHS}
 
 # Install bazel needs permission of root to update the /usr/local/bin directory
-RUN source ${DOCKER_BASEPATH}/lscripts/bazel.installer.sh
+RUN source ${DOCKER_SETUP_PATH}/installer/lscripts/bazel.installer.sh
 
 ## Run processes as non-root user
 USER ${DUSER}
@@ -155,6 +159,9 @@ RUN export WORKON_HOME=${PY_VENV_PATH} && \
     source /usr/local/bin/virtualenvwrapper.sh && \
     mkvirtualenv -p $(which ${PYTHON}) ${PY_VENV_NAME} && \
     workon ${PY_VENV_NAME} && \
-    ${PIP} --no-cache-dir install -r ${DOCKER_BASEPATH}/lscripts/python.requirements.txt && \
-    ${PIP} --no-cache-dir install -r ${DOCKER_BASEPATH}/lscripts/python.requirements-extras.txt && \
-    ${PIP} --no-cache-dir install -r ${DOCKER_BASEPATH}/lscripts/python.requirements-ai.txt
+    ${PIP} --no-cache-dir install -r ${DOCKER_SETUP_PATH}/installer/lscripts/python.requirements.txt && \
+    ${PIP} --no-cache-dir install -r ${DOCKER_SETUP_PATH}/installer/lscripts/python.requirements-extras.txt && \
+    ${PIP} --no-cache-dir install -r ${DOCKER_SETUP_PATH}/installer/lscripts/python.requirements-ai.txt
+
+## raise to root user so developer can execute userid fixes
+USER root
