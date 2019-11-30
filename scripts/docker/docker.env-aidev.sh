@@ -10,12 +10,22 @@ OS="ubuntu18.04"
 CUDA_VERSION=10.0
 CUDNN_VERSION="7.6.4.38"
 CUDNN_MAJOR_VERSION=7
-NVIDIA_IMAGE_TAG=${CUDA_VERSION}-cudnn-${CUDNN_VERSION}-devel-${OS}
+TENSORRT_VERSION=5
+# #
+# OS="ubuntu16.04"
+# CUDA_VERSION=9.0
+# CUDNN_VERSION="7.6.4.38"
+# CUDNN_MAJOR_VERSION=7
+# TENSORRT_VERSION=4
 #
+
+TF_VERSION=1.13.1
+
+NVIDIA_IMAGE_TAG=${CUDA_VERSION}-cudnn-${CUDNN_VERSION}-devel-${OS}
 
 VERSION=5
 WHICHONE="aidev-devel-gpu"
-# WHICHONE="aidevmin-devel-gpu"
+WHICHONE="aidevmin-devel-gpu"
 
 if [ ! -z $1 ]; then
   WHICHONE=$1
@@ -23,7 +33,7 @@ fi
 echo "WHICHONE: ${WHICHONE}"
 
 BASE_IMAGE_NAME="nvidia/cuda:${NVIDIA_IMAGE_TAG}"
-TAG="mangalbhaskar/aimldl:${NVIDIA_IMAGE_TAG}-$(echo ${WHICHONE}|cut -d'-' -f1)-v${VERSION}-${timestamp}"
+TAG="mangalbhaskar/aimldl:${NVIDIA_IMAGE_TAG}-$(echo ${WHICHONE}|cut -d'-' -f1)-v${VERSION}-tf${TF_VERSION}-${timestamp}"
 DOCKERFILE="dockerfiles/${WHICHONE}.Dockerfile"
 DOCKER_IMG=${TAG}
 

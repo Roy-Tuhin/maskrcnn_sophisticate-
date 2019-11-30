@@ -5,7 +5,9 @@ exifread
 statsmodels
 numba
 flake8
+vtk
 seaborn
+Mayavi
 
 annoy
 pyquery

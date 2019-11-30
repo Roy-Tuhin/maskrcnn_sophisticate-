@@ -37,52 +37,19 @@
   * `WORK_BASE_PATH=/codehub` - for volume mount with the [codehub repo](https://github.com/mangalbhaskar/codehub)
   * `OTHR_BASE_PATHS=/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat /aimldl-cfg` - for volume mount with the [aimldl repo](https://github.com/mangalbhaskar/aimldl)
 * **Images**
-  * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-4-20191128_1444`**
-    * no direct root access
-  * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidevmin-v5-20191130_1340`**
-    ```
-    OS=ubuntu18.04
-    VERSION=5
-    CUDA_VERSION=10.0
-    CUDNN_MAJOR_VERSION=7
-    NVIDIA_IMAGE_TAG=10.0-cudnn-7.6.4.38-devel-ubuntu18.04
-    BASE_IMAGE_NAME=nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
-    TAG=mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidevmin-v5-20191130_1442
-    pyVer=3
-    timestamp=20191130_1442
-    PY_VENV_PATH=/virtualmachines/virtualenvs
-    PY_VENV_NAME=py_3_20191130_1442
-    DUSER=baaz
-    BAZEL_VERSION=0.26.1
-    WORK_BASE_PATH=/codehub
-    OTHR_BASE_PATHS=/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat /aimldl-cfg
-    DOCKER_BASEPATH=/external4docker
-    WHICHONE=aidevmin-devel-gpu
-    DOCKERFILE=dockerfiles/aidevmin-devel-gpu.Dockerfile
-    MAINTAINER="mangalbhaskar <mangalbhaskar@gmail.com>"
-    ```
+  * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v5-tf1.13.1-20191130_1909`**
+    * `tensorflow-gpu==1.13.1`
+  * **`9.0-cudnn-7.6.4.38-devel-ubuntu16.04-aidev-v5-tf1.9.0-20191130_1858`**
+    * `tensorflow-gpu==1.9.0` and `keras==2.2.2`
+    * Ref: https://github.com/matterport/Mask_RCNN/issues/1808
+  * **`9.0-cudnn-7.6.4.38-devel-ubuntu16.04-aidevmin-v5-20191130_1819`**
   * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v5-20191130_1606`**
-    ```bash
-    OS=ubuntu18.04
-    VERSION=5
-    CUDA_VERSION=10.0
-    CUDNN_MAJOR_VERSION=7
-    NVIDIA_IMAGE_TAG=10.0-cudnn-7.6.4.38-devel-ubuntu18.04
-    BASE_IMAGE_NAME=nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
-    TAG=mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v5-20191130_1606
-    pyVer=3
-    timestamp=20191130_1606
-    PY_VENV_PATH=/virtualmachines/virtualenvs
-    PY_VENV_NAME=py_3_20191130_1606
-    DUSER=baaz
-    BAZEL_VERSION=0.26.1
-    WORK_BASE_PATH=/codehub
-    OTHR_BASE_PATHS=/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat /aimldl-cfg
-    DOCKER_BASEPATH=/external4docker
-    WHICHONE=aidev-devel-gpu
-    DOCKERFILE=dockerfiles/aidev-devel-gpu.Dockerfile
-    MAINTAINER="mangalbhaskar <mangalbhaskar@gmail.com>"
-    ```
+    * `tensorflow-gpu==2.0.2`
+  * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidevmin-v5-20191130_1340`**
+  * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-4-20191128_1444`**
+    * `tensorflow-gpu==2.0.2`
+    * no direct root access
+
 
 ## Mongo DB
 
@@ -110,16 +77,37 @@
 
 ### 1. **Build Images**
 
-* **aidevmin**
+* **Note**
+  * Adjust the required versions for python related libs according to CUDA version in the ai requriements
+    * `/codehub/scripts/docker/dockerfiles/installer/lscripts/python.requirements-ai.txt`
+    * https://github.com/matterport/Mask_RCNN/issues/1808
+* a) **aidevmin**
   ```bash
   cd /codehub/scripts/docker
   source docker.buildimg-aidev.sh aidevmin-devel-gpu
   ```
-* **aidev**
+* b) **aidev**
   ```bash
   cd /codehub/scripts/docker
   source docker.buildimg-aidev.sh aidev-devel-gpu
   ```
+* c) **nvidia/cuda**
+  * Ensure you should have `cuda` repo cloned: `https://gitlab.com/nvidia/container-images/cuda.git` at path: `/codehub/scripts/docker/dockerfiles/cuda`. This is already avaiable as the submodule to `codehub` repo
+  * Edit the script: `/codehub/scripts/docker/docker.buildimg-cuda.sh` for your requirements
+  * Execute to build cuda/cudnn images
+    ```bash
+    cd /codehub/scripts/docker
+    source docker.buildimg-cuda.sh
+    ```
+  * create aidevmin/aidev from the generated image
+  * Edit the script: `/codehub/scripts/docker/docker.env-aidev.sh`
+    * Update with the same `OS`, `CUDA_VERSION`, and `CUDNN_VERSION` and `CUDNN_MAJOR_VERSION`
+    * Increment the VERSION=5; otherwise previous version would be used; or delete the previous image and use the same version
+      ```bash
+      cd /codehub/scripts/docker
+      source docker.buildimg-aidev.sh aidev-devel-gpu
+      source docker.buildimg-aidev.sh aidevmin-devel-gpu
+      ```
 
 
 ### 2. **Create Containers**
@@ -148,3 +136,8 @@
   ## aidev
   source docker.exec-aidev.sh aidev-devel-gpu-5
   ```
+
+
+## How to report Issues & custom docker image requirements
+
+* Use the git-hub issues on the [aimldl repo here](https://github.com/mangalbhaskar/aimldl/issues) and create the new issue: bug/requirement

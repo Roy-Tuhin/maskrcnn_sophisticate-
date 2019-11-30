@@ -34,18 +34,17 @@ tags: Ubuntu, Linux Scripts, docker
 * Computer Graphics, VFX
 
 
-**Upgraded from my Older repos**
+**Upgraded from my older repos**
 1. [linuxscripts](https://github.com/mangalbhaskar/linuxscripts)
 Linuxscripts repo contains shell scripts and may have the corresponding .md file under technotes giving details and theory on different aspects.
 2. [technotes](https://github.com/mangalbhaskar/technotes)
 Technotes repo contains markdown (.md) files on different technical items and may have the corresponding shell scripts in the linuxscripts repo.
 
 
-
 ## Docker Images
-> work-in-progress
 
-* https://hub.docker.com/r/mangalbhaskar/codehub
+* [hub.docker.com - mangalbhaskar/aimldl](https://hub.docker.com/r/mangalbhaskar/aimldl)
+* [README.scripts.docker.md](readme/README.scripts.docker.md)
 
 
 ## TODO

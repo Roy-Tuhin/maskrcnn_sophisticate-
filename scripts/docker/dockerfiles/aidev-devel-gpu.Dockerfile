@@ -22,6 +22,7 @@ ENV LC_ALL C.UTF-8
 
 ARG CUDA_VERSION=${CUDA_VERSION}
 ARG CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}
+ARG TENSORRT_VERSION=${TENSORRT_VERSION}
 
 ARG pyVer
 ARG PYTHON=python${pyVer}
@@ -67,7 +68,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       grep \
       vim \
       sudo \
-      libnvinfer5 \
+      libnvinfer${TENSORRT_VERSION} \
       libnvinfer-dev \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*

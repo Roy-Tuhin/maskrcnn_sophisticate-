@@ -64,6 +64,7 @@ EOL
     --build-arg "DUSER=${DUSER}" \
     --build-arg "CUDA_VERSION=${CUDA_VERSION}" \
     --build-arg "CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}" \
+    --build-arg "TENSORRT_VERSION=${TENSORRT_VERSION}" \
     --build-arg "DUSER_ID=${DUSER_ID}" \
     --build-arg "DUSER_GRP=${DUSER_GRP}" \
     --build-arg "DUSER_GRP_ID=${DUSER_GRP_ID}" \

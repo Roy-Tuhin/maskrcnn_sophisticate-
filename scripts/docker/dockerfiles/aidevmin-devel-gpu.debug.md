@@ -54,3 +54,61 @@ ERROR: locustio 0.13.2 has requirement gevent==1.5a2, but you'll have gevent 1.4
   Running setup.py clean for Mayavi
   Building wheel for annoy (setup.py): started
   Building wheel for annoy (setup.py): finis
+
+
+## CUDA9.0 with tensorflow-1.13.1
+
+@baaz:18:42:01:docker$source /codehub/scripts/docker/docker.createcontainer-aidev.sh mangalbhaskar/aimldl:9.0-cudnn-7.6.4.38-devel-ubuntu16.04-aidev-v5-20191130_1838 aidev-devel-gpu
+
+  @baaz:17:58:07:readme$locate libcublas
+/usr/local/cuda-10.0/doc/man/man7/libcublas.7
+/usr/local/cuda-10.0/doc/man/man7/libcublas.so.7
+/usr/local/cuda-10.0/targets/x86_64-linux/lib/libcublas.so
+/usr/local/cuda-10.0/targets/x86_64-linux/lib/libcublas.so.10.0
+/usr/local/cuda-10.0/targets/x86_64-linux/lib/libcublas.so.10.0.130
+/usr/local/cuda-10.0/targets/x86_64-linux/lib/libcublas_static.a
+/usr/local/cuda-10.0/targets/x86_64-linux/lib/stubs/libcublas.so
+
+
+>>> import tensorflow as tf
+Traceback (most recent call last):
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/site-packages/tensorflow/python/pywrap_tensorflow.py", line 58, in <module>
+    from tensorflow.python.pywrap_tensorflow_internal import *
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/site-packages/tensorflow/python/pywrap_tensorflow_internal.py", line 28, in <module>
+    _pywrap_tensorflow_internal = swig_import_helper()
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/site-packages/tensorflow/python/pywrap_tensorflow_internal.py", line 24, in swig_import_helper
+    _mod = imp.load_module('_pywrap_tensorflow_internal', fp, pathname, description)
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/imp.py", line 242, in load_module
+    return load_dynamic(name, filename, file)
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/imp.py", line 342, in load_dynamic
+    return _load(spec)
+ImportError: libcublas.so.10.0: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/site-packages/tensorflow/__init__.py", line 24, in <module>
+    from tensorflow.python import pywrap_tensorflow  # pylint: disable=unused-import
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/site-packages/tensorflow/python/__init__.py", line 49, in <module>
+    from tensorflow.python import pywrap_tensorflow
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/site-packages/tensorflow/python/pywrap_tensorflow.py", line 74, in <module>
+    raise ImportError(msg)
+ImportError: Traceback (most recent call last):
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/site-packages/tensorflow/python/pywrap_tensorflow.py", line 58, in <module>
+    from tensorflow.python.pywrap_tensorflow_internal import *
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/site-packages/tensorflow/python/pywrap_tensorflow_internal.py", line 28, in <module>
+    _pywrap_tensorflow_internal = swig_import_helper()
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/site-packages/tensorflow/python/pywrap_tensorflow_internal.py", line 24, in swig_import_helper
+    _mod = imp.load_module('_pywrap_tensorflow_internal', fp, pathname, description)
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/imp.py", line 242, in load_module
+    return load_dynamic(name, filename, file)
+  File "/virtualmachines/virtualenvs/py_3_20191130_1838/lib/python3.5/imp.py", line 342, in load_dynamic
+    return _load(spec)
+ImportError: libcublas.so.10.0: cannot open shared object file: No such file or directory
+
+
+Failed to load the native TensorFlow runtime.
+
+See https://www.tensorflow.org/install/errors
+
