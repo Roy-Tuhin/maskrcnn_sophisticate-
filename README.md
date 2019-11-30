@@ -42,14 +42,13 @@ tags: Ubuntu, Linux Scripts, docker
 
 ## README
 
-* [README - scripts.lscripts](readme/scripts.lscripts.md)
-* [README - scripts.docker](readme/scripts.docker.md)
-* [README - submodules](readme/submodules.md)
-* [README - external](readme/external.md)
+* [scripts.lscripts](readme/scripts.lscripts.md)
+* [scripts.docker](readme/scripts.docker.md)
+* [submodules](readme/submodules.md)
+* [external](readme/external.md)
 
 
-## TODO
-
+**TODO**
 * [README - todo](readme/todo.md)
 
 
