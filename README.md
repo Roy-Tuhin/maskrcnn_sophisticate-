@@ -35,6 +35,15 @@ tags: Ubuntu, Linux Scripts, docker
 * Computer Graphics, VFX
 
 
+## Setup
+
+
+* Installer script: run the following command on command prompt
+  ```bash
+  wget -O - https://raw.githubusercontent.com/mangalbhaskar/codehub/master/scripts/codehub.init.sh | bash
+
+  ```
+
 ## Docker Images
 
 * [hub.docker.com - mangalbhaskar/aimldl](https://hub.docker.com/r/mangalbhaskar/aimldl)

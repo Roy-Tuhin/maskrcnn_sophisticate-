@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# sudo apt update
-# sudo apt install -y git
-#
+sudo apt update
+sudo apt install -y git
+
 sudo mkdir -p /codehub
 sudo chown -R $(id -un):$(id -gn) /codehub
 #
