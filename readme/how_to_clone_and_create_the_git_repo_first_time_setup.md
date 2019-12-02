@@ -3,7 +3,7 @@
 
 * Code hub installer script: run the following command on command prompt
   ```bash
-  wget -O - https://github.com/mangalbhaskar/codehub/blob/master/scripts/codehub.init.sh | bash
+  wget -O - https://raw.githubusercontent.com/mangalbhaskar/codehub/master/scripts/codehub.init.sh | bash
   ```
 * `codehub.init.sh` execcutes following instructions:
   ```bash
