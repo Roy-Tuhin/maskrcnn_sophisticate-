@@ -12,6 +12,10 @@
 NVIDIA_DRIVER_VER='387.22'
 NVIDIA_DRIVER_VER='390.42'
 
+## default value for Ubuntu-18.04 LTS, CUDA 10 and tf 1.14 works with this version
+## driver version 430  is not avaiable in apt repo by default, if required install it separately
+NVIDIA_DRIVER_VER='390'
+
 ## CUDA
 ## CUDA 9.0 has better support and release cycle compared to 9.1
 CUDA_VER="9.0"
@@ -33,13 +37,20 @@ CUDA_URL="http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86
 # CUDA_OS_REL="1710"
 # CUDA_PCKG="cuda-repo-ubuntu$CUDA_OS_REL-$CUDA_REL-local_CUDA_VER.148-1_amd64.deb"
 # CUDA_URL="http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/$CUDA_PCKG"
+# CUDA_REPO_KEY="9-1-local"
 
 CUDA_VER="10.0"
 CUDA_REL="10-0" # echo $CUDA_VER | tr . -
 CUDA_OS_REL="1804"
 # CUDA_PCKG="cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb"
 CUDA_PCKG="cuda-repo-ubuntu$CUDA_OS_REL-$CUDA_REL-local_$CUDA_VER.176-1_amd64.deb"
-CUDA_PCKG="cuda-repo-ubuntu1804-10-0-local-10.0.130-410.48_1.0-1_amd64.deb"
+#CUDA_PCKG="cuda-repo-ubuntu1804-10-0-local-10.0.130-410.48_1.0-1_amd64.deb"
+CUDA_PCKG="cuda-repo-ubuntu$CUDA_OS_REL-$CUDA_REL-local-$CUDA_VER.130-410.48_1.0-1_amd64.deb"
+#echo $CUDA_PCKG
+# CUDA_REPO_KEY="10-0-local-10.0.130-410.48"
+CUDA_REPO_KEY="$CUDA_REL-local-$CUDA_VER.130-410.48"
+#echo $CUDA_REPO_KEY
+
 # CUDA_PCKG="cuda_10.0.130_410.48_linux.run"
 # CUDA_URL="https://developer.download.nvidia.com/compute/cuda/10.0/secure/Prod/local_installers/cuda_10.0.130_410.48_linux.run"
 CUDA_URL="https://developer.download.nvidia.com/compute/cuda/10.0/secure/Prod/local_installers/$CUDA_PCKG"
@@ -142,9 +153,3 @@ OpenCV_VER_CHECKOUT="3.4.2"
 HAROOPAD_VER="0.13.1"
 #
 MAGMA_VER="2.5.0-rc1"
-
-## for tensorflow till 1.15 release
-_TF_MIN_BAZEL_VERSION='0.24.1'
-_TF_MAX_BAZEL_VERSION='0.26.1'
-BAZEL_VERSION=1.1.0
-BAZEL_VERSION=${_TF_MAX_BAZEL_VERSION}

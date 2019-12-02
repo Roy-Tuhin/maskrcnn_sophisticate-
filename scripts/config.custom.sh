@@ -41,7 +41,11 @@ WSGIPYTHONHOME=""
 
 ANDROID_HOME="${CHUB_HOME}/android/sdk"
 
-CVSROOT=":pserver:bhaskar@10.4.71.121:2401/data/CVS_REPO"
+## change CVSUSER to appropriate value, be default uses system user
+CVSUSER=$(whoami)
+CVSSERVER="10.4.71.121"
+CVSPORT="2401"
+CVSROOT=":pserver:${CVSUSER}@${CVSSERVER}:${CVSPORT}/data/CVS_REPO"
 
 LINUX_VERSION="$(lsb_release -sr)"
 LINUX_CODE_NAME=$(lsb_release -sc)
