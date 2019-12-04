@@ -2,10 +2,9 @@
 
 ## TODO: Instead of echo to .bashrc, echo it in this file
 
-SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
-
-source ${SCRIPTS_DIR}/export.sh
-source ${SCRIPTS_DIR}/ps1.sh
+source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/export.sh
+# source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/PS1.sh
+source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/ps1.sh
 
 ## commands
 alias lt='ls -lrth'
@@ -24,11 +23,13 @@ alias chublogs="cd ${CHUB_LOGS}"
 
 ## util scripts
 alias androidstudio="bash ${CHUB_HOME}/tools/android-studio/bin/studio.sh"
-### CVS
+
+# ### CVS
 alias cvstt='cvs status 2>/dev/null | grep ^File | grep -v Up-to'
-NPM_PACKAGES=/codehub/.npm-packages
-PATH=/home/baaz/.npm-packages/bin:/usr/local/cuda/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/lib/jvm/java-8-openjdk-amd64/bin:/codehub/android/sdk/tools:/codehub/android/sdk/platform-tools:/home/baaz/softwares/blender:/home/baaz/softwares/meshlab/src/distrib
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-NPM_PACKAGES=/codehub/.npm-packages
-PATH=/codehub/.npm-packages/bin:/home/baaz/.npm-packages/bin:/usr/local/cuda/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/lib/jvm/java-8-openjdk-amd64/bin:/codehub/android/sdk/tools:/codehub/android/sdk/platform-tools:/home/baaz/softwares/blender:/home/baaz/softwares/meshlab/src/distrib
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+
+# NPM_PACKAGES=/codehub/.npm-packages
+# PATH=/home/baaz/.npm-packages/bin:/usr/local/cuda/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/lib/jvm/java-8-openjdk-amd64/bin:/codehub/android/sdk/tools:/codehub/android/sdk/platform-tools:/home/baaz/softwares/blender:/home/baaz/softwares/meshlab/src/distrib
+# export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+# NPM_PACKAGES=/codehub/.npm-packages
+# PATH=/codehub/.npm-packages/bin:/home/baaz/.npm-packages/bin:/usr/local/cuda/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/lib/jvm/java-8-openjdk-amd64/bin:/codehub/android/sdk/tools:/codehub/android/sdk/platform-tools:/home/baaz/softwares/blender:/home/baaz/softwares/meshlab/src/distrib
+# export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"

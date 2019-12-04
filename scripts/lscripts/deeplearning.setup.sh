@@ -244,7 +244,13 @@ cd tensorflow-1.7.0
 # What is OpenCL SYCL?
 ## https://www.khronos.org/sycl
 ## https://stackoverflow.com/questions/41831214/what-is-sycl-1-2
-# https://www.codeplay.com/portal/03-30-17-setting-up-tensorflow-with-opencl-using-sycl
+## https://www.codeplay.com/portal/03-30-17-setting-up-tensorflow-with-opencl-using-sycl
+## https://developer.codeplay.com/products/computecpp/ce/guides/tensorflow-guide/tensorflow-generic-setup?
+
+# SYCL is a C++ abstraction layer for OpenCL. TensorFlow's experimental support for OpenCL uses SYCL, in conjunction with a SYCL-aware C++ compiler.
+
+# As Yaroslav pointed out in his comment, SYCL is only required if you are building TensorFlow with OpenCL support. The following question during the execution of ./configure asks about OpenCL support:
+
 
 ## version checks
 ## cuDNN
