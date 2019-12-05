@@ -18,6 +18,38 @@ USER_BASHRC_FILE="${HOME}/.bashrc"
 CHUB_DIR="codehub"
 CHUB_HOME=/${CHUB_DIR}
 
+declare -a CODEHUB_DIRS=(
+  "android"
+  "apps"
+  "apps/www"
+  "auth"
+  "data"
+  "data/database"
+  "data/files"
+  "data/samples"
+  "downloads"
+  "external"
+  "external4docker"
+  "logs"
+  "logs/www"
+  "logs/www/uploads"
+  "practice"
+  "readme"
+  "samples"
+  "scripts"
+  "_site"
+  "tests"
+  "tools"
+  "cfg"
+  "tmp"
+  "workspaces"
+)
+
+declare -a CH_PY_ENVVARS=(
+  'CHUB_APP'
+  'CHUB_HOME_EXT'
+)
+
 # BASEDIR="softwares"
 # BASEPATH="${HOME}/${BASEDIR}"
 

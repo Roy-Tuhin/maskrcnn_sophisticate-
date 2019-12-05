@@ -79,37 +79,8 @@ function codehub_main() {
 
     ### -------
 
-    declare -a codehub_dirs=(
-      "android"
-      "apps"
-      "apps/www"
-      "auth"
-      "data"
-      "data/database"
-      "data/files"
-      "data/samples"
-      "downloads"
-      "external"
-      "external4docker"
-      "logs"
-      "logs/www"
-      "logs/www/uploads"
-      "practice"
-      "readme"
-      "samples"
-      "scripts"
-      "_site"
-      "tests"
-      "tools"
-      "cfg"
-      "tmp"
-      "workspaces"
-    )
-
-    declare -a ch_py_envvars=(
-      'CHUB_APP'
-      'CHUB_HOME_EXT'
-    )
+    declare -a codehub_dirs=(${CODEHUB_DIRS[@]})
+    declare -a ch_py_envvars=(${CH_PY_ENVVARS[@]})
 
     ## CAUTIOUS:
     ## Ensure that environment variable exports should not have the user name printed in the export script

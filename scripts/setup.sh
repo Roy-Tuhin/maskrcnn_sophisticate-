@@ -9,8 +9,10 @@
 
 function create_setup() {
   local SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
-  source ${SCRIPTS_DIR}/aimldl.setup.sh
+
+  ## codehub created the top level directories for the code including the config
   source ${SCRIPTS_DIR}/codehub.setup.sh
+  source ${SCRIPTS_DIR}/aimldl.setup.sh
 }
 
 create_setup

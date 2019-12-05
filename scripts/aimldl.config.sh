@@ -13,12 +13,12 @@ AI_PY_VENV_PATH="/${AI_VM_BASE}/virtualenvs"
 
 ## AI Top Level Directories
 AI_CODE_BASE_PATH="/codehub"
-AI_CFG_BASE_PATH="/${ai_prefix}-cfg"
-AI_DATA_BASE_PATH="/${ai_prefix}-dat"
-AI_MOUNT_BASE_PATH="/${ai_prefix}-mnt"
-AI_DOC_BASE_PATH="/${ai_prefix}-doc"
-AI_RPT_BASE_PATH="/${ai_prefix}-rpt"
-AI_KBANK_BASE_PATH="/${ai_prefix}-kbank"
+AI_CFG_BASE_PATH="/${AI_DIR_PREFIX}-cfg"
+AI_DATA_BASE_PATH="/${AI_DIR_PREFIX}-dat"
+AI_MOUNT_BASE_PATH="/${AI_DIR_PREFIX}-mnt"
+AI_DOC_BASE_PATH="/${AI_DIR_PREFIX}-doc"
+AI_RPT_BASE_PATH="/${AI_DIR_PREFIX}-rpt"
+AI_KBANK_BASE_PATH="/${AI_DIR_PREFIX}-kbank"
 
 declare -a AI_CFG_DIRS=(
   "model"

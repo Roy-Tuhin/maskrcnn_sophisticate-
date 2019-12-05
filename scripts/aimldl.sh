@@ -100,13 +100,13 @@ function aimldl_main() {
     local ai_kbank_base_path=${AI_KBANK_BASE_PATH}
     ### -------
 
-    declare -a ai_remote_machine_ids=${AI_REMOTE_MACHINE_IDS[@]}
+    declare -a ai_remote_machine_ids=(${AI_REMOTE_MACHINE_IDS[@]})
 
-    declare -a ai_cfg_dirs=${AI_CFG_DIRS[@]}
+    declare -a ai_cfg_dirs=(${AI_CFG_DIRS[@]})
 
-    declare -a ai_data_dirs=${AI_DATA_DIRS[@]}
+    declare -a ai_data_dirs=(${AI_DATA_DIRS[@]})
 
-    declare -a ai_py_envvars=${AI_PY_ENVVARS[@]}
+    declare -a ai_py_envvars=(${AI_PY_ENVVARS[@]})
 
     ## CAUTIOUS:
     ## Ensure that environment variable exports should not have the user name printed in the export script
@@ -269,11 +269,14 @@ function aimldl_main() {
         sudo chown -R $(id -un):$(id -gn) ${cfg_dir_path}
       fi
     done
+
+    __copy_config_files__
   }
 
 
   function __copy_config_files__() {
     debug "__copy_config_files__:============================"
+    debug ${AI_ENVVARS['AI_CFG']}
 
     rsync -r ${SCRIPTS_DIR}/config/* ${AI_ENVVARS['AI_CFG']}
     ls -ltr ${AI_ENVVARS['AI_CFG']}
