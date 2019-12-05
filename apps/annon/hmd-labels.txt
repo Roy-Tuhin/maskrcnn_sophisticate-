@@ -1,0 +1,1 @@
+cctv_camera,footpath_polygon,loose_material,traffic_sign,traffic_sign_frame,lane_marking,road_polygon,pole,reflector,roadside_spot_light,signage,street_light,traffic_light,barricade,billboard,garbage_can,roadside_junction_box,transformer,crosswalk,speed_breaker,booth,flyover_pillar,pothole,garbage_pile,lane_arrow_marking,traffic_pole
