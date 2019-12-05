@@ -6,6 +6,10 @@ todo
 * complete image with the fixes for aidev
 * push image to the docker hub
 
+* debug tensorflow compilation - docker image issue due `*.h` file missing
+* delete docker hub repo, recreate it with fixed image with proper versions
+* compile optimization tools
+
 
 
 AIMLDL_ENV=production ##development
@@ -41,3 +45,42 @@ $ docker login --username=yourhubusername --email=youremail@company.com
 Mask_RCNN
 * keras: 2.2.2, tensorflow: 1.9.0, CUDA-9.0
 * keras: 2.2.3 to 2.3.5, tensorflow: 1.131.1, CUDA-10
+
+
+## Bugs
+
+* Fix the tensorRT version in Docker file wrt to specific CUDA, cuDNN version. Currently, latest tensorRT also gets installed
+  ```
+  libnvinfer5:
+    Installed: 5.1.5-1+cuda10.1
+    Candidate: 5.1.5-1+cuda10.1
+    Version table:
+   *** 5.1.5-1+cuda10.1 500
+          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+          100 /var/lib/dpkg/status
+       5.1.5-1+cuda10.0 500
+          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+       5.1.2-1+cuda10.1 500
+          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+       5.1.2-1+cuda10.0 500
+          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+  (py_3_20191130_1909) @baaz@codehub-docker:16:25:26:tensorflow$apt-cache policy libnvinfer*
+  libnvinfer-dev:
+    Installed: (none)
+    Candidate: 6.0.1-1+cuda10.2
+    Version table:
+       6.0.1-1+cuda10.2 500
+          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+       6.0.1-1+cuda10.1 500
+          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+       6.0.1-1+cuda10.0 500
+          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+       5.1.5-1+cuda10.1 500
+          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+       5.1.5-1+cuda10.0 500
+          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+       5.1.2-1+cuda10.1 500
+          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+       5.1.2-1+cuda10.0 500
+          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+  ```

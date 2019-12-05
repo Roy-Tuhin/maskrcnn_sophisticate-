@@ -1,0 +1,347 @@
+{
+  "api": "None",
+  "type": "matterport-coco_things-1",
+  "result": {
+    "100818_135946_16718_zed_l_057.jpg": {
+      "file_attributes": {
+        "height": 1080,
+        "uuid": "b1408b98-2203-42c0-8c12-7bc64e433cc7",
+        "width": 1920
+      },
+      "filename": "100818_135946_16718_zed_l_057.jpg",
+      "regions": [
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.25,
+              1.0
+            ],
+            "label": "bicycle",
+            "score": 0.9995211362838745
+          },
+          "shape_attributes": {
+            "height": 332,
+            "name": "rect",
+            "width": 108,
+            "x": 335,
+            "y": 426
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.25,
+              1.0
+            ],
+            "label": "bicycle",
+            "score": 0.9995040893554688
+          },
+          "shape_attributes": {
+            "height": 217,
+            "name": "rect",
+            "width": 78,
+            "x": 850,
+            "y": 443
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.8000000000000007,
+              0.0,
+              1.0
+            ],
+            "label": "motorcycle",
+            "score": 0.9943127632141113
+          },
+          "shape_attributes": {
+            "height": 80,
+            "name": "rect",
+            "width": 49,
+            "x": 1468,
+            "y": 399
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.25,
+              1.0
+            ],
+            "label": "bicycle",
+            "score": 0.9937911629676819
+          },
+          "shape_attributes": {
+            "height": 116,
+            "name": "rect",
+            "width": 38,
+            "x": 951,
+            "y": 425
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.25,
+              1.0
+            ],
+            "label": "bicycle",
+            "score": 0.9937360286712646
+          },
+          "shape_attributes": {
+            "height": 374,
+            "name": "rect",
+            "width": 141,
+            "x": 107,
+            "y": 449
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.25,
+              1.0
+            ],
+            "label": "bicycle",
+            "score": 0.9918394088745117
+          },
+          "shape_attributes": {
+            "height": 38,
+            "name": "rect",
+            "width": 32,
+            "x": 444,
+            "y": 442
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.25,
+              1.0
+            ],
+            "label": "bicycle",
+            "score": 0.9888169765472412
+          },
+          "shape_attributes": {
+            "height": 189,
+            "name": "rect",
+            "width": 119,
+            "x": 493,
+            "y": 403
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.25,
+              1.0
+            ],
+            "label": "bicycle",
+            "score": 0.9818158149719238
+          },
+          "shape_attributes": {
+            "height": 74,
+            "name": "rect",
+            "width": 29,
+            "x": 844,
+            "y": 436
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.8000000000000007,
+              0.0,
+              1.0
+            ],
+            "label": "motorcycle",
+            "score": 0.9809485673904419
+          },
+          "shape_attributes": {
+            "height": 116,
+            "name": "rect",
+            "width": 144,
+            "x": 1096,
+            "y": 424
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.25,
+              1.0
+            ],
+            "label": "bicycle",
+            "score": 0.980884313583374
+          },
+          "shape_attributes": {
+            "height": 90,
+            "name": "rect",
+            "width": 49,
+            "x": 981,
+            "y": 435
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.25,
+              1.0
+            ],
+            "label": "bicycle",
+            "score": 0.9721854329109192
+          },
+          "shape_attributes": {
+            "height": 98,
+            "name": "rect",
+            "width": 33,
+            "x": 913,
+            "y": 431
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.8000000000000007,
+              0.0,
+              1.0
+            ],
+            "label": "motorcycle",
+            "score": 0.9643710851669312
+          },
+          "shape_attributes": {
+            "height": 44,
+            "name": "rect",
+            "width": 56,
+            "x": 1438,
+            "y": 383
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.25,
+              1.0
+            ],
+            "label": "bicycle",
+            "score": 0.9607762694358826
+          },
+          "shape_attributes": {
+            "height": 122,
+            "name": "rect",
+            "width": 71,
+            "x": 604,
+            "y": 426
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.1999999999999993,
+              0.0,
+              1.0
+            ],
+            "label": "fire hydrant",
+            "score": 0.9486260414123535
+          },
+          "shape_attributes": {
+            "height": 131,
+            "name": "rect",
+            "width": 40,
+            "x": 853,
+            "y": 151
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.25,
+              1.0
+            ],
+            "label": "bicycle",
+            "score": 0.9449499249458313
+          },
+          "shape_attributes": {
+            "height": 48,
+            "name": "rect",
+            "width": 24,
+            "x": 899,
+            "y": 433
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.5500000000000003,
+              1.0
+            ],
+            "label": "boat",
+            "score": 0.9330564141273499
+          },
+          "shape_attributes": {
+            "height": 359,
+            "name": "rect",
+            "width": 359,
+            "x": 1531,
+            "y": 256
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              0.5500000000000003,
+              1.0
+            ],
+            "label": "boat",
+            "score": 0.9281876087188721
+          },
+          "shape_attributes": {
+            "height": 162,
+            "name": "rect",
+            "width": 302,
+            "x": 950,
+            "y": 325
+          }
+        },
+        {
+          "region_attributes": {
+            "color": [
+              0.0,
+              1.0,
+              0.5499999999999998
+            ],
+            "label": "airplane",
+            "score": 0.9267661571502686
+          },
+          "shape_attributes": {
+            "height": 65,
+            "name": "rect",
+            "width": 40,
+            "x": 995,
+            "y": 474
+          }
+        }
+      ],
+      "size": 0
+    }
+  },
+  "status_code": 200,
+  "timings": {
+    "image_read": 0.1298222541809082,
+    "res_parsing": 0.0003821849822998047,
+    "tt_detect": 1.4604971408843994
+  }
+}

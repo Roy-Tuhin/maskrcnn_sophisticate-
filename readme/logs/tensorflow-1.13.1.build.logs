@@ -1,0 +1,237 @@
+
+## Configurations
+
+(py_3_20191130_1909) @baaz@codehub-docker:16:40:02:tensorflow$./configure 
+WARNING: --batch mode is deprecated. Please instead explicitly shut down your Bazel server using the command "bazel shutdown".
+INFO: Invocation ID: 14e78197-22ca-4ead-95f3-4314cee85385
+You have bazel 0.21.0 installed.
+Please specify the location of python. [Default is /virtualmachines/virtualenvs/py_3_20191130_1909/bin/python]: 
+
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+AttributeError: module 'site' has no attribute 'getsitepackages'
+Found possible Python library paths:
+  /virtualmachines/virtualenvs/py_3_20191130_1909/lib/python3.6/site-packages
+Please input the desired Python library path to use.  Default is [/virtualmachines/virtualenvs/py_3_20191130_1909/lib/python3.6/site-packages]
+
+Do you wish to build TensorFlow with XLA JIT support? [Y/n]: 
+XLA JIT support will be enabled for TensorFlow.
+
+Do you wish to build TensorFlow with OpenCL SYCL support? [y/N]: 
+No OpenCL SYCL support will be enabled for TensorFlow.
+
+Do you wish to build TensorFlow with ROCm support? [y/N]: 
+No ROCm support will be enabled for TensorFlow.
+
+Please specify the location where CUDA 10.0 toolkit is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: 
+
+
+Please specify the location where cuDNN 7 library is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: 
+
+
+Please specify the location where TensorRT is installed. [Default is /usr/lib/x86_64-linux-gnu]:
+
+
+Please specify the locally installed NCCL version you want to use. [Default is to use https://github.com/nvidia/nccl]: 
+
+
+Do you want to use clang as CUDA compiler? [y/N]: 
+nvcc will be used as CUDA compiler.
+
+Please specify which gcc should be used by nvcc as the host compiler. [Default is /usr/bin/gcc]: 
+
+
+Do you wish to build TensorFlow with MPI support? [y/N]: 
+No MPI support will be enabled for TensorFlow.
+
+Please specify optimization flags to use during compilation when bazel option "--config=opt" is specified [Default is -march=native -Wno-sign-compare]: 
+
+
+Would you like to interactively configure ./WORKSPACE for Android builds? [y/N]: y
+Searching for NDK and SDK installations.
+
+Please specify the home path of the Android NDK to use. [Default is /home/baaz/Android/Sdk/ndk-bundle]: /codehub/android/sdk/ndk/20.1.5948944/
+
+
+WARNING: The API level of the NDK in /codehub/android/sdk/ndk/20.1.5948944/ is 20, which is not supported by Bazel (officially supported versions: [10, 11, 12, 13, 14, 15, 16, 17, 18]). Please use another version. Compiling Android targets may result in confusing errors.
+
+Please specify the home path of the Android SDK to use. [Default is /home/baaz/Android/Sdk]: /codehub/android/sdk
+
+
+Please specify the Android SDK API level to use. [Available levels: ['22', '23', '25', '27', '28', '29']] [Default is 29]: 
+
+
+Please specify an Android build tools version to use. [Available versions: ['28.0.3', '29.0.0', '29.0.2']] [Default is 29.0.2]: 
+
+
+Preconfigured Bazel build configs. You can use any of the below by adding "--config=<>" to your build command. See .bazelrc for more details.
+  --config=mkl          # Build with MKL support.
+  --config=monolithic   # Config for mostly static monolithic build.
+  --config=gdr          # Build with GDR support.
+  --config=verbs        # Build with libverbs support.
+  --config=ngraph       # Build with Intel nGraph support.
+  --config=dynamic_kernels  # (Experimental) Build kernels into separate shared objects.
+Preconfigured Bazel build configs to DISABLE default on features:
+  --config=noaws        # Disable AWS S3 filesystem support.
+  --config=nogcp        # Disable GCP support.
+  --config=nohdfs       # Disable HDFS support.
+  --config=noignite     # Disable Apacha Ignite support.
+  --config=nokafka      # Disable Apache Kafka support.
+  --config=nonccl       # Disable NVIDIA NCCL support.
+Configuration finished
+
+
+## Build
+
+### tf-docker
+
+https://github.com/tensorflow/tensorflow/issues/10289
+https://github.com/bazelbuild/bazel/issues/6648
+
+bazel build --config=opt --config=cuda --action_env PATH="$PATH"  --incompatible_strict_action_env=false //tensorflow/tools/pip_package:build_pip_package
+
+WARNING: /tensorflow_src/tensorflow/contrib/BUILD:13:1: in py_library rule //tensorflow/contrib:contrib_py: target '//tensorflow/contrib:contrib_py' depends on deprecated target '//tensorflow/contrib/distributions:distributions_py': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.contrib.distributions are unmaintained, unsupported, and will be removed by late 2018. You should update all usage of `tf.contrib.distributions` to `tfp.distributions`.
+INFO: Analysed target //tensorflow/tools/pip_package:build_pip_package (364 packages loaded, 23676 targets configured).
+INFO: Found 1 target...
+ERROR: /root/.cache/bazel/_bazel_root/43801f1e35f242fb634ebbc6079cf6c5/external/farmhash_archive/BUILD.bazel:12:1: C++ compilation of rule '@farmhash_archive//:farmhash' failed (Exit 127)
+/usr/bin/env: 'python': No such file or directory
+Target //tensorflow/tools/pip_package:build_pip_package failed to build
+Use --verbose_failures to see the command lines of failed build steps.
+INFO: Elapsed time: 31.448s, Critical Path: 0.08s
+INFO: 0 processes.
+FAILED: Build did NOT complete successfully
+root@codehub-docker:/tensorflow_src# python
+python             python3            python3-config     python3.6          python3.6-config   python3.6m         python3.6m-config  python3m           python3m-config
+root@codehub-docker:/tensorflow_src# which python
+/usr/local/bin/python
+
+
+echo $PATH
+/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+echo $LD_LIBRARY_PATH 
+/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64
+
+
+root@codehub-docker:/tensorflow_src# echo $
+Display all 150 possibilities? (y or n)
+$ANDROID_HOME                  $COLUMNS                       $GRP_ID                        $LINUX_ID                      $PDAL_VER                      $USER_ID
+$BASEDIR                       $COMP_WORDBREAKS               $HAROOPAD_VER                  $LINUX_SCRIPT_BASE             $PHP_VER                       $USR
+$BASEPATH                      $CUDA_OS_REL                   $HISTCMD                       $LINUX_SCRIPT_HOME             $PIPESTATUS                    $VM_BASE
+$BASH                          $CUDA_PCKG                     $HISTCONTROL                   $LINUX_VERSION                 $PPID                          $VM_HOME
+$BASHOPTS                      $CUDA_PKG_VERSION              $HISTFILE                      $LOCAL_HOST                    $PROJ_VER                      $VTK_BUILD
+$BASHPID                       $CUDA_REL                      $HISTFILESIZE                  $LS_COLORS                     $PS1                           $VTK_RELEASE
+$BASHRC_FILE                   $CUDA_REPO_KEY                 $HISTSIZE                      $MACHINE_ARCH                  $PS2                           $VTK_VER
+$BASH_ALIASES                  $CUDA_URL                      $HOME                          $MACHTYPE                      $PS4                           $WSGIPYTHONHOME
+$BASH_ARGC                     $CUDA_VER                      $HOSTNAME                      $MAGMA_VER                     $PWD                           $WSGIPYTHONPATH
+$BASH_ARGV                     $CUDA_VERSION                  $HOSTTYPE                      $MAILCHECK                     $PY_VENV_PATH                  $_
+$BASH_CMDS                     $CVSPORT                       $HOST_PERMS                    $MPIR_REL_TAG                  $RANDOM                        $_TF_MAX_BAZEL_VERSION
+$BASH_COMMAND                  $CVSROOT                       $HUSER                         $NODEJS_VER                    $SCRIPTS_DIR                   $_TF_MIN_BAZEL_VERSION
+$BASH_LINENO                   $CVSSERVER                     $HUSER_GRP                     $NUMTHREADS                    $SECONDS                       $bired
+$BASH_SOURCE                   $CVSUSER                       $HUSER_GRP_ID                  $NVIDIA_DRIVER_CAPABILITIES    $SHELL                         $biwhi
+$BASH_SUBSHELL                 $DIRSTACK                      $HUSER_ID                      $NVIDIA_DRIVER_VER             $SHELLOPTS                     $biyel
+$BASH_VERSINFO                 $DISPLAY                       $IFS                           $NVIDIA_REQUIRE_CUDA           $SHLVL                         $cuDNN_DEV_LIB
+$BASH_VERSION                  $DOCKER_IMG                    $JAVA_JDK_VER                  $NVIDIA_VISIBLE_DEVICES        $SUITE_PARSE_VER               $cuDNN_LIB
+$BAZEL_VERSION                 $EIGEN_REL_TAG                 $LANG                          $OLDPWD                        $TERM                          $cuDNN_RELEASE
+$BOOST_VER                     $EUID                          $LASZIP_VER                    $OPTERR                        $TF_CUDA_COMPUTE_CAPABILITIES  $cuDNN_USR_GUIDE
+$CERES_SOLVER_REL              $GDAL_VER                      $LAZ_PERF_REL_TAG              $OPTIND                        $TF_CUDA_VERSION               $cuDNN_VER
+$CERES_SOLVER_REL_TAG          $GEOS_VER                      $LD_LIBRARY_PATH               $OSTYPE                        $TF_CUDNN_VERSION              $gre
+$CHUB_DIR                      $GEOTIFF_VER                   $LIBKML_VER                    $OpenCV_VER_CHECKOUT           $TF_NEED_CUDA                  $icya
+$CHUB_HOME                     $GEOWAVE_REL_TAG               $LINENO                        $PATH                          $TF_NEED_TENSORRT              $nocolor
+$CI_BUILD_PYTHON               $GROUPS                        $LINES                         $PDAL_BUILD                    $TIFF_VER                      $on_ired
+$CODEHUB_ENV_FILE              $GRP                           $LINUX_CODE_NAME               $PDAL_RELEASE                  $UID                           $tensorRTFILE
+
+echo $tensorRTFILE
+nv-tensorrt-repo-ubuntu1804-cuda10.0-trt5.1.5.0-ga-20190427_1-1_amd64.deb
+
+
+## aidev-docker
+
+echo $PATH
+/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+echo $LD_LIBRARY_PATH 
+/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64
+
+
+echo $
+Display all 144 possibilities? (y or n)
+$AI_ANNON_DATA_HOME                   $BASH_CMDS                            $DUSER                                $OPTERR
+$AI_ANNON_DATA_HOME_LOCAL             $BASH_COMMAND                         $DUSER_GRP                            $OPTIND
+$AI_ANNON_DB                          $BASH_LINENO                          $DUSER_GRP_ID                         $OSTYPE
+$AI_ANNON_HOME                        $BASH_SOURCE                          $DUSER_ID                             $PATH
+$AI_APP                               $BASH_SUBSHELL                        $EUID                                 $PIPESTATUS
+$AI_CFG                               $BASH_VERSINFO                        $FASTER_RCNN                          $PPID
+$AI_DATA                              $BASH_VERSION                         $GROUPS                               $PS1
+$AI_DOC                               $CAFFE_ROOT                           $HISTCMD                              $PS2
+$AI_ENVVARS                           $CHUB_APP                             $HISTCONTROL                          $PS4
+$AI_GOOGLE_APPLICATION_CREDENTIALS    $CHUB_CFG                             $HISTFILE                             $PWD
+$AI_HOME                              $CHUB_DATA                            $HISTFILESIZE                         $PYTHONPATH
+$AI_HOME_EXT                          $CHUB_DOWNLOADS                       $HISTSIZE                             $PY_VENV_NAME
+$AI_KBANK                             $CHUB_ENVVARS                         $HOME                                 $RANDOM
+$AI_LANENET_ROOT                      $CHUB_GOOGLE_APPLICATION_CREDENTIALS  $HOSTNAME                             $RC
+$AI_LOGS                              $CHUB_HOME                            $HOSTTYPE                             $SCRIPTS_DIR
+$AI_MNT                               $CHUB_HOME_EXT                        $HUSER                                $SECONDS
+$AI_MODEL_CFG_PATH                    $CHUB_LOGS                            $HUSER_GRP                            $SHELL
+$AI_PY_ENVVARS                        $CHUB_PY_ENVVARS                      $HUSER_GRP_ID                         $SHELLOPTS
+$AI_PY_VENV_PATH                      $CHUB_PY_VENV_PATH                    $HUSER_ID                             $SHLVL
+$AI_REPORTS                           $CHUB_VM_HOME                         $IFS                                  $TERM
+$AI_SCRIPTS                           $CHUB_WEB_APP                         $LANG                                 $TF_CUDA_COMPUTE_CAPABILITIES
+$AI_VM_HOME                           $CHUB_WEB_APP_LOGS                    $LC_ALL                               $TF_CUDA_VERSION
+$AI_WEB_APP                           $CHUB_WEB_APP_UPLOADS                 $LD_LIBRARY_PATH                      $TF_CUDNN_VERSION
+$AI_WEB_APP_LOGS                      $CHUB_WORKSPACES                      $LIBRARY_PATH                         $TF_NEED_CUDA
+$AI_WEB_APP_UPLOADS                   $CHUB_WSGIPythonHome                  $LINENO                               $TF_NEED_TENSORRT
+$AI_WEIGHTS_PATH                      $CHUB_WSGIPythonPath                  $LINES                                $UID
+$AI_WSGIPythonHome                    $CI_BUILD_PYTHON                      $LINUX_SCRIPT_HOME                    $VIRTUALENVWRAPPER_ENV_BIN_DIR
+$AI_WSGIPythonPath                    $COLUMNS                              $LS_COLORS                            $VIRTUALENVWRAPPER_HOOK_DIR
+$ANDROID_HOME                         $COMP_WORDBREAKS                      $MACHTYPE                             $VIRTUALENVWRAPPER_PROJECT_FILENAME
+$APACHE_HOME                          $CUDA_PKG_VERSION                     $MAILCHECK                            $VIRTUALENVWRAPPER_PYTHON
+$BASH                                 $CUDA_VERSION                         $MASK_RCNN                            $VIRTUALENVWRAPPER_SCRIPT
+$BASHOPTS                             $CUDNN_VERSION                        $NCCL_VERSION                         $VIRTUALENVWRAPPER_VIRTUALENV
+$BASHPID                              $CVSROOT                              $NVIDIA_DRIVER_CAPABILITIES           $VIRTUALENVWRAPPER_VIRTUALENV_CLONE
+$BASH_ALIASES                         $DIRSTACK                             $NVIDIA_REQUIRE_CUDA                  $VIRTUALENVWRAPPER_WORKON_CD
+$BASH_ARGC                            $DISPLAY                              $NVIDIA_VISIBLE_DEVICES               $WORKON_HOME
+$BASH_ARGV                            $DOCKER_IMG                           $OLDPWD                               $_
+
+
+root@codehub-docker:/tensorflow# bazel build --config=opt --config=cuda --action_env PATH="$PATH"  --incompatible_strict_action_env=false //tensorflow/tools/pip_package:build_pip_package
+WARNING: The following configs were expanded more than once: [cuda]. For repeatable flags, repeats are counted twice and may lead to unexpected behavior.
+INFO: Invocation ID: 960cd350-b600-4478-b0db-9196914d0df0
+ERROR: Skipping '//tensorflow/tools/pip_package:build_pip_package': error loading package 'tensorflow/tools/pip_package': in /external4docker/tensorflow/tensorflow/tensorflow.bzl: Encountered error while reading extension file 'build_defs.bzl': no such package '@local_config_tensorrt//': Traceback (most recent call last):
+  File "/external4docker/tensorflow/third_party/tensorrt/tensorrt_configure.bzl", line 171
+    _trt_lib_version(repository_ctx, trt_install_path)
+  File "/external4docker/tensorflow/third_party/tensorrt/tensorrt_configure.bzl", line 81, in _trt_lib_version
+    _find_trt_header_dir(repository_ctx, trt_install_path)
+  File "/external4docker/tensorflow/third_party/tensorrt/tensorrt_configure.bzl", line 64, in _find_trt_header_dir
+    str(repository_ctx.path(("%s/../incl...)
+  File "/external4docker/tensorflow/third_party/tensorrt/tensorrt_configure.bzl", line 64, in str
+    repository_ctx.path(("%s/../include" % trt_install_path)).realpath
+/usr/lib/include (No such file or directory)
+WARNING: Target pattern parsing failed.
+ERROR: error loading package 'tensorflow/tools/pip_package': in /external4docker/tensorflow/tensorflow/tensorflow.bzl: Encountered error while reading extension file 'build_defs.bzl': no such package '@local_config_tensorrt//': Traceback (most recent call last):
+  File "/external4docker/tensorflow/third_party/tensorrt/tensorrt_configure.bzl", line 171
+    _trt_lib_version(repository_ctx, trt_install_path)
+  File "/external4docker/tensorflow/third_party/tensorrt/tensorrt_configure.bzl", line 81, in _trt_lib_version
+    _find_trt_header_dir(repository_ctx, trt_install_path)
+  File "/external4docker/tensorflow/third_party/tensorrt/tensorrt_configure.bzl", line 64, in _find_trt_header_dir
+    str(repository_ctx.path(("%s/../incl...)
+  File "/external4docker/tensorflow/third_party/tensorrt/tensorrt_configure.bzl", line 64, in str
+    repository_ctx.path(("%s/../include" % trt_install_path)).realpath
+/usr/lib/include (No such file or directory)
+INFO: Elapsed time: 0.214s
+INFO: 0 processes.
+FAILED: Build did NOT complete successfully (0 packages loaded)
+    currently loading: tensorflow/tools/pip_package
+    Fetching @local_config_rocm; Restarting.
+    Fetching @local_config_tensorrt; fetching
+    Fetching @local_config_cuda; fetching
+
+
+
+https://github.com/tensorflow/tensorflow/pull/17409
+
+
+root@codehub-docker:/# find . -iname 'NvInfer.h' -type f
+./root/.cache/bazel/_bazel_root/43801f1e35f242fb634ebbc6079cf6c5/execroot/org_tensorflow/bazel-out/k8-opt/genfiles/external/local_config_tensorrt/tensorrt/include/NvInfer.h
+./usr/include/x86_64-linux-gnu/NvInfer.h

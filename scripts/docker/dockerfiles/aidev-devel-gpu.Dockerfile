@@ -47,6 +47,8 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
       build-essential \
+      ca-certificates \
+      gnupg2 \
       libcurl3-dev \
       libfreetype6-dev \
       libhdf5-serial-dev \
@@ -68,6 +70,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       grep \
       vim \
       sudo \
+      libpng-dev \
+      libjpeg-dev \
+      automake \
+      libtool \
       libnvinfer${TENSORRT_VERSION} \
       libnvinfer-dev \
     && apt clean \
@@ -143,6 +149,10 @@ ENV TF_NEED_TENSORRT 1
 ENV TF_CUDA_COMPUTE_CAPABILITIES=3.5,5.2,6.0,6.1,7.0
 ENV TF_CUDA_VERSION=${CUDA_VERSION}
 ENV TF_CUDNN_VERSION=${CUDNN_MAJOR_VERSION}
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV FORCE_CUDA="1"
+ENV TORCH_CUDA_ARCH_LIST="Kepler;Kepler+Tesla;Maxwell;Maxwell+Tegra;Pascal;Volta;Turing"
 
 ARG PY_VENV_NAME=${PY_VENV_NAME}
 RUN chmod a+rwx ${BASH_FILE} && \

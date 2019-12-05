@@ -1,0 +1,26 @@
+APP_PATHS:
+  AI_DATA: /home/baaz/Documents/ai-ml-dl-data
+  AI_HOME: /home/baaz/Documents/ai-ml-dl
+  AI_LOGS: /home/baaz/Documents/ai-ml-dl-data/logs
+  AI_MODEL_PATH: /aimldl-dat/release
+  AI_REPORTS: /home/baaz/Documents/ai-ml-dl/reports
+  AI_SCRIPTS: /home/baaz/Documents/ai-ml-dl/scripts
+  AI_WEB_APP: /home/baaz/Documents/ai-ml-dl/www
+  AI_WEB_APP_LOGS: /home/baaz/Documents/ai-ml-dl/www/logs
+  AI_WEB_APP_UPLOADS: /home/baaz/Documents/ai-ml-dl/www/uploads
+  BASEPATH: /aimldl-cod/scripts
+  CAFFE_ROOT: /home/baaz/Documents/ai-ml-dl/external/py-faster-rcnn/caffe-fast-rcnn
+  FRCN_ROOT: /home/baaz/Documents/ai-ml-dl/external/py-faster-rcnn
+  LOG_DIR: /home/baaz/Documents/ai-ml-dl-data/logs
+  MRCNN_ROOT: /home/baaz/Documents/ai-ml-dl/external/Mask_RCNN
+  PYTHONPATH:
+    AI_HOME_EXT:
+    - /home/baaz/Documents/ai-ml-dl/external
+    APP:
+    - /home/baaz/Documents/ai-ml-dl/apps
+    FASTER_RCNN:
+    - /home/baaz/Documents/ai-ml-dl/external/py-faster-rcnn/caffe-fast-rcnn/python
+    - /home/baaz/Documents/ai-ml-dl/external/py-faster-rcnn/lib
+    MASK_RCNN:
+    - /home/baaz/Documents/ai-ml-dl/external/Mask_RCNN
+  WEIGHTS_PATH: null

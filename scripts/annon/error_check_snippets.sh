@@ -1,0 +1,9 @@
+find . -iname "*.json" -type f -exec grep --color=auto -l '"Label":"Default"' {} \;
+find . -iname "*.json" -type f -exec grep -nH --color=auto "Default" {} \; | wc -l
+find . -iname "*.json" -type f -exec grep -nH --color=auto '"Label": "Default"' {} \; | wc -l
+find . -iname "*.json" -type f -exec grep -inH --color=auto '"Label":"Default"' {} \; | wc -l
+find . -iname "*.json" -type f -exec grep -nH --color=auto "Default" {} \;
+find . -iname "*.json" -type f -exec grep --color=auto -nH '"Default"' {} \;
+find . -iname "*.json" -type f -exec grep --color=auto -il '"Color":"Default"' {} \;
+find . -iname "*.json" -type f -exec grep --color=auto -il '"Arrow":"Default"' {} \;
+find . -iname "*.json" -type f -exec grep --color=auto -il '"Crosswalk":"Default"' {} \;

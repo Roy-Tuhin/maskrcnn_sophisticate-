@@ -1,0 +1,34 @@
+{
+  "name": "test.coco-1.jpg",
+  "api": {
+    "uploads": "/api/vision/uploads/test.coco-1.jpg"
+  },
+  "type": "tsd",
+  "result": {
+    "test.coco-1.jpg1064402": {
+      "filename": "test.coco-1.jpg",
+      "size": 1064402,
+      "regions": [
+        {
+          "region_attributes": {
+            "label": "bbox",
+            "score": 0.9952172040939331,
+            "color": "None"
+          },
+          "shape_attributes": {
+            "name": "rect",
+            "y": 107,
+            "x": 642,
+            "height": 68,
+            "width": 67
+          }
+        }
+      ],
+      "file_attributes": {
+        "width": 1080,
+        "height": 1920
+      }
+    }
+  },
+  "status_code": 200
+}

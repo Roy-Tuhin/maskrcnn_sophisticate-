@@ -11,6 +11,8 @@ CUDA_VERSION=10.0
 CUDNN_VERSION="7.6.4.38"
 CUDNN_MAJOR_VERSION=7
 TENSORRT_VERSION=5
+# sudo apt install libnvinfer5=5.1.2-1+cuda10.0
+
 # #
 # OS="ubuntu16.04"
 # CUDA_VERSION=9.0

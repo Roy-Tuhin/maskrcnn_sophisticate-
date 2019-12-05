@@ -14,12 +14,14 @@ alias getip='source ${LINUX_SCRIPT_HOME}/utils/ip.sh'
 
 ## change directory
 alias lscripts="cd ${LINUX_SCRIPT_HOME}"
+alias dscripts="cd ${CHUB_HOME}/scripts/docker"
 alias chub="cd ${CHUB_HOME}"
 
 alias technotes='cd ${CHUB_HOME}/technotes'
 
 alias chubdata="cd ${CHUB_DATA}"
 alias chublogs="cd ${CHUB_LOGS}"
+alias chubtml="cd ${CHUB_TMP}"
 
 ## util scripts
 alias androidstudio="bash ${CHUB_HOME}/tools/android-studio/bin/studio.sh"

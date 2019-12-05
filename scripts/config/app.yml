@@ -1,0 +1,89 @@
+API_CFG:
+  ALLOWED_FILE_TYPE:
+  - .txt
+  - .csv
+  - .yml
+  - .json
+  ALLOWED_IMAGE_TYPE:
+  - .pdf
+  - .png
+  - .jpg
+  - .jpeg
+  - .tiff
+  - .gif
+  ALLOWED_VIDEO_TYPE:
+  - .mp4
+  API_VISION_BASE_URL: /api/vision
+  APP_NAME: falcon
+  ARCH: arch
+  DATASET: dataset
+  DEBUG: false
+  DOCS: ''
+  FILE_DELIMITER: ;
+  GPU_ID: 0
+  HOST:
+  - 10.4.71.69:4040
+  IDS:
+    ballon: ballon_segmentation
+    cocop: coco_panoptic
+    cocos: coco_stuff
+    cocot: coco_things
+    hmd: hd_map_dataset
+    od: object_detection
+    ods: object_detection_segmentation
+    pd: people_detection
+    road: road_segmentation
+    spd: sign_post_detection
+    spr: sign_post_recognition
+    tsd: traffic_sign_detection
+    tsr: traffic_sign_recognition
+  LOG_TIMESTAMP: false
+  MODE: gpu
+  ROUTER: falcon
+  SAVE_NULL_RESULTS: false
+  TEST_MODE: inference
+  TRAIN_MODE: training
+  VIS_DETECTIONS: false
+  WARMUP: false
+API_DOC:
+  vision:
+    archs: null
+    docs:
+      detect:
+        deprecated: false
+        description: The main api call to make the detections. 'q' is optional parameter,
+          which defaults to 'tsd' type of detection. Returns the json response back.
+        params:
+          image: <base64_encoded_image_data>
+          name: <imageName_with_extension>
+          orgname: mmi|vidteq|matterport [mmi]
+          q: '[<vision_api_id>-<vision_api_ver>]'
+        type: POST
+        url: /api/vision/detect
+      detections:
+        deprecated: true
+        description: Returns the detections for the previously predicted image. With
+          '.csv' returns the json response and without it, it returns the annotate
+          image.
+        params: null
+        type: GET
+        url: /api/vision/detections/<imageName_with_extension>[.csv]
+      models:
+        deprecated: false
+        description: Returns the original image
+        examples:
+          '0': /api/vision/models
+          '1': /api/vision/models/vidteq
+          '2': /api/vision/models/vidteq-hmd
+          '3': /api/vision/models/vidteq-hmd-1
+        params: null
+        type: GET
+        url: /api/vision/models/[ [<orgname>][-<vision_api_id>][-<vision_api_ver>]
+          ]
+      uploads:
+        deprecated: true
+        description: Returns the original image
+        params: null
+        type: GET
+        url: /api/vision/uploads/<imageName_with_extension>
+    ids: null

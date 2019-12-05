@@ -1,0 +1,26 @@
+APP_PATHS:
+  AI_DATA: /aimldl-dat
+  AI_HOME: /aimldl-cod
+  AI_LOGS: /aimldl-dat/logs
+  AI_MODEL_PATH: /aimldl-dat/release
+  AI_REPORTS: /aimldl-rpt
+  AI_SCRIPTS: /aimldl-cod/scripts
+  AI_WEB_APP: /aimldl-cod/www
+  AI_WEB_APP_LOGS: /aimldl-cod/www/logs
+  AI_WEB_APP_UPLOADS: /aimldl-cod/www/uploads
+  BASEPATH: /aimldl-cod/scripts
+  CAFFE_ROOT: /aimldl-cod/external/py-faster-rcnn/caffe-fast-rcnn
+  FRCN_ROOT: /aimldl-cod/external/py-faster-rcnn
+  LOG_DIR: /aimldl-dat/logs
+  MRCNN_ROOT: /aimldl-cod/external/Mask_RCNN
+  PYTHONPATH:
+    AI_HOME_EXT:
+    - /aimldl-cod/external
+    APP:
+    - /aimldl-cod/apps
+    FASTER_RCNN:
+    - /aimldl-cod/external/py-faster-rcnn/caffe-fast-rcnn/python
+    - /aimldl-cod/external/py-faster-rcnn/lib
+    MASK_RCNN:
+    - /aimldl-cod/external/Mask_RCNN
+  WEIGHTS_PATH: /aimldl-dat/release

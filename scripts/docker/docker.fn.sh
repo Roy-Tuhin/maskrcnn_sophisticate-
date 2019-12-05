@@ -28,6 +28,7 @@ function docker_envvars() {
 
   envvars="${envvars} -e DOCKER_IMG=${DOCKER_IMG} "
   envvars="${envvars} -e DISPLAY=${DDISPLAY} "
+  envvars="${envvars} -e HOST_PERMS=$(id -u):$(id -g) "
   envvars="${envvars} -e HUSER=${HUSER} "
   envvars="${envvars} -e HUSER_ID=${HUSER_ID} "
   envvars="${envvars} -e HUSER_GRP=${HUSER_GRP} "
