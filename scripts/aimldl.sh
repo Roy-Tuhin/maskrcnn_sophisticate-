@@ -65,10 +65,10 @@ function aimldl_main() {
   ## This makes script re-entrant and side effects can be avoided.
   ## Otherwise, in the same shell if the script is run again by
   ## changing the values in config, previous values lingers in the shell.
-  declare -A AI_ENVVARS=()
-  declare -a AI_DATA_DIR_PATHS=()
-  declare -a AI_CFG_PATHS=()
-  declare -A AI_MOUNT_PATHS_FOR_REMOTE=()
+  declare -gA AI_ENVVARS=()
+  declare -ga AI_DATA_DIR_PATHS=()
+  declare -ga AI_CFG_PATHS=()
+  declare -gA AI_MOUNT_PATHS_FOR_REMOTE=()
 
   ## TODO: check if the top level directory can be provided as env variables itself
   # declare -gA AI_DOC_DIR_PATHS=()
@@ -87,6 +87,7 @@ function aimldl_main() {
     local ai_weights_path=${AI_WEIGHTS_PATH}
     local ai_mount_machprefix=${AI_MOUNT_MACHPREFIX}
     local ai_google_application_credentials_file=${AI_GOOGLE_APPLICATION_CREDENTIALS_FILE}
+
     local ai_wsgipythonpath=${AI_WSGIPythonPath}
     local ai_wsgipythonhome=${AI_WSGIPythonHome}
 
@@ -117,6 +118,7 @@ function aimldl_main() {
     # AI_ENVVARS['AI_PY_VENV_PATH']='${HOME}'/${ai_vm_base}/virtualenvs
     AI_ENVVARS['AI_VM_HOME']=${AI_VM_HOME}
     AI_ENVVARS['AI_PY_VENV_PATH']=${AI_PY_VENV_PATH}
+    AI_ENVVARS['WORKON_HOME']=${WORKON_HOME}
 
     AI_ENVVARS['AI_WSGIPythonPath']=${AI_PY_VENV_PATH}/${ai_wsgipythonpath}
     AI_ENVVARS['AI_WSGIPythonHome']=${AI_PY_VENV_PATH}/${ai_wsgipythonhome}
@@ -141,7 +143,9 @@ function aimldl_main() {
     AI_ENVVARS['AI_SCRIPTS']="${AI_ENVVARS['AI_HOME']}/scripts"
     AI_ENVVARS['AI_APP']="${AI_ENVVARS['AI_HOME']}/apps"
     AI_ENVVARS['AI_ANNON_HOME']="${AI_ENVVARS['AI_HOME']}/apps/annon"
-    
+
+    AI_ENVVARS['AI_CONFIG']="${AI_ENVVARS['AI_HOME']}/config"
+
     AI_ENVVARS['AI_WEB_APP']="${AI_ENVVARS['AI_HOME']}/apps/www"
     AI_ENVVARS['AI_WEB_APP_LOGS']="${AI_ENVVARS['AI_LOGS']}/www"
     AI_ENVVARS['AI_WEB_APP_UPLOADS']="${AI_ENVVARS['AI_HOME']}/www/uploads"
@@ -269,19 +273,7 @@ function aimldl_main() {
         sudo chown -R $(id -un):$(id -gn) ${cfg_dir_path}
       fi
     done
-
-    __copy_config_files__
   }
-
-
-  function __copy_config_files__() {
-    debug "__copy_config_files__:============================"
-    debug ${AI_ENVVARS['AI_CFG']}
-
-    rsync -r ${SCRIPTS_DIR}/config/* ${AI_ENVVARS['AI_CFG']}
-    ls -ltr ${AI_ENVVARS['AI_CFG']}
-  }
-
 
   function create_data_dirs() {
     debug "create_data_dirs:============================"
@@ -381,15 +373,16 @@ function aimldl_main() {
 
 
   function create_exports() {
-    debug 'create_exports:============================'
+    debug "create_exports:============================${SCRIPTS_DIR}"
 
     local env
     local _line
-    local export_file="${SCRIPTS_DIR}/config/export.sh"
+    local export_file="${SCRIPTS_DIR}/config/aimldl.export.sh"
     
     echo "#!/bin/bash" > $export_file
     for env in "${!AI_ENVVARS[@]}"; do
-      _line="export ${env}"=${AI_ENVVARS[$env]}
+      _line="export ${env}"=${AI_ENVVARS[${env}]}
+      info ${_line}
       echo "${_line}" >> ${export_file}
     done
 
@@ -398,8 +391,6 @@ function aimldl_main() {
     echo 'export PYTHONPATH=${PYTHONPATH}:${CAFFE_ROOT}/python' >> ${export_file}
     echo "export AI_ENVVARS=${ai_envvars}" >> ${export_file}
 
-    __copy_config_files__
-    
     source ${export_file}
   }
 
@@ -407,7 +398,7 @@ function aimldl_main() {
   function inject_in_bashrc() {
     FILE=${HOME}/.bashrc
     echo "Modifying ${FILE}"
-    LINE="source ${AI_ENVVARS['AI_CFG']}/aimldl.env.sh"
+    LINE="source ${AI_ENVVARS['AI_CONFIG']}/aimldl.env.sh"
     grep -qF "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
   }
 
@@ -438,7 +429,7 @@ function aimldl_main() {
   }
 
 
-  function create_config_files() {
+  function create_config_files_aimldl() {
     local pyver=3
     local pyenv=$(lsvirtualenv -b | grep ^py_$pyver | tr '\n' ',' | cut -d',' -f1)
     workon ${pyenv}
@@ -447,6 +438,18 @@ function aimldl_main() {
     python ${SCRIPTS_DIR}/app.py
   }
 
+
+  function __copy_config_files__() {
+    debug "__copy_config_files__:============================"
+    debug ${AI_ENVVARS['AI_CONFIG']}
+    rsync -r ${SCRIPTS_DIR}/config/* ${AI_ENVVARS['AI_CONFIG']}
+    ls -ltr ${AI_ENVVARS['AI_CONFIG']}
+  }
+
+
+  function create_config_files() {
+    __copy_config_files__
+  }
 
   ##----------------------------------------------------------
   ### create and export environment variables

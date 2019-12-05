@@ -22,20 +22,20 @@ function codehub_setup() {
 
   codehub_main
 
-  # create_exports
+  create_exports
 
-  # create_codehub_dirs
+  create_codehub_dirs
 
-  # inject_in_bashrc
+  inject_in_bashrc
 
 
-  # ## TODO: error fix
-  # ## [INFO]: ln -s CHUB_ENVVARS[APACHE_HOME] /CHUB_ENVVARS[APACHE_HOME]
-  # ## ln: failed to create symbolic link '/CHUB_ENVVARS[APACHE_HOME]': Permission denied
+  ## TODO: error fix
+  ## [INFO]: ln -s CHUB_ENVVARS[APACHE_HOME] /CHUB_ENVVARS[APACHE_HOME]
+  ## ln: failed to create symbolic link '/CHUB_ENVVARS[APACHE_HOME]': Permission denied
 
-  # # create_symlinks
+  # create_symlinks
 
-  # create_config_files
+  create_config_files
 }
 
 codehub_setup

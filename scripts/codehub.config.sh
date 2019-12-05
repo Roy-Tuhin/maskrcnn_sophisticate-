@@ -16,7 +16,7 @@ source "$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/aimldl.config.sh"
 USER_BASHRC_FILE="${HOME}/.bashrc"
 
 CHUB_DIR="codehub"
-CHUB_HOME=/${CHUB_DIR}
+CHUB_HOME="/${CHUB_DIR}"
 
 declare -a CODEHUB_DIRS=(
   "android"
@@ -40,7 +40,7 @@ declare -a CODEHUB_DIRS=(
   "_site"
   "tests"
   "tools"
-  "cfg"
+  "config"
   "tmp"
   "workspaces"
 )
@@ -96,5 +96,5 @@ source ${LINUX_SCRIPT_HOME}/utils/common.sh
 ## ----
 function update_env_file(){
   source ${CODEHUB_ENV_FILE}
-  rsync -r ${CODEHUB_ENV_FILE} ${CHUB_CFG}
+  rsync -r ${CODEHUB_ENV_FILE} ${CHUB_CONFIG}
 }

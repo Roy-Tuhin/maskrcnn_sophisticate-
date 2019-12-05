@@ -63,8 +63,8 @@ function codehub_main() {
   ## This makes script re-entrant and side effects can be avoided.
   ## Otherwise, in the same shell if the script is run again by
   ## changing the values in config, previous values lingers in the shell.
-  declare -a CHUB_DIR_PATHS=()
-  declare -A CHUB_ENVVARS=()
+  declare -ga CHUB_DIR_PATHS=()
+  declare -gA CHUB_ENVVARS=()
 
   ## TODO: check if the top level directory can be provided as env variables itself
   # declare -gA AI_DOC_DIR_PATHS=()
@@ -99,7 +99,7 @@ function codehub_main() {
 
     CHUB_ENVVARS['CHUB_HOME']="${CHUB_HOME}"
 
-    CHUB_ENVVARS['CHUB_CFG']="${CHUB_ENVVARS['CHUB_HOME']}/cfg"
+    CHUB_ENVVARS['CHUB_CONFIG']="${CHUB_ENVVARS['CHUB_HOME']}/config"
     CHUB_ENVVARS['CHUB_DATA']="${CHUB_ENVVARS['CHUB_HOME']}/data"
     CHUB_ENVVARS['CHUB_HOME_EXT']="${CHUB_ENVVARS['CHUB_HOME']}/external"
     CHUB_ENVVARS['CHUB_DOWNLOADS']="${CHUB_ENVVARS['CHUB_HOME']}/downloads"
@@ -174,25 +174,17 @@ function codehub_main() {
   }
 
 
-  function __copy_config_files__() {
-    debug "__copy_config_files__:============================"
-    debug ${CHUB_ENVVARS}
-    debug ${CHUB_ENVVARS['CHUB_CFG']}
-    rsync -r ${SCRIPTS_DIR}/config/* ${CHUB_ENVVARS['CHUB_CFG']}
-    ls -ltr ${CHUB_ENVVARS['CHUB_CFG']}
-  }
-
-
   function create_exports() {
     debug 'create_exports:============================'
 
     local env
     local _line
-    local export_file="${SCRIPTS_DIR}/config/export.sh"
+    local export_file="${SCRIPTS_DIR}/config/codehub.export.sh"
     
-    echo "#!/bin/bash" > $export_file
+    echo "#!/bin/bash" > ${export_file}
     for env in "${!CHUB_ENVVARS[@]}"; do
-      _line="export ${env}"=${CHUB_ENVVARS[$env]}
+      _line="export ${env}"=${CHUB_ENVVARS[${env}]}
+      info ${_line}
       echo "${_line}" >> ${export_file}
     done
 
@@ -208,7 +200,7 @@ function codehub_main() {
   function inject_in_bashrc() {
     FILE=${HOME}/.bashrc
     echo "Modifying ${FILE}"
-    LINE="source ${CHUB_ENVVARS['CHUB_CFG']}/codehub.env.sh"
+    LINE="source ${CHUB_ENVVARS['CHUB_CONFIG']}/codehub.env.sh"
     grep -qF "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
   }
 
@@ -231,6 +223,14 @@ function codehub_main() {
       fi
       # ln -s ${slink} ${slink_dir}
     done
+  }
+
+
+  function __copy_config_files__() {
+    debug "__copy_config_files__:============================"
+    debug ${CHUB_ENVVARS['CHUB_CONFIG']}
+    rsync -r ${SCRIPTS_DIR}/config/* ${CHUB_ENVVARS['CHUB_CONFIG']}
+    ls -ltr ${CHUB_ENVVARS['CHUB_CONFIG']}
   }
 
 

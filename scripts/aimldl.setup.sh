@@ -24,21 +24,23 @@ function aimldl_setup() {
 
   aimldl_main
 
-  # create_exports
+  create_exports
 
-  # inject_in_bashrc
+  inject_in_bashrc
 
-  # create_cfg_dir
+  create_cfg_dir
 
-  # create_data_dirs
+  create_data_dirs
 
-  # create_doc_dirs
+  create_doc_dirs
 
-  # create_local_dirs_for_remote_mount_paths
+  create_local_dirs_for_remote_mount_paths
 
-  # create_symlinks
+  create_symlinks
 
-  # create_config_files
+  create_config_files
+
+  create_config_files_aimldl
 }
 
 aimldl_setup

@@ -9,7 +9,16 @@ AI_GOOGLE_APPLICATION_CREDENTIALS_FILE=""
 AI_MOUNT_MACHPREFIX='vtq' ## possible values: 'vtd' or 'mmi'
 AI_VM_BASE="virtualmachines"
 AI_VM_HOME="/${AI_VM_BASE}"
-AI_PY_VENV_PATH="/${AI_VM_BASE}/virtualenvs"
+AI_PY_VENV_PATH='${HOME}'/${AI_VM_BASE}/virtualenvs
+
+WORKON_HOME=${AI_PY_VENV_PATH}
+
+
+AI_WSGIPythonPath="py_3-6-8_2019-06-26/bin"
+AI_WSGIPythonHome="py_3-6-8_2019-06-26/lib/python3.6/site-packages/"
+
+# AI_WSGIPythonPath="py_3-6-5_2018-11-21/bin"
+# AI_WSGIPythonHome="py_3-6-5_2018-11-21/lib/python3.6/site-packages/"
 
 ## AI Top Level Directories
 AI_CODE_BASE_PATH="/codehub"
@@ -72,18 +81,11 @@ AI_ANNON_DB_TEST="/aimldl-dat/data-gaze/AIML_Database_Test"
 AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_290719"
 AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_240919_121321"
 AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719"
-
 # AI_ANNON_DATA_HOME="${AI_ANNON_DATA_HOME_LOCAL}"
-AI_ANNON_HOME="/aimldl-cod/apps/annon"
+
 
 ## absoulte path will always be /aimldl-dat
 AI_WEIGHTS_PATH="release" ## default value for production/CBR release
 
 ## uncomment and give custom relative path for model - should be used for development work
 # AI_WEIGHTS_PATH="logs"
-
-AI_WSGIPythonPath="py_3-6-8_2019-06-26/bin"
-AI_WSGIPythonHome="py_3-6-8_2019-06-26/lib/python3.6/site-packages/"
-
-# AI_WSGIPythonPath="py_3-6-5_2018-11-21/bin"
-# AI_WSGIPythonHome="py_3-6-5_2018-11-21/lib/python3.6/site-packages/"
