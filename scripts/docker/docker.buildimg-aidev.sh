@@ -17,10 +17,14 @@
 ## quick image test
 ## docker run --name aidev-3a --gpus all --rm -it mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-3 bash
 
+
+## Usage
+# source docker.buildimg-aidev.sh 1>$(pwd)/buildinfo/buildimg-$(date -d now +'%d%m%y_%H%M%S').log 2>&1
+
 function build_docker_img_aimldl() {
   local SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
 
-  source $SCRIPTS_DIR/docker.env-aidev.sh $1
+  source ${SCRIPTS_DIR}/docker.config.sh $1
 
   ${DOCKER_CMD} --version
 
@@ -30,13 +34,22 @@ function build_docker_img_aimldl() {
   echo "Building new image with TAG: ${TAG}"
 
   mkdir -p ${CONTEXT}/config && \
-    mv ${CONTEXT}/config/* $SCRIPTS_DIR/buildinfo/
+    mv ${CONTEXT}/config/* ${SCRIPTS_DIR}/buildinfo/
 
-  cat > ${CONTEXT}/config/${WHICHONE}-${timestamp}.info <<EOL
+  local build_info_file=${CONTEXT}/config/${WHICHONE}-${timestamp}.info
+  echo "build_info_file: ${build_info_file}"
+  cat > ${build_info_file} <<EOL
 OS=${OS}
 VERSION=${VERSION}
 CUDA_VERSION=${CUDA_VERSION}
 CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}
+cuDNN_RELEASE=${cuDNN_RELEASE}
+TENSORRT_VER=${TENSORRT_VER}
+LIBNVINFER_VER=${LIBNVINFER_VER}
+TENSORFLOW_VER=${TENSORFLOW_VER}
+BAZEL_VER=${BAZEL_VER}
+KERAS_VER=${KERAS_VER}
+PYTORCH_VER=${PYTORCH_VER}
 NVIDIA_IMAGE_TAG=${NVIDIA_IMAGE_TAG}
 BASE_IMAGE_NAME=${BASE_IMAGE_NAME}
 TAG=${TAG}
@@ -45,7 +58,6 @@ timestamp=${timestamp}
 PY_VENV_PATH=${PY_VENV_PATH}
 PY_VENV_NAME=${PY_VENV_NAME}
 DUSER=${DUSER}
-BAZEL_VERSION=${BAZEL_VERSION}
 WORK_BASE_PATH=${WORK_BASE_PATH}
 OTHR_BASE_PATHS=${OTHR_BASE_PATHS}
 DOCKER_BASEPATH=${DOCKER_BASEPATH}
@@ -55,6 +67,8 @@ DOCKERFILE=${DOCKERFILE}
 MAINTAINER=${MAINTAINER}
 EOL
 
+  echo "DOCKERFILE: ${DOCKERFILE}"
+
   ${DOCKER_CMD} build \
     --build-arg "BASE_IMAGE_NAME=${BASE_IMAGE_NAME}" \
     --build-arg "pyVer=${pyVer}" \
@@ -63,8 +77,10 @@ EOL
     --build-arg "BAZEL_URL=${BAZEL_URL}" \
     --build-arg "DUSER=${DUSER}" \
     --build-arg "CUDA_VERSION=${CUDA_VERSION}" \
+    --build-arg "BUILD_FOR_CUDA_VER=${BUILD_FOR_CUDA_VER}" \
     --build-arg "CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}" \
-    --build-arg "TENSORRT_VERSION=${TENSORRT_VERSION}" \
+    --build-arg "TENSORRT_VER=${TENSORRT_VER}" \
+    --build-arg "LIBNVINFER_VER=${LIBNVINFER_VER}" \
     --build-arg "DUSER_ID=${DUSER_ID}" \
     --build-arg "DUSER_GRP=${DUSER_GRP}" \
     --build-arg "DUSER_GRP_ID=${DUSER_GRP_ID}" \
@@ -80,4 +96,5 @@ EOL
   echo "Enjoy!"
 }
 
+## $1 is WHICHONE; refer: docker.env-aidev.sh
 build_docker_img_aimldl $1

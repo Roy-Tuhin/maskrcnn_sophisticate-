@@ -84,3 +84,16 @@ Mask_RCNN
        5.1.2-1+cuda10.0 500
           500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
   ```
+
+## fix path
+
+  @baaz@ultron:00:47:17:docker$grep docker.env-aidev *.sh
+docker.buildimg-aidev.sh:  source $SCRIPTS_DIR/docker.env-aidev.sh $1
+docker.buildimg-aidev.sh:## $1 is WHICHONE; refer: docker.env-aidev.sh
+docker.createcontainer-aidev.sh:  source ${SCRIPTS_DIR}/docker.env-aidev.sh $2
+docker.createcontainer-tf.sh:  source ${SCRIPTS_DIR}/docker.env-aidev.sh $2
+docker.exec-aidev.sh:  source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/docker.env-aidev.sh
+docker.userfix.sh:  source "${SCRIPTS_DIR}/docker.env-aidev.sh"
+@baaz@ultron:00:47:27:docker$subl docker.buildimg-aidev.sh
+
+

@@ -20,10 +20,15 @@ LABEL maintainer "mangalbhaskar <mangalbhaskar@gmail.com>"
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-ARG CUDA_VERSION=${CUDA_VERSION}
-ARG CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}
-ARG TENSORRT_VERSION=${TENSORRT_VERSION}
+ARG CUDA_VERSION=${BUILD_FOR_CUDA_VER}
 
+ARG BUILD_FOR_CUDA_VER="${BUILD_FOR_CUDA_VER}"
+ENV BUILD_FOR_CUDA_VER $BUILD_FOR_CUDA_VER
+
+ARG CUDNN_MAJOR_VERSION=${CUDNN_MAJOR_VERSION}
+ARG TENSORRT_VER=${TENSORRT_VER}
+ARG LIBNVINFER_VER=${LIBNVINFER_VER}
+# ARG LIB_DIR_PREFIX=x86_64
 ARG pyVer
 ARG PYTHON=python${pyVer}
 ARG PIP=pip${pyVer}
@@ -41,6 +46,11 @@ ENV DUSER_GRP $DUSER_GRP
 
 ARG DUSER_GRP_ID
 ENV DUSER_GRP_ID $DUSER_GRP_ID
+
+ARG DOCKER_BASEPATH="${DOCKER_BASEPATH}"
+ARG DOCKER_SETUP_PATH="${DOCKER_SETUP_PATH}"
+ARG WORK_BASE_PATH="${WORK_BASE_PATH}"
+ARG OTHR_BASE_PATHS="${OTHR_BASE_PATHS}"
 
 ## Needed for string substitution
 SHELL ["/bin/bash", "-c"]
@@ -73,11 +83,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       libpng-dev \
       libjpeg-dev \
       automake \
-      libtool \
-      libnvinfer${TENSORRT_VERSION} \
-      libnvinfer-dev \
-    && apt clean \
-    && rm -rf /var/lib/apt/lists/*
+      libtool
 
 # Link the libcuda stub to the location where tensorflow is searching for it and reconfigure
 # dynamic linker run-time bindings
@@ -87,6 +93,12 @@ RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/lib
     ln -s $(which ${PYTHON}) /usr/local/bin/python && \
     ln -s $(which ${PIP}) /usr/bin/pip && \
     ldconfig
+
+RUN apt-get install -y --no-install-recommends \
+      libnvinfer${TENSORRT_VER}=${LIBNVINFER_VER} \
+      libnvinfer-dev=${LIBNVINFER_VER} \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN ${PIP} --no-cache-dir install --upgrade \
     pip \
@@ -103,11 +115,6 @@ RUN addgroup --gid ${DUSER_GRP_ID} ${DUSER_GRP} && \
     adduser ${DUSER} sudo && \
     /bin/echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user && \
     /bin/echo "%sudo ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/user
-
-ARG DOCKER_BASEPATH="${DOCKER_BASEPATH}"
-ARG DOCKER_SETUP_PATH="${DOCKER_SETUP_PATH}"
-ARG WORK_BASE_PATH="${WORK_BASE_PATH}"
-ARG OTHR_BASE_PATHS="${OTHR_BASE_PATHS}"
 
 RUN mkdir -p ${PY_VENV_PATH} \
       ${DOCKER_BASEPATH} \
@@ -172,7 +179,7 @@ RUN export WORKON_HOME=${PY_VENV_PATH} && \
     workon ${PY_VENV_NAME} && \
     ${PIP} --no-cache-dir install -r ${DOCKER_SETUP_PATH}/installer/lscripts/python.requirements.txt && \
     ${PIP} --no-cache-dir install -r ${DOCKER_SETUP_PATH}/installer/lscripts/python.requirements-extras.txt && \
-    ${PIP} --no-cache-dir install -r ${DOCKER_SETUP_PATH}/installer/lscripts/python.requirements-ai.txt
+    ${PIP} --no-cache-dir install -r ${DOCKER_SETUP_PATH}/installer/lscripts/python.requirements-ai-cuda-${BUILD_FOR_CUDA_VER}.txt
 
 ## raise to root user so developer can execute userid fixes
 USER root

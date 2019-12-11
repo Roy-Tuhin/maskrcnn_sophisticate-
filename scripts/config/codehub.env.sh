@@ -2,7 +2,7 @@
 
 ## TODO: Instead of echo to .bashrc, echo it in this file
 
-source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/export.sh
+source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/codehub.export.sh
 # source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/PS1.sh
 source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/ps1.sh
 

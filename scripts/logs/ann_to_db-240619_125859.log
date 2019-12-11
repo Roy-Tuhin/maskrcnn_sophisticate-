@@ -1,0 +1,64 @@
+
+release_db:-----------------------------
+base_from_path: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations
+base_to_path: /aimldl-dat/data-gaze/AIML_Database_Test
+-------
+cfg: {'BASEDIR_NAME': {'DB': 'data', 'LOG': 'log', 'ARCHIVE': 'archive', 'RELEASE': 'release', 'ANNON': 'annon_data'}, 'AICATS': ['Label', 'Human', 'Animal', 'Reptile', 'Rodent', 'Bird', 'Object', 'Structure', 'Place', 'Surface', 'Road', 'Road_Marking', 'Vehicle', 'Building', 'Contruction', 'Sky', 'Water', 'Earth', 'Fire', 'Terrain', 'Vegetation', 'Snow', 'Void', 'Loose_Material', 'Unlabeled'], 'BASE_PATH': {'DB_DIR': '', 'LOG_DIR': '', 'DB_DATA_DIR': '', 'RELEASE_DIR': ''}, 'ERROR_TYPES': ['file_not_found', 'error_reading_file', 'unsupported_annotation_type', 'malformed_annotation'], 'VALID_ANNON_TYPE': {'polygon': ['all_points_x', 'all_points_y'], 'rect': ['x', 'y', 'width', 'height'], 'circle': ['cx', 'cy', 'r'], 'ellipse': ['cx', 'cy', 'rx', 'ry'], 'polyline': ['all_points_x', 'all_points_y']}, 'FILES': {'IMAGES': 'IMAGES.json', 'ANNOTATIONS': 'ANNOTATIONS.json', 'LABELS': 'LABELS.json', 'ERRORS': 'ERRORS.json', 'CLASSINFO': 'CLASSINFO.json', 'STATS': 'STATS.csv', 'STATSLABEL': 'STATSLABEL.csv', 'IMAGELIST': 'IMAGELIST.csv'}, 'TABLES': {'IMAGES': ['annotations'], 'ANNOTATIONS': ['img_id', 'lbl_id'], 'LABELS': [None], 'ERRORS': [None], 'STATS': [None], 'STATSLABEL': [None], 'IMAGELIST': [None]}, 'COLLECTIONS': ['Images', 'Annotations'], 'GROUPBY': {'STATS': 'annotator_id', 'STATSLABEL': 'label'}, 'SORT': {'STATS': 'total_ant', 'STATSLABEL': 'annotation_per_label'}, 'SUMMARY': {'STATS': ['annotator_id', 'total_ant', 'total_error_img_notfound', 'total_error_unlabeled_ant', 'total_error_img_reading', 'total_error_ant'], 'STATSLABEL': ['label', 'annotation_per_label', 'image_per_label'], 'IMAGELIST': ['filename', 'filepath', 'dir']}, 'RELEASE': {'FILE': 'release.csv', 'ANNDB_COLS': {'timestamp': '240619_125900', 'created_on': None, 'modified_on': None, 'total_exec_time': 0, 'total_img': 0, 'total_ant': 0, 'total_lbl': 0, 'total_annon_file_processed': 0, 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'rel_filenames': None}}, 'ANNON_DB_TABLE_PREFIX': 'HMD', 'ANNON_FILENAME_PREFIX': 'images-p', 'TIMESTAMP': '240619_125900', 'DB_PATH': '', 'ANNDB_RELEASE_TIMESTAMP': '', 'AIDS_SPLITS_CRITERIA': {'TNVLTT': [['train', 'val', 'test'], [0.75, 0.2]], 'TNVL': [['train', 'val'], [0.75]], 'USE': 'TNVLTT'}, 'ANNDB_FILTER': {'TYPE_1': {'BY': ['cctv_camera']}, 'ENABLE': False, 'USE': 'TYPE_1'}, 'AIDS_FILTER': {'FILE': 'SUMMARY-STATSLABEL', 'FILE_EXT': '.csv', 'TYPE_1': {'BY': ['cctv_camera']}, 'TYPE_2': {'BY': 'annotation_per_label', 'ON': 'label', 'RATIO': 0.25}, 'TYPE_3': {'BY': 'image_per_label', 'ON': 'label', 'RATIO': 0.25}, 'ENABLE': True, 'USE': 'TYPE_3'}, 'AIDS_RANDOMIZER': {'ENABLE': True, 'USE_SEED': True}, 'INFO_DATA': {'AIDS': {'FILE': 'aids_info.json', 'DATA': None}, 'PATHS': {'FILE': 'paths_info.yml', 'DATA': None}}, 'SAVE_TO_FILE': True, 'IMAGE_API': {'URL': 'http://10.4.71.121/stage/maze/vs/trackSticker.php', 'ENABLE': False, 'TYPE': 'get', 'PARAMS': {'action': 'getImage', 'image': ''}, 'SAVE_LOCAL_COPY': False, 'DEBUG': True, 'IMAGE_HEIGHT': 1080, 'IMAGE_WIDTH': 1920, 'STATIC_IMAGE_DIMENSION': True, 'IMG_CHECK': False}, 'ALLOWED_IMAGE_TYPE': ['.png', '.jpg', '.jpeg', '.gif'], 'DBCFG': {'HOST': 'localhost', 'PORT': 27017, 'USERNAME': '', 'PASSWORD': '', 'DBNAME': 'annon'}}
+-------
+
+files: ['/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_140519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_170519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_100519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_090519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_130519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_100519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_150519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_150519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_160519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_070519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_090519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_130519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_100519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_160519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_170519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_200519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_210519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_200519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_210519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_160519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_170519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_070519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_140519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_080519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_100519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_070519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_200519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_150519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_150519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_160519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_130519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_140519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_090519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_200519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_210519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_170519.json']
+-------
+
+Total files to process =======>: 36
+index_name: index-created_on
+-------
+ annon_filename: images-p1-060519_AT4_via205_140519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_140519.json
+created_on: 2019-06-24 12:59:00 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_140519.json
+annon_filename: images-p1-060519_AT4_via205_140519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '140519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+Total Annotated File (Images): 151
+Total Error: File: Not Found: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: Annotation: 0
+Total Annotation: 504
+Total Label: 7
+Total Annotation Type: {'polygon': 482, 'rect': 22}
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '140519', 'annotation_tool': 'via205', 'total_img': 151, 'total_ant': 504, 'total_lbl': 7, 'total_ant_type': [{'polygon': 482, 'rect': 22}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '140519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => loose_material:151
+Image per label: => traffic_sign_frame:51
+Image per label: => signage:21
+Image per label: => footpath_polygon:93
+Image per label: => traffic_sign:54
+Image per label: => speed_breaker:19
+Image per label: => crosswalk:10
+len(k), len(v): 15, 15
+len(k), len(v): 13, 13
+K length: 28
+V length: 28
+index_name: index-rel_filename
+Traceback (most recent call last):
+  File "/home/baaz/Documents/aimldl/apps/annon/ann_to_db.py", line 756, in <module>
+    main(appcfg, args)
+  File "/home/baaz/Documents/aimldl/apps/annon/ann_to_db.py", line 675, in main
+    db_data_dir = release_db(cfg, from_path, to_path)
+  File "/home/baaz/Documents/aimldl/apps/annon/ann_to_db.py", line 635, in release_db
+    save_parsed_data(cfg, annondata, db=db)
+  File "/home/baaz/Documents/aimldl/apps/annon/ann_to_db.py", line 274, in save_parsed_data
+    save_Stats(cfg, Stats, Total_Stats, dataset, annon_filepath, dst_dir, db)
+  File "/home/baaz/Documents/aimldl/apps/annon/ann_to_db.py", line 301, in save_Stats
+    create_stats_files(cfg, Stats, Total_Stats, dst_dir)
+  File "/home/baaz/Documents/aimldl/apps/annon/ann_to_db.py", line 232, in create_stats_files
+    ImgFilename = os.path.join(dst_dir, 'image-'+gid+'.txt')
+  File "/home/baaz/virtualmachines/virtualenvs/py_3-7-3_2019-05-07/lib/python3.7/posixpath.py", line 80, in join
+    a = os.fspath(a)
+TypeError: expected str, bytes or os.PathLike object, not NoneType

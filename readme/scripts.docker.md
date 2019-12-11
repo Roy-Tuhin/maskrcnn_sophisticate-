@@ -37,21 +37,60 @@
   * `WORK_BASE_PATH=/codehub` - for volume mount with the [codehub repo](https://github.com/mangalbhaskar/codehub)
   * `OTHR_BASE_PATHS=/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat /aimldl-cfg` - for volume mount with the [aimldl repo](https://github.com/mangalbhaskar/aimldl)
 * **Images**
-  * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v5-tf1.13.1-20191130_1909`**
-    * `tensorflow-gpu==1.13.1` and `keras==2.2.3`
-  * **`9.0-cudnn-7.6.4.38-devel-ubuntu16.04-aidev-v5-tf1.9.0-20191130_1858`**
-    * `tensorflow-gpu==1.9.0` and `keras==2.2.2`
-    * Ref: https://github.com/matterport/Mask_RCNN/issues/1808
-  * **`9.0-cudnn-7.6.4.38-devel-ubuntu16.04-aidevmin-v5-20191130_1819`**
-  * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v5-20191130_1606`**
-    * `tensorflow-gpu==2.0.2`
-  * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidevmin-v5-20191130_1340`**
-  * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-4-20191128_1444`**
-    * `tensorflow-gpu==2.0.2`
-    * no direct root access
+  * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v7-20191211_1656`**
+    ```
+    OS=ubuntu18.04
+    VERSION=5
+    CUDA_VERSION=10.0
+    CUDNN_MAJOR_VERSION=7
+    cuDNN_RELEASE=7.6.4.38
+    TENSORRT_VER=5
+    LIBNVINFER_VER=5.1.5-1+cuda10.0
+    TENSORFLOW_VER=1.13.1
+    BAZEL_VER=0.21.0
+    KERAS_VER=2.2.3
+    PYTORCH_VER=1.1.0
+    NVIDIA_IMAGE_TAG=10.0-cudnn-7.6.4.38-devel-ubuntu18.04
+    BASE_IMAGE_NAME=nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
+    TAG=mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v5-tf-20191211_1624
+    pyVer=3
+    timestamp=20191211_1624
+    PY_VENV_PATH=/virtualmachines/virtualenvs
+    PY_VENV_NAME=py_3_20191211_1624
+    DUSER=baaz
+    WORK_BASE_PATH=/codehub
+    OTHR_BASE_PATHS=/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat /aimldl-cfg
+    DOCKER_BASEPATH=/external4docker
+    DOCKER_SETUP_PATH=/docker-installer
+    WHICHONE=aidev-devel-gpu
+    DOCKERFILE=dockerfiles/aidev-devel-gpu.Dockerfile
+    MAINTAINER="mangalbhaskar <mangalbhaskar@gmail.com>"
+    ```
+  * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidevmin-v7-20191211_1739`**
+    ```
+    OS=ubuntu18.04
+    VERSION=7
+    CUDA_VERSION=10.0
+    CUDNN_MAJOR_VERSION=7
+    cuDNN_RELEASE=7.6.4.38
+    TENSORRT_VER=5
+    LIBNVINFER_VER=5.1.5-1+cuda10.0
+    NVIDIA_IMAGE_TAG=10.0-cudnn-7.6.4.38-devel-ubuntu18.04
+    BASE_IMAGE_NAME=nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
+    TAG=mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v7-20191211_1656
+    pyVer=3
+    timestamp=20191211_1656
+    PY_VENV_PATH=/virtualmachines/virtualenvs
+    PY_VENV_NAME=py_3_20191211_1656
+    DUSER=baaz
+    DOCKER_BASEPATH=/external4docker
+    DOCKER_SETUP_PATH=/docker-installer
+    WHICHONE=aidevmin-devel-gpu
+    DOCKERFILE=dockerfiles/aidevmin-devel-gpu.Dockerfile
+    MAINTAINER="mangalbhaskar <mangalbhaskar@gmail.com>"
+    ```
 
-
-## Mongo DB
+## Mongo DB - TODO
 
 * **Requirements**
 * **Key Highlights**
@@ -118,9 +157,9 @@
   source docker.createcontainer-aidev.sh <image_name> <whichone>
   ## example
   ## aidevmin
-  source docker.createcontainer-aidev.sh mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidevmin-v5-20191130_1340 aidevmin-devel-gpu
+  source docker.createcontainer-aidev.sh mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidevmin-v7-20191211_1739 aidevmin-devel-gpu
   ## aidev
-  source docker.createcontainer-aidev.sh mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v5-20191130_1606 aidev-devel-gpu
+  source docker.createcontainer-aidev.sh mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v7-20191211_1656 aidev-devel-gpu
   ```
 
 
@@ -140,4 +179,4 @@
 
 ## How to report Issues & custom docker image requirements
 
-* Use the git-hub issues on the [aimldl repo here](https://github.com/mangalbhaskar/aimldl/issues) and create the new issue: bug/requirement
+* Use the git-hub issues on the [codehub repo here](https://github.com/mangalbhaskar/codehub/issues) and create the new issue: bug/requirement

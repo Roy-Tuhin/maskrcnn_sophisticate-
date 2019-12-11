@@ -1,0 +1,739 @@
+-------->Database based release
+
+release_annon:-----------------------------
+createdb: True
+
+release_db:-----------------------------
+base_from_path: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations
+-------
+cfg: {'BASEDIR_NAME': {'DB': 'data', 'LOG': 'log', 'ARCHIVE': 'archive', 'RELEASE': 'release', 'ANNON': 'annon_data'}, 'AICATS': ['Label', 'Human', 'Animal', 'Reptile', 'Rodent', 'Bird', 'Object', 'Structure', 'Place', 'Surface', 'Road', 'Road_Marking', 'Vehicle', 'Building', 'Contruction', 'Sky', 'Water', 'Earth', 'Fire', 'Terrain', 'Vegetation', 'Snow', 'Void', 'Loose_Material', 'Unlabeled'], 'BASE_PATH': {'DB_DIR': '', 'LOG_DIR': '', 'DB_DATA_DIR': '', 'RELEASE_DIR': ''}, 'ERROR_TYPES': ['file_not_found', 'error_reading_file', 'unsupported_annotation_type', 'malformed_annotation'], 'VALID_ANNON_TYPE': {'polygon': ['all_points_x', 'all_points_y'], 'rect': ['x', 'y', 'width', 'height'], 'circle': ['cx', 'cy', 'r'], 'ellipse': ['cx', 'cy', 'rx', 'ry'], 'polyline': ['all_points_x', 'all_points_y']}, 'FILES': {'IMAGES': 'IMAGES.json', 'ANNOTATIONS': 'ANNOTATIONS.json', 'LABELS': 'LABELS.json', 'ERRORS': 'ERRORS.json', 'CLASSINFO': 'CLASSINFO.json', 'STATS': 'STATS.csv', 'STATSLABEL': 'STATSLABEL.csv', 'IMAGELIST': 'IMAGELIST.csv'}, 'TABLES': {'IMAGES': ['annotations'], 'ANNOTATIONS': ['img_id', 'lbl_id'], 'LABELS': [None], 'ERRORS': [None], 'STATS': [None], 'STATSLABEL': [None], 'IMAGELIST': [None]}, 'COLLECTIONS': ['Images', 'Annotations'], 'GROUPBY': {'STATS': 'annotator_id', 'STATSLABEL': 'label'}, 'SORT': {'STATS': 'total_ant', 'STATSLABEL': 'annotation_per_label'}, 'SUMMARY': {'STATS': ['annotator_id', 'total_ant', 'total_error_img_notfound', 'total_error_unlabeled_ant', 'total_error_img_reading', 'total_error_ant'], 'STATSLABEL': ['label', 'annotation_per_label', 'image_per_label'], 'IMAGELIST': ['filename', 'filepath', 'dir']}, 'RELEASE': {'FILE': 'release.csv', 'ANNDB_COLS': {'timestamp': '240619_233722', 'created_on': None, 'modified_on': None, 'total_exec_time': 0, 'rel_filename': None}}, 'ANNON_DB_TABLE_PREFIX': 'HMD', 'ANNON_FILENAME_PREFIX': 'images-p', 'TIMESTAMP': '240619_233722', 'DB_PATH': '', 'ANNDB_RELEASE_TIMESTAMP': '', 'AIDS_SPLITS_CRITERIA': {'TNVLTT': [['train', 'val', 'test'], [0.75, 0.2]], 'TNVL': [['train', 'val'], [0.75]], 'USE': 'TNVLTT'}, 'ANNDB_FILTER': {'TYPE_1': {'BY': ['cctv_camera']}, 'ENABLE': False, 'USE': 'TYPE_1'}, 'AIDS_FILTER': {'FILE': 'SUMMARY-STATSLABEL', 'FILE_EXT': '.csv', 'TYPE_1': {'BY': ['cctv_camera']}, 'TYPE_2': {'BY': 'annotation_per_label', 'ON': 'label', 'RATIO': 0.25}, 'TYPE_3': {'BY': 'image_per_label', 'ON': 'label', 'RATIO': 0.25}, 'ENABLE': True, 'USE': 'TYPE_3'}, 'AIDS_RANDOMIZER': {'ENABLE': True, 'USE_SEED': True}, 'INFO_DATA': {'AIDS': {'FILE': 'aids_info.json', 'DATA': None}, 'PATHS': {'FILE': 'paths_info.yml', 'DATA': None}}, 'SAVE_TO_FILE': False, 'IMAGE_API': {'URL': 'http://10.4.71.121/stage/maze/vs/trackSticker.php', 'ENABLE': False, 'TYPE': 'get', 'PARAMS': {'action': 'getImage', 'image': ''}, 'SAVE_LOCAL_COPY': False, 'DEBUG': True, 'IMAGE_HEIGHT': 1080, 'IMAGE_WIDTH': 1920, 'STATIC_IMAGE_DIMENSION': True, 'IMG_CHECK': False}, 'ALLOWED_IMAGE_TYPE': ['.png', '.jpg', '.jpeg', '.gif'], 'DBCFG': {'HOST': 'localhost', 'PORT': 27017, 'USERNAME': '', 'PASSWORD': '', 'DBNAME': 'annon'}}
+-------
+
+files: ['/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_140519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_100519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_090519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_130519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_100519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_150519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_070519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_090519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_130519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_100519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_200519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_070519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_140519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_080519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_100519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_070519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_150519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_130519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_140519.json', '/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_090519.json']
+-------
+
+Total files to process =======>: 20
+index_name: index-created_on
+-------
+ annon_filename: images-p1-060519_AT4_via205_140519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_140519.json
+created_on: 2019-06-24 23:37:22 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_140519.json
+annon_filename: images-p1-060519_AT4_via205_140519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '140519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+Total Annotated File (Images): 151
+Total Annotation: 504
+Total Label: 7
+Total Annotation Type: {'polygon': 482, 'rect': 22}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '140519', 'annotation_tool': 'via205', 'total_img': 151, 'total_ant': 504, 'total_lbl': 7, 'total_ant_type': [{'polygon': 482, 'rect': 22}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '140519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => loose_material:151
+Image per label: => traffic_sign_frame:51
+Image per label: => signage:21
+Image per label: => footpath_polygon:93
+Image per label: => traffic_sign:54
+Image per label: => speed_breaker:19
+Image per label: => crosswalk:10
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 12.06s, Processed files: 1, Remaning files: 19
+-------
+ annon_filename: images-p1-060519_AT5_via205_100519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_100519.json
+created_on: 2019-06-24 23:37:34 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_100519.json
+annon_filename: images-p1-060519_AT5_via205_100519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT5', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT5'}
+Total Annotated File (Images): 50
+Total Annotation: 424
+Total Label: 7
+Total Annotation Type: {'polygon': 315, 'rect': 109}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT5', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'total_img': 50, 'total_ant': 424, 'total_lbl': 7, 'total_ant_type': [{'polygon': 315, 'rect': 109}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT5', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT5'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => traffic_sign_frame:31
+Image per label: => loose_material:49
+Image per label: => footpath_polygon:46
+Image per label: => traffic_sign:22
+Image per label: => signage:50
+Image per label: => barricade:8
+Image per label: => traffic_light:4
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 4.04s, Processed files: 2, Remaning files: 18
+-------
+ annon_filename: images-p1-060519_AT4_via205_090519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_090519.json
+created_on: 2019-06-24 23:37:38 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_090519.json
+annon_filename: images-p1-060519_AT4_via205_090519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '090519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+Total Annotated File (Images): 132
+Total Annotation: 470
+Total Label: 6
+Total Annotation Type: {'polygon': 469, 'rect': 1}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '090519', 'annotation_tool': 'via205', 'total_img': 132, 'total_ant': 470, 'total_lbl': 6, 'total_ant_type': [{'polygon': 469, 'rect': 1}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '090519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => loose_material:132
+Image per label: => signage:23
+Image per label: => traffic_sign_frame:68
+Image per label: => traffic_sign:25
+Image per label: => crosswalk:27
+Image per label: => speed_breaker:16
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 9.51s, Processed files: 3, Remaning files: 17
+-------
+ annon_filename: images-p1-060519_AT5_via205_130519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_130519.json
+created_on: 2019-06-24 23:37:48 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_130519.json
+annon_filename: images-p1-060519_AT5_via205_130519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT5', 'annotation_rel_date': '130519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT5'}
+Total Annotated File (Images): 50
+Total Annotation: 297
+Total Label: 8
+Total Annotation Type: {'polygon': 219, 'rect': 78}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 4
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT5', 'annotation_rel_date': '130519', 'annotation_tool': 'via205', 'total_img': 50, 'total_ant': 297, 'total_lbl': 8, 'total_ant_type': [{'polygon': 219, 'rect': 78}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 4, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT5', 'annotation_rel_date': '130519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT5'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => traffic_sign_frame:40
+Image per label: => traffic_light:10
+Image per label: => signage:19
+Image per label: => loose_material:47
+Image per label: => cctv_camera:17
+Image per label: => barricade:13
+Image per label: => footpath_polygon:19
+Image per label: => traffic_sign:17
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 2.71s, Processed files: 4, Remaning files: 16
+-------
+ annon_filename: images-p1-060519_AT4_via205_100519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_100519.json
+created_on: 2019-06-24 23:37:51 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_100519.json
+annon_filename: images-p1-060519_AT4_via205_100519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+Total Annotated File (Images): 159
+Total Annotation: 675
+Total Label: 7
+Total Annotation Type: {'polygon': 660, 'rect': 15}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'total_img': 159, 'total_ant': 675, 'total_lbl': 7, 'total_ant_type': [{'polygon': 660, 'rect': 15}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => loose_material:158
+Image per label: => traffic_sign:42
+Image per label: => traffic_sign_frame:93
+Image per label: => signage:52
+Image per label: => crosswalk:43
+Image per label: => speed_breaker:19
+Image per label: => barricade:15
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 10.39s, Processed files: 5, Remaning files: 15
+-------
+ annon_filename: images-p1-060519_AT3_via205_150519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_150519.json
+created_on: 2019-06-24 23:38:01 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_150519.json
+annon_filename: images-p1-060519_AT3_via205_150519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '150519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT3'}
+Total Annotated File (Images): 120
+Total Annotation: 686
+Total Label: 6
+Total Annotation Type: {'polygon': 314, 'rect': 372}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '150519', 'annotation_tool': 'via205', 'total_img': 120, 'total_ant': 686, 'total_lbl': 6, 'total_ant_type': [{'polygon': 314, 'rect': 372}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '150519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT3'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => loose_material:120
+Image per label: => traffic_sign:18
+Image per label: => traffic_sign_frame:41
+Image per label: => speed_breaker:19
+Image per label: => signage:41
+Image per label: => traffic_light:2
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 9.56s, Processed files: 6, Remaning files: 14
+-------
+ annon_filename: images-p1-060519_AT4_via205_070519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_070519.json
+created_on: 2019-06-24 23:38:11 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_070519.json
+annon_filename: images-p1-060519_AT4_via205_070519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '070519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+Total Annotated File (Images): 99
+Total Annotation: 298
+Total Label: 4
+Total Annotation Type: {'polygon': 298}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '070519', 'annotation_tool': 'via205', 'total_img': 99, 'total_ant': 298, 'total_lbl': 4, 'total_ant_type': [{'polygon': 298}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '070519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => signage:18
+Image per label: => traffic_sign_frame:61
+Image per label: => loose_material:99
+Image per label: => traffic_sign:25
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 3.52s, Processed files: 7, Remaning files: 13
+-------
+ annon_filename: images-p1-060519_AT5_via205_090519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_090519.json
+created_on: 2019-06-24 23:38:14 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT5_via205_090519.json
+annon_filename: images-p1-060519_AT5_via205_090519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT5', 'annotation_rel_date': '090519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT5'}
+Total Annotated File (Images): 50
+Total Annotation: 310
+Total Label: 6
+Total Annotation Type: {'rect': 47, 'polygon': 263}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT5', 'annotation_rel_date': '090519', 'annotation_tool': 'via205', 'total_img': 50, 'total_ant': 310, 'total_lbl': 6, 'total_ant_type': [{'rect': 47, 'polygon': 263}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT5', 'annotation_rel_date': '090519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT5'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => signage:2
+Image per label: => traffic_light:4
+Image per label: => traffic_sign_frame:34
+Image per label: => traffic_sign:31
+Image per label: => loose_material:43
+Image per label: => footpath_polygon:40
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 3.04s, Processed files: 8, Remaning files: 12
+-------
+ annon_filename: images-p1-060519_AT4_via205_130519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_130519.json
+created_on: 2019-06-24 23:38:17 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_130519.json
+annon_filename: images-p1-060519_AT4_via205_130519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '130519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+Total Annotated File (Images): 216
+Total Annotation: 431
+Total Label: 4
+Total Annotation Type: {'polygon': 372, 'rect': 59}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '130519', 'annotation_tool': 'via205', 'total_img': 216, 'total_ant': 431, 'total_lbl': 4, 'total_ant_type': [{'polygon': 372, 'rect': 59}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '130519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => loose_material:215
+Image per label: => signage:48
+Image per label: => traffic_sign_frame:46
+Image per label: => traffic_sign:6
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 6.33s, Processed files: 9, Remaning files: 11
+-------
+ annon_filename: images-p1-060519_AT3_via205_100519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_100519.json
+created_on: 2019-06-24 23:38:24 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_100519.json
+annon_filename: images-p1-060519_AT3_via205_100519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT3'}
+Total Annotated File (Images): 208
+Total Annotation: 477
+Total Label: 4
+Total Annotation Type: {'polygon': 420, 'rect': 57}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'total_img': 208, 'total_ant': 477, 'total_lbl': 4, 'total_ant_type': [{'polygon': 420, 'rect': 57}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT3'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => loose_material:208
+Image per label: => speed_breaker:10
+Image per label: => signage:21
+Image per label: => traffic_sign_frame:21
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 8.83s, Processed files: 10, Remaning files: 10
+-------
+ annon_filename: images-p1-060519_AT3_via205_200519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_200519.json
+created_on: 2019-06-24 23:38:32 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_200519.json
+annon_filename: images-p1-060519_AT3_via205_200519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '200519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT3'}
+Total Annotated File (Images): 150
+Total Annotation: 665
+Total Label: 6
+Total Annotation Type: {'polygon': 451, 'rect': 214}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '200519', 'annotation_tool': 'via205', 'total_img': 150, 'total_ant': 665, 'total_lbl': 6, 'total_ant_type': [{'polygon': 451, 'rect': 214}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '200519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT3'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => loose_material:150
+Image per label: => signage:55
+Image per label: => traffic_sign:55
+Image per label: => traffic_sign_frame:81
+Image per label: => speed_breaker:27
+Image per label: => barricade:33
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 9.21s, Processed files: 11, Remaning files: 9
+-------
+ annon_filename: images-p1-060519_AT3_via205_070519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_070519.json
+created_on: 2019-06-24 23:38:42 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_070519.json
+annon_filename: images-p1-060519_AT3_via205_070519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '070519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT3'}
+Total Annotated File (Images): 100
+Total Annotation: 377
+Total Label: 6
+Total Annotation Type: {'rect': 61, 'polygon': 316}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '070519', 'annotation_tool': 'via205', 'total_img': 100, 'total_ant': 377, 'total_lbl': 6, 'total_ant_type': [{'rect': 61, 'polygon': 316}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '070519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT3'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => signage:31
+Image per label: => footpath_polygon:19
+Image per label: => loose_material:100
+Image per label: => speed_breaker:12
+Image per label: => traffic_sign_frame:24
+Image per label: => barricade:14
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 5.42s, Processed files: 12, Remaning files: 8
+-------
+ annon_filename: images-p1-060519_AT3_via205_140519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_140519.json
+created_on: 2019-06-24 23:38:47 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT3_via205_140519.json
+annon_filename: images-p1-060519_AT3_via205_140519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '140519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT3'}
+Total Annotated File (Images): 120
+Total Annotation: 582
+Total Label: 5
+Total Annotation Type: {'polygon': 394, 'rect': 188}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 1
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '140519', 'annotation_tool': 'via205', 'total_img': 120, 'total_ant': 582, 'total_lbl': 5, 'total_ant_type': [{'polygon': 394, 'rect': 188}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 1, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT3', 'annotation_rel_date': '140519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT3'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => loose_material:120
+Image per label: => traffic_sign:77
+Image per label: => traffic_sign_frame:73
+Image per label: => signage:22
+Image per label: => speed_breaker:15
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 8.78s, Processed files: 13, Remaning files: 7
+-------
+ annon_filename: images-p1-060519_AT4_via205_080519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_080519.json
+created_on: 2019-06-24 23:38:56 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT4_via205_080519.json
+annon_filename: images-p1-060519_AT4_via205_080519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '080519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+Total Annotated File (Images): 99
+Total Annotation: 127
+Total Label: 2
+Total Annotation Type: {'polygon': 127}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '080519', 'annotation_tool': 'via205', 'total_img': 99, 'total_ant': 127, 'total_lbl': 2, 'total_ant_type': [{'polygon': 127}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT4', 'annotation_rel_date': '080519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT4'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => loose_material:99
+Image per label: => traffic_sign_frame:17
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 2.73s, Processed files: 14, Remaning files: 6
+-------
+ annon_filename: images-p1-060519_AT1_via205_100519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_100519.json
+created_on: 2019-06-24 23:38:58 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_100519.json
+annon_filename: images-p1-060519_AT1_via205_100519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT1', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT1'}
+Total Annotated File (Images): 16
+Total Annotation: 69
+Total Label: 4
+Total Annotation Type: {'rect': 40, 'polygon': 29}
+Total Error: File: Not Found: 0
+Total Error: Annotation: Unlabeled: 0
+Total Error: File: Reading: 0
+Total Error: Annotation: 0
+Total Error: Empty Annotation: 0
+Total Stats: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT1', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'total_img': 16, 'total_ant': 69, 'total_lbl': 4, 'total_ant_type': [{'rect': 40, 'polygon': 29}], 'total_error_img_notfound': 0, 'total_error_unlabeled_ant': 0, 'total_error_img_reading': 0, 'total_error_ant': 0, 'total_error_empty_ant': 0}
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT1', 'annotation_rel_date': '100519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT1'}
+
+generate_stats_from_labels:-----------------------------
+Image per label: => signage:16
+Image per label: => loose_material:16
+Image per label: => traffic_sign:8
+Image per label: => traffic_sign_frame:5
+len(k), len(v): 15, 15
+len(k), len(v): 14, 14
+K length: 29
+V length: 29
+tblname: HMD_STATS
+index_name: index-rel_filename
+tblname: HMD_IMAGES
+index_name: index-img_id
+tblname: HMD_IMAGELIST
+index_name: index-img_id
+tblname: HMD_ANNOTATIONS
+index_name: index-ant_id
+tblname: HMD_CLASSINFO
+index_name: index-lbl_id
+tblname: HMD_ERRORS
+index_name: index-rel_filename
+=======> Total Execution Time: 0.58s, Processed files: 15, Remaning files: 5
+-------
+ annon_filename: images-p1-060519_AT1_via205_070519.json 
+ annon_filepath: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_070519.json
+created_on: 2019-06-24 23:38:59 +05:30
+
+parse_annon_file:-----------------------------
+
+get_annon:-----------------------------
+annon_filepath:/home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/annotations/images-p1-060519_AT1_via205_070519.json
+annon_filename: images-p1-060519_AT1_via205_070519.json
+name_ids: {'image_rel_date': '060519', 'image_part': 'images-p1', 'annotator_id': 'AT1', 'annotation_rel_date': '070519', 'annotation_tool': 'via205', 'image_dir': 'images-p1-060519_AT1'}
+Empty Label or Annotation: /home/baaz/Documents/ai-ml-dl-gaze/AIML_Annon/images/images-p1-060519_AT1/291018_121037_16717_zed_l_906.jpg
+Traceback (most recent call last):
+  File "/home/baaz/Documents/aimldl/apps/annon/ann_to_db.py", line 789, in <module>
+    main(appcfg, args)
+  File "/home/baaz/Documents/aimldl/apps/annon/ann_to_db.py", line 711, in main
+    res = release_annon(cfg, args)
+  File "/home/baaz/Documents/aimldl/apps/annon/ann_to_db.py", line 698, in release_annon
+    res = release_db(cfg, args)
+  File "/home/baaz/Documents/aimldl/apps/annon/ann_to_db.py", line 649, in release_db
+    annondata = annon_parser.parse_annon_file(cfg, annon_filepath, base_from_path)
+  File "/home/baaz/Documents/aimldl/apps/annon/annon_parser.py", line 42, in parse_annon_file
+    annondata = get_annon(cfg, dataset, annon_filepath, base_from_path)
+  File "/home/baaz/Documents/aimldl/apps/annon/annon_parser.py", line 413, in get_annon
+    Error[annon_filename]['empty_annotation'].append(image_info)
+KeyError: 'empty_annotation'

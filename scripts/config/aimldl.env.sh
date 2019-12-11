@@ -1,9 +1,7 @@
 #!/bin/bash
 
-SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
-
-source ${SCRIPTS_DIR}/export.sh
-source ${SCRIPTS_DIR}/ps1.sh
+source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/aimldl.export.sh
+source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/ps1.sh
 
 ## commands
 alias lt='ls -lrth'

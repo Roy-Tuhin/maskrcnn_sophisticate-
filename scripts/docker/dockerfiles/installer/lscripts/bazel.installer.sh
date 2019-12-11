@@ -2,7 +2,7 @@
 
 ##----------------------------------------------------------
 ### tensorflow - CPU, GPU builds
-## Tested on Ubuntu 16.04 LTS, Ubuntu 18.04 LTS
+## Tested on Ubuntu 16.04 LTS, Ubuntu 18.04 LTS, Kali Linux 2019.1
 ##----------------------------------------------------------
 #
 ## Dependency for building tensorflow from source
@@ -12,10 +12,11 @@
 #
 ##----------------------------------------------------------
 
-SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )"
 
 function bazel_install() {
-  echo $SCRIPTS_DIR
+  local SCRIPTS_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  echo ${SCRIPTS_DIR}
+  source ${SCRIPTS_DIR}/config.custom.sh
 
   # # echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
   # # curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
@@ -37,32 +38,31 @@ function bazel_install() {
   # #     ${DOCKER_BASEPATH}/bazel/installer.sh && \
   # #     rm -f ${DOCKER_BASEPATH}/bazel/installer.sh
 
-
-
-  source $SCRIPTS_DIR/config.custom.sh
-
   local DIR="bazel"
-  local PROG_DIR="$BASEPATH/$DIR"
+  local PROG_DIR="${BASEPATH}/${DIR}"
   mkdir -p ${PROG_DIR}
 
-  if [ -z ${BAZEL_VERSION} ]; then
-    BAZEL_VERSION=1.1.0
+  if [ -z ${BAZEL_VER} ]; then
+    BAZEL_VER=1.1.0
+  fi
+  if [ -z ${BAZEL_URL} ]; then
+    BAZEL_URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VER}/${DIR}-${BAZEL_VER}-installer-linux-x86_64.sh"
   fi
 
-  local URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${DIR}-${BAZEL_VERSION}-installer-linux-x86_64.sh"
+  local URL=${BAZEL_URL}
 
-  echo "Number of threads will be used: $NUMTHREADS"
-  echo "BASEPATH: $BASEPATH"
-  echo "URL: $URL"
-  echo "PROG_DIR: $PROG_DIR"
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-  if [ ! -f ${PROG_DIR}/installer-${BAZEL_VERSION}.sh ]; then
-    wget -O ${PROG_DIR}/installer-${BAZEL_VERSION}.sh ${URL} && \
+  if [ ! -f ${PROG_DIR}/installer-${BAZEL_VER}.sh ]; then
+    wget -O ${PROG_DIR}/installer-${BAZEL_VER}.sh ${URL} && \
     wget -O ${PROG_DIR}/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE" && \
-    chmod +x ${PROG_DIR}/installer-${BAZEL_VERSION}.sh && \
-    sudo ${PROG_DIR}/installer-${BAZEL_VERSION}.sh
+    chmod +x ${PROG_DIR}/installer-${BAZEL_VER}.sh && \
+    sudo ${PROG_DIR}/installer-${BAZEL_VER}.sh
   else
-    sudo ${PROG_DIR}/installer-${BAZEL_VERSION}.sh
+    sudo ${PROG_DIR}/installer-${BAZEL_VER}.sh
   fi
 
 }

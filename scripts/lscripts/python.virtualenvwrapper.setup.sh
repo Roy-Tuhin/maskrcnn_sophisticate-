@@ -97,8 +97,8 @@ create_and_setup_py_env() {
   # rmvirtualenv $py_env_name
 
   $pip install -r python.requirements.txt
-  # $pip install -r python.requirements-extras.txt
-  # $pip install -r python.requirements-ai.txt
+  $pip install -r python.requirements-extras.txt
+  $pip install -r python.requirements-ai.txt
 
   echo "## Install AI frameworks:"
   echo "## manually: Tensorflow, Caffe, Keras"

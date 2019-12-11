@@ -5,6 +5,8 @@
 ## Tested on Ubuntu 16.04 LTS, Ubuntu 18.04 LTS
 ##----------------------------------------------------------
 #
+## https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/
+#
 ## TBD:
 ## - use update alternative for multiple python2 version or python3 version
 ##   - https://askubuntu.com/questions/609623/enforce-a-shell-script-to-execute-a-specific-python-version

@@ -1,43 +1,38 @@
 #!/bin/bash
 
-timestamp=$(date +%Y%m%d_%H%M)
+##----------------------------------------------------------
+### config - path and other configurations
+## Tested on  Ubuntu 18.04 LTS, Kali Linux 2019.1
+##----------------------------------------------------------
 
-LINUX_VERSION="$(lsb_release -sr)"
-LINUX_CODE_NAME=$(lsb_release -sc)
-LINUX_ID=$(lsb_release -si) ## Ubuntu, Kali
+__TIMESTAMP__=$(date +%Y%m%d_%H%M)
+timestamp=${__TIMESTAMP__}
 
-OS="ubuntu18.04"
-CUDA_VERSION=10.0
-CUDNN_VERSION="7.6.4.38"
-CUDNN_MAJOR_VERSION=7
-TENSORRT_VERSION=5
-# sudo apt install libnvinfer5=5.1.2-1+cuda10.0
-
-# #
-# OS="ubuntu16.04"
-# CUDA_VERSION=9.0
-# CUDNN_VERSION="7.6.4.38"
-# CUDNN_MAJOR_VERSION=7
-# TENSORRT_VERSION=4
-#
-
-TF_VERSION=1.13.1
-
-NVIDIA_IMAGE_TAG=${CUDA_VERSION}-cudnn-${CUDNN_VERSION}-devel-${OS}
-
-VERSION=5
-WHICHONE="aidev-devel-gpu"
+VERSION=7
 WHICHONE="aidevmin-devel-gpu"
+WHICHONE="aidev-devel-gpu"
 
 if [ ! -z $1 ]; then
   WHICHONE=$1
 fi
 echo "WHICHONE: ${WHICHONE}"
 
+if [ -z $2 ]; then
+  # BUILD_FOR_CUDA_VER=9.0
+  BUILD_FOR_CUDA_VER=10.0
+fi
+echo "DOCKERFILE BUILD_FOR_CUDA_VER: ${BUILD_FOR_CUDA_VER}"
+
+source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/dockerfiles/installer/lscripts/lscripts.config.sh ${BUILD_FOR_CUDA_VER}
+
+NVIDIA_IMAGE_TAG=${CUDA_VERSION}-cudnn-${CUDNN_VERSION}-devel-${OS}
+
 BASE_IMAGE_NAME="nvidia/cuda:${NVIDIA_IMAGE_TAG}"
-TAG="mangalbhaskar/aimldl:${NVIDIA_IMAGE_TAG}-$(echo ${WHICHONE}|cut -d'-' -f1)-v${VERSION}-tf${TF_VERSION}-${timestamp}"
+TAG="mangalbhaskar/aimldl:${NVIDIA_IMAGE_TAG}-$(echo ${WHICHONE}|cut -d'-' -f1)-v${VERSION}-${timestamp}"
 DOCKERFILE="dockerfiles/${WHICHONE}.Dockerfile"
 DOCKER_IMG=${TAG}
+
+echo "DOCKERFILE: ${DOCKERFILE}"
 
 if [ ! -f ${DOCKERFILE} ];then
   echo "${DOCKERFILE} does not exits"
@@ -91,13 +86,6 @@ MONGODB_VOLUMES="${MONGODB_VOLUMES} -v /aimldl-dat/data-mongodb/configdb:/data/c
 MONGO_DB_PORTS=""
 MONGO_DB_PORTS="${MONGO_DB_PORTS} -p ${HOST_MONGODB_PORTS}:${DOCKER_MONGODB_PORTS}"
 
-## bazel configuration for compiling tensorflow from source
-_TF_MIN_BAZEL_VERSION='0.24.1'
-_TF_MAX_BAZEL_VERSION='0.26.1'
-BAZEL_VERSION=1.1.0
-BAZEL_VERSION=${_TF_MAX_BAZEL_VERSION}
-BAZEL_URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"
-#
 DOCKER_PREFIX="codehub"
 #
 MAINTAINER='"mangalbhaskar <mangalbhaskar@gmail.com>"'
