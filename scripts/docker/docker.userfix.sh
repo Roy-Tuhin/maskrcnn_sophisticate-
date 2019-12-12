@@ -3,7 +3,7 @@
 
 function docker_userfix() {
   local SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
-  source "${SCRIPTS_DIR}/docker.env-aidev.sh"
+  source "${SCRIPTS_DIR}/docker.config.sh"
 
   addgroup --gid "${HUSER_GRP_ID}" "${HUSER_GRP}"
   adduser --disabled-password --force-badname --gecos '' "${HUSER}" \

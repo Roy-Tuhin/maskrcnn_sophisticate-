@@ -17,8 +17,7 @@
 
 
 function codehub_setup() {
-  local SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
-  source ${SCRIPTS_DIR}/codehub.sh
+  source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/codehub.sh
 
   codehub_main
 

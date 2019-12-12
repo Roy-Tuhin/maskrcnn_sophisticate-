@@ -1,0 +1,187 @@
+(py_3_20191211_1656) baaz@codehub-docker:/external4docker/tensorflow$ ./configure 
+WARNING: Running Bazel server needs to be killed, because the startup options are different.
+WARNING: --batch mode is deprecated. Please instead explicitly shut down your Bazel server using the command "bazel shutdown".
+INFO: Invocation ID: 52787431-26cd-43ec-9b91-c64f933e23cf
+You have bazel 0.21.0 installed.
+Please specify the location of python. [Default is /virtualmachines/virtualenvs/py_3_20191211_1656/bin/python]: 
+
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+AttributeError: module 'site' has no attribute 'getsitepackages'
+Found possible Python library paths:
+  /virtualmachines/virtualenvs/py_3_20191211_1656/lib/python3.6/site-packages
+Please input the desired Python library path to use.  Default is [/virtualmachines/virtualenvs/py_3_20191211_1656/lib/python3.6/site-packages]
+
+Do you wish to build TensorFlow with XLA JIT support? [Y/n]: 
+XLA JIT support will be enabled for TensorFlow.
+
+Do you wish to build TensorFlow with OpenCL SYCL support? [y/N]: 
+No OpenCL SYCL support will be enabled for TensorFlow.
+
+Do you wish to build TensorFlow with ROCm support? [y/N]: 
+No ROCm support will be enabled for TensorFlow.
+
+Please specify the location where CUDA 10.0 toolkit is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: 
+
+
+Please specify the location where cuDNN 7 library is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: 
+
+
+Please specify the location where TensorRT is installed. [Default is /usr/lib/x86_64-linux-gnu]:
+
+
+Please specify the locally installed NCCL version you want to use. [Default is to use https://github.com/nvidia/nccl]: 
+
+
+Do you want to use clang as CUDA compiler? [y/N]: 
+nvcc will be used as CUDA compiler.
+
+Please specify which gcc should be used by nvcc as the host compiler. [Default is /usr/bin/gcc]: 
+
+
+Do you wish to build TensorFlow with MPI support? [y/N]: 
+No MPI support will be enabled for TensorFlow.
+
+Please specify optimization flags to use during compilation when bazel option "--config=opt" is specified [Default is -march=native -Wno-sign-compare]: 
+
+
+Would you like to interactively configure ./WORKSPACE for Android builds? [y/N]: y
+Searching for NDK and SDK installations.
+
+Please specify the home path of the Android NDK to use. [Default is /home/baaz/Android/Sdk/ndk-bundle]: /codehub/android/sdk/ndk/20.1.5948944/
+
+
+WARNING: The API level of the NDK in /codehub/android/sdk/ndk/20.1.5948944/ is 20, which is not supported by Bazel (officially supported versions: [10, 11, 12, 13, 14, 15, 16, 17, 18]). Please use another version. Compiling Android targets may result in confusing errors.
+
+Please specify the home path of the Android SDK to use. [Default is /home/baaz/Android/Sdk]: /codehub/android/sdk
+
+
+Please specify the Android SDK API level to use. [Available levels: ['22', '23', '25', '27', '28', '29']] [Default is 29]: 
+
+
+Please specify an Android build tools version to use. [Available versions: ['28.0.3', '29.0.0', '29.0.2']] [Default is 29.0.2]: 
+
+
+Preconfigured Bazel build configs. You can use any of the below by adding "--config=<>" to your build command. See .bazelrc for more details.
+  --config=mkl          # Build with MKL support.
+  --config=monolithic   # Config for mostly static monolithic build.
+  --config=gdr          # Build with GDR support.
+  --config=verbs        # Build with libverbs support.
+  --config=ngraph       # Build with Intel nGraph support.
+  --config=dynamic_kernels  # (Experimental) Build kernels into separate shared objects.
+Preconfigured Bazel build configs to DISABLE default on features:
+  --config=noaws        # Disable AWS S3 filesystem support.
+  --config=nogcp        # Disable GCP support.
+  --config=nohdfs       # Disable HDFS support.
+  --config=noignite     # Disable Apacha Ignite support.
+  --config=nokafka      # Disable Apache Kafka support.
+  --config=nonccl       # Disable NVIDIA NCCL support.
+Configuration finished
+
+
+(py_3_20191211_1656) baaz@codehub-docker:/external4docker/tensorflow$ bazel build --config=opt --config=cuda --action_env PATH="$PATH"  --incompatible_strict_action_env=false tensorflow/tools/pip_package:build_pip_package
+
+
+Starting local Bazel server and connecting to it...
+WARNING: The following configs were expanded more than once: [cuda]. For repeatable flags, repeats are counted twice and may lead to unexpected behavior.
+INFO: Invocation ID: ba67e398-c364-46ed-ad04-e84945b3c15d
+DEBUG: /home/baaz/.cache/bazel/_bazel_baaz/373b9183b301c48f51c41e387d524a80/external/bazel_tools/tools/cpp/lib_cc_configure.bzl:115:5: 
+Auto-Configuration Warning: 'TMP' environment variable is not set, using 'C:\Windows\Temp' as default
+WARNING: /external4docker/tensorflow/tensorflow/python/BUILD:2986:1: in py_library rule //tensorflow/python:standard_ops: target '//tensorflow/python:standard_ops' depends on deprecated target '//tensorflow/python/ops/distributions:distributions': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.distributions will not receive new features, and will be removed by early 2019. You should update all usage of `tf.distributions` to `tfp.distributions`.
+WARNING: /external4docker/tensorflow/tensorflow/python/BUILD:77:1: in py_library rule //tensorflow/python:no_contrib: target '//tensorflow/python:no_contrib' depends on deprecated target '//tensorflow/python/ops/distributions:distributions': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.distributions will not receive new features, and will be removed by early 2019. You should update all usage of `tf.distributions` to `tfp.distributions`.
+WARNING: /external4docker/tensorflow/tensorflow/contrib/gan/BUILD:136:1: in py_library rule //tensorflow/contrib/gan:losses_impl: target '//tensorflow/contrib/gan:losses_impl' depends on deprecated target '//tensorflow/python/ops/distributions:distributions': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.distributions will not receive new features, and will be removed by early 2019. You should update all usage of `tf.distributions` to `tfp.distributions`.
+WARNING: /external4docker/tensorflow/tensorflow/contrib/metrics/BUILD:16:1: in py_library rule //tensorflow/contrib/metrics:metrics_py: target '//tensorflow/contrib/metrics:metrics_py' depends on deprecated target '//tensorflow/python/ops/distributions:distributions': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.distributions will not receive new features, and will be removed by early 2019. You should update all usage of `tf.distributions` to `tfp.distributions`.
+WARNING: /external4docker/tensorflow/tensorflow/contrib/learn/BUILD:17:1: in py_library rule //tensorflow/contrib/learn:learn: target '//tensorflow/contrib/learn:learn' depends on deprecated target '//tensorflow/contrib/session_bundle:exporter': No longer supported. Switch to SavedModel immediately.
+WARNING: /external4docker/tensorflow/tensorflow/contrib/learn/BUILD:17:1: in py_library rule //tensorflow/contrib/learn:learn: target '//tensorflow/contrib/learn:learn' depends on deprecated target '//tensorflow/contrib/session_bundle:gc': No longer supported. Switch to SavedModel immediately.
+WARNING: /external4docker/tensorflow/tensorflow/contrib/timeseries/python/timeseries/state_space_models/BUILD:233:1: in py_library rule //tensorflow/contrib/timeseries/python/timeseries/state_space_models:filtering_postprocessor: target '//tensorflow/contrib/timeseries/python/timeseries/state_space_models:filtering_postprocessor' depends on deprecated target '//tensorflow/contrib/distributions:distributions_py': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.contrib.distributions are unmaintained, unsupported, and will be removed by late 2018. You should update all usage of `tf.contrib.distributions` to `tfp.distributions`.
+WARNING: /external4docker/tensorflow/tensorflow/contrib/timeseries/python/timeseries/state_space_models/BUILD:76:1: in py_library rule //tensorflow/contrib/timeseries/python/timeseries/state_space_models:kalman_filter: target '//tensorflow/contrib/timeseries/python/timeseries/state_space_models:kalman_filter' depends on deprecated target '//tensorflow/contrib/distributions:distributions_py': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.contrib.distributions are unmaintained, unsupported, and will be removed by late 2018. You should update all usage of `tf.contrib.distributions` to `tfp.distributions`.
+WARNING: /external4docker/tensorflow/tensorflow/contrib/seq2seq/BUILD:23:1: in py_library rule //tensorflow/contrib/seq2seq:seq2seq_py: target '//tensorflow/contrib/seq2seq:seq2seq_py' depends on deprecated target '//tensorflow/contrib/distributions:distributions_py': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.contrib.distributions are unmaintained, unsupported, and will be removed by late 2018. You should update all usage of `tf.contrib.distributions` to `tfp.distributions`.
+WARNING: /external4docker/tensorflow/tensorflow/contrib/seq2seq/BUILD:23:1: in py_library rule //tensorflow/contrib/seq2seq:seq2seq_py: target '//tensorflow/contrib/seq2seq:seq2seq_py' depends on deprecated target '//tensorflow/python/ops/distributions:distributions': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.distributions will not receive new features, and will be removed by early 2019. You should update all usage of `tf.distributions` to `tfp.distributions`.
+WARNING: /external4docker/tensorflow/tensorflow/contrib/timeseries/python/timeseries/BUILD:356:1: in py_library rule //tensorflow/contrib/timeseries/python/timeseries:ar_model: target '//tensorflow/contrib/timeseries/python/timeseries:ar_model' depends on deprecated target '//tensorflow/contrib/distributions:distributions_py': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.contrib.distributions are unmaintained, unsupported, and will be removed by late 2018. You should update all usage of `tf.contrib.distributions` to `tfp.distributions`.
+WARNING: /external4docker/tensorflow/tensorflow/contrib/bayesflow/BUILD:17:1: in py_library rule //tensorflow/contrib/bayesflow:bayesflow_py: target '//tensorflow/contrib/bayesflow:bayesflow_py' depends on deprecated target '//tensorflow/contrib/distributions:distributions_py': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.contrib.distributions are unmaintained, unsupported, and will be removed by late 2018. You should update all usage of `tf.contrib.distributions` to `tfp.distributions`.
+WARNING: /external4docker/tensorflow/tensorflow/contrib/BUILD:13:1: in py_library rule //tensorflow/contrib:contrib_py: target '//tensorflow/contrib:contrib_py' depends on deprecated target '//tensorflow/contrib/distributions:distributions_py': TensorFlow Distributions has migrated to TensorFlow Probability (https://github.com/tensorflow/probability). Deprecated copies remaining in tf.contrib.distributions are unmaintained, unsupported, and will be removed by late 2018. You should update all usage of `tf.contrib.distributions` to `tfp.distributions`.
+INFO: Analysed target //tensorflow/tools/pip_package:build_pip_package (364 packages loaded, 23677 targets configured).
+INFO: Found 1 target...
+INFO: From Compiling tensorflow/lite/kernels/gemm_support.cc:
+In file included from external/gemmlowp/public/../internal/../fixedpoint/fixedpoint.h:874:0,
+                 from external/gemmlowp/public/../internal/output.h:26,
+                 from external/gemmlowp/public/../internal/unpack.h:23,
+                 from external/gemmlowp/public/../internal/single_thread_gemm.h:29,
+                 from external/gemmlowp/public/../internal/multi_thread_gemm.h:24,
+                 from external/gemmlowp/public/../internal/dispatch_gemm_shape.h:23,
+                 from external/gemmlowp/public/gemmlowp.h:19,
+                 from ./tensorflow/lite/kernels/gemm_support.h:18,
+                 from tensorflow/lite/kernels/gemm_support.cc:15:
+external/gemmlowp/public/../internal/../fixedpoint/./fixedpoint_sse.h:43:39: warning: ignoring attributes on template argument '__m128i {aka __vector(2) long long int}' [-Wignored-attributes]
+ struct FixedPointRawTypeTraits<__m128i> {
+                                       ^
+In file included from external/gemmlowp/public/../internal/simd_wrappers.h:509:0,
+                 from external/gemmlowp/public/../internal/output.h:28,
+                 from external/gemmlowp/public/../internal/unpack.h:23,
+                 from external/gemmlowp/public/../internal/single_thread_gemm.h:29,
+                 from external/gemmlowp/public/../internal/multi_thread_gemm.h:24,
+                 from external/gemmlowp/public/../internal/dispatch_gemm_shape.h:23,
+                 from external/gemmlowp/public/gemmlowp.h:19,
+
+
+
+INFO: From Compiling tensorflow/contrib/bigtable/kernels/bigtable_sample_key_pairs_dataset_op.cc:
+In file included from ./tensorflow/core/platform/tensor_coding.h:21:0,
+                 from ./tensorflow/core/framework/resource_handle.h:19,
+                 from ./tensorflow/core/framework/allocator.h:24,
+                 from ./tensorflow/core/framework/tensor.h:22,
+                 from ./tensorflow/core/framework/attr_value_util.h:24,
+                 from ./tensorflow/core/framework/dataset.h:23,
+                 from ./tensorflow/contrib/bigtable/kernels/bigtable_lib.h:23,
+                 from tensorflow/contrib/bigtable/kernels/bigtable_sample_key_pairs_dataset_op.cc:16:
+./tensorflow/core/lib/core/refcount.h: In member function 'virtual void tensorflow::data::{anonymous}::BigtableSampleKeyPairsDatasetOp::MakeDataset(tensorflow::OpKernelContext*, tensorflow::data::DatasetBase**)':
+./tensorflow/core/lib/core/refcount.h:104:12: warning: 'resource' may be used uninitialized in this function [-Wmaybe-uninitialized]
+     delete this;
+            ^~~~
+tensorflow/contrib/bigtable/kernels/bigtable_sample_key_pairs_dataset_op.cc:38:28: note: 'resource' was declared here
+     BigtableTableResource* resource;
+                            ^~~~~~~~
+INFO: From Compiling tensorflow/contrib/ignite/kernels/client/ignite_plain_client_unix.cc [for host]:
+tensorflow/contrib/ignite/kernels/client/ignite_plain_client_unix.cc: In member function 'virtual tensorflow::Status tensorflow::PlainClient::Connect()':
+tensorflow/contrib/ignite/kernels/client/ignite_plain_client_unix.cc:50:30: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   if (server.sin_addr.s_addr == -1) {
+       ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+INFO: From Executing genrule //tensorflow/contrib/ignite:gen_igfs_ops_pygenrule:
+2019-12-11 23:04:52.310249: I tensorflow/contrib/ignite/kernels/igfs/igfs.cc:68] IGFS created [host=localhost, port=10500, fs_name=default_fs]
+INFO: From Compiling tensorflow/core/grappler/optimizers/loop_optimizer.cc:
+tensorflow/core/grappler/optimizers/loop_optimizer.cc: In member function 'tensorflow::Status tensorflow::grappler::LoopOptimizer::RemoveDeadBranches(const std::unordered_set<std::__cxx11::basic_string<char> >&, const tensorflow::grappler::NodeMap&, tensorflow::GraphDef*)':
+tensorflow/core/grappler/optimizers/loop_optimizer.cc:660:3: warning: 'constant_switch_value' may be used uninitialized in this function [-Wmaybe-uninitialized]
+   if (constant_switch_value == false) {
+   ^~
+tensorflow/core/grappler/optimizers/loop_optimizer.cc:656:8: note: 'constant_switch_value' was declared here
+   bool constant_switch_value;
+        ^~~~~~~~~~~~~~~~~~~~~
+ERROR: /external4docker/tensorflow/tensorflow/contrib/tensorrt/BUILD:268:1: C++ compilation of rule '//tensorflow/contrib/tensorrt:trt_conversion' failed (Exit 1)
+tensorflow/contrib/tensorrt/convert/convert_nodes.cc: In constructor 'tensorflow::tensorrt::convert::TRT_TensorOrWeights::TRT_TensorOrWeights(nvinfer1::DataType, const nvinfer1::Dims&, int)':
+tensorflow/contrib/tensorrt/convert/convert_nodes.cc:516:60: error: invalid new-expression of abstract class type 'tensorflow::tensorrt::convert::TRT_TensorOrWeights::SimpleITensor'
+     : simple_itensor_(new SimpleITensor(trt_dtype, trt_dims)),
+                                                            ^
+tensorflow/contrib/tensorrt/convert/convert_nodes.cc:459:28: note:   because the following virtual functions are pure within 'tensorflow::tensorrt::convert::TRT_TensorOrWeights::SimpleITensor':
+ class TRT_TensorOrWeights::SimpleITensor : public nvinfer1::ITensor {
+                            ^~~~~~~~~~~~~
+In file included from ./tensorflow/contrib/tensorrt/log/trt_logger.h:23:0,
+                 from ./tensorflow/contrib/tensorrt/convert/convert_nodes.h:26,
+                 from tensorflow/contrib/tensorrt/convert/convert_nodes.cc:16:
+bazel-out/k8-opt/genfiles/external/local_config_tensorrt/tensorrt/include/NvInfer.h:774:18: note:   virtual bool nvinfer1::ITensor::dynamicRangeIsSet() const
+     virtual bool dynamicRangeIsSet() const = 0;
+                  ^~~~~~~~~~~~~~~~~
+bazel-out/k8-opt/genfiles/external/local_config_tensorrt/tensorrt/include/NvInfer.h:779:18: note:   virtual void nvinfer1::ITensor::resetDynamicRange()
+     virtual void resetDynamicRange() = 0;
+                  ^~~~~~~~~~~~~~~~~
+bazel-out/k8-opt/genfiles/external/local_config_tensorrt/tensorrt/include/NvInfer.h:786:19: note:   virtual float nvinfer1::ITensor::getDynamicRangeMin() const
+     virtual float getDynamicRangeMin() const = 0;
+                   ^~~~~~~~~~~~~~~~~~
+bazel-out/k8-opt/genfiles/external/local_config_tensorrt/tensorrt/include/NvInfer.h:793:19: note:   virtual float nvinfer1::ITensor::getDynamicRangeMax() const
+     virtual float getDynamicRangeMax() const = 0;
+                   ^~~~~~~~~~~~~~~~~~
+Target //tensorflow/tools/pip_package:build_pip_package failed to build
+Use --verbose_failures to see the command lines of failed build steps.
+INFO: Elapsed time: 6402.079s, Critical Path: 753.05s
+INFO: 9140 processes: 9140 local.
+FAILED: Build did NOT complete successfully

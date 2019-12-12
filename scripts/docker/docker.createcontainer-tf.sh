@@ -2,7 +2,7 @@
 
 function docker_main() {
   local SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
-  source ${SCRIPTS_DIR}/docker.env-aidev.sh $2
+  source ${SCRIPTS_DIR}/docker.config.sh $2
   source ${SCRIPTS_DIR}/docker.fn.sh
 
   ${DOCKER_CMD} --version

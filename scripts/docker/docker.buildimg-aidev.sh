@@ -96,5 +96,5 @@ EOL
   echo "Enjoy!"
 }
 
-## $1 is WHICHONE; refer: docker.env-aidev.sh
+## $1 is WHICHONE; refer: docker.config.sh
 build_docker_img_aimldl $1

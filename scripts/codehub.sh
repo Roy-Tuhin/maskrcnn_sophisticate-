@@ -54,10 +54,8 @@
 
 
 function codehub_main() {
-  local SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
-
-  source ${SCRIPTS_DIR}/lscripts/utils/common.sh
-  source ${SCRIPTS_DIR}/codehub.config.sh
+  source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/lscripts/utils/common.sh
+  source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/codehub.config.sh
 
   ## Reset the global environment variables.
   ## This makes script re-entrant and side effects can be avoided.
@@ -179,7 +177,7 @@ function codehub_main() {
 
     local env
     local _line
-    local export_file="${SCRIPTS_DIR}/config/codehub.export.sh"
+    local export_file=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/config/codehub.export.sh
     
     echo "#!/bin/bash" > ${export_file}
     for env in "${!CHUB_ENVVARS[@]}"; do
@@ -229,7 +227,7 @@ function codehub_main() {
   function __copy_config_files__() {
     debug "__copy_config_files__:============================"
     debug ${CHUB_ENVVARS['CHUB_CONFIG']}
-    rsync -r ${SCRIPTS_DIR}/config/* ${CHUB_ENVVARS['CHUB_CONFIG']}
+    rsync -r $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/config/* ${CHUB_ENVVARS['CHUB_CONFIG']}
     ls -ltr ${CHUB_ENVVARS['CHUB_CONFIG']}
   }
 

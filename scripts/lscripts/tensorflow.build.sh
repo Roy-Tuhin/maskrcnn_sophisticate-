@@ -9,6 +9,17 @@ cd /external4docker/tensorflow
 ## https://github.com/tensorflow/tensorflow/issues/10289
 ## https://github.com/bazelbuild/bazel/issues/6648
 bazel build --config=opt --config=cuda --action_env PATH="$PATH"  --incompatible_strict_action_env=false //tensorflow/tools/pip_package:build_pip_package
+bazel build --config=opt --config=cuda --action_env PATH="$PATH"  --incompatible_strict_action_env=false //external4docker/tensorflow/tensorflow/tools/pip_package:build_pip_package
+bazel build --verbose_failures --config=opt --config=cuda --action_env PATH="$PATH"  --incompatible_strict_action_env=false //external4docker/tensorflow/tensorflow/tools/pip_package:build_pip_package
+
+
+
+
+bazel build --color=yes --curses=yes --config=cuda\
+    --verbose_failures \
+    --output_filter=DONT_MATCH_ANYTHING \
+    tensorflow_serving/model_servers:tensorflow_model_server
+
 
 
 ./bazel-bin/tensorflow/tools/pip_package/build_pip_package /codehub/tmp/tensorflow_pkg

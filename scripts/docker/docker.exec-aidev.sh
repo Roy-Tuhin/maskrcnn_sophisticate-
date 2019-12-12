@@ -6,7 +6,7 @@
 ### -------------------------------------------
 
 function exec_container() {
-  source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/docker.env-aidev.sh
+  source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/docker.config.sh
 
   if [ ! -z $1 ]; then
     DOCKER_CONTAINER_NAME=$1
