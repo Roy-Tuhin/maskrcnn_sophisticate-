@@ -10,7 +10,7 @@
 ##----------------------------------------------------------
 
 ## uninstall
-sudo apt remove docker docker-engine docker.io
+sudo apt -y remove docker docker-engine docker.io
 sudo apt update
 ## Install packages to allow apt to use a repository over HTTPS:
 sudo apt -q -y install \

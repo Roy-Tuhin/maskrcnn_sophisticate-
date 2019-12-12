@@ -13,6 +13,7 @@ __version__ = '1.0'
 API_DEFAULT_MODEL_KEY = 'vidteq-hmd-1'
 # API_DEFAULT_MODEL_KEY = 'vidteq-ods-171019_190549'
 API_DEFAULT_MODEL_KEY = 'maybeshewill-rld-1'
+API_DEFAULT_MODEL_KEY = 'vidteq-rld-1'
 
 MODE = 'gpu' #['gpu','cpu']
 GPU_ID = 0

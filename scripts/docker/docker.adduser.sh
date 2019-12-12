@@ -20,6 +20,13 @@ function docker_adduser() {
   # echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/user
 
   cp -r /etc/skel/. /home/${HUSER}
+  # Set user files ownership to current user, such as .bashrc, .profile, etc.
+  chown ${HUSER}:${HUSER_GRP} /home/${HUSER}
+  ls -ad /home/${HUSER}/.??* | xargs chown -R ${HUSER}:${HUSER_GRP}
+}
+
+
+function bashrc_patch_1() {
   echo '
   export PATH=${PATH}:/usr/local/bin
 
@@ -28,10 +35,18 @@ function docker_adduser() {
   alias l="ls -lrth"
   # ulimit -c unlimited
   ' >> "/home/${HUSER}/.bashrc"
+}
 
-  # Set user files ownership to current user, such as .bashrc, .profile, etc.
-  chown ${HUSER}:${HUSER_GRP} /home/${HUSER}
-  ls -ad /home/${HUSER}/.??* | xargs chown -R ${HUSER}:${HUSER_GRP}
+
+function bashrc_patch_2() {
+  echo '
+  source /usr/local/bin/virtualenvwrapper.sh
+  export WORKON_HOME=${PY_VENV_PATH}
+  ' >> "/home/${HUSER}/.bashrc"
 }
 
 docker_adduser
+
+bashrc_patch_1
+
+bashrc_patch_2

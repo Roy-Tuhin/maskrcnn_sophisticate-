@@ -9,6 +9,7 @@ function run_batch_train_evaluate(){
 
   source "${SCRIPTS_DIR}/common.sh"
   source batch_train_evaluate_cfg.sh
+  source batch_train_evaluate_workload.sh
 
   workon ${pyenv}
 
@@ -28,18 +29,16 @@ function run_batch_train_evaluate(){
   # local annon_frompaths_str=$(ls -dm ${annon_job_basepath}/*/annotations)
   # local annon_frompaths_arr=(${annon_frompaths_str//,/ })
 
-  declare -a no_of_dbs=($(seq 1 1 4)) ## 4 items
+  # declare -a no_of_dbs=($(seq 1 1 4)) ## 4 items
+  # local annon_prev=4
+  # echo "annon_prev: ${annon_prev}"
 
-  local annon_prev=4
-  echo "annon_prev: ${annon_prev}"
-
-  local count=0
+  # local count=0
   local index=-1
-  for item_num in "${no_of_dbs[@]}"; do
-    count=$((count + 1))
+  for annon_dbname in "${annon_dbnames[@]}"; do
     index=$(( index + 1 ))
-
-    local annon_dbname=annon_v$((annon_prev+count))
+    # count=$((count + 1))
+    # local annon_dbname=annon_v$((annon_prev+count))
     local timestamp_job_create_start=$(date -d now +'%d%m%y_%H%M%S')
 
     ## TODO: careful: somehow working, but not sure why single quotes to be there

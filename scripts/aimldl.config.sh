@@ -13,6 +13,8 @@ AI_PY_VENV_PATH='${HOME}'/${AI_VM_BASE}/virtualenvs
 
 WORKON_HOME=${AI_PY_VENV_PATH}
 
+## What Is /dev/shm And Its Practical Usage?
+## https://www.cyberciti.biz/tips/what-is-devshm-and-its-practical-usage.html
 
 AI_WSGIPythonPath="py_3-6-8_2019-06-26/bin"
 AI_WSGIPythonHome="py_3-6-8_2019-06-26/lib/python3.6/site-packages/"
@@ -83,6 +85,8 @@ AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_24
 AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719"
 # AI_ANNON_DATA_HOME="${AI_ANNON_DATA_HOME_LOCAL}"
 
+## Inspired by:
+## https://github.com/ApolloAuto/apollo/tree/master/scripts
 
 ## absoulte path will always be /aimldl-dat
 AI_WEIGHTS_PATH="release" ## default value for production/CBR release

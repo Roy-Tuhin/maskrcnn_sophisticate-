@@ -55,4 +55,16 @@ sudo systemctl enable gunicorn.service
 ## sudo nginx -t
 ## sudo systemctl restart nginx.service
 
+
+## How To's
+## * List all services
+## systemctl --type=service
+
+## https://unix.stackexchange.com/questions/139513/how-to-clear-journalctl
+## * Clear logs
+## sudo journalctl -m --vacuum-time=1s 
+
+## * Using environment file
+## https://coreos.com/os/docs/latest/using-systemd-drop-in-units.html
+
 ##----------------------------------------------------------

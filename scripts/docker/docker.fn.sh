@@ -33,6 +33,8 @@ function docker_envvars() {
   envvars="${envvars} -e HUSER_ID=${HUSER_ID} "
   envvars="${envvars} -e HUSER_GRP=${HUSER_GRP} "
   envvars="${envvars} -e HUSER_GRP_ID=${HUSER_GRP_ID} "
+  envvars="${envvars} -e PY_VENV_PATH=${PY_VENV_PATH} "
+  envvars="${envvars} -e PY_VENV_NAME=${PY_VENV_NAME} "
 
   echo "${envvars}"
 }
@@ -118,7 +120,7 @@ function create_container() {
 function userfix() {
   if [ "${HUSER}" != "root" ]; then
     ${DOCKER_CMD} exec ${DOCKER_CONTAINER_NAME} /bin/bash -c "source ${SCRIPTS_BASE_PATH}/docker/docker.adduser.sh"
-    ${DOCKER_CMD} exec ${DOCKER_CONTAINER_NAME} /bin/bash -c "chown -R ${HUSER}:${HUSER_GRP} ${WORK_BASE_PATH}"
+    # ${DOCKER_CMD} exec ${DOCKER_CONTAINER_NAME} /bin/bash -c "chown -R ${HUSER}:${HUSER_GRP} ${WORK_BASE_PATH}"
     # ${DOCKER_CMD} exec ${DOCKER_CONTAINER_NAME} /bin/bash -c "[ -d ${WORK_BASE_PATH} ] && chown -R ${HUSER}:${HUSER_GRP} ${WORK_BASE_PATH} && \
     #   chmod a+w ${WORK_BASE_PATH}"
     # ${DOCKER_CMD} exec ${DOCKER_CONTAINER_NAME} /bin/bash -c "[ -d ${OTHR_BASE_PATHS} ] && chown -R ${HUSER}:${HUSER_GRP} ${OTHR_BASE_PATHS} && \
