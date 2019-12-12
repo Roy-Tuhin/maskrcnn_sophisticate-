@@ -97,3 +97,12 @@ docker.userfix.sh:  source "${SCRIPTS_DIR}/docker.env-aidev.sh"
 @baaz@ultron:00:47:27:docker$subl docker.buildimg-aidev.sh
 
 
+
+
+
+## Shell script
+
+* https://www.computerhope.com/unix/adduser.htm
+* https://www.cyberciti.biz/faq/linux-change-user-group-uid-gid-for-all-owned-files/
+* https://wiki.bash-hackers.org/scripting/debuggingtips
+* https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script
