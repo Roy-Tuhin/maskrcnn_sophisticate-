@@ -1,0 +1,112 @@
+## Train
+# classes:
+# - BG
+# - loose_material
+# - footpath_polygon
+# - signage
+# - traffic_sign_frame
+# - traffic_sign
+# - barricade
+# - traffic_light
+# - pole
+# - street_light
+# - billboard
+# - road_polygon
+# - reflector
+# - flyover_pillar
+# - cctv_camera
+# - lane_marking
+# - crosswalk
+# - speed_breaker
+# - booth
+# - roadside_junction_box
+# - transformer
+# - roadside_spot_light
+# - pothole
+# - garbage_can
+# - lane_arrow_marking
+# - garbage_pile
+## Val
+# classes:
+# - BG 
+# - lane_marking 
+# - road_polygon 
+# - crosswalk
+# - footpath_polygon 
+# - traffic_sign_frame 
+# - signage
+# - traffic_light
+# - speed_breaker
+# - traffic_sign
+# - pole
+# - street_light
+# - cctv_camera
+# - pothole
+# - transformer
+# - loose_material
+# - flyover_pillar
+# - reflector
+# - billboard
+# - booth
+# - barricade
+# - roadside_spot_light
+# - roadside_junction_box
+# - lane_arrow_marking
+# - garbage_can
+# - garbage_pile
+## Test
+classes:
+- BG
+- traffic_sign
+- signage
+- traffic_light
+- loose_material
+- blah # - traffic_sign_frame
+- pole
+- street_light
+- reflector
+- cctv_camera
+- billboard
+- flyover_pillar
+- garbage_pile
+- footpath_polygon
+- lane_marking
+- crosswalk
+- road_polygon
+- speed_breaker
+- booth
+- barricade
+- transformer
+- roadside_junction_box
+- roadside_spot_light
+- pothole
+- garbage_can
+- lane_arrow_marking
+classinfo: null
+config:
+  DETECTION_MIN_CONFIDENCE: 0.9
+  GPU_COUNT: 1
+  IMAGES_PER_GPU: 1
+  IMAGE_MAX_DIM: 1024
+  IMAGE_MIN_DIM: 800
+  NAME: hmd
+  NUM_CLASSES: 26
+dataset: PXL-240919_175423_250919_122117
+dnnarch: mask_rcnn
+framework_type: keras
+id: hmd
+load_weights:
+  by_name: true
+  exclude:
+  - mrcnn_class_logits
+  - mrcnn_bbox_fc
+  - mrcnn_bbox
+  - mrcnn_mask
+mode: inference
+name: hmd
+num_classes: 26
+org_name: vidteq
+problem_id: hmd
+rel_num: 8
+weights: null
+weights_path: mask_rcnn/280919_180453/train_hmd_280919_182625/mask_rcnn_hmd_0160.h5

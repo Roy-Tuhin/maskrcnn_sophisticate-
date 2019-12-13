@@ -1,0 +1,56 @@
+classes:
+- BG
+- barricade
+- billboard
+- booth
+- cctv_camera
+- crosswalk
+- flyover_pillar
+- footpath_polygon
+- garbage_can
+- garbage_pile
+- lane_arrow_marking
+- lane_marking
+- loose_material
+- pole
+- pothole
+- reflector
+- road_polygon
+- roadside_junction_box
+- roadside_spot_light
+- signage
+- speed_breaker
+- street_light
+- traffic_light
+- traffic_pole
+- traffic_sign
+- traffic_sign_frame
+- transformer
+classinfo: null
+config:
+  DETECTION_MIN_CONFIDENCE: 0.9
+  GPU_COUNT: 1
+  IMAGES_PER_GPU: 1
+  IMAGE_MAX_DIM: 1920
+  IMAGE_MIN_DIM: 1080
+  NAME: hmd
+  NUM_CLASSES: 27
+dataset: PXL-161019_175838
+dnnarch: mask_rcnn
+framework_type: keras
+id: hmd
+load_weights:
+  by_name: true
+  exclude:
+  - mrcnn_class_logits
+  - mrcnn_bbox_fc
+  - mrcnn_bbox
+  - mrcnn_mask
+mode: inference
+name: hmd
+num_classes: 27
+org_name: vidteq
+problem_id: hmd
+rel_num: 161019_181526
+weights: null
+weights_path: mask_rcnn/161019_181526/train_hmd_161019_181845/mask_rcnn_hmd_0010.h5

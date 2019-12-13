@@ -1,0 +1,31 @@
+classes:
+- BG
+- bbox
+classinfo: null
+config:
+  DETECTION_MIN_CONFIDENCE: 0.9
+  GPU_COUNT: 1
+  IMAGES_PER_GPU: 1
+  IMAGE_MAX_DIM: 1280
+  IMAGE_MIN_DIM: 720
+  NAME: bbox
+  NUM_CLASSES: 2
+dataset: tsd-1.yml
+dnnarch: mask_rcnn
+framework_type: keras
+id: tsd
+load_weights:
+  by_name: true
+  exclude:
+  - mrcnn_class_logits
+  - mrcnn_bbox_fc
+  - mrcnn_bbox
+  - mrcnn_mask
+mode: inference
+name: bbox
+num_classes: 2
+org_name: vidteq
+problem_id: tsd
+rel_num: 5
+weights: null
+weights_path: vidteq/tsd/5/mask_rcnn/weights/mask_rcnn_bbox_0030.h5

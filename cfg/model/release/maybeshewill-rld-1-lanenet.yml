@@ -1,0 +1,15 @@
+classes: null
+classinfo: null
+config: null
+dataset: tusimple
+dnnarch: lanenet
+framework_type: tensorflow
+id: rld
+mode: inference
+name: rld
+num_classes: null
+org_name: maybeshewill
+problem_id: rld
+rel_num: 1
+weights: null
+weights_path: maybeshewill/rld/1/lanenet/lanenet_vgg/tusimple_lanenet_vgg.ckpt

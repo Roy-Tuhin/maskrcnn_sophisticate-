@@ -1,0 +1,17 @@
+dnnarch: faster_rcnn_end2end
+evaluate:
+  config: null
+  device: /gpu:0
+  dnnarch: faster_rcnn_end2end
+  mode: inference
+framework_type: caffe
+predict:
+  config: null
+  device: /gpu:0
+  dnnarch: faster_rcnn_end2end
+  mode: inference
+train:
+  config: null
+  device: /gpu:0
+  dnnarch: faster_rcnn_end2end
+  mode: training

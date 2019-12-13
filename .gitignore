@@ -3,7 +3,7 @@
 /*
 
 
-# Whitelist some files
+## Whitelist some files
 !.gitignore
 !.gitmodules
 !*.md
@@ -18,20 +18,22 @@
 # !android/
 !apps/
 !auth/
+!cfg/
 # !data/
 # !downloads/
 # !logs/
 # !external/
+# !external4docker/
 !practice/
 !readme/
+!samples/
 !scripts/
 !_site/
 !tests/
+# !tmp/
 # !tools/
-# !cfg/
 # !workspaces/
 
-# **/*.yml
 **/*bk
 **/*.pyc
 **/*__pycache__
@@ -40,5 +42,4 @@
 **/temp.*
 **/README.html
 **/*.ipynb_checkpoints
-
 **/*.py.*

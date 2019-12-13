@@ -1,0 +1,34 @@
+classes:
+- BG
+- booth
+- cctv_camera
+- lane_arrow_marking
+- pothole
+classinfo: null
+config:
+  DETECTION_MIN_CONFIDENCE: 0.9
+  GPU_COUNT: 1
+  IMAGES_PER_GPU: 1
+  IMAGE_MAX_DIM: 1920
+  IMAGE_MIN_DIM: 1080
+  NAME: hmd
+  NUM_CLASSES: 5
+dataset: 240419_142215.yml
+dnnarch: mask_rcnn
+framework_type: keras
+id: hmd
+load_weights:
+  by_name: true
+  exclude:
+  - mrcnn_class_logits
+  - mrcnn_bbox_fc
+  - mrcnn_bbox
+  - mrcnn_mask
+mode: inference
+name: hmd
+num_classes: 5
+org_name: vidteq
+problem_id: hmd
+rel_num: 5
+weights: null
+weights_path: mask_rcnn/train_hmd_290419_172517/mask_rcnn_hmd_0032.h5

@@ -24,7 +24,8 @@ AI_WSGIPythonHome="py_3-6-8_2019-06-26/lib/python3.6/site-packages/"
 
 ## AI Top Level Directories
 AI_CODE_BASE_PATH="/codehub"
-AI_CFG_BASE_PATH="/${AI_DIR_PREFIX}-cfg"
+# AI_CFG_BASE_PATH="/${AI_DIR_PREFIX}-cfg"
+AI_CFG_BASE_PATH="${AI_CODE_BASE_PATH}/cfg"
 AI_DATA_BASE_PATH="/${AI_DIR_PREFIX}-dat"
 AI_MOUNT_BASE_PATH="/${AI_DIR_PREFIX}-mnt"
 AI_DOC_BASE_PATH="/${AI_DIR_PREFIX}-doc"
@@ -69,8 +70,10 @@ declare -a AI_PY_ENVVARS=(
 
 declare -a AI_REMOTE_MACHINE_IDS=(
   "alpha"
-  "ultron"
   "jarvis"
+  "ultron"
+  "venom"
+  "flash"
   "samba-100"
 )
 

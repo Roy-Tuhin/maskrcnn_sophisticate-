@@ -1,0 +1,38 @@
+aids_id: null
+classes:
+- BG
+- road_asphalt
+- road_edge
+- white_line
+- traffic_sign
+classinfo: null
+config:
+  DETECTION_MIN_CONFIDENCE: 0.9
+  GPU_COUNT: 1
+  IMAGES_PER_GPU: 1
+  IMAGE_MAX_DIM: 1920
+  IMAGE_MIN_DIM: 1080
+  NAME: tsdr
+  NUM_CLASSES: 5
+dataset: tsdr-1.yml
+description: null
+dnnarch: mask_rcnn
+framework_type: keras
+id: tsdr
+load_weights:
+  by_name: true
+  exclude:
+  - mrcnn_class_logits
+  - mrcnn_bbox_fc
+  - mrcnn_bbox
+  - mrcnn_mask
+mode: inference
+name: tsdr
+num_classes: 5
+org_name: vidteq
+problem_id: tsdr
+prototxt: null
+rel_num: 1
+teppr_id: null
+weights: null
+weights_path: vidteq/tsdr/1/mask_rcnn/weights/mask_rcnn_tsdr_0040.h5

@@ -1,0 +1,15 @@
+classes: null
+classinfo: null
+config: null
+dataset: lnd-291119_174355
+dnnarch: lanenet
+framework_type: tensorflow
+id: rld
+mode: inference
+name: rld
+num_classes: null
+org_name: vidteq
+problem_id: rld
+rel_num: 1
+weights: null
+weights_path: vidteq/rld/1/lanenet/weights/tusimple_lanenet_vgg_2019-11-29-18-12-57.ckpt-144002

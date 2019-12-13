@@ -1,0 +1,63 @@
+checkpoint_path: /aimldl-dat/logs/mask_rcnn/161019_181526/train_hmd_161019_184833/mask_rcnn_hmd_{epoch:04d}.h5
+classes:
+- BG
+- barricade
+- billboard
+- booth
+- cctv_camera
+- crosswalk
+- flyover_pillar
+- footpath_polygon
+- garbage_can
+- garbage_pile
+- lane_arrow_marking
+- lane_marking
+- loose_material
+- pole
+- pothole
+- reflector
+- road_polygon
+- roadside_junction_box
+- roadside_spot_light
+- signage
+- speed_breaker
+- street_light
+- traffic_light
+- traffic_pole
+- traffic_sign
+- traffic_sign_frame
+- transformer
+classinfo: null
+config:
+  BACKBONE: resnet50
+  DETECTION_MIN_CONFIDENCE: 0.9
+  GPU_COUNT: 1
+  IMAGES_PER_GPU: 1
+  IMAGE_MAX_DIM: 1024
+  IMAGE_MIN_DIM: 800
+  STEPS_PER_EPOCH: 1000
+creator: AIE3
+dataset: PXL-161019_175838
+dbname: PXL-161019_175838
+dnnarch: mask_rcnn
+framework_type: keras
+id: null
+load_weights:
+  by_name: true
+  exclude:
+  - mrcnn_class_logits
+  - mrcnn_bbox_fc
+  - mrcnn_bbox
+  - mrcnn_mask
+log_dir: /aimldl-dat/logs/mask_rcnn/161019_181526/train_hmd_161019_184833
+mode: inference
+model_info: vidteq-hmd-161019_184833-mask_rcnn.yml
+name: hmd
+num_classes: 27
+org_name: vidteq
+problem_id: ods
+rel_num: '161019_184833'
+timestamp: '161019_184833'
+weights: null
+# weights_path: mask_rcnn/161019_181526/train_hmd_161019_184833/mask_rcnn_hmd_0040.h5
+weights_path: mask_rcnn/161019_181526/train_hmd_161019_184833/mask_rcnn_hmd_0004.h5

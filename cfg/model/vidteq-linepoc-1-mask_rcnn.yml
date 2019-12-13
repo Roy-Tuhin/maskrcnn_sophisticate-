@@ -1,0 +1,31 @@
+classes:
+- BG
+- lane_marking
+classinfo: null
+config:
+  DETECTION_MIN_CONFIDENCE: 0.9
+  GPU_COUNT: 1
+  IMAGES_PER_GPU: 1
+  IMAGE_MAX_DIM: 1920
+  IMAGE_MIN_DIM: 1080
+  NAME: linepoc
+  NUM_CLASSES: 2
+dataset: linepoc-1.yml
+dnnarch: mask_rcnn
+framework_type: keras
+id: linepoc
+load_weights:
+  by_name: true
+  exclude:
+  - mrcnn_class_logits
+  - mrcnn_bbox_fc
+  - mrcnn_bbox
+  - mrcnn_mask
+mode: inference
+name: linepoc
+num_classes: 2
+org_name: vidteq
+problem_id: linepoc
+rel_num: 1
+weights: null
+weights_path: mask_rcnn/linepoc20190405t1818/mask_rcnn_linepoc_0040.h5

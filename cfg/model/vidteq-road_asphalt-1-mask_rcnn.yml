@@ -1,0 +1,31 @@
+classes:
+- BG
+- road_asphalt
+classinfo: null
+config:
+  DETECTION_MIN_CONFIDENCE: 0.9
+  GPU_COUNT: 1
+  IMAGES_PER_GPU: 1
+  IMAGE_MAX_DIM: 1920
+  IMAGE_MIN_DIM: 1080
+  NAME: road_asphalt
+  NUM_CLASSES: 2
+dataset: road_asphalt-1.yml
+dnnarch: mask_rcnn
+framework_type: keras
+id: road_asphalt
+load_weights:
+  by_name: true
+  exclude:
+  - mrcnn_class_logits
+  - mrcnn_bbox_fc
+  - mrcnn_bbox
+  - mrcnn_mask
+mode: inference
+name: road_asphalt
+num_classes: 2
+org_name: vidteq
+problem_id: road_segmentation_asphalt
+rel_num: 1
+weights: null
+weights_path: vidteq/road_asphalt/1/mask_rcnn/weights/mask_rcnn_road_asphalt_0026.h5

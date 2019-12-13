@@ -1,0 +1,30 @@
+classes:
+- BG
+- crosswalk
+config:
+  DETECTION_MIN_CONFIDENCE: 0.9
+  GPU_COUNT: 1
+  IMAGES_PER_GPU: 1
+  IMAGE_MAX_DIM: 1920
+  IMAGE_MIN_DIM: 1080
+  NAME: hmd
+  NUM_CLASSES: 2
+dataset: 280519_130255.yml
+dnnarch: mask_rcnn
+framework_type: keras
+id: hmd
+load_weights:
+  by_name: true
+  exclude:
+  - mrcnn_class_logits
+  - mrcnn_bbox_fc
+  - mrcnn_bbox
+  - mrcnn_mask
+mode: inference
+name: hmd
+num_classes: 2
+org_name: vidteq
+problem_id: hmd
+rel_num: 1
+weights: null
+weights_path: mask_rcnn/train_hmd_280519_150510/mask_rcnn_hmd_0010.h5

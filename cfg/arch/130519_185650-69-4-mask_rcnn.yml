@@ -1,0 +1,84 @@
+allowed_file_type:
+- .txt
+- .csv
+- .yml
+- .json
+allowed_image_type:
+- .pdf
+- .png
+- .jpg
+- .jpeg
+- .gif
+allowed_video_type:
+- .mp4
+dataset: 130519_185650.yml
+dnnarch: mask_rcnn
+evaluate:
+  config:
+    DETECTION_MIN_CONFIDENCE: 0.9
+    GPU_COUNT: 1
+    IMAGES_PER_GPU: 1
+    IMAGE_MAX_DIM: 1920
+    IMAGE_MIN_DIM: 1080
+  device: /gpu:0
+  dnnarch: mask_rcnn
+  evaluate_no_of_result: -1
+  iou_threshold: 0.5
+  load_weights:
+    by_name: true
+    exclude:
+    - mrcnn_class_logits
+    - mrcnn_bbox_fc
+    - mrcnn_bbox
+    - mrcnn_mask
+  mode: inference
+  model_info: vidteq-hmd-130519_185650-69-4-mask_rcnn.yml
+  save_viz_and_json: false
+  weights: null
+framework_type: keras
+predict:
+  config:
+    DETECTION_MIN_CONFIDENCE: 0.5
+    GPU_COUNT: 1
+    IMAGES_PER_GPU: 1
+    IMAGE_MAX_DIM: 1920
+    IMAGE_MIN_DIM: 1080
+  device: /gpu:0
+  dnnarch: mask_rcnn
+  load_weights:
+    by_name: true
+    exclude:
+    - mrcnn_class_logits
+    - mrcnn_bbox_fc
+    - mrcnn_bbox
+    - mrcnn_mask
+  mode: inference
+  model_info: vidteq-hmd-130519_185650-69-4-mask_rcnn.yml
+  save_viz_and_json: false
+  weights: null
+test_mode: inference
+train:
+  config:
+    DETECTION_MIN_CONFIDENCE: 0.9
+    GPU_COUNT: 1
+    IMAGES_PER_GPU: 1
+    IMAGE_MAX_DIM: 1024
+    IMAGE_MIN_DIM: 800
+    STEPS_PER_EPOCH: 50
+  device: /gpu:0
+  dnnarch: mask_rcnn
+  load_weights:
+    by_name: true
+    exclude:
+    - mrcnn_class_logits
+    - mrcnn_bbox_fc
+    - mrcnn_bbox
+    - mrcnn_mask
+  mode: training
+  model_info: matterport-coco_things-1-mask_rcnn.yml
+  schedules:
+  - epochs: 10
+    layers: heads
+    learning_rate: 0.0001
+  weights: null
+train_mode: training

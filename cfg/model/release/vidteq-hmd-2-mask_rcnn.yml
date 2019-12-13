@@ -1,0 +1,61 @@
+classes:
+- BG
+- ambulance
+- auto_rikshaw
+- barrigade
+- billboard
+- booth
+- cctv_camera
+- cement_truck
+- flyover_pillar
+- garbage_can
+- garbage_pile
+- garbage_trolley
+- invalid_carriage
+- pole
+- reflector
+- road_tanker
+- roadside_junction_box
+- roadside_spot_light
+- signage
+- street_light
+- tempo_traveller_or_mini_bus
+- tractor
+- traffic_light
+- traffic_pole
+- traffic_sign
+- traffic_sign_frame
+- transformer
+- tree_leaf_branch
+- tree_trunk
+- truck
+- tvs_luna_mopet
+- vegetation
+classinfo: null
+config:
+  DETECTION_MIN_CONFIDENCE: 0.9
+  GPU_COUNT: 1
+  IMAGES_PER_GPU: 1
+  IMAGE_MAX_DIM: 1920
+  IMAGE_MIN_DIM: 1080
+  NAME: hmd
+  NUM_CLASSES: 32
+dataset: hmd-120419_183656-120419_183734.yml
+dnnarch: mask_rcnn
+framework_type: keras
+id: hmd
+load_weights:
+  by_name: true
+  exclude:
+  - mrcnn_class_logits
+  - mrcnn_bbox_fc
+  - mrcnn_bbox
+  - mrcnn_mask
+mode: inference
+name: hmd
+num_classes: 32
+org_name: vidteq
+problem_id: hmd
+rel_num: 2
+weights: null
+weights_path: vidteq/hmd/2/mask_rcnn/weights/mask_rcnn_hmd_0040.h5

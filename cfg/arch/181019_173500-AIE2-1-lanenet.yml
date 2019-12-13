@@ -1,0 +1,96 @@
+creator: 'AIE2'
+train:
+  allowed_file_type:
+  - .txt
+  - .csv
+  - .yml
+  - .json
+  allowed_image_type:
+  - .pdf
+  - .png
+  - .jpg
+  - .jpeg
+  - .gif
+  allowed_video_type:
+  - .mp4
+  train_mode: training
+  test_mode: inference
+  dbname: null
+  splits: 
+  - train
+  - val
+  - test
+  annon_type: tusimple
+  dataclass: AnnonDataset
+  name: tusimple
+  framework_type: tensorflow
+  mode: training
+  device: /gpu:0
+  weights: null
+  model_info: maybeshewill-rld-1-lanenet.yml
+  dnnarch: lanenet
+  config: null
+  load_weights: null
+  schedules: null
+evaluate:
+  allowed_file_type:
+  - .txt
+  - .csv
+  - .yml
+  - .json
+  allowed_image_type:
+  - .pdf
+  - .png
+  - .jpg
+  - .jpeg
+  - .gif
+  allowed_video_type:
+  - .mp4
+  train_mode: training
+  test_mode: inference
+  dbname: null
+  splits: 
+  - train
+  - val
+  - test
+  annon_type: tusimple
+  dataclass: AnnonDataset
+  name: rld
+  framework_type: tensorflow
+  mode: inference
+  device: /gpu:0
+  weights: null
+  model_info: maybeshewill-rld-1-lanenet.yml
+  dnnarch: lanenet
+  config: null
+  load_weights: null
+  save_viz_and_json: false
+  evaluate_no_of_result: -1
+  iou_threshold: 0.5
+predict:
+  allowed_file_type:
+  - .txt
+  - .csv
+  - .yml
+  - .json
+  allowed_image_type:
+  - .pdf
+  - .png
+  - .jpg
+  - .jpeg
+  - .gif
+  allowed_video_type:
+  - .mp4
+  train_mode: training
+  test_mode: inference
+  dbname: null
+  framework_type: tensorflow
+  mode: inference
+  device: /gpu:0
+  weights: null
+  model_info: maybeshewill-rld-1-lanenet.yml
+  dnnarch: lanenet
+  config: null
+  load_weights: null
+  save_viz_and_json: false
+  iou_threshold: 0.5
