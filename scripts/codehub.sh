@@ -99,8 +99,9 @@ function codehub_main() {
 
     CHUB_ENVVARS['CHUB_CONFIG']="${CHUB_ENVVARS['CHUB_HOME']}/config"
     CHUB_ENVVARS['CHUB_DATA']="${CHUB_ENVVARS['CHUB_HOME']}/data"
-    CHUB_ENVVARS['CHUB_HOME_EXT']="${CHUB_ENVVARS['CHUB_HOME']}/external"
     CHUB_ENVVARS['CHUB_DOWNLOADS']="${CHUB_ENVVARS['CHUB_HOME']}/downloads"
+    CHUB_ENVVARS['CHUB_HOME_EXT']="${CHUB_ENVVARS['CHUB_HOME']}/external"
+    CHUB_ENVVARS['CHUB_SCRIPTS']="${CHUB_ENVVARS['CHUB_HOME']}/scripts"
     CHUB_ENVVARS['CHUB_WORKSPACES']="${CHUB_ENVVARS['CHUB_HOME']}/workspaces"
 
     CHUB_ENVVARS['CHUB_APP']="${CHUB_ENVVARS['CHUB_HOME']}/apps"
@@ -227,7 +228,7 @@ function codehub_main() {
   function __copy_config_files__() {
     debug "__copy_config_files__:============================"
     debug ${CHUB_ENVVARS['CHUB_CONFIG']}
-    rsync -r $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/config/* ${CHUB_ENVVARS['CHUB_CONFIG']}
+    rsync -r ${CHUB_ENVVARS['CHUB_SCRIPTS']}/config/* ${CHUB_ENVVARS['CHUB_CONFIG']}
     ls -ltr ${CHUB_ENVVARS['CHUB_CONFIG']}
   }
 

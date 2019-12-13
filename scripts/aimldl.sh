@@ -54,10 +54,9 @@
 
 
 function aimldl_main() {
-  local SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
 
-  source ${SCRIPTS_DIR}/lscripts/utils/common.sh
-  source ${SCRIPTS_DIR}/aimldl.config.sh
+  source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/lscripts/utils/common.sh
+  source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/aimldl.config.sh
 
   ## Avoid leaking variables in the execution shell
 
@@ -114,8 +113,6 @@ function aimldl_main() {
     ## Use single quotes to ensure the environment variables does not get expanded
     AI_ENVVARS['APACHE_HOME']='${HOME}/public_html'
 
-    # AI_ENVVARS['AI_VM_HOME']='${HOME}'/${ai_vm_base}
-    # AI_ENVVARS['AI_PY_VENV_PATH']='${HOME}'/${ai_vm_base}/virtualenvs
     AI_ENVVARS['AI_VM_HOME']=${AI_VM_HOME}
     AI_ENVVARS['AI_PY_VENV_PATH']=${AI_PY_VENV_PATH}
     AI_ENVVARS['WORKON_HOME']=${WORKON_HOME}
@@ -376,13 +373,15 @@ function aimldl_main() {
 
 
   function create_exports() {
-    debug "create_exports:============================${SCRIPTS_DIR}"
+    debug "create_exports:============================:"
 
     local env
     local _line
-    local export_file="${SCRIPTS_DIR}/config/aimldl.export.sh"
+    local export_file=${AI_ENVVARS['AI_SCRIPTS']}/config/aimldl.export.sh
     
-    echo "#!/bin/bash" > $export_file
+    info "export_file: ${export_file}"
+
+    echo "#!/bin/bash" > ${export_file}
     for env in "${!AI_ENVVARS[@]}"; do
       _line="export ${env}"=${AI_ENVVARS[${env}]}
       info ${_line}
@@ -407,10 +406,9 @@ function aimldl_main() {
 
 
   function create_symlinks() {
-    debug 'create_symlinks:============================'
+    debug 'create_symlinks:============================:'
 
     declare -a symlinks=(
-      ${AI_ENVVARS['AI_CFG']}
       ${AI_ENVVARS['AI_DATA']}
       ${AI_ENVVARS['AI_MNT']}
       ${AI_ENVVARS['AI_DOC']}
@@ -433,26 +431,22 @@ function aimldl_main() {
 
 
   function create_config_files_aimldl() {
-    export WORKON_HOME=${AI_PY_VENV_PATH}
-    source /usr/local/bin/virtualenvwrapper.sh
     local pyver=${AI_PYVER}
     local pyenv=$(lsvirtualenv -b | grep ^py_$pyver | tr '\n' ',' | cut -d',' -f1)
-    # local pyenv=${AI_PY_VENV_NAME}
 
-    debug ${pyver}
-    debug ${pyenv}
+    debug "${pyver}, ${pyenv}"
 
     workon ${pyenv}
 
-    python ${SCRIPTS_DIR}/paths.py
-    python ${SCRIPTS_DIR}/app.py
+    python ${AI_ENVVARS['AI_SCRIPTS']}/paths.py
+    python ${AI_ENVVARS['AI_SCRIPTS']}/app.py
   }
 
 
   function __copy_config_files__() {
     debug "__copy_config_files__:============================"
     debug ${AI_ENVVARS['AI_CONFIG']}
-    rsync -r ${SCRIPTS_DIR}/config/* ${AI_ENVVARS['AI_CONFIG']}
+    rsync -r ${AI_ENVVARS['AI_SCRIPTS']}/config/* ${AI_ENVVARS['AI_CONFIG']}
     ls -ltr ${AI_ENVVARS['AI_CONFIG']}
   }
 

@@ -27,13 +27,6 @@ function codehub_setup() {
 
   inject_in_bashrc
 
-
-  ## TODO: error fix
-  ## [INFO]: ln -s CHUB_ENVVARS[APACHE_HOME] /CHUB_ENVVARS[APACHE_HOME]
-  ## ln: failed to create symbolic link '/CHUB_ENVVARS[APACHE_HOME]': Permission denied
-
-  # create_symlinks
-
   create_config_files
 }
 

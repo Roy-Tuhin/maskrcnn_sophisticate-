@@ -52,6 +52,10 @@ cfg = {
     ,'tsr': 'traffic_sign_recognition'
     ,'spd': 'sign_post_detection'
     ,'spr': 'sign_post_recognition'
+    ,'rld': 'road_lane_detection'
+    ,'rbd': 'road_boundary_detection'
+    ,'rlbd': 'road_lane_boundary_detection'
+    ,'tlr': 'traffic_light_recognition'
   }
   ## TODO: use the ROUTER instead of APP_NAME
   ,'APP_NAME': 'falcon'
@@ -69,6 +73,7 @@ cfg = {
   ,'CMD': ['train', 'predict', 'evaluate']
   ,'ARCHS':[
     'mask_rcnn'
+    ,'lanenet'
   ]
   ,'ORGNAME':[
     'matterport'
@@ -133,9 +138,9 @@ def load_yaml(filepath):
 
 
 if __name__ == '__main__':
-  yml_file = 'app.yml'
+  paths_file = 'app.yml'
+
   override_cfg()
 
-  yml_filepath = osp.join(osp.dirname(__file__),'..','config',yml_file)
-  print("yml_filepath: {}".format(yml_filepath))
-  yaml_safe_dump(yml_filepath, cfg)
+  yaml_safe_dump(osp.join(osp.dirname(__file__),'config',paths_file), cfg)
+  yaml_safe_dump(osp.join(osp.dirname(__file__),'..','config',paths_file), cfg)

@@ -1,26 +1,42 @@
-APP_PATHS:
-  AI_DATA: /home/baaz/Documents/ai-ml-dl-data
-  AI_HOME: /home/baaz/Documents/ai-ml-dl
-  AI_LOGS: /home/baaz/Documents/ai-ml-dl-data/logs
-  AI_MODEL_PATH: /aimldl-dat/release
-  AI_REPORTS: /home/baaz/Documents/ai-ml-dl/reports
-  AI_SCRIPTS: /home/baaz/Documents/ai-ml-dl/scripts
-  AI_WEB_APP: /home/baaz/Documents/ai-ml-dl/www
-  AI_WEB_APP_LOGS: /home/baaz/Documents/ai-ml-dl/www/logs
-  AI_WEB_APP_UPLOADS: /home/baaz/Documents/ai-ml-dl/www/uploads
-  BASEPATH: /aimldl-cod/scripts
-  CAFFE_ROOT: /home/baaz/Documents/ai-ml-dl/external/py-faster-rcnn/caffe-fast-rcnn
-  FRCN_ROOT: /home/baaz/Documents/ai-ml-dl/external/py-faster-rcnn
-  LOG_DIR: /home/baaz/Documents/ai-ml-dl-data/logs
-  MRCNN_ROOT: /home/baaz/Documents/ai-ml-dl/external/Mask_RCNN
-  PYTHONPATH:
-    AI_HOME_EXT:
-    - /home/baaz/Documents/ai-ml-dl/external
-    APP:
-    - /home/baaz/Documents/ai-ml-dl/apps
-    FASTER_RCNN:
-    - /home/baaz/Documents/ai-ml-dl/external/py-faster-rcnn/caffe-fast-rcnn/python
-    - /home/baaz/Documents/ai-ml-dl/external/py-faster-rcnn/lib
-    MASK_RCNN:
-    - /home/baaz/Documents/ai-ml-dl/external/Mask_RCNN
-  WEIGHTS_PATH: null
+AI_ANNON_DATA_HOME: /data/samba/Bangalore/prod/Bangalore_Maze_Exported_Data/ANNOTATIONS
+AI_ANNON_DATA_HOME_LOCAL: /aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719
+AI_ANNON_DB: /aimldl-dat/data-gaze/AIML_Database
+AI_ANNON_HOME: /codehub/apps/annon
+AI_APP: /codehub/apps
+AI_CFG: /codehub/cfg
+AI_CONFIG: /codehub/config
+AI_DATA: /aimldl-dat
+AI_DOC: /aimldl-doc
+AI_GOOGLE_APPLICATION_CREDENTIALS: /codehub/auth/
+AI_HOME: /codehub
+AI_HOME_EXT: /codehub/external
+AI_KBANK: /aimldl-kbank
+AI_LANENET_ROOT: /codehub/external/lanenet-lane-detection
+AI_LOGS: /aimldl-dat/logs
+AI_MNT: /aimldl-mnt
+AI_MODEL_CFG_PATH: /codehub/cfg/model
+AI_PYVER: '3'
+AI_PY_ENVVARS: AI_APP:AI_HOME_EXT:MASK_RCNN:FASTER_RCNN:CAFFE_ROOT:AI_LANENET_ROOT
+AI_PY_VENV_NAME: py_3-6-8_2019-06-26
+AI_PY_VENV_PATH: /home/jarvis/virtualmachines/virtualenvs
+AI_REPORTS: /aimldl-rpt
+AI_SCRIPTS: /codehub/scripts
+AI_VM_HOME: /home/jarvis/virtualmachines
+AI_WEB_APP: /codehub/apps/www
+AI_WEB_APP_LOGS: /aimldl-dat/logs/www
+AI_WEB_APP_UPLOADS: /codehub/www/uploads
+AI_WEIGHTS_PATH: /aimldl-dat/release
+AI_WSGIPythonHome: /home/jarvis/virtualmachines/virtualenvs/py_3-6-8_2019-06-26/lib/python3.6/site-packages/
+AI_WSGIPythonPath: /home/jarvis/virtualmachines/virtualenvs/py_3-6-8_2019-06-26/bin
+APACHE_HOME: /home/jarvis/public_html
+CAFFE_ROOT: /codehub/external/py-faster-rcnn/caffe-fast-rcnn
+FASTER_RCNN: /codehub/external/py-faster-rcnn
+MASK_RCNN: /codehub/external/Mask_RCNN
+PYTHONPATH:
+  AI_APP: /codehub/apps
+  AI_HOME_EXT: /codehub/external
+  AI_LANENET_ROOT: /codehub/external/lanenet-lane-detection
+  CAFFE_ROOT: /codehub/external/py-faster-rcnn/caffe-fast-rcnn
+  FASTER_RCNN: /codehub/external/py-faster-rcnn
+  MASK_RCNN: /codehub/external/Mask_RCNN
+WORKON_HOME: /home/jarvis/virtualmachines/virtualenvs
