@@ -95,7 +95,35 @@ def detect_with_json(model, verbose=1, modelcfg=None, image_name=None, im_non_nu
 
   sess.close()
   pred_json = postprocess_result['pred_json']
-  pred_json["file_attributes"] = {}
+  pred_json = convert_to_via(pred_json)
+
+  pred_json["file_attributes"] = {
+    'width' : 1280,
+    'height' : 720
+  }
+  return pred_json
+
+def convert_to_via(pred_json):
+  x = pred_json['x_axis']
+  y = pred_json['y_axis']
+
+  regions = []
+  shape_attributes = {
+    'all_points_x' : None,
+    'all_points_y' : None,
+    "name": "polyline"
+  }
+  for i in range(len(x)):
+    shape_attributes['all_points_x'] = x[i]
+    shape_attributes['all_points_y'] = y[i]
+    one = {'region_attributes' : {}, 'shape_attributes' : shape_attributes}
+    regions.append(one)
+  ## Filters
+  pred_json.pop('x_axis', None)
+  pred_json.pop('y_axis', None)
+  pred_json.pop('image_name', None)
+  pred_json.pop('run_time', None)
+  pred_json['regions'] = regions
   return pred_json
 
 

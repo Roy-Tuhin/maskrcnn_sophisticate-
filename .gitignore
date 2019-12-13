@@ -40,3 +40,5 @@
 **/temp.*
 **/README.html
 **/*.ipynb_checkpoints
+
+**/*.py.*

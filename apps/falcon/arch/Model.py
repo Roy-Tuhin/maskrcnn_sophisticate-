@@ -307,6 +307,7 @@ def train(args, mode, appcfg):
       log.info("Training...")
       fn_train = get_module_fn(dnnmod, "train")
       fn_train(model, dataset_train, dataset_val, cmdcfg)
+      log.info("Training Completed!!!")
   finally:
     ## save modelinfo
     ## popolate the relative weights_path of the last model from the training if any model is generated otherwise None
