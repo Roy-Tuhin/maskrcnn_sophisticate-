@@ -1,7 +1,0 @@
-PYTHONPATH:
-  AI_APP: /codehub/apps
-  AI_HOME_EXT: /codehub/external
-  AI_LANENET_ROOT: /codehub/external/lanenet-lane-detection
-  CAFFE_ROOT: /codehub/external/py-faster-rcnn/caffe-fast-rcnn
-  FASTER_RCNN: /codehub/external/py-faster-rcnn
-  MASK_RCNN: /codehub/external/Mask_RCNN

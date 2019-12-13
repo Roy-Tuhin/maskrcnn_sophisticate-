@@ -79,5 +79,5 @@ if __name__ == '__main__':
   get_from_envvars('AI_PY_ENVVARS', cfg_param='PYTHONPATH')
 
   paths_file = "paths.yml"
-  yaml_safe_dump(osp.join(osp.dirname(__file__),'config',paths_file), cfg)
+  yaml_safe_dump(osp.join(osp.dirname(__file__),'config',paths_file+'.example'), cfg)
   yaml_safe_dump(osp.join(osp.dirname(__file__),'..','config',paths_file), cfg)

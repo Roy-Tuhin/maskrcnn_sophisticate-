@@ -142,5 +142,5 @@ if __name__ == '__main__':
 
   override_cfg()
 
-  yaml_safe_dump(osp.join(osp.dirname(__file__),'config',paths_file), cfg)
+  yaml_safe_dump(osp.join(osp.dirname(__file__),'config',paths_file+'.example'), cfg)
   yaml_safe_dump(osp.join(osp.dirname(__file__),'..','config',paths_file), cfg)

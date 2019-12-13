@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn Daemon
+After=network.target docker.service
+
+[Service]
+User=ultron
+Group=ultron
+WorkingDirectory=/aimldl-cod/apps/www/od/wsgi-bin
+Environment="PATH=/home/ultron/virtualmachines/virtualenvs/py_3-6-8_2019-08-01/bin"
+ExecStart=/home/ultron/virtualmachines/virtualenvs/py_3-6-8_2019-08-01/bin/gunicorn web_server:"main(API_MODEL_KEY='vidteq-ods-7', QUEUE='false')" -b "0.0.0.0:4040"
+
+[Install]
+WantedBy=multi-user.target
