@@ -1,5 +1,5 @@
 __author__ = 'mangalbhaskar'
-__version__ = '2.0'
+__version__ = '1.0'
 """
 # config for api testing
 # --------------------------------------------------------
@@ -30,11 +30,9 @@ LOAD_BALANCER_PORT="8100"
 API_MODEL_KEY="maybeshewill-rld-1"
 API_MODEL_KEY="vidteq-hmd-1"
 API_MODEL_KEY="vidteq-ods-7"
-API_MODEL_KEY="vidteq-rld-1"
-API_MODEL_KEY="vidteq-rbd-1"
+# API_MODEL_KEY=""
 
-# API_PREDICT_TYPE="lane"
-# API_PREDICT_TYPE="polygon"
+API_PREDICT_TYPE="polygon"
 # API_PREDICT_TYPE="bbox"
 
 ## Load Balancer
@@ -59,7 +57,7 @@ API_MODEL_KEY="vidteq-rbd-1"
 
 ## If Apache server is used as proxy
 API_URL="http://"+GUNICORN_IP+"/~"+user+"/od/wsgi-bin/index.wsgi/api/vision/tdd"
-# API_URL="http://"+GUNICORN_IP+"/~"+user+"/od/wsgi-bin/index.wsgi/api/vision/predict/"+API_PREDICT_TYPE
+API_URL="http://"+GUNICORN_IP+"/~"+user+"/od/wsgi-bin/index.wsgi/api/vision/predict/"+API_PREDICT_TYPE
 
 ## direct gunicorn server URLs
 API_URL="http://"+GUNICORN_IP+":"+GUNICORN_PORT+"/api/vision/v2/predict"
@@ -79,7 +77,6 @@ IMAGE_PATH="/aimldl-dat/samples/Trafic_Signs/100818_144130_16716_zed_l_640.jpg"
 
 
 IMAGE_DIR="/aimldl-dat/samples/mask_rcnn"
-IMAGE_DIR="/aimldl-dat/samples/lanenet"
 
 ## Initialize the number of requests for the stress test along with
 ## the sleep amount between requests

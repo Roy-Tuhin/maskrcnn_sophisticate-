@@ -47,8 +47,8 @@ def construct_bp(cfg):
   @mroute.route(API_VISION_URL+'/predict/lane', methods=['POST'])
   @mroute.route(API_VISION_URL+'/predict/bbox', methods=['POST'])
   @cross_origin()
-  def predict_bbox():
-    return web_api.predict_bbox(current_app, request)
+  def predict_any():
+    return web_api.predict_any(current_app, request)
 
 
   @mroute.route(API_VISION_URL+'/predict/polygon', methods=['POST'])

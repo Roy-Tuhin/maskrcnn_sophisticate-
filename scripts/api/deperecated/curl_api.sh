@@ -26,23 +26,33 @@
 #
 ##----------------------------------------------------------
 
-
-SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
-
-source "${SCRIPTS_DIR}/apicfg.sh"
-
 function exec_curl() {
-  local image=$1
+  source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/apicfg.sh
+  local api_model_key_test=${API_MODEL_KEY}
+  local image=${IMAGE_PATH}
 
-  if [ -z ${image} ]; then
-    image=${IMAGE_PATH}
+  if [ ! -z $1 ]; then
+    api_model_key_test=$1
+    apicfg_filepath=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/${api_model_key_test}.sh
+    if [ ! -f ${apicfg_filepath} ]; then
+      echo "apicfg_filepath does not exists: ${apicfg_filepath}"
+      return
+    fi
+    echo "Importing apicfg_filepath: ${apicfg_filepath}"
+    source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/${api_model_key_test}.sh
+  fi
+
+  if [ ! -z $2 ]; then
+    image=$2
   fi
   image_name=$(echo ${image} | rev | cut -d'/' -f 1 | rev)
 
-  # echo ${image}
-  # echo ${API_URL}
-  # echo ${API_MODEL_KEY}
-  # echo ${IMAGE_ARRAY[@]}
+  echo "image: ${image}"
+  echo "image_name: ${image_name}"
+  echo "API_URL: ${API_URL}"
+  echo "api_model_key_test: ${api_model_key_test}"
+  # echo "IMAGE_ARRAY: ${IMAGE_ARRAY[@]}"
+
   local timestamp=$(date -d now +'%d%m%y_%H%M%S')
 
   local base_log_dir=${AI_LOGS}/api/curl-${timestamp}
@@ -61,14 +71,14 @@ function exec_curl() {
     done
   else
     log_filepath=${prog_log}/${image_name}.json
-    if [ -z ${API_MODEL_KEY} ]; then
+    if [ -z ${api_model_key_test} ]; then
       curlopt=$(echo -H "Accept: application/json" -X POST -F image=@${image} ${API_URL})
       curl ${curlopt} -o ${log_filepath} | tee -a ${log_filepath} &
     else
-      curlopt=$(echo -H "Accept: application/json" -X POST -F image=@${image} -F q=${API_MODEL_KEY} ${API_URL})
+      curlopt=$(echo -H "Accept: application/json" -X POST -F image=@${image} -F q=${api_model_key_test} ${API_URL})
       curl ${curlopt} -o ${log_filepath} | tee -a ${log_filepath} &
     fi
   fi
 }
 
-exec_curl $1
+exec_curl $1 $2

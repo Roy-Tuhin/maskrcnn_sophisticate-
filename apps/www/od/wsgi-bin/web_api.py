@@ -123,7 +123,7 @@ def upload_file(app, request):
   return render_template('index.html')
 
 
-def predict_bbox(app, request):
+def predict_any(app, request):
   appcfg = app.config['APPCFG']
   modelinfo = app.config['MODELINFO']
 

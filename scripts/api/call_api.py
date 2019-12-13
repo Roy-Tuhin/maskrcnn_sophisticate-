@@ -9,18 +9,39 @@ __version__ = '2.0'
 # --------------------------------------------------------
 """
 
+import os
+import sys
+
 import requests
 import base64
-import os
+
+from importlib import import_module
+
+this_dir = os.path.dirname(__file__)
+if this_dir not in sys.path:
+  sys.path.append(this_dir)
+
+this = sys.modules[__name__]
 
 import apicfg
 
-API_URL = apicfg.API_URL
-print("API_URL: {}".format(API_URL))
 
-def call_vision_api(args):
-  filepath = args.filepath
+def call_vision_api(args, cfg):
+  ## TODO: error/exception handling
+
+  apimod = import_module(args.api_model_key)
+
+  API_URL = getattr(apimod, 'API_URL')
+  filepath = getattr(apimod, 'IMAGE_PATH')
+
+  print("API_URL: {}".format(API_URL))
+  print("filepath: {}".format(filepath))
+
+  ## TODO: overide from cmd args
+  # filepath = args.filepath
+
   time_stats, data = None, None
+
   with open(filepath,'rb') as im:
     res = requests.post(API_URL
       ,files={"image": im}
@@ -49,21 +70,22 @@ def call_vision_api(args):
   return time_stats
 
 
-def parse_args(cfg):
+def parse_args():
   import argparse
 
-  IMAGE_PATH = cfg.IMAGE_PATH
-  
   parser = argparse.ArgumentParser()
+  parser.add_argument("--api"
+    ,dest="api_model_key"
+    ,required=True)
   parser.add_argument("--image"
     ,dest="filepath"
-    ,default=IMAGE_PATH
     ,required=False)
 
   args = parser.parse_args()
+
   return args
 
 
 if __name__ == '__main__':
-  args = parse_args(apicfg)
-  call_vision_api(args)
+  args = parse_args()
+  call_vision_api(args, apicfg)

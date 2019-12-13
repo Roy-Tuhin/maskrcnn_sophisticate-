@@ -262,6 +262,7 @@ def train(model, dataset_train, dataset_val, cmdcfg):
       ,learning_rate=stage.learning_rate
       ,epochs=stage.epochs
       ,layers=stage.layers
+      ,stage=stage
       ,augmentation=None
       ,custom_callbacks=None
       ,no_augmentation_sources=None

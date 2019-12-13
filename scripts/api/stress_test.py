@@ -9,6 +9,8 @@ __version__ = '1.0'
 # --------------------------------------------------------
 """
 
+## TODO: to refactor it for rld, rbd, ods in lines with call_api.py
+
 from threading import Thread
 import requests
 import time

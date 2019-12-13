@@ -44,7 +44,16 @@ sys.path.insert(0, APP_ROOT_DIR)
 # from index import app as application
 # application.debug = True
 
-# from index import app
-from web_server import app
+# # from index import app
+# from web_server import app
+# application = app
+# # application.debug = True
+
+## Because web_server is changed to application factory pattern to support multiple model loading
+from web_server import main
+
+api_model_key='vidteq-rld-1'
+queue=False
+app = main(API_MODEL_KEY=api_model_key, QUEUE=queue)
 application = app
 # application.debug = True

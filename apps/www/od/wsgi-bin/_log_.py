@@ -57,10 +57,10 @@ logcfg = {
         '__main__': {
             'handlers': ['console'],
             # 'level': 'CRITICAL',
-            # 'level': 'ERROR',
+            'level': 'ERROR',
             # 'level': 'WARNING',
             # 'level': 'INFO',
-            'level': 'DEBUG',
+            # 'level': 'DEBUG',
             # 'level': 'NOTSET',
             'propagate': False
         }
