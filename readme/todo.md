@@ -85,20 +85,16 @@ Mask_RCNN
           500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
   ```
 
-## fix path
+## Bugs
 
-  @baaz@ultron:00:47:17:docker$grep docker.env-aidev *.sh
-docker.buildimg-aidev.sh:  source $SCRIPTS_DIR/docker.env-aidev.sh $1
-docker.buildimg-aidev.sh:## $1 is WHICHONE; refer: docker.env-aidev.sh
-docker.createcontainer-aidev.sh:  source ${SCRIPTS_DIR}/docker.env-aidev.sh $2
-docker.createcontainer-tf.sh:  source ${SCRIPTS_DIR}/docker.env-aidev.sh $2
-docker.exec-aidev.sh:  source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/docker.env-aidev.sh
-docker.userfix.sh:  source "${SCRIPTS_DIR}/docker.env-aidev.sh"
-@baaz@ultron:00:47:27:docker$subl docker.buildimg-aidev.sh
+/codehub/scripts/aimldl.sh: line 434: lsvirtualenv: command not found
+/codehub/scripts/aimldl.sh: line 435: workon: command not found
+yml_filepath: /codehub/scripts/../config/paths.yml
+yml_filepath: /codehub/scripts/../config/app.yml
 
 
 
-
+# Technotes
 
 ## Shell script
 
@@ -106,4 +102,14 @@ docker.userfix.sh:  source "${SCRIPTS_DIR}/docker.env-aidev.sh"
 * https://www.cyberciti.biz/faq/linux-change-user-group-uid-gid-for-all-owned-files/
 * https://wiki.bash-hackers.org/scripting/debuggingtips
 * https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script
+
+
+## Git
+
+https://stackoverflow.com/questions/11868447/how-can-i-remove-an-entry-in-global-configuration-with-git-config
+git config --global --edit
+
+git config --global --unset user.name
+git config --global --unset user.email
+
 

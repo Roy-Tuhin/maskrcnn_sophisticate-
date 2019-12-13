@@ -16,8 +16,11 @@ WORKON_HOME=${AI_PY_VENV_PATH}
 ## What Is /dev/shm And Its Practical Usage?
 ## https://www.cyberciti.biz/tips/what-is-devshm-and-its-practical-usage.html
 
-AI_WSGIPythonPath="py_3-6-8_2019-06-26/bin"
-AI_WSGIPythonHome="py_3-6-8_2019-06-26/lib/python3.6/site-packages/"
+AI_PYVER=3
+AI_PY_VENV_NAME="py_3-6-8_2019-06-26"
+
+AI_WSGIPythonPath="${AI_PY_VENV_NAME}/bin"
+AI_WSGIPythonHome="${AI_PY_VENV_NAME}/lib/python3.6/site-packages/"
 
 # AI_WSGIPythonPath="py_3-6-5_2018-11-21/bin"
 # AI_WSGIPythonHome="py_3-6-5_2018-11-21/lib/python3.6/site-packages/"

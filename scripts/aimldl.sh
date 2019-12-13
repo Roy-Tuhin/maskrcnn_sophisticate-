@@ -120,6 +120,9 @@ function aimldl_main() {
     AI_ENVVARS['AI_PY_VENV_PATH']=${AI_PY_VENV_PATH}
     AI_ENVVARS['WORKON_HOME']=${WORKON_HOME}
 
+    AI_ENVVARS['AI_PYVER']=${AI_PYVER}
+    AI_ENVVARS['AI_PY_VENV_NAME']=${AI_PY_VENV_NAME}
+
     AI_ENVVARS['AI_WSGIPythonPath']=${AI_PY_VENV_PATH}/${ai_wsgipythonpath}
     AI_ENVVARS['AI_WSGIPythonHome']=${AI_PY_VENV_PATH}/${ai_wsgipythonhome}
 
@@ -430,8 +433,15 @@ function aimldl_main() {
 
 
   function create_config_files_aimldl() {
-    local pyver=3
+    export WORKON_HOME=${AI_PY_VENV_PATH}
+    source /usr/local/bin/virtualenvwrapper.sh
+    local pyver=${AI_PYVER}
     local pyenv=$(lsvirtualenv -b | grep ^py_$pyver | tr '\n' ',' | cut -d',' -f1)
+    # local pyenv=${AI_PY_VENV_NAME}
+
+    debug ${pyver}
+    debug ${pyenv}
+
     workon ${pyenv}
 
     python ${SCRIPTS_DIR}/paths.py
