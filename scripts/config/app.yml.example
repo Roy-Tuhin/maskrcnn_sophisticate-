@@ -18,6 +18,7 @@ API_DOC:
   API_VISION_BASE_URL: /api/vision
   ARCHS: &id001
   - mask_rcnn
+  - lanenet
   DOCS:
     batch_predict:
       deprecated: false
@@ -65,9 +66,13 @@ API_DOC:
     od: object_detection
     ods: object_detection_segmentation
     pd: people_detection
+    rbd: road_boundary_detection
+    rlbd: road_lane_boundary_detection
+    rld: road_lane_detection
     road: road_segmentation
     spd: sign_post_detection
     spr: sign_post_recognition
+    tlr: traffic_light_recognition
     tsd: traffic_sign_detection
     tsr: traffic_sign_recognition
   ORGNAME: &id003

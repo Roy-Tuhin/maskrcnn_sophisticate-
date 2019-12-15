@@ -9,8 +9,8 @@
 
 function create_setup() {
   ## codehub created the top level directories for the code including the config
-  source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/codehub.setup.sh
   source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/aimldl.setup.sh
+  # source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/codehub.setup.sh
 }
 
 create_setup

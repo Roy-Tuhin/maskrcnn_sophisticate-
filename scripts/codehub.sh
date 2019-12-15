@@ -204,30 +204,30 @@ function codehub_main() {
   }
 
 
-  function create_symlinks() {
-    debug 'create_symlinks:============================'
+  # function create_symlinks() {
+  #   debug 'create_symlinks:============================'
 
-    declare -a symlinks=(
-      CHUB_ENVVARS['APACHE_HOME']
-    )
+  #   declare -a symlinks=(
+  #     CHUB_ENVVARS['APACHE_HOME']
+  #   )
 
-    for slink in "${symlinks[@]}"; do
-      slink_dir=${CHUB_ENVVARS['CHUB_HOME']}/$(echo ${slink} | cut -d'-' -f 2)
-      if [ ! -L "${slink_dir}" ]; then
-        echo "creating..."
-        info ln -s ${slink} ${slink_dir}
-        ln -s ${slink} ${slink_dir}
-      else
-        info Already Exists: ln -s ${slink} ${slink_dir}
-      fi
-      # ln -s ${slink} ${slink_dir}
-    done
-  }
+  #   for slink in "${symlinks[@]}"; do
+  #     slink_dir=${CHUB_ENVVARS['CHUB_HOME']}/$(echo ${slink} | cut -d'-' -f 2)
+  #     if [ ! -L "${slink_dir}" ]; then
+  #       echo "creating..."
+  #       info ln -s ${slink} ${slink_dir}
+  #       ln -s ${slink} ${slink_dir}
+  #     else
+  #       info Already Exists: ln -s ${slink} ${slink_dir}
+  #     fi
+  #     # ln -s ${slink} ${slink_dir}
+  #   done
+  # }
 
 
   function __copy_config_files__() {
     debug "__copy_config_files__:============================"
-    debug ${CHUB_ENVVARS['CHUB_CONFIG']}
+    debug ${CHUB_ENVVARS['CHUB_SCRIPTS']}
     rsync -r ${CHUB_ENVVARS['CHUB_SCRIPTS']}/config/* ${CHUB_ENVVARS['CHUB_CONFIG']}
     ls -ltr ${CHUB_ENVVARS['CHUB_CONFIG']}
   }

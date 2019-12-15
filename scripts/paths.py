@@ -37,7 +37,9 @@ def get_from_envvars(env_var_name, cfg_param=None):
   Automatically gets the environment variable names
   This saves manually updating this file to include new environment variables
   """
+  print("env_var_name: {}".format(env_var_name))
   envvars = os.getenv(env_var_name)
+  print("envvars: {}".format(envvars))
   ## check for None and emptiness
   if envvars:
     envvars = envvars.split(':')
@@ -45,11 +47,14 @@ def get_from_envvars(env_var_name, cfg_param=None):
       ## check for emptiness: case-1) AI_ENVVARS=':'
       if envvar:
         if not cfg_param and envvar not in cfg:
-          cfg[envvar] = os.getenv(envvar)
+          envval = os.getenv(envvar)
+          # print("envval: {}".format(envval))
+          cfg[envvar] = envval
         elif cfg_param:
           if cfg_param not in cfg:
             cfg[cfg_param] = {}
-          cfg[cfg_param][envvar] = os.getenv(envvar)
+          envval = os.getenv(envvar)
+          cfg[cfg_param][envvar] = envval
 
 
 def yaml_safe_dump(filepath, o):
@@ -74,10 +79,11 @@ def load_yaml(filepath):
 if __name__ == '__main__':
   ## get from variables
   get_from_envvars('AI_ENVVARS')
+  # get_from_envvars('CHUB_ENVVARS')
   
-  ## get from python paths variable
+  # ## get from python paths variable
   get_from_envvars('AI_PY_ENVVARS', cfg_param='PYTHONPATH')
 
   paths_file = "paths.yml"
-  yaml_safe_dump(osp.join(osp.dirname(__file__),'config',paths_file+'.example'), cfg)
+  # yaml_safe_dump(osp.join(osp.dirname(__file__),'config',paths_file+'.example'), cfg)
   yaml_safe_dump(osp.join(osp.dirname(__file__),'..','config',paths_file), cfg)

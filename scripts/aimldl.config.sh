@@ -8,10 +8,11 @@ AI_DIR_PREFIX="aimldl"
 AI_GOOGLE_APPLICATION_CREDENTIALS_FILE=""
 AI_MOUNT_MACHPREFIX='vtq' ## possible values: 'vtd' or 'mmi'
 AI_VM_BASE="virtualmachines"
-AI_VM_HOME='${HOME}'/${AI_VM_BASE}
+AI_VM_HOME=${HOME}/${AI_VM_BASE}
 AI_PY_VENV_PATH=${AI_VM_HOME}/virtualenvs
 
 WORKON_HOME=${AI_PY_VENV_PATH}
+AI_VIRTUALENVWRAPPER=/usr/local/bin/virtualenvwrapper.sh
 
 ## What Is /dev/shm And Its Practical Usage?
 ## https://www.cyberciti.biz/tips/what-is-devshm-and-its-practical-usage.html

@@ -116,6 +116,7 @@ function aimldl_main() {
     AI_ENVVARS['AI_VM_HOME']=${AI_VM_HOME}
     AI_ENVVARS['AI_PY_VENV_PATH']=${AI_PY_VENV_PATH}
     AI_ENVVARS['WORKON_HOME']=${WORKON_HOME}
+    AI_ENVVARS['AI_VIRTUALENVWRAPPER']=${AI_VIRTUALENVWRAPPER}
 
     AI_ENVVARS['AI_PYVER']=${AI_PYVER}
     AI_ENVVARS['AI_PY_VENV_NAME']=${AI_PY_VENV_NAME}
@@ -196,6 +197,8 @@ function aimldl_main() {
     done
     debug "AI_MOUNT_PATHS_FOR_REMOTE: ${AI_MOUNT_PATHS_FOR_REMOTE[@]}"
     ### -------
+
+    debug "AI_ENVVARS: ${AI_ENVVARS[@]}"
   }
 
   ##----------------------------------------------------------
@@ -431,8 +434,11 @@ function aimldl_main() {
 
 
   function create_config_files_aimldl() {
-    local pyver=${AI_PYVER}
-    local pyenv=$(lsvirtualenv -b | grep ^py_$pyver | tr '\n' ',' | cut -d',' -f1)
+    # source ${HOME}/.bashrc
+    export WORKON_HOME=${AI_ENVVARS['WORKON_HOME']}
+    # source ${AI_ENVVARS['AI_VIRTUALENVWRAPPER']}
+    local pyver=${AI_ENVVARS['AI_PYVER']}
+    local pyenv=$(lsvirtualenv -b | grep ^py_${pyver} | tr '\n' ',' | cut -d',' -f1)
 
     debug "${pyver}, ${pyenv}"
 
@@ -445,7 +451,7 @@ function aimldl_main() {
 
   function __copy_config_files__() {
     debug "__copy_config_files__:============================"
-    debug ${AI_ENVVARS['AI_CONFIG']}
+    debug ${AI_ENVVARS['AI_SCRIPTS']}
     rsync -r ${AI_ENVVARS['AI_SCRIPTS']}/config/* ${AI_ENVVARS['AI_CONFIG']}
     ls -ltr ${AI_ENVVARS['AI_CONFIG']}
   }
