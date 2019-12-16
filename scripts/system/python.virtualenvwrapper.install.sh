@@ -23,6 +23,7 @@
 function python_virtualenvwrapper_install() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
+  source ${LSCRIPTS}/python.config.sh
 
   if [ ! -z $1 ]; then
     local pyVer=$1
@@ -42,7 +43,7 @@ function python_virtualenvwrapper_install() {
     local _pip=pip$1
 
     ## Install virtualenv virtualenvwrapper
-    sudo ${_pip} install virtualenv virtualenvwrapper
+    # sudo ${_pip} install virtualenv virtualenvwrapper
     echo "virtualenv version::"
     virtualenv --version
 
@@ -116,7 +117,7 @@ function python_virtualenvwrapper_install() {
 
   # cd ${LSCRIPTS}
 
-  source ${LSCRIPTS}/python.virtualenvwrapper.setup.sh ${pyVer} $2
+  # source ${LSCRIPTS}/python.virtualenvwrapper.setup.sh ${pyVer} $2
 }
 
 python_virtualenvwrapper_install $1 $2
