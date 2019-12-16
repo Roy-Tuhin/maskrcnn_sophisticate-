@@ -37,6 +37,8 @@ function system_setup_extended() {
   ##----------------------------------------------------------
   ### Python virtualenv virtualenvwrapper setup
   ##----------------------------------------------------------
+
+  ## TODO: error during installation commands not found to be fixed; env setup fails
   source ${LSCRIPTS}/python.virtualenvwrapper.install.sh 3
   #source ${LSCRIPTS}/python.virtualenvwrapper.install.sh 2
 

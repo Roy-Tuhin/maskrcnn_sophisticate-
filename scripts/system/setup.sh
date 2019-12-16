@@ -5,7 +5,7 @@ function system_setup() {
   source ${LSCRIPTS}/lscripts.config.sh
 
   ## based on dockerfile builds
-  source ${LSCRIPTS}/essential.sh
+  #source ${LSCRIPTS}/essential.sh
 
   ##3. Copy softwares from `samba5/softwares/packages-for-new-system-install` to local system under `$HOME/Downloads` manually, or use `rsync`
   #
@@ -44,9 +44,12 @@ function system_setup() {
   ## Nvidia GPU Drivers should be pre-installed
   ## Refer init-nvidia.sh
 
-  source ${LSCRIPTS}/cuda.install.sh
-  source ${LSCRIPTS}/cudnn.install.sh
-  source ${LSCRIPTS}/tensorRT.install.sh
+  #source ${LSCRIPTS}/cuda.install.sh
+  #source ${LSCRIPTS}/cudnn.install.sh
+  #source ${LSCRIPTS}/tensorRT.install.sh
+
+  ## OR, use single script with auto download from apt repo - work in progress for configuration
+  #source ${LSCRIPTS}/cuda-10.0-with-tensorrt.aptget-install.sh
 
   ##----------------------------------------------------------
   ## 3. Sytem utilities and other software packages

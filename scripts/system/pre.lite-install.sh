@@ -11,7 +11,7 @@
 
 function pre_lite_install() {
   LSCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
-  source ${LSCRIPTS}/system.config.sh
+  source ${LSCRIPTS}/lscripts.config.sh
 
   ## https://www.pyimagesearch.com/2015/08/24/resolved-matplotlib-figures-not-showing-up-or-displaying/
   ## https://github.com/tctianchi/pyvenn/issues/3
