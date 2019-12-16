@@ -40,89 +40,94 @@
 #
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
+function cuda_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-source $LSCRIPTS/lscripts.config.sh
+  if [ -z "${BASEPATH}" ]; then
+    local BASEPATH="$HOME/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
-
-if [ -z "$CUDA_VER" ]; then
-  CUDA_VER="9.0"
-  CUDA_REL="9-0"
-  # CUDA_REL=`echo $CUDA_VER | tr . -`
-  CUDA_OS_REL="1604"
-  CUDA_PCKG="cuda-repo-ubuntu$CUDA_OS_REL-$CUDA_REL-local_$CUDA_VER.176-1_amd64.deb"
-  echo "Unable to get CUDA_VER version, falling back to default version#: $CUDA_VER"
-fi
+  if [ -z "${CUDA_VER}" ]; then
+    local CUDA_VER="9.0"
+    local CUDA_REL="9-0"
+    # local CUDA_REL=`echo $CUDA_VER | tr . -`
+    local CUDA_OS_REL="1604"
+    local CUDA_PCKG="cuda-repo-ubuntu$CUDA_OS_REL-$CUDA_REL-local_${CUDA_VER}.176-1_amd64.deb"
+    echo "Unable to get CUDA_VER version, falling back to default version#: ${CUDA_VER}"
+  fi
 
 
-if [ -z "$CUDA_PCKG" ] || [ -z "$CUDA_URL" ]; then
-  echo "Unable to get CUDA_PCKG!"
-  CUDA_VER="9.0"
-  CUDA_REL="9-0"
-  # CUDA_REL=`echo $CUDA_VER | tr . -`
-  CUDA_OS_REL="1604"
-  CUDA_PCKG="cuda-repo-ubuntu$CUDA_OS_REL-$CUDA_REL-local_$CUDA_VER.176-1_amd64.deb"
-  CUDA_URL="http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/$CUDA_PCKG"
-  echo "Unable to get CUDA_VER version, falling back to default version#: $CUDA_VER"
-fi
+  if [ -z "${CUDA_PCKG}" ] || [ -z "${CUDA_URL}" ]; then
+    echo "Unable to get CUDA_PCKG!"
+    local CUDA_VER="9.0"
+    local CUDA_REL="9-0"
+    # CUDA_REL=`echo $CUDA_VER | tr . -`
+    local CUDA_OS_REL="1604"
+    local CUDA_PCKG="cuda-repo-ubuntu$CUDA_OS_REL-$CUDA_REL-local_$CUDA_VER.176-1_amd64.deb"
+    local CUDA_URL="http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/$CUDA_PCKG"
+    echo "Unable to get CUDA_VER version, falling back to default version#: $CUDA_VER"
+  fi
 
-echo "CUDA_PCKG: $CUDA_PCKG"
-echo "CUDA_URL: $CUDA_URL"
+  echo "CUDA_PCKG: ${CUDA_PCKG}"
+  echo "CUDA_URL: ${CUDA_URL}"
 
-if [ ! -f $HOME/Downloads/$CUDA_PCKG ]; then
-  ### Ubuntu 16.04
-  # CUDA_PCKG="cuda-repo-ubuntu1604_8.0.61-1_amd64.deb" # CUDA 8.0 package
-  wget -c $CUDA_URL -P $HOME/Downloads
+  if [ ! -f $HOME/Downloads/${CUDA_PCKG} ]; then
+    ### Ubuntu 16.04
+    # CUDA_PCKG="cuda-repo-ubuntu1604_8.0.61-1_amd64.deb" # CUDA 8.0 package
+    wget -c ${CUDA_URL} -P $HOME/Downloads
 
-  ### Ubuntu 14.04
-  # CUDA_PCKG="cuda-repo-ubuntu1404_8.0.44-1_amd64.deb"
-  # wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/$CUDA_PCKG -P $HOME/Downloads  
-else
-  echo Not downloading as: $HOME/Downloads/$CUDA_PCKG already exists!
-fi
+    ### Ubuntu 14.04
+    # CUDA_PCKG="cuda-repo-ubuntu1404_8.0.44-1_amd64.deb"
+    # wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/$CUDA_PCKG -P $HOME/Downloads  
+  else
+    echo Not downloading as: $HOME/Downloads/${CUDA_PCKG} already exists!
+  fi
 
-if [ -f $HOME/Downloads/$CUDA_PCKG ]; then
-  ## Remove Any existing CUDA and CUDNN installation
-  #sudo apt -s purge 'cuda*'
-  #sudo apt -s purge 'cudnn*'
+  if [ -f $HOME/Downloads/${CUDA_PCKG} ]; then
+    ## Remove Any existing CUDA and CUDNN installation
+    #sudo apt -s purge 'cuda*'
+    #sudo apt -s purge 'cudnn*'
 
-  # sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
-  # sudo dpkg -i cuda-repo-ubuntu1404_8.0.44-1_amd64.deb
-  #
-  sudo dpkg -i $HOME/Downloads/$CUDA_PCKG
+    # sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+    # sudo dpkg -i cuda-repo-ubuntu1404_8.0.44-1_amd64.deb
+    #
+    sudo dpkg -i $HOME/Downloads/${CUDA_PCKG}
 
-  #sudo apt-key add /var/cuda-repo-9-1-local/7fa2af80.pub
-  sudo apt-key add /var/cuda-repo-$CUDA_REL-local/7fa2af80.pub
+    if [ -z ${CUDA_REPO_KEY} ]; then
+      #local CUDA_REPO_KEY="cuda-repo-9-1-local/7fa2af80.pub"
+      #local CUDA_REPO_KEY="cuda-repo-${CUDA_REL}-local/7fa2af80.pub"
+      local CUDA_REPO_KEY="cuda-repo-${CUDA_REL}-local/7fa2af80.pub"
+    fi
+    sudo apt-key add /var/${CUDA_REPO_KEY}
 
-  sudo -E apt update
+    sudo -E apt update
 
-  #sudo -E apt -q -y install cuda-toolkit-9-1
-  sudo -E apt -q -y install cuda-toolkit-$CUDA_REL
+    #sudo -E apt -q -y install cuda-toolkit-9-1
+    sudo -E apt -q -y install cuda-toolkit-${CUDA_REL}
 
-  ##----------------------------------------------------------
-  ## Meta Packages Available for CUDA 9.1
-  ## Refer CUDA Installation Manual
-  ##----------------------------------------------------------#
-  ## Installs all CUDA Toolkit and DriCUDA_VER packages.
-  ## Handles upgrading to the next CUDA_VERsion of the cuda package when it's CUDA_RELeased
-  ## This does not install the latest version of Nvidia driver, hence not sugggested
-  #
-  ## sudo -E apt -q -y install cuda
-  #
-  ## Installs all CUDA Toolkit packages required to develop CUDA applications. Does not include the driCUDA_VER.
-  #
-  ## sudo -E apt -q -y install cuda-toolkit-9-1
-  #
-  ##----------------------------------------------------------
+    ##----------------------------------------------------------
+    ## Meta Packages Available for CUDA 9.1
+    ## Refer CUDA Installation Manual
+    ##----------------------------------------------------------#
+    ## Installs all CUDA Toolkit and DriCUDA_VER packages.
+    ## Handles upgrading to the next CUDA_VERsion of the cuda package when it's CUDA_RELeased
+    ## This does not install the latest version of Nvidia driver, hence not sugggested
+    #
+    ## sudo -E apt -q -y install cuda
+    #
+    ## Installs all CUDA Toolkit packages required to develop CUDA applications. Does not include the driCUDA_VER.
+    #
+    ## sudo -E apt -q -y install cuda-toolkit-9-1
+    #
+    ##----------------------------------------------------------
 
-  ##----------------------------------------------------------
-  ### CUDA Config
-  ##----------------------------------------------------------
-  source  $LINUX_SCRIPT_HOME/cuda.config.sh
-fi
+    ##----------------------------------------------------------
+    ### CUDA Config
+    ##----------------------------------------------------------
+    source ${LSCRIPTS}/cuda.config.sh
+  fi
+}
+
+cuda_install

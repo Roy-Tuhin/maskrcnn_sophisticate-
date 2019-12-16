@@ -11,41 +11,39 @@
 ##----------------------------------------------------------
 
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
+function tensorrt_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-source $LSCRIPTS/lscripts.config.sh
+  if [ -z "${BASEPATH}" ]; then
+    BASEPATH="$HOME/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
+  if [ -f $HOME/Downloads/${tensorRTFILE} ]; then
+    # Install runtime lib
+    sudo dpkg -i $HOME/Downloads/${tensorRTFILE}
+    sudo -E apt update
+    sudo -E apt -q -y install tensorrt
+    ## Developer Installation: The following instructions sets up a full TensorRT development environment with samples, documentation and both the C++ and Python API.
+    # Python 2.7+
+    sudo -E apt -q -y install python-libnvinfer-doc swig
+    # Python 3.5
+    sudo -E apt -q -y install python3-libnvinfer-doc
+    ## In either case:
+    sudo -E apt -q -y install uff-converter-tf
+    ## Verify
+    dpkg -l | grep TensorRT
+    ## App Server Installation: When setting up servers which will host TensorRT powered applications, you can simply install any of the following
+    sudo -E apt -q -y install libnvinfer
+  else
+    echo "File Does NOT Exists: $HOME/Downloads/${tensorRTFILE}"
+    if [ ! -z ${LIBNVINFER_VER} ]; then
+    sudo -E apt -q -y install --no-install-recommends \
+      libnvinfer${TENSORRT_VER}=${LIBNVINFER_VER} \
+      libnvinfer-dev=${LIBNVINFER_VER}
+    fi
+  fi
+}
 
-
-if [ -f $HOME/Downloads/$tensorRTFILE ]; then
-  # Install runtime lib
-  sudo dpkg -i $HOME/Downloads/$tensorRTFILE
-
-  sudo -E apt update
-  sudo -E apt -q -y install tensorrt
-
-  ## Developer Installation: The following instructions sets up a full TensorRT development environment with samples, documentation and both the C++ and Python API.
-  # Python 2.7+
-  sudo -E apt -q -y install python-libnvinfer-doc swig
-
-  # Python 3.5
-  sudo -E apt -q -y install python3-libnvinfer-doc
-
-  ## In either case:
-  sudo -E apt -q -y install uff-converter-tf
-
-  ## Verify
-  dpkg -l | grep TensorRT
-
-  ## App Server Installation: When setting up servers which will host TensorRT powered applications, you can simply install any of the following
-  sudo -E apt -q -y install libnvinfer
-else
-  echo "File Does NOT Exists: $HOME/Downloads/$tensorRTFILE"
-fi
-
+tensorrt_install

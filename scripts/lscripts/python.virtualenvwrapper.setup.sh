@@ -95,6 +95,7 @@ function python_virtualenvwrapper_setup() {
     echo "Installing basic required packages given in file: python.requirements.txt"
     echo "You can Install additional packages from: python.requirements-extras.txt"
     echo "You can Install additional packages from: python.requirements-ai.txt"
+    echo "You can Install Python AI packages specific to cuda version from: AI_PYCUDA_FILE: ${LSCRIPTS}/${AI_PYCUDA_FILE}"
     
     ## testing
     # deactivate
@@ -102,11 +103,11 @@ function python_virtualenvwrapper_setup() {
 
     $pip install -r ${LSCRIPTS}/python.requirements.txt
     $pip install -r ${LSCRIPTS}/python.requirements-extras.txt
-    $pip install -r ${LSCRIPTS}/python.requirements-ai.txt
+    # $pip install -r ${LSCRIPTS}/python.requirements-ai.txt
 
-    echo "## Install AI frameworks:"
-    echo "## manually: Tensorflow, Caffe, Keras"
-    echo "## already in python.requirements-ai.txt: theano"
+    echo "Python AI packages specific to cuda version: AI_PYCUDA_FILE: ${LSCRIPTS}/${AI_PYCUDA_FILE}"
+    $pip install -r ${LSCRIPTS}/${AI_PYCUDA_FILE}
+
     echo ""
     echo "install OpenCV only in virtualenv: copy from system"
     echo "# cp /usr/local/lib/python2.7/dist-packages/cv2.so <pathToVirtualEnv>/lib/python2.7/site-packages"
