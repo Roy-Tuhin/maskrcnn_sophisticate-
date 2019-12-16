@@ -113,3 +113,47 @@ git config --global --unset user.name
 git config --global --unset user.email
 
 
+
+## Linux
+
+**Create Linux Bootable USB**
+* https://github.com/balena-io/etcher#debian-and-ubuntu-based-package-repository-gnulinux-x86x64
+* https://linuxize.com/post/how-to-create-a-bootable-linux-usb-drive/
+  ```bash
+  echo "deb https://deb.etcher.io stable etcher" | sudo tee /etc/apt/sources.list.d/balena-etcher.list
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61
+  sudo apt-get update
+  sudo apt-get install balena-etcher-electron
+  #
+  ## uninstall
+  # sudo apt-get remove balena-etcher-electron
+  # sudo rm /etc/apt/sources.list.d/balena-etcher.list
+  # sudo apt-get update
+  ```
+
+## IoT
+
+* https://www.balena.io
+
+
+* https://www.tensorflow.org/lite/performance/post_training_quant
+* https://colab.research.google.com/github/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/performance/post_training_quant.ipynb
+* https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/performance/post_training_quant.ipynb
+* https://www.tensorflow.org/model_optimization/guide/get_started
+* https://medium.com/tensorflow/tensorflow-model-optimization-toolkit-pruning-api-42cac9157a6a
+* https://medium.com/tensorflow/tensorflow-model-optimization-toolkit-post-training-integer-quantization-b4964a1ea9ba
+* https://medium.com/tensorflow/what-exactly-is-this-tfx-thing-1ac9e56531c
+* https://medium.com/tensorflow/smilear-iqiyis-mobile-ar-solution-based-on-tensorflow-lite-7b39347b1b8d
+* https://www.silverlineelectronics.in/raspberry-pi-3-board-pack-for-android-thing.html
+* https://www.raspberrypi.org/search/camera+for+AI
+* https://www.raspberrypi.org/documentation/raspbian/applications/camera.md
+* https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up
+* https://github.com/tensorflow/examples/blob/master/lite/examples/object_detection/raspberry_pi/README.md
+* https://www.tensorflow.org/lite/examples/
+* https://medium.com/tensorflow/introducing-the-model-optimization-toolkit-for-tensorflow-254aca1ba0a3
+* https://medium.com/tensorflow/tensorflow-model-optimization-toolkit-float16-quantization-halves-model-size-cc113c75a2fa
+* https://medium.com/tensorflow
+* https://github.com/tensorflow/model-optimization
+* https://www.tensorflow.org/install/source
+* https://nanonets.com/blog/how-to-easily-detect-objects-with-deep-learning-on-raspberry-pi/
+* https://www.balena.io/fin/
