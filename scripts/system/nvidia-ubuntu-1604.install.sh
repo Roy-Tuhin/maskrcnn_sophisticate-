@@ -16,7 +16,7 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 if [ -z "$BASEPATH" ]; then
   BASEPATH="$HOME/softwares"
@@ -24,7 +24,7 @@ if [ -z "$BASEPATH" ]; then
 fi
 
 # check for Graphics Hardware and System Architecture Details
-source $LINUX_SCRIPT_HOME/gpu.info.sh
+source $LINUX_SCRIPT_HOME/utils/gpu.info.sh
 
 ##----------------------------------------------------------
 ## Nvidia Graphics Card Driver Installation

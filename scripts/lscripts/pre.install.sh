@@ -12,7 +12,7 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 sudo -E apt -q -y install libxml2-dev
 # sudo -E apt -q -y install liblas-dev # some issue with libght

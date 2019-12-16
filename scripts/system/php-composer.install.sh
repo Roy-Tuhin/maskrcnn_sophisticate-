@@ -9,7 +9,7 @@
 #   LSCRIPTS="."
 # fi
 
-# source $LSCRIPTS/linuxscripts.config.sh
+# source $LSCRIPTS/lscripts.config.sh
 
 # if [ -z "$PHP_VER" ]; then
 #   PHP_VER="7.2"

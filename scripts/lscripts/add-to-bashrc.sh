@@ -5,7 +5,7 @@
 
 ##grep -q -F "alias lt='ls -ltr'" ~/.bashrc || echo "alias lt='ls -ltr'" >> ~/.bashrc
 
-source linuxscripts.config.sh
+source lscripts.config.sh
 
 #FILE=$HOME/.bashrc
 #LINE="alias lt='ls -ltr'"
@@ -22,7 +22,7 @@ source linuxscripts.config.sh
   echo $LINE
   grep -qF "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
-  #FILE="linuxscripts.config.sh"
+  #FILE="lscripts.config.sh"
   #LINE='BASHRC_CUSTOM_ADDED=1'
   #echo $LINE
   #grep -qF "$LINE" "$FILE" || echo "$LINE" >> "$FILE"

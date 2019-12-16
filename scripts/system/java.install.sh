@@ -25,43 +25,44 @@
 # http://openjdk.java.net/projects/jdk8/
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
+function java_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-source $LSCRIPTS/linuxscripts.config.sh
+  if [ -z "${JAVA_JDK_VER}" ]; then
+    JAVA_JDK_VER="8"
+    echo "Unable to get JAVA_JDK_VER version, falling back to default version#: ${JAVA_JDK_VER}"
+  fi
 
-if [ -z "$JAVA_JDK_VER" ]; then
-  JAVA_JDK_VER="8"
-  echo "Unable to get JAVA_JDK_VER version, falling back to default version#: $JAVA_JDK_VER"
-fi
+  ##JAVA_JDK_VER="1.8.0"
+  #JAVA_JDK_VER="8"
+  #JAVA_JDK_VER="9"
 
-##JAVA_JDK_VER="1.8.0"
-#JAVA_JDK_VER="8"
-#JAVA_JDK_VER="9"
+  # Error while installing JDK 9
+  # The following packages have unmet dependencies:
+  #  openjdk-9-jdk : Depends: openjdk-9-jre (= 9~b114-0ubuntu1) but it is not going to be installed
+  #                  Depends: openjdk-9-jdk-headless (= 9~b114-0ubuntu1) but it is not going to be installed
+  # E: Unable to correct problems, you have held broken packages.
 
-# Error while installing JDK 9
-# The following packages have unmet dependencies:
-#  openjdk-9-jdk : Depends: openjdk-9-jre (= 9~b114-0ubuntu1) but it is not going to be installed
-#                  Depends: openjdk-9-jdk-headless (= 9~b114-0ubuntu1) but it is not going to be installed
-# E: Unable to correct problems, you have held broken packages.
+  # sudo add-apt-repository -y ppa:openjdk-r/ppa
 
-# sudo add-apt-repository -y ppa:openjdk-r/ppa
+  sudo -E apt update
+  # Example: openjdk-${JAVA_JDK_VER}-jdk, openjdk-${JAVA_JDK_VER}-jdk
+  sudo -E apt -q -y install openjdk-${JAVA_JDK_VER}-jdk
 
-sudo -E apt update
-# Example: openjdk-$JAVA_JDK_VER-jdk, openjdk-$JAVA_JDK_VER-jdk
-sudo -E apt -q -y install openjdk-$JAVA_JDK_VER-jdk
+  # sudo -E apt -q -y install default-jre
+  # sudo -E apt -q -y install default-jdk
 
-# sudo -E apt -q -y install default-jre
-# sudo -E apt -q -y install default-jdk
+  sudo -E apt -q -y install openjfx ## JavaFX
+  sudo -E apt -q -y install ant
 
-sudo -E apt -q -y install openjfx ## JavaFX
-sudo -E apt -q -y install ant
+  ##----------------------------------------------------------
+  ### Java Config
+  ##----------------------------------------------------------
+  source ${LSCRIPTS}/java.config.sh
 
-##----------------------------------------------------------
-### Java Config
-##----------------------------------------------------------
-source $LINUX_SCRIPT_HOME/java.config.sh
+  # sudo update-alternatives --config java
+  # sudo update-alternatives --config javac
+}
 
-# sudo update-alternatives --config java
-# sudo update-alternatives --config javac
+java_install

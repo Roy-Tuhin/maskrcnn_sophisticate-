@@ -25,60 +25,61 @@
 # E: Package 'python-software-properties' has no installation candidate
 ##----------------------------------------------------------
 
+function nodejs_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )"
+  if [ -z "${NODEJS_VER}" ]; then
+    NODEJS_VER=9
+    echo "Unable to get NODEJS_VER version, falling back to default version#: ${NODEJS_VER}"
+  fi
 
-source $SCRIPTS_DIR/config.custom.sh
+  echo "LINUX_VERSION:${LINUX_VERSION}"
 
-if [ -z "$NODEJS_VER" ]; then
-  NODEJS_VER=9
-  echo "Unable to get NODEJS_VER version, falling back to default version#: $NODEJS_VER"
-fi
+  ## Ubuntu 16.04 LTS
+  if [[ ${LINUX_VERSION} == "16.04" ]]; then
+    echo "...${LINUX_VERSION}"
+    sudo -E apt -q -y install python-software-properties
+  fi
 
-echo "LINUX_VERSION:$LINUX_VERSION"
+  ## Ubuntu 18.04 LTS
+  if [[ ${LINUX_VERSION} == "18.04" ]]; then
+    echo ${LINUX_VERSION}
+    sudo -E apt -q -y install software-properties-common
+  fi
 
-## Ubuntu 16.04 LTS
-if [[ $LINUX_VERSION == "16.04" ]]; then
-  echo "...$LINUX_VERSION"
-  sudo -E apt -q -y install python-software-properties
-fi
+  ## Kali 2019.1
+  if [[ ${LINUX_ID} == "Kali" ]]; then
+    echo ${LINUX_VERSION}
+    sudo -E apt -q -y install software-properties-common
+  fi
 
-## Ubuntu 18.04 LTS
-if [[ $LINUX_VERSION == "18.04" ]]; then
-  echo $LINUX_VERSION
-  sudo -E apt -q -y install software-properties-common
-fi
+  curl -sL https://deb.nodesource.com/setup_$NODEJS_VER.x | sudo -E bash -
+  sudo -E apt -q -y install nodejs
+  npm update -g npm
+  npm -v
+  node -v
 
-## Kali 2019.1
-if [[ $LINUX_ID == "Kali" ]]; then
-  echo $LINUX_VERSION
-  sudo -E apt -q -y install software-properties-common
-fi
+  mkdir "${CODEHUB_HOME}/.npm-packages"
+  touch ${CODEHUB_HOME}/.npmrc
+  echo prefix='${CODEHUB_HOME}/.npm-packages' > ${CODEHUB_HOME}/.npmrc
 
-curl -sL https://deb.nodesource.com/setup_$NODEJS_VER.x | sudo -E bash -
-sudo -E apt -q -y install nodejs
-npm update -g npm
-npm -v
-node -v
+  echo NPM_PACKAGES='${CODEHUB_HOME}/.npm-packages' >> ${CODEHUB_ENV_FILE}
+  echo PATH='${NPM_PACKAGES}/bin:$PATH' >> ${CODEHUB_ENV_FILE}
+  unset MANPATH # delete if you already modified MANPATH elsewhere in your config
+  echo "export MANPATH='${NPM_PACKAGES}/share/man:$(manpath)'" >> ${CODEHUB_ENV_FILE}
 
-mkdir "${CODEHUB_HOME}/.npm-packages"
-touch ${CODEHUB_HOME}/.npmrc
-echo prefix='${CODEHUB_HOME}/.npm-packages' > ${CODEHUB_HOME}/.npmrc
+  update_env_file
 
-echo NPM_PACKAGES='$CODEHUB_HOME/.npm-packages' >> ${CODEHUB_ENV_FILE}
-echo PATH='$NPM_PACKAGES/bin:$PATH' >> ${CODEHUB_ENV_FILE}
-unset MANPATH # delete if you already modified MANPATH elsewhere in your config
-echo "export MANPATH='$NPM_PACKAGES/share/man:$(manpath)'" >> ${CODEHUB_ENV_FILE}
+  ## cushion if source for bashrc does not happen
+  export MANPATH='${NPM_PACKAGES}/share/man:$(manpath)'
 
-update_env_file
+  ## To install the Yarn package manager, run:
 
-## cushion if source for bashrc does not happen
-export MANPATH='$NPM_PACKAGES/share/man:$(manpath)'
+  #curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+  #echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  #sudo apt update && sudo apt install yarn
+  # source ${LINUX_SCRIPT_HOME}/nodejs.requirements.sh
+}
 
-## To install the Yarn package manager, run:
-
-#curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-#echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-#sudo apt update && sudo apt install yarn
-
-# source ${LINUX_SCRIPT_HOME}/nodejs.requirements.sh
+nodejs_install

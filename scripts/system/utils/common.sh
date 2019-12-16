@@ -17,7 +17,7 @@ LOCAL_HOST=`hostname`
 OSTYPE=$(uname -s) ## Linux, Darwin
 
 ### -------------------------------------------
-## TOFO: make parameterized function to return specific color code
+## TODO: make parameterized function to return specific color code
 
 nocolor='\e[0m'    # text reset
 biwhi='\e[1;97m';
@@ -40,23 +40,23 @@ icya='\e[0;96m';
 ### -------------------------------------------
 
 function info() {
-  (>&2 echo -e "${biwhi}[INFO]: $*${nocolor}")
+  (>&2 echo -e "${biwhi}[INFO - $(date -d now)]: $*${nocolor}")
 }
 
 function error() {
-  (>&2 echo -e "${bired}[ERROR]: $*${nocolor}")
+  (>&2 echo -e "${bired}[ERROR - $(date -d now)]: $*${nocolor}")
 }
 
 function warning() {
-  (>&2 echo -e "${biyel}[WARNING]: $*${nocolor}")
+  (>&2 echo -e "${biyel}[WARNING - $(date -d now)]: $*${nocolor}")
 }
 
 function ok() {
-  (>&2 echo -e "${gre}[OK]: $*${nocolor}")
+  (>&2 echo -e "${gre}[OK - $(date -d now)]: $*${nocolor}")
 }
 
 function debug() {
-  (>&2 echo -e "${on_ired}[DEBUG]${nocolor}: ${icya}$*${nocolor}")
+  (>&2 echo -e "${on_ired}[DEBUG - $(date -d now)]${nocolor}: ${icya}$*${nocolor}")
 }
 
 function print_delim() {

@@ -11,7 +11,7 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 # check for Graphics Hardware and System Architecture Details
 source $LINUX_SCRIPT_HOME/utils/gpu.info.sh

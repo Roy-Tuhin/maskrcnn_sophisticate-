@@ -49,7 +49,7 @@ sudo -E apt -y update
 sudo -E apt install -y qgis python-qgis qgis-plugin-grass
 
 
-# source ./linuxscripts.config.sh
+# source ./lscripts.config.sh
 
 # if [ -z "$BASEPATH" ]; then
 #   BASEPATH="$HOME/softwares"

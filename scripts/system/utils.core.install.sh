@@ -5,10 +5,10 @@
 ## Tested on Ubuntu 16.04 LTS, Ubuntu 18.04 LTS
 ##----------------------------------------------------------
 
-sudo -E apt-get update
+sudo apt -y update
 
 ## Essential for New Machine Setup
-sudo -E apt -q -y install git
-sudo -E apt -q -y install gparted
-sudo -E apt -q -y install net-tools
-sudo -E apt -q -y install ppa-purge
+sudo apt -y install git
+sudo apt -y install gparted
+sudo apt -y install net-tools
+sudo apt -y install ppa-purge

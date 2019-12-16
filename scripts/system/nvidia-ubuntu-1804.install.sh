@@ -11,10 +11,10 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 # check for Graphics Hardware and System Architecture Details
-source $LINUX_SCRIPT_HOME/gpu.info.sh
+source $LINUX_SCRIPT_HOME/utils/gpu.info.sh
 
 if [ -z "$BASEPATH" ]; then
   BASEPATH="$HOME/softwares"
@@ -36,12 +36,15 @@ sudo apt-get remove nvidia*
 sudo -E apt update
 sudo -E apt upgrade
 
-## install graphics driver
+# install graphics driver
+
 sudo sh -c 'echo "blacklist nouveau\noptions nouveau modeset=0" > /etc/modprobe.d/disable-nouveau.conf'
 
+NVIDIA_DRIVER_VER='390'
 sudo apt install nvidia-driver-$NVIDIA_DRIVER_VER
 sudo reboot
 
-## after successful Nvidia Driver installation
-# source $LINUX_SCRIPT_HOME/nvidia-driver-info.sh
+# after successful Nvidia Driver installation
+
+source $LINUX_SCRIPT_HOME/nvidia-driver-info.sh
 
