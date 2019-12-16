@@ -14,48 +14,52 @@
 #
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+function redis_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
+  if [ -z "${BASEPATH}" ]; then
+    local BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
 
-PROG='redis-stable'
-DIR=$PROG
-PROG_DIR="$BASEPATH/$PROG"
-FILE="$PROG.tar.gz"
+  local PROG='redis-stable'
+  local DIR=$PROG
+  local PROG_DIR="$BASEPATH/$PROG"
+  local FILE="$PROG.tar.gz"
 
-URL="http://download.redis.io/$FILE"
+  local URL="http://download.redis.io/$FILE"
 
-echo "Number of threads will be used: $NUMTHREADS"
-echo "BASEPATH: $BASEPATH"
-echo "URL: $URL"
-echo "PROG_DIR: $PROG_DIR"
+  echo "Number of threads will be used: $NUMTHREADS"
+  echo "BASEPATH: $BASEPATH"
+  echo "URL: $URL"
+  echo "PROG_DIR: $PROG_DIR"
 
-if [ ! -f $HOME/Downloads/$FILE ]; then
-  wget -c $URL -P $HOME/Downloads
-else
-  echo Not downloading as: $HOME/Downloads/$FILE already exists!
-fi
+  mkdir -p ${BASEPATH}
 
-if [ ! -d $HOME/softwares/$DIR ]; then
-  tar xvfz $HOME/Downloads/$FILE -C $HOME/softwares
-else
-  echo Extracted Dir already exists: $HOME/softwares/$DIR
-fi
+  if [ ! -f $HOME/Downloads/$FILE ]; then
+    wget -c $URL -P $HOME/Downloads
+  else
+    echo Not downloading as: $HOME/Downloads/$FILE already exists!
+  fi
 
-cd $PROG_DIR
-make -j$NUMTHREADS
-make test -j$NUMTHREADS
-sudo make install
+  if [ ! -d $PROG_DIR ]; then
+    tar xvfz $HOME/Downloads/$FILE -C $BASEPATH
+  else
+    echo Extracted Dir already exists: $PROG_DIR
+  fi
 
-# cd $LINUX_SCRIPT_HOME
+  cd $PROG_DIR
+  make -j$NUMTHREADS
+  make test -j$NUMTHREADS
+  sudo make install
 
-##----------------------------------------------------------
-## Build Logs
-##----------------------------------------------------------
+  # cd $LINUX_SCRIPT_HOME
+
+  ##----------------------------------------------------------
+  ## Build Logs
+  ##----------------------------------------------------------
+}
+
+redis_install

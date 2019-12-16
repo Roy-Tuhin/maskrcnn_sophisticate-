@@ -19,7 +19,7 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 swig -version
 

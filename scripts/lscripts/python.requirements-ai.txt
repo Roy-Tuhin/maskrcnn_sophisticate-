@@ -21,3 +21,5 @@ tensorflow-gpu==1.13.1
 keras==2.2.3
 
 torch==1.1.0
+
+tensorflow-model-optimization

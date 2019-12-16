@@ -7,7 +7,7 @@ LSCRIPTS=$(pwd)
 
 cd $LSCRIPTS
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 ##----------------------------------------------------------
 ## Nvidia GPU Drivers

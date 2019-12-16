@@ -39,7 +39,7 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 
 # sudo add-apt-repository --remove ppa:romain-janvier/cloudcompare

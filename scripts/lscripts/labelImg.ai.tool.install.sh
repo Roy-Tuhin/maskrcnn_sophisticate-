@@ -8,7 +8,7 @@
 #
 ##----------------------------------------------------------
 
-source ./linuxscripts.config.sh
+source ./lscripts.config.sh
 
 if [ -z "$BASEPATH" ]; then
   BASEPATH="$HOME/softwares"

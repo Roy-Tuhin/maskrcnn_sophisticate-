@@ -6,11 +6,11 @@
 ## Inspired by linuxscripts
 ##----------------------------------------------------------
 
-mkdir -p $HOME/softwares
+mkdir -p ${HOME}/softwares
 sudo apt update
 sudo apt install -y git
 
-git clone https://github.com/mangalbhaskar/linuxscripts.git $HOME/softwares/linuxscripts
+git clone https://github.com/mangalbhaskar/linuxscripts.git ${HOME}/softwares/linuxscripts
 
 sudo mkdir -p /aimldl-cod
 sudo chown -R $(id -un):$(id -gn) /aimldl-cod

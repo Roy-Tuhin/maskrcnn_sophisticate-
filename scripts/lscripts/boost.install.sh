@@ -17,7 +17,7 @@
 ## Ubuntu 18.04 comes with Boost version: 1.65.1
 ##----------------------------------------------------------
 
-source ./linuxscripts.config.sh
+source ./lscripts.config.sh
 
 if [ -z "$BASEPATH" ]; then
   BASEPATH="$HOME/softwares"

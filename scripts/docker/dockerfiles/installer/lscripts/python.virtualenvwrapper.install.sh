@@ -29,7 +29,7 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 if [ -z "$PY_VENV_PATH" ]; then
   PY_VENV_PATH=$HOME/virtualmachines/virtualenvs

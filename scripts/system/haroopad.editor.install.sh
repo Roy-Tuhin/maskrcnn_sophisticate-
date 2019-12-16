@@ -13,7 +13,7 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 if [ -z "$HAROOPAD_VER" ]; then
   HAROOPAD_VER="0.13.1"

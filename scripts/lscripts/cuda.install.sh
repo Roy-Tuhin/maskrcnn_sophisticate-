@@ -44,7 +44,7 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 if [ -z "$BASEPATH" ]; then
   BASEPATH="$HOME/softwares"
@@ -111,7 +111,7 @@ if [ -f $HOME/Downloads/$CUDA_PCKG ]; then
   ##----------------------------------------------------------#
   ## Installs all CUDA Toolkit and DriCUDA_VER packages.
   ## Handles upgrading to the next CUDA_VERsion of the cuda package when it's CUDA_RELeased
-  ## This does not install the latest CUDA_VERsion of Nvidia driCUDA_VER, hence not sugggested
+  ## This does not install the latest version of Nvidia driver, hence not sugggested
   #
   ## sudo -E apt -q -y install cuda
   #

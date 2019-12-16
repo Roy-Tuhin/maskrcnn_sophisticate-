@@ -14,7 +14,7 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 # sudo apt-get -y install python-yaml 
 # sudo apt-get -y libhdf5-serial-dev

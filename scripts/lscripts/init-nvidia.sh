@@ -1,40 +1,37 @@
 #!/bin/bash
 
-LSCRIPTS=$(pwd)
-#export PATH=$PATH:$LSCRIPTS
-#echo "PATH: $PATH"
-#echo "Inside dir: $LSCRIPTS"
+function init_nvidia() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-cd $LSCRIPTS
+  ##----------------------------------------------------------
+  ## Nvidia GPU Drivers
+  ##----------------------------------------------------------
 
-source $LSCRIPTS/linuxscripts.config.sh
+  ## Ubuntu 16.04 LTS
+  ## Install in Virtual Console
+  if [[ ${LINUX_VERSION} == "16.04" ]]; then
+    echo "...${LINUX_VERSION}"
+    source ${LSCRIPTS}/nvidia-ubuntu-1604.install.sh
+  fi
 
-##----------------------------------------------------------
-## Nvidia GPU Drivers
-##----------------------------------------------------------
+  # Ubuntu 18.04 LTS
+  if [[ ${LINUX_VERSION} == "18.04" ]]; then
+    echo ${LINUX_VERSION}
+    source ${LSCRIPTS}/nvidia-ubuntu-1804.install.sh
+  fi
 
-## Ubuntu 16.04 LTS
-## Install in Virtual Console
-if [[ $LINUX_VERSION == "16.04" ]]; then
-  echo "...$LINUX_VERSION"
-  source $LSCRIPTS/nvidia-ubuntu-1604.install.sh
-fi
+  ## FYI:
+  # # after successful Nvidia Driver installation
 
-# Ubuntu 18.04 LTS
-if [[ $LINUX_VERSION == "18.04" ]]; then
-  echo $LINUX_VERSION
-  source $LSCRIPTS/nvidia-ubuntu-1804.install.sh
-fi
+  # source ${LINUX_SCRIPT_HOME}/nvidia-driver-info.sh
 
-## FYI:
-# # after successful Nvidia Driver installation
+  # # ##----------------------------------------------------------
+  # # ## CUDA, cuDNN, TensorRT
+  # # ##----------------------------------------------------------
+  # source ${LSCRIPTS}/cuda.install.sh
+  # source ${LSCRIPTS}/cudnn.install.sh
+  # source ${LSCRIPTS}/tensorRT.install.sh
+}
 
-# source $LINUX_SCRIPT_HOME/nvidia-driver-info.sh
-
-# # ##----------------------------------------------------------
-# # ## CUDA, cuDNN, TensorRT
-# # ##----------------------------------------------------------
-# source $LSCRIPTS/cuda.install.sh
-# source $LSCRIPTS/cudnn.install.sh
-# source $LSCRIPTS/tensorRT.install.sh
-
+init_nvidia

@@ -6,7 +6,7 @@
 ##----------------------------------------------------------
 # https://shotcut.org/download/
 
-source linuxscripts.config.sh
+source lscripts.config.sh
 
 
 FILE="shotcut-linux-x86_64-180801.tar.bz2"

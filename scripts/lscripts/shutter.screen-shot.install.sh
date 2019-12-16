@@ -14,7 +14,7 @@
 LSCRIPTS=$(pwd)
 cd $LSCRIPTS
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 if [[ $LINUX_VERSION == "16.04" ]]; then
   sudo -E add-apt-repository -y ppa:shutter/ppa

@@ -51,7 +51,7 @@ if [ -z $LSCRIPTS ];then
   $LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 ## Install python packages using pip
 sudo pip install -U -r $LINUX_SCRIPT_HOME/python.requirements.txt

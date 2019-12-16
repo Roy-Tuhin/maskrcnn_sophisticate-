@@ -1,50 +1,48 @@
 #!/bin/bash
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
+function apache2_config() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-source $LSCRIPTS/linuxscripts.config.sh
+  if [ -z "${PHP_VER}" ]; then
+    PHP_VER="7.2"
+    echo "Unable to get PHP version, falling back to default version#: ${PHP_VER}"
+  fi
 
-if [ -z "$PHP_VER" ]; then
-  PHP_VER="7.2"
-  echo "Unable to get PHP version, falling back to default version#: $PHP_VER"
-fi
+  ## Enable Userdir Module
+  sudo a2enmod userdir
 
-## Enable Userdir Module
-sudo a2enmod userdir
+  ## Enable ReWrite Engine Module
+  sudo a2enmod rewrite
 
-## Enable ReWrite Engine Module
-sudo a2enmod rewrite
+  ## Python with Apache
 
-## Python with Apache
+  ## disable multithreading processes
+  sudo a2dismod mpm_event
 
-## disable multithreading processes
-sudo a2dismod mpm_event
+  ## Enable cgi
+  sudo a2enmod cgi
+  sudo a2enmod mpm_prefork cgi
 
-## Enable cgi
-sudo a2enmod cgi
-sudo a2enmod mpm_prefork cgi
+  ## Enable WSGI: mod_wsgi
+  # sudo a2dismod wsgi
+  sudo a2enmod wsgi
 
-## Enable WSGI: mod_wsgi
-# sudo a2dismod wsgi
-sudo a2enmod wsgi
+  if [ ! -d $HOME/public_html ]; then
+    mkdir -p $HOME/public_html && chmod 0755 $HOME/public_html
+  fi
 
-if [ ! -d $HOME/public_html ]; then
-  mkdir -p $HOME/public_html && chmod 0755 $HOME/public_html
-fi
+  PHP_INSTALLED_VER=`php --version | cut -d'-' -f1 | grep -i php | cut -d' ' -f2`
 
-PHP_INSTALLED_VER=`php --version | cut -d'-' -f1 | grep -i php | cut -d' ' -f2`
+  echo -e "${biwhi} PHP_INSTALLED_VER: $PHP_INSTALLED_VER ${nocolor}"
+  echo ""
 
-echo -e "${biwhi} PHP_INSTALLED_VER: $PHP_INSTALLED_VER ${nocolor}"
-echo ""
-
-echo -e "${biwhi} Edit this file and make following entries: ${nocolor}"
-echo -e "${biyel} * (copy below line and replace the existing) ${nocolor}"
-echo -e "${biyel} * (use 'vi' editor only) ${nocolor}"
-echo ""
-echo -e "${icya} sudo vi /etc/apache2/mods-available/userdir.conf ${nocolor}"
-echo -e "${bired}"
+  echo -e "${biwhi} Edit this file and make following entries: ${nocolor}"
+  echo -e "${biyel} * (copy below line and replace the existing) ${nocolor}"
+  echo -e "${biyel} * (use 'vi' editor only) ${nocolor}"
+  echo ""
+  echo -e "${icya} sudo vi /etc/apache2/mods-available/userdir.conf ${nocolor}"
+  echo -e "${bired}"
 cat << EOF
 <IfModule mod_userdir.c>
   UserDir public_html
@@ -82,20 +80,19 @@ cat << EOF
   </Directory>
 </IfModule>
 EOF
-echo -e "${nocolor}"
 
-## WSGIApplicationGroup %{GLOBAL}
-## https://stackoverflow.com/questions/4236045/django-apache-mod-wsgi-hangs-on-importing-a-python-module-from-so-file
-## https://www.pyimagesearch.com/2018/02/05/deep-learning-production-keras-redis-flask-apache/
+  echo -e "${nocolor}"
 
-echo ""
-echo -e "${biwhi} Edit this file and make following entries: ${nocolor}"
-echo -e "${biyel} * (copy below line and replace the existing) ${nocolor}"
-echo -e "${biyel} * (use 'vi' editor only) ${nocolor}"
-echo ""
-echo -e "${icya} sudo vi /etc/apache2/mods-available/php$PHP_VER.conf ${nocolor}"
-
-echo -e "${bired}"
+  ## WSGIApplicationGroup %{GLOBAL}
+  ## https://stackoverflow.com/questions/4236045/django-apache-mod-wsgi-hangs-on-importing-a-python-module-from-so-file
+  ## https://www.pyimagesearch.com/2018/02/05/deep-learning-production-keras-redis-flask-apache/
+  echo ""
+  echo -e "${biwhi} Edit this file and make following entries: ${nocolor}"
+  echo -e "${biyel} * (copy below line and replace the existing) ${nocolor}"
+  echo -e "${biyel} * (use 'vi' editor only) ${nocolor}"
+  echo ""
+  echo -e "${icya} sudo vi /etc/apache2/mods-available/php${PHP_VER}.conf ${nocolor}"
+  echo -e "${bired}"
 cat << EOF
 <IfModule mod_userdir.c>
     WSGIDaemonProcess wsgi-bin threads=10
@@ -119,14 +116,19 @@ cat << EOF
     </Directory>
 </IfModule>
 EOF
-echo -e "${nocolor}"
+  echo -e "${nocolor}"
 
-echo '<?php phpinfo(); ?>' > ${HOME}/public_html/info.php
+  mkdir -p ${HOME}/public_html
 
-echo -e "${biwhi} Created file: ${HOME}/public_html/info.php ${nocolor}"
-echo ""
-echo -e "${biwhi} Restart the server:${nocolor}\n${icya} sudo service apache2 restart ${nocolor}"
-echo ""
-echo -e "${biwhi} Access server at: ${nocolor}\n${icya} http://localhost/~$USER/ ${nocolor}"
-echo -e "${biwhi} Access info.php at: ${nocolor}\n${icya} http://localhost/~$USER/info.php ${nocolor}"
-echo ""
+  echo '<?php phpinfo(); ?>' > ${HOME}/public_html/info.php
+
+  echo -e "${biwhi} Created file: ${HOME}/public_html/info.php ${nocolor}"
+  echo ""
+  echo -e "${biwhi} Restart the server:${nocolor}\n${icya} sudo service apache2 restart ${nocolor}"
+  echo ""
+  echo -e "${biwhi} Access server at: ${nocolor}\n${icya} http://localhost/~$USER/ ${nocolor}"
+  echo -e "${biwhi} Access info.php at: ${nocolor}\n${icya} http://localhost/~$USER/info.php ${nocolor}"
+  echo ""
+}
+
+apache2_config

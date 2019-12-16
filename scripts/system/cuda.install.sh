@@ -44,7 +44,7 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 if [ -z "$BASEPATH" ]; then
   BASEPATH="$HOME/softwares"
@@ -97,11 +97,8 @@ if [ -f $HOME/Downloads/$CUDA_PCKG ]; then
   #
   sudo dpkg -i $HOME/Downloads/$CUDA_PCKG
 
-  ## cuda repo keys for different cuda versions
   #sudo apt-key add /var/cuda-repo-9-1-local/7fa2af80.pub
-  #sudo apt-key add /var/cuda-repo-10-0-local-10.0.130-410.48/7fa2af80.pub
-
-  sudo apt-key add /var/cuda-repo-$CUDA_REPO_KEY/7fa2af80.pub
+  sudo apt-key add /var/cuda-repo-$CUDA_REL-local/7fa2af80.pub
 
   sudo -E apt update
 

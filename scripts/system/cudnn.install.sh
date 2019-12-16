@@ -24,7 +24,7 @@ if [ -z $LSCRIPTS ];then
   LSCRIPTS="."
 fi
 
-source $LSCRIPTS/linuxscripts.config.sh
+source $LSCRIPTS/lscripts.config.sh
 
 if [ -z "$BASEPATH" ]; then
   BASEPATH="$HOME/softwares"
@@ -82,7 +82,7 @@ else
   echo "Runtime Lib is required to install Dev lib and User Guide"
 fi
 
-## TODO: gcc should have been set to ver 6
+## TODO: switch to gcc-select
 # # Ubuntu 18.04 LTS
 # if [[ $LINUX_VERSION == "18.04" ]]; then
 #   echo $LINUX_VERSION
