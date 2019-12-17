@@ -3,10 +3,10 @@
 **NOTE:**
 * After system installation, all the python scripts should be run within the virtualenv setup until specified otherwise
 * **Configurations files**
-  * a) **Absolute paths**:`/aimldl-cod/scripts/paths.py`
-  * b) **Application configurations**:`/aimldl-cod/scripts/app.py`
-  * c) **API documentation**: `/aimldl-cod/scripts/api_doc.py`
-  * d) **Local Custom Settings**: `/aimldl-cod/scripts/config.custom.sh`
+  * a) **Absolute paths**:`/codehub/scripts/paths.py`
+  * b) **Application configurations**:`/codehub/scripts/app.py`
+  * c) **API documentation**: `/codehub/scripts/api_doc.py`
+  * d) **Local Custom Settings**: `/codehub/scripts/config.custom.sh`
 
 ## 1. Change the local environment configurations
   * get the details on the python environment settings
@@ -14,12 +14,12 @@
   lsvirtualenv
   cdvirtualenv
   ```
-  * set the proper values for `AI_WSGIPythonPath` and `AI_WSGIPythonHome` accordingly in file: `/aimldl-cod/scripts/config.custom.sh`
+  * set the proper values for `AI_WSGIPythonPath` and `AI_WSGIPythonHome` accordingly in file: `/codehub/scripts/config.custom.sh`
 
 
 ## 2. For getting the mount commands for remote system - **optional**
   ```bash
-  cd /aimldl-cod/scripts
+  cd /codehub/scripts
   cp config.mount.example.sh config.mount.local.sh
   ```
 
@@ -39,7 +39,7 @@
 ## 4. Directory and environment variable setup
   * This will create the required directory strucutres, environment varaibles, path and app configuration files
     ```bash
-    cd /aimldl-cod/scripts
+    cd /codehub/scripts
     source setup.sh
     ```
   * All config files are generated here: `/aimldl-cfg`
@@ -49,7 +49,7 @@
 
 1. Install docker-ce
   ```bash
-  cd /aimldl-cod/scripts/docker
+  cd /codehub/scripts/docker
   source docker-ce.install.sh
   ```
 2. **re-boot system**
@@ -70,14 +70,14 @@
 * **Note:**
   * This is required for end-to-end TEPPr workflow
   * Configuration files - **Ideally nothing needs to be changed**
-    * a) docker environment configurations are defined in: `/aimldl-cod/scripts/docker/docker.env.sh`
-    * b) MongoDB configurations are defined in: `/aimldl-cod/scripts/config/mongod.conf`
+    * a) docker environment configurations are defined in: `/codehub/scripts/docker/docker.env.sh`
+    * b) MongoDB configurations are defined in: `/codehub/scripts/config/mongod.conf`
   * If mongodb is already installed on host system stop the mongodb service on host system, before installing mongodb docker container
 1. **Install mongodb as a docker container** - **preferred**
   * Build mongodb docker image
   * `mongodb` user and group id fixes. Refer [mongo custom image](https://github.com/mangalbhaskar/mongo/tree/master/4.1) 
     ```bash
-    cd /aimldl-cod/scripts/docker/mongo
+    cd /codehub/scripts/docker/mongo
     source docker.buildimg.mongodb-userfix.sh <mongodb-version> <docker-image-tag>
     ## For Ubuntu 16.04
     source docker.buildimg.mongodb-userfix.sh 4.0 mongouid
@@ -86,12 +86,12 @@
     ```
   * Create mongodb docker container
     ```bash
-    cd /aimldl-cod/scripts/docker
+    cd /codehub/scripts/docker
     source docker.setup.sh
     ```
   * Test mongodb docker container
     ```bash
-    cd /aimldl-cod/scripts/docker
+    cd /codehub/scripts/docker
     source docker.exec.sh
     ```
 2. **Install Mongo Client to access mongodb from UI** - **This is optional but preferred if you are new to mongodb**
@@ -112,12 +112,12 @@
 ## 7. Create DNN Setup
 
 * **NOTE:**
-  * All the required code should be installed under: `/aimldl-cod/external`
-  * Install individual DNN repos; refer script`/aimldl-cod/scripts/setup.external.sh`
+  * All the required code should be installed under: `/codehub/external`
+  * Install individual DNN repos; refer script`/codehub/scripts/setup.external.sh`
 
 1. Install minimal required dnns
     ```bash
-    cd /aimldl-cod/scripts
+    cd /codehub/scripts
     #
     ## contains all the external git references
     # source setup.external.sh
@@ -182,7 +182,7 @@
 3. Upload/release the models to the database. Used by the AI API port.
   * uploaded logs are generated here for each model: `/aimldl-dat/logs/annon`
     ```bash
-    cd /aimldl-cod/scripts/annon
+    cd /codehub/scripts/annon
     source run_release_modelinfo.sh <annon_db>
     ## Example:
     source run_release_modelinfo.sh annon_v3
@@ -191,7 +191,7 @@
   * check in the database directly using mongoclient
   * use annon workflow for verification:
     ```bash
-    cd /aimldl-cod/apps/annon
+    cd /codehub/apps/annon
     python verifydb.py
     ```
   * summary report: `<dbname>_summary-<ddmmyy>_<hhmmss>.json` is generated in command line and also at the annon logs path: `/aimldl-dat/logs/annon`
