@@ -115,9 +115,9 @@ function python_virtualenvwrapper_install() {
 
   install_py_env ${pyVer}
 
-  # cd ${LSCRIPTS}
+  cd ${LSCRIPTS}
 
-  # source ${LSCRIPTS}/python.virtualenvwrapper.setup.sh ${pyVer} $2
+  source ${LSCRIPTS}/python.virtualenvwrapper.setup.sh ${pyVer} $2
 }
 
 python_virtualenvwrapper_install $1 $2

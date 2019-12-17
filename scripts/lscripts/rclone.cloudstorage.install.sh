@@ -25,22 +25,21 @@
 #
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/lscripts.config.sh
+function rclone_cloudstorage_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
+	curl https://rclone.org/install.sh > ${LSCRIPTS}/rclone.install.sh
+	sudo bash ${LSCRIPTS}/rclone.install.sh
 
-curl https://rclone.org/install.sh > rclone.install.sh
-sudo bash rclone.install.sh
+	## OR
+	# sudo apt install rclone
 
-## OR
-# sudo apt install rclone
+	# man rclone
+	rclone config
 
+	# cd ${LSCRIPTS}
+}
 
-# man rclone
-rclone config
-
-
-# cd $LINUX_SCRIPT_HOME
+rclone_cloudstorage_install
