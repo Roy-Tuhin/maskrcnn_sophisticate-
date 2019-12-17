@@ -1,10 +1,10 @@
 ---
 title: Codehub
-decription: Codehub is the development environment toolchain
+description: Codehub is the development environment toolchain
 author: Bhaskar Mangal
 created: 16th-Nov-2019
-updated: 01st-Dev-2019
-tags: Ubuntu, Linux Scripts, docker
+updated: 17th-Dev-2019
+tags: Ubuntu, Linux Scripts, docker, AIMLDL
 ---
 
 
@@ -16,12 +16,41 @@ tags: Ubuntu, Linux Scripts, docker
 # Codehub
 
 
+## Getting Started - First Time Setup
+
+
+1. **Run the installer script**
+    * This step clones and initializes the `/codehub` repo on the local system
+    * Installer script executes this setup script:`/codehub/scripts/setup.sh`
+    * Run the following command on command prompt to clone and initialize the git repo on the local system:
+      ```bash
+      wget -O - https://raw.githubusercontent.com/mangalbhaskar/codehub/master/scripts/codehub.init.sh | bash
+      ```
+2. **Install the required software**
+    * Ref: [How to Setup System and Install Required Software](readme/scripts.system.md)
+3. **Setup AI environment**
+    * Ref: [How to Setup AI Environment](readme/how_to_setup_env.md)
+4. **Setup AI API**
+    * Ref: [How to Setup AI API](readme/apps.www.od.md)
+5. **Configure AI API to auto-start on system boot**
+    * Ref: [How to deploy start api automatically on system boot](readme/how_to_start_api_automatically_on_system_boot.md)
+
+
+## Docker Setup for AI Development
+
+**Docker Images**
+* [hub.docker.com - mangalbhaskar/aimldl](https://hub.docker.com/r/mangalbhaskar/aimldl)
+
+
+## Specifications
+
+
 **codehub - Design Philosophy:**
 > What is it?
 
-* Setting up the development environment, tools chains is time consuming and repetitive.
-* Migrating from one system to another, in case of new setup after formatting of the system, system crashes is painful tasks.
-* During this, change in the user name, uid/gid and re-configuration is highly manually.
+* Setting up the development environment, tools chains is time consuming and repetitive
+* Migrating from one system to another, in case of new setup after formatting of the system, system crashes is a painful task
+* During this, change in the user name, uid/gid and re-configuration is highly manual
 * Containers plays key roles in creating such re-usable environment
 
 
@@ -49,40 +78,11 @@ AIMLDL workflow and conventions for computer vision tasks.
 * Plug-n-play of different DNN architectures
 
 
-## First Time Setup
-
-
-1. **Run the installer script**
-  * This step clones and initializes the `/codehub` repo on the local system
-  * Installer script executes this setup script:`/codehub/scripts/setup.sh`
-  * Run the following command on command prompt to clone and initialize the git repo on the local system:
-    ```bash
-    wget -O - https://raw.githubusercontent.com/mangalbhaskar/codehub/master/scripts/codehub.init.sh | bash
-    ```
-2. **Install the required software**
-  * Ref: [How to Setup System and Install Required Software](readme/scripts.system.md)
-3. **Setup AI environment**
-  * Ref: [How to Setup AI Environment](readme/how_to_setup_env.md)
-4. **Setup AI API**
-  * Ref: [How to Setup AI API](readme/apps.www.od.md)
-5. **Configure AI API to auto-start on system boot**
-  * Ref: [How to deploy start api automatically on system boot](readme/how_to_start_api_automatically_on_system_boot.md)
-
-
-## Docker Setup for AI Development
-
-**Docker Images**
-* [hub.docker.com - mangalbhaskar/aimldl](https://hub.docker.com/r/mangalbhaskar/aimldl)
-
-
-## Specifications
-
-
 ### AIMLDL
 
 * [System Design](readme/spec.system-design.md)
 * [AI Environment Variables Explained](readme/apps.environment-variables-explained.md)
-* [Annotaion Workflow](readme/spec.apps.annon.md)
+* [Annotation Workflow](readme/spec.apps.annon.md)
 * [FAQ's](readme/faqs.md)
 
 
@@ -133,14 +133,6 @@ AIMLDL workflow and conventions for computer vision tasks.
   * gunicorn server timeout setting increased from default 30 seconds to 60 seconds
 
 
-## Specifications
-
-
-## Howto
-
-* [How to clone and create the git repo first time setup](readme/how_to_clone_and_create_the_git_repo_first_time_setup.md)
-
-
 ## Learning Resources - removed temporarily
 
 **Deep Learning Notes**
@@ -185,7 +177,7 @@ AIMLDL workflow and conventions for computer vision tasks.
   * docker script `gpg vs gpg2` conditional selection in docker image - put a note in mongodb setup
   * AI model version management using `git-lfs`
   * Full interation of TEPPr workflow items
-  * tensorboard enahcements
+  * tensorboard enhancements
   * integration of lanenet
   * hyper-tuning mask_rcnn
   * system stats usage reports
@@ -214,13 +206,6 @@ Copyright (c):
 
 2019 Vidteq India Pvt. Ltd. - A MapmyIndia Company
 Written by mangalbhaskar
-
 ```
 * Licensed under [see LICENSE for details]
-* Images/Annotations (if any) under **samples** are copyright of the contributor(s). All rights reserved.
-
-
-## Credits
-
-* TODO
-
+* Images/Annotations (if any) under **samples, tests** are copyright of the contributor(s). All rights reserved.
