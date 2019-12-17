@@ -25,11 +25,9 @@
 
 
 ## 3. Clone the internal git repos
-  * `/aimldl-cfg` is mandatory internal git repo, also for the production setup
   * documentation and knowledge bank is not required in production setup
   ```bash
   cd /
-  git clone xxxxx@xx.x.xx.100:/home/xxxx/yyyy/git-repo/aimldl-cfg /aimldl-cfg
   git clone xxxxx@xx.x.xx.100:/home/xxxx/yyyy/git-repo/aimldl-doc /aimldl-doc
   git clone xxxxx@xx.x.xx.100:/home/xxxx/yyyy/git-repo/aimldl-rpt /aimldl-rpt
   git clone xxxxx@xx.x.xx.100:/home/xxxx/yyyy/git-repo/aimldl-kbank /aimldl-kbank
@@ -42,7 +40,7 @@
     cd /codehub/scripts
     source setup.sh
     ```
-  * All config files are generated here: `/aimldl-cfg`
+  * All config files are generated here: `/codehub/config`
 
 
 ## 5. Install Docker
@@ -129,7 +127,7 @@
 
 ## 8. Setup Pre-trained models
 
-1. the model configuration files should be available under: `/aimldl-cfg/model/release`
+1. the model configuration files should be available under: `/codehub/cfg/model/release`
 2. the model/weight files should be available under: `/aimldl-dat/release`. This should follow the below directory structue
   ```bash
   ├── matterport
