@@ -53,8 +53,9 @@ AIMLDL workflow and conventions for computer vision tasks.
 
 
 1. **Run the installer script**
-  * This clones and initializes the `/codehub` repo and executes codehub setup:`/codehub/scripts/setup.sh`
-  * run the following command on command prompt:
+  * This step clones and initializes the `/codehub` repo on the local system
+  * Installer script executes this setup script:`/codehub/scripts/setup.sh`
+  * Run the following command on command prompt to clone and initialize the git repo on the local system:
     ```bash
     wget -O - https://raw.githubusercontent.com/mangalbhaskar/codehub/master/scripts/codehub.init.sh | bash
     ```
@@ -68,8 +69,9 @@ AIMLDL workflow and conventions for computer vision tasks.
   * Ref: [How to deploy start api automatically on system boot](readme/how_to_start_api_automatically_on_system_boot.md)
 
 
-## Docker Images
+## Docker Setup for AI Development
 
+**Docker Images**
 * [hub.docker.com - mangalbhaskar/aimldl](https://hub.docker.com/r/mangalbhaskar/aimldl)
 
 

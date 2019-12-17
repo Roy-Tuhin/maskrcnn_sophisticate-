@@ -2,11 +2,7 @@
 
 * A curated list of shell scripts, software packages and libraries for AI ML DL using Nvidia GPU
 * Tested on `Ubuntu 16.04 LTS` and `Ubuntu  18.04 LTS`
-* Compatible with `Kali Linux 2019.2`
-
-## Credits
-
-* Derivative of the repo: [`mangalbhaskar/linuxscripts`](https://github.com/mangalbhaskar/linuxscripts.git)
+* Compatible with `Kali Linux 2019.1`
 
 
 ## Notes - Please Read!
@@ -16,17 +12,17 @@
 * Downloading URLs, references, instructions and debugging errors tips are provided as comments inside the scripts
 * Adjust the configuration according to your requirements
 * Ubuntu 18.04 LTS is preferred installation
-* Specific versions are selected based on compatibility across different dependent packages. Changing them is not advisable and do that at your own risk. More details of compatibility issues in master repo here:  [`mangalbhaskar/linuxscripts - README`](https://github.com/mangalbhaskar/linuxscripts/blob/master/README.md)
+* Specific versions are selected based on compatibility across different dependent packages. Changing them is not advisable and do that at your own risk
 
 * **Final Note**:
   * If there is an interrupt and the installation fails, restart the installation
   * Don't be afraid to open and read the scripts, and make any changes if required
-  * Use commonsense ;)
+  * Use commonsense `;)`
 
 
 ## Configuration Settings
 
-* `linuxscripts.config.sh`
+* `lscripts.config.sh`
   - Main configuration file  
 * `versions.sh`
   - defines all the software version
@@ -190,3 +186,7 @@
 
 * Refer: [technotes - sublime-text-editor](https://github.com/mangalbhaskar/technotes/blob/master/sublime-text-editor.md)
 
+
+## Credits
+
+* Derivative of the repo: [`mangalbhaskar/linuxscripts`](https://github.com/mangalbhaskar/linuxscripts.git)

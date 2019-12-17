@@ -11,6 +11,11 @@ tags: Ubuntu Linux Scripts
 * TOC
 {:toc}
 
+
+**This readme is Deprecated as of 17th-Dec'19 as `linuxscripts` is now `lscripts` as a component in `codehub` repo**
+**TODO: update the information on `lscripts`**
+
+
 ## What is it?
 A simple, yet consistent effort to **document and publish my learnings** and sharing with everyone in the team and others.
 
