@@ -10,12 +10,12 @@
 * Create the symlink to the apache root directory - **if Apache server is used with wsgi**
   ```bash
   cd $HOME/public_html
-  ln -s /aimldl-cod/apps/www/od
+  ln -s /codehub/apps/www/od
   sudo service apache2 restart
   ```
 * quick testing:
   ```bash
-  cd /aimldl-cod/apps/www/od/wsgi-bin
+  cd /codehub/apps/www/od/wsgi-bin
   gunicorn web_server:app
   ```
 * Test from the web
@@ -23,7 +23,7 @@
   * upload the image and verify if API json response is returned or not
 * Test from the command line
   ```bash
-  cd /aimldl-cod/scripts/api
+  cd /codehub/scripts/api
   ## change the sample image name and path inside the shell script
   #
   ## apicfg.sh -> change the configuration for testing
@@ -71,13 +71,13 @@
 
 1. using `curl`
   ```bash
-  cd /aimldl-cod/scripts/api
+  cd /codehub/scripts/api
   ## apicfg.sh -> change the configuration for testing
   source curl_api.sh
   ```
 2. using `python`
   ```bash
-  cd /aimldl-cod/scripts/api
+  cd /codehub/scripts/api
   ## apicfg.py -> change the configuration for testing
   python call_api.py
   ```

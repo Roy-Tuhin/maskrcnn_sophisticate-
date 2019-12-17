@@ -28,7 +28,7 @@
 
 * If `--to` is not present, it will use database
   ```bash
-  cd /aimldl-cod/apps/annon
+  cd /codehub/apps/annon
   python annon_to_db.py --help
   python annon_to_db.py create --from /path/to/annotation/<directory_OR_annotation_json_file>
   ## example
@@ -36,7 +36,7 @@
   ```
 * **Visualize annon DB (annotations without splits)**
   ```bash
-  cd /aimldl-cod/apps/falcon
+  cd /codehub/apps/falcon
   python falcon.py visualize --dataset annon
   ```
 
@@ -44,7 +44,7 @@
 
 * if `--from` and `--to` are not present, it will use database
   ```bash
-  cd /aimldl-cod/apps/annon
+  cd /codehub/apps/annon
   python db_to_aids.py --help
   python db_to_aids.py create --by <AI_Engineer_ID>
   ## example
@@ -54,7 +54,7 @@
 * example: `PXL-051019_165419_051019_165647`. The timestamps are in `<ddmmyy_hhmmss>` format
 * **Visualize AI Datasets (annotations with data splits)**
   ```bash
-  cd /aimldl-cod/apps/falcon
+  cd /codehub/apps/falcon
   python falcon.py visualize --dataset <ai-datasets_with_splits_db_name> --on <train | test | val>
   ## examples
   python falcon.py visualize --dataset PXL-051019_165419_051019_165647 --on train
@@ -66,8 +66,8 @@
 ## 3. **Create modelinfo configuration file for any pre-trained model to be used during training experiment**
 
 * Modelinfo `yml` files are the bindings for a model with respective labels, architecture, framework and other configurations
-* It should be created under directory: **`/aimldl-cfg/model/`**
-* Refer the sample provided for the format here: `[/aimldl-cod/apps/annon/samples/cfg/model/matterport-coco_things-1-mask_rcnn.yml](../apps/annon/samples/cfg/model/matterport-coco_things-1-mask_rcnn.yml)`
+* It should be created under directory: **`/codehub/cfg/model/`**
+* Refer the sample provided for the format here: `[/codehub/apps/annon/samples/cfg/model/matterport-coco_things-1-mask_rcnn.yml](../apps/annon/samples/cfg/model/matterport-coco_things-1-mask_rcnn.yml)`
 
 
 ## 4. **Create AI Experiment**
@@ -77,7 +77,7 @@
   * b) `evaluate: evaluation on train, val and test dataset` to give the accuracy metric from the output model from the training step
   * c) `predict: prediction on some sample test set` to visually analyze the output using the output model from the training step
 * AI Engineer needs to create `TEP` configuration in a `yml` file
-  * It should be created under directory: **`/aimldl-cfg/arch/`**
+  * It should be created under directory: **`/codehub/cfg/arch/`**
   * File should be named as:
     * `<ddmmyy_hhmm00>-AIE<i>-<j>-<dnn_arch>.yml`, where
       * `<ddmmyy_hhmm00>` is the timestamp of creation date of the experiment
@@ -85,21 +85,21 @@
       * `<j>` is the experiment number
       * `<dnn_arch>` is the DNN architecture name (without any spaces or hypen)
     * Example: `040919_162100-AIE3-1-mask_rcnn.yml`
-  * Refer the sample provided for the format here: `[/aimldl-cod/apps/annon/samples/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml](../apps/annon/samples/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml)`
+  * Refer the sample provided for the format here: `[/codehub/apps/annon/samples/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml](../apps/annon/samples/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml)`
 * Upload the AI experiment to the AI Dataset DB
   ```bash
-  cd /aimldl-cod/apps/annon
+  cd /codehub/apps/annon
   python teppr.py --help
   python teppr.py create --type experiment --from /path/to/<directory_or_yml_file> --to <ai_dataset__db_name> --exp <train | evaluate | predict>
   ## example
-  python teppr.py create --type experiment --from /aimldl-cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp train
+  python teppr.py create --type experiment --from /codehub/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp train
   ```
   * This witll create new table in AI Dataset DB: `TRAIN` or update the entries if table exists
 * Later, after training, update the yml file for evaluate and predict and then upload to DB individually
   ```bash
-  cd /aimldl-cod/apps/annon
-  python teppr.py create --type experiment --from /aimldl-cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp evaluate
-  python teppr.py create --type experiment --from /aimldl-cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp predict
+  cd /codehub/apps/annon
+  python teppr.py create --type experiment --from /codehub/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp evaluate
+  python teppr.py create --type experiment --from /codehub/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp predict
   ```
   * This will create new table in AI Dataset DB: `EVALUATE`, `PREDICT` respectively or update the entries if table exists
 

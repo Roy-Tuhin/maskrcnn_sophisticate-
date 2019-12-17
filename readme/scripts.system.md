@@ -75,7 +75,7 @@
   * follow the installer instructions and then **re-boot system** after nvidia driver installation
 * after system is re-booted, verify nvidia driver installation
   ```bash
-  cd /aimldl-cod/scripts/system
+  cd /codehub/scripts/system
   source nvidia-driver-info.sh
   ```
 
@@ -83,7 +83,7 @@
 ## 3. Install CUDA, CUDNN and Related Packages
 * **mandatory packages**
   ```bash
-  cd /aimldl-cod/scripts/system
+  cd /codehub/scripts/system
   source cuda.install.sh
   source cudnn.install.sh
   ```
@@ -97,7 +97,7 @@
 
 * **Execute `setup.sh` and `setup-extended.sh`**
   ```bash
-  cd /aimldl-cod/scripts/system
+  cd /codehub/scripts/system
   source setup.sh
   source setup-extended.sh
   ```

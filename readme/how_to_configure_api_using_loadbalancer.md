@@ -42,12 +42,12 @@
   sudo nginx -t
   sudo systemctl restart nginx.service
   ```
-* **Configure** the nginx **load_balaner.conf**: `/aimldl-cod/scripts/config/nginx/load_balancer.conf`
+* **Configure** the nginx **load_balaner.conf**: `/codehub/scripts/config/nginx/load_balancer.conf`
   * https://upcloud.com/community/tutorials/configure-load-balancing-nginx/
   * Provide the IPs and other settings
 * enable the configuration
   ```bash
-  sudo cp /aimldl-cod/scripts/config/nginx/load_balancer.conf /etc/nginx/sites-available/
+  sudo cp /codehub/scripts/config/nginx/load_balancer.conf /etc/nginx/sites-available/
   sudo ln -s /etc/nginx/sites-available/load_balancer.conf /etc/nginx/sites-enabled
   sudo rm /etc/nginx/sites-enabled/default
   sudo systemctl reload nginx.service

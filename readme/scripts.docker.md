@@ -35,7 +35,7 @@
   * `DOCKER_BASEPATH=/external4docker` - for volume mount to the host. To be used to clone the source code on the host, but compile inside docker.
   * `DOCKER_SETUP_PATH=/docker-installer` - setup scripts
   * `WORK_BASE_PATH=/codehub` - for volume mount with the [codehub repo](https://github.com/mangalbhaskar/codehub)
-  * `OTHR_BASE_PATHS=/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat /aimldl-cfg` - for volume mount with the [aimldl repo](https://github.com/mangalbhaskar/aimldl)
+  * `OTHR_BASE_PATHS=/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat` - for volume mount with the [aimldl repo](https://github.com/mangalbhaskar/aimldl)
 * **Images**
   * **`10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v7-20191211_1656`**
     ```
@@ -59,7 +59,7 @@
     PY_VENV_NAME=py_3_20191211_1624
     DUSER=baaz
     WORK_BASE_PATH=/codehub
-    OTHR_BASE_PATHS=/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat /aimldl-cfg
+    OTHR_BASE_PATHS=/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat
     DOCKER_BASEPATH=/external4docker
     DOCKER_SETUP_PATH=/docker-installer
     WHICHONE=aidev-devel-gpu

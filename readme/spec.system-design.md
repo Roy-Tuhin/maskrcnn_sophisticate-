@@ -48,69 +48,18 @@
 
 ## Top Level Directories
 
-1. **code:** `/aimldl-cod` - main repo
+1. **code:** `/codehub` - main repo
 2. **data:** `/aimldl-dat` - internal repo
 3. **remote mount points:** `/aimldl-mnt`
-4. **configuration:** `/aimldl-cfg` - internal repo
-  - dataset, DNN archtecture and modelinfo
-5. **specifications and documentations:** `/aimldl-doc` - internal repo
-6. **reporting:** `/aimldl-rpt` - internal repo
-7. **research references:** `/aimldl-kbank` - internal repo
+4. **specifications and documentations:** `/aimldl-doc` - internal repo
+5. **reporting:** `/aimldl-rpt` - internal repo
+6. **research references:** `/aimldl-kbank` - internal repo
 
 
-## `/aimldl-cod`: Code Directory Structure
+## `/codehub`: Code Directory Structure
 
-* This repository is code repository mapping to: **`/aimldl-cod`**
+* This repository is code repository mapping to: **`/codehub`**
   ```bash
-  ├── apps
-  │   ├── annon
-  │   │   ├── images
-  │   │   └── samples
-  │   ├── falcon
-  │   │   ├── arch
-  │   │   ├── images
-  │   │   ├── log
-  │   │   └── utils
-  │   ├── pixel
-  │   └── www
-  │       └── od
-  ├── auth
-  ├── cfg -> /aimldl-cfg
-  ├── dat -> /aimldl-dat
-  ├── doc -> /aimldl-doc
-  ├── external
-  │   ├── batchgenerators
-  │   ├── lanenet-lane-detection
-  │   ├── lanenet-server
-  │   ├── Mask_RCNN
-  │   ├── medicaldetectiontoolkit
-  │   └── TuSimple-lane-classes
-  │
-  ├── kbank -> /aimldl-kbank
-  ├── mnt -> /aimldl-mnt
-  ├── practice
-  │   ├── mangal
-  │   ├── nikhil
-  │   └── saqib
-  │
-  ├── readme
-  ├── rpt -> /aimldl-rpt
-  ├── samples
-  ├── scripts
-  │   ├── annon
-  │   ├── api
-  │   ├── auth
-  │   ├── config
-  │   ├── context
-  │   ├── docker
-  │   │   └── mongo
-  │   ├── logs
-  │   ├── system
-  │   │   └── logs
-  │   └── teppr
-  ├── _site
-  └── tests
-      └── images
   ```
 
 ### `apps/`
@@ -223,13 +172,13 @@
   - Development Environment directory structure
   - This is available as a part of git/github clone
     ```bash
-    /aimldl-cod/apps
-    /aimldl-cod/auth
-    /aimldl-cod/external
-    /aimldl-cod/practice
-    /aimldl-cod/_site
-    /aimldl-cod/scripts
-    /aimldl-cod/tests
+    /codehub/apps
+    /codehub/auth
+    /codehub/external
+    /codehub/practice
+    /codehub/_site
+    /codehub/scripts
+    /codehub/tests
     ```
 * **AI_DATA_DIR_PATHS**
   - MongoDB data bindings for local DB
@@ -267,9 +216,9 @@
     ## Reports
     /aimldl-dat/reports
     ## DNN configurations to be uploaded to DB
-    /aimldl-cfg/model
-    /aimldl-cfg/arch
-    /aimldl-cfg/dataset - deprecated
+    /codehub/cfg/model
+    /codehub/cfg/arch
+    /codehub/cfg/dataset - deprecated
     ```
 * **AI_MOUNT_PATHS_FOR_REMOTE:**
   - remote machines mount points for TEPPr workflow. Change as per system availability
@@ -290,8 +239,7 @@
 
 * Host Directories (created in setup) mapped inside the container
   ```bash
-  aimldl-cfg
-  aimldl-cod
+  codehub
   aimldl-dat
   aimldl-scripts - accessibility of the the utility scripts inside docker container
   ```

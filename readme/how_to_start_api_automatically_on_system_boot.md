@@ -4,11 +4,11 @@
 
 1. setup the proper paths for the conf files: `*.service`
   ```bash
-  vi /aimldl-cod/scripts/config/systemd/gunicorn.service
+  vi /codehub/scripts/config/systemd/gunicorn.service
   ```
 2. run the script to create and enable service that gets started on system boot
   ```bash
-  source /aimldl-cod/scripts/setup.services.sh
+  source /codehub/scripts/setup.services.sh
   ```
 
 **NOTES:**

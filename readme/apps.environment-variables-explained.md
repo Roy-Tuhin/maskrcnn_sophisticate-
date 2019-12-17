@@ -17,12 +17,12 @@ $AI_CFG                             $AI_HOME_EXT                        $AI_PY_V
 
 
 * **How and where to set the environment variables?**
-  * `/aimldl-cod/scripts`
+  * `/codehub/scripts`
     * config.custom.sh
     * config.sh
   * execute:
     ```bash
-    cd /aimldl-cod/scripts
+    cd /codehub/scripts
     source setup.sh
     ```
 

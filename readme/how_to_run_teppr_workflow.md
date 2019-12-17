@@ -3,9 +3,9 @@
 * TEPPr is Training (train), Evaluation (evaluate), Prediction (predict), Publish (publish), Reporting (report)
 * Router
   * Routes TEPPr request to specific AI architecture through the common interface
-  * Pixel:`/aimldl-cod/apps/pixel`: **deprecated**
+  * Pixel:`/codehub/apps/pixel`: **deprecated**
     * 1st generation with different files as entry point for TEPPr
-  * Falcon: `/aimldl-cod/apps/falcon`: **under active development**
+  * Falcon: `/codehub/apps/falcon`: **under active development**
     * 2nd generation with single entry and mongoDB support for integrated TEPPr workflow
 
 
@@ -21,7 +21,7 @@
 8. P: Publish and release trained models to AI API
 9. r: Generate reports - at any steps reports can be generated
 10. For batch processing and other utility scripts
-  * `/aimldl-cod/scripts/teppr`
+  * `/codehub/scripts/teppr`
 
 
 ## 1. Create Annotations and AI Dataset
@@ -37,12 +37,12 @@
 
 1. Visualize annon DB (annotations without splits)
   ```bash
-  cd /aimldl-cod/apps/falcon
+  cd /codehub/apps/falcon
   python falcon.py visualize --dataset annon
   ```
 2. Visualize AI Datasets (annotations with data splits)
   ```bash
-  cd /aimldl-cod/apps/falcon
+  cd /codehub/apps/falcon
   python falcon.py visualize --dataset <ai-datasets_with_splits_db_name> --on <train | test | val>
   ## examples
   python falcon.py visualize --dataset PXL-051019_165419_051019_165647 --on train
@@ -58,7 +58,7 @@
   * b) `evaluate: evaluation on train, val and test dataset` to give the accuracy metric from the output model from the training step
   * c) `predict: prediction on some sample test set` to visually analyze the output using the output model from the training step
 * AI Engineer needs to create `TEP` configuration in a `yml` file
-  * It should be created under directory: **`/aimldl-cfg/arch/`**
+  * It should be created under directory: **`/codehub/cfg/arch/`**
   * File should be named as:
     * `<ddmmyy_hhmm00>-AIE<i>-<j>-<dnn_arch>.yml`, where
       * `<ddmmyy_hhmm00>` is the timestamp of creation date of the experiment
@@ -66,21 +66,21 @@
       * `<j>` is the experiment number
       * `<dnn_arch>` is the DNN architecture name (without any spaces or hypen)
     * Example: `040919_162100-AIE3-1-mask_rcnn.yml`
-  * Refer the sample provided for the format here: `[/aimldl-cod/apps/annon/samples/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml](../apps/annon/samples/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml)`
+  * Refer the sample provided for the format here: `[/codehub/apps/annon/samples/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml](../apps/annon/samples/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml)`
 * Upload the AI experiment to the AI Dataset DB
   ```bash
-  cd /aimldl-cod/apps/annon
+  cd /codehub/apps/annon
   python teppr.py --help
   python teppr.py create --type experiment --from /path/to/<directory_or_yml_file> --to <ai_dataset__db_name> --exp <train | evaluate | predict>
   ## example
-  python teppr.py create --type experiment --from /aimldl-cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp train
+  python teppr.py create --type experiment --from /codehub/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp train
   ```
   * This witll create new table in AI Dataset DB: `TRAIN` or update the entries if table exists
 * Later, after training, update the yml file for evaluate and predict and then upload to DB individually
   ```bash
-  cd /aimldl-cod/apps/annon
-  python teppr.py create --type experiment --from /aimldl-cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp evaluate
-  python teppr.py create --type experiment --from /aimldl-cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp predict
+  cd /codehub/apps/annon
+  python teppr.py create --type experiment --from /codehub/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp evaluate
+  python teppr.py create --type experiment --from /codehub/cfg/arch/040919_162100-AIE3-1-mask_rcnn.yml --to PXL-051019_165419_051019_165647 --exp predict
   ```
   * This will create new table in AI Dataset DB: `EVALUATE`, `PREDICT` respectively or update the entries if table exists
 
@@ -88,7 +88,7 @@
 ## 3. Inspect AI Datasets
 
 ```bash
-cd /aimldl-cod/apps/falcon
+cd /codehub/apps/falcon
 python falcon.py inspect_annon --dataset <ai-datasets_with_splits_db_name> --on <train | test | val> --exp <exp_id>
 
 ## examples
@@ -111,7 +111,7 @@ Train - Training on the (AIDS) AI Dataset
     * This is required to ensure if algorithim steps performs as expected
     * There should be no errors at this stage
   ```bash
-  cd /aimldl-cod/apps/falcon
+  cd /codehub/apps/falcon
   python falcon.py --help
   #
   ## Visualize Annotations
@@ -123,7 +123,7 @@ Train - Training on the (AIDS) AI Dataset
 2. **Execute training**
   * Refer: [train.sh](../apps/falcon/train.sh)
   ```bash
-  cd /aimldl-cod/apps/falcon
+  cd /codehub/apps/falcon
   python falcon.py --help
   #
   ## Example:
@@ -131,7 +131,7 @@ Train - Training on the (AIDS) AI Dataset
   ```
 3. Batch Training - **Detailed Instructions TODO**
   ```bash
-  cd /aimldl-cod/scripts/teppr
+  cd /codehub/scripts/teppr
   source run_batch_train.sh 1>${AI_LOGS}/run_batch_train-$(date -d now +'%d%m%y_%H%M%S').log 2>&1
   ```
 
@@ -141,7 +141,7 @@ Train - Training on the (AIDS) AI Dataset
 Evaluate Trained Model on train, val and test AI Datasets
 * Refer: [train.sh](../apps/falcon/evaluate.sh)
 
-1. **Create Modelinfo File under directory: `/aimldl-cfg/model`. Refer exisiting modelinfo file**
+1. **Create Modelinfo File under directory: `/codehub/cfg/model`. Refer exisiting modelinfo file**
   a) Update the classes name with the proper sequence in which model was trained. Get the classinfo details from the training logs output under `/aimldl-dat/logs`
   ```bash
   <org_name>-<problem_id>-<training_dir_timestamp_from_logs_dir>-<arch_name>.yml
@@ -151,9 +151,9 @@ Evaluate Trained Model on train, val and test AI Datasets
   * a) Modify the evaluate experiment details, and point to proper modelinfo file
   * b) Upload the evaluate experiment to db
     ```bash
-    python cfg2db.py create --type experiment --from /aimldl-cfg/arch/<archspecific_experiment_yml_file> --exp evaluate --to <ai_datasets_id>
+    python cfg2db.py create --type experiment --from /codehub/cfg/arch/<archspecific_experiment_yml_file> --exp evaluate --to <ai_datasets_id>
     ## example
-    python cfg2db.py create --type experiment --from /aimldl-cfg/arch/280919_173500-69-8-mask_rcnn.yml --exp evaluate --to aids-87c0c094-755a-4771-bd70-23e6a7d742b3
+    python cfg2db.py create --type experiment --from /codehub/cfg/arch/280919_173500-69-8-mask_rcnn.yml --exp evaluate --to aids-87c0c094-755a-4771-bd70-23e6a7d742b3
     ```
 3. **Run the `evaluate`**
   ```bash
@@ -174,11 +174,11 @@ Publish - Release trained model to AI API Port
 
 1. Create Model config release directory if does not already exists.
   ```bash
-  mkdir -p /aimldl-cfg/model/release
+  mkdir -p /codehub/cfg/model/release
   ```
-2. Create a Model config file under `/aimldl-cfg/model`.
+2. Create a Model config file under `/codehub/cfg/model`.
   * This file ideally should already exists and would have been created after training to test and evaluate the model.
-  * copy the same file under `/aimldl-cfg/model`
+  * copy the same file under `/codehub/cfg/model`
 3. Copy the weights/model files under `/aimldl-dat/release`. 
   ```bash
   ├── <organization_name>
@@ -200,7 +200,7 @@ Publish - Release trained model to AI API Port
 4. Upload the model config to 'MODELINFO' table in the database
   * model path is unique key hence, running the script again **does not create duplicate entry**
   ```bash
-  cd /aimldl-cod/scripts/annon
+  cd /codehub/scripts/annon
   source run_batch_cfg2db_modelinfo.sh 1>${AI_LOGS}/run_batch_cfg2db_modelinfo-$(date -d now +'%d%m%y_%H%M%S').log 2>&1
   ```
 

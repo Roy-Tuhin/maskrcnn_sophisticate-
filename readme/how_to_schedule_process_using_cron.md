@@ -37,6 +37,6 @@
     https://www.ostechnix.com/a-beginners-guide-to-cron-jobs/
     * Example of a cronjob
     ```bash
-    40 11 26 10 6 /usr/bin/python /aimldl-cod/practice/nikhil/python/add2no.py 1>/aimldl-cod/practice/nikhil/python/test.log 2>&1
-    41 11 26 10 6 echo "Please find attached the backup file" | mutt -a "/aimldl-cod/practice/nikhil/python/test.log" -s "File attached" -- nikhil@mapmyindia.com
+    40 11 26 10 6 /usr/bin/python /codehub/practice/nikhil/python/add2no.py 1>/codehub/practice/nikhil/python/test.log 2>&1
+    41 11 26 10 6 echo "Please find attached the backup file" | mutt -a "/codehub/practice/nikhil/python/test.log" -s "File attached" -- nikhil@mapmyindia.com
     ```
