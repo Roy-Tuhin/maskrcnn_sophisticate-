@@ -3,12 +3,13 @@
 ## This config can also be used to overrides the default environment variables only for the current shell
 ## by including in the main executing script
 
-AI_BASEPATH="/codehub"
+AI_BASEPATH=""
+AI_CODE_BASE_PATH="/codehub"
 AI_DIR_PREFIX="aimldl"
 AI_GOOGLE_APPLICATION_CREDENTIALS_FILE=""
 AI_MOUNT_MACHPREFIX='vtq' ## possible values: 'vtd' or 'mmi'
 AI_VM_BASE="virtualmachines"
-AI_VM_HOME=${AI_BASEPATH}/${AI_VM_BASE}
+AI_VM_HOME=${AI_CODE_BASE_PATH}/${AI_VM_BASE}
 AI_PY_VENV_PATH=${AI_VM_HOME}/virtualenvs
 
 WORKON_HOME=${AI_PY_VENV_PATH}
@@ -27,7 +28,7 @@ AI_WSGIPythonHome="${AI_PY_VENV_NAME}/lib/python3.6/site-packages/"
 # AI_WSGIPythonHome="py_3-6-5_2018-11-21/lib/python3.6/site-packages/"
 
 ## AI Top Level Directories
-AI_CFG_BASE_PATH="${AI_BASEPATH}/cfg"
+AI_CFG_BASE_PATH="${AI_CODE_BASE_PATH}/cfg"
 AI_DATA_BASE_PATH="/${AI_DIR_PREFIX}-dat"
 AI_MOUNT_BASE_PATH="/${AI_DIR_PREFIX}-mnt"
 AI_DOC_BASE_PATH="/${AI_DIR_PREFIX}-doc"

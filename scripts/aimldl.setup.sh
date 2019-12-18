@@ -41,8 +41,8 @@ function aimldl_setup() {
 
   create_config_files_aimldl
 
-  echo "${AI_ENVVARS}"
-  echo $(lsvirtualenv -b | grep ^py_3 | tr '\n' ',' | cut -d',' -f1)
+  debug "${AI_ENVVARS}"
+  debug $(lsvirtualenv -b | grep ^py_3 | tr '\n' ',' | cut -d',' -f1)
 }
 
 aimldl_setup
