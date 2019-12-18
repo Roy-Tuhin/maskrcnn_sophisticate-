@@ -201,6 +201,7 @@ function codehub_main() {
     echo "Modifying ${FILE}"
     LINE="source ${CHUB_ENVVARS['CHUB_CONFIG']}/codehub.env.sh"
     grep -qF "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+    source ${FILE}
   }
 
 

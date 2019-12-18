@@ -405,6 +405,7 @@ function aimldl_main() {
     echo "Modifying ${FILE}"
     LINE="source ${AI_ENVVARS['AI_CONFIG']}/aimldl.env.sh"
     grep -qF "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+    source ${FILE}
   }
 
 
