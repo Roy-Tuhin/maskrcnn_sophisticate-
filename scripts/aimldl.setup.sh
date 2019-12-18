@@ -10,7 +10,7 @@
 ## NOTE:
 ## It will override any manual changes in the configurations files,
 ## hence, make config changes in following files only:
-## config.sh, config.custom.sh, pathy.py, app.py
+## aimldl.sh, aimldl.config.sh, paths.py, app.py
 #
 ##----------------------------------------------------------
 ## TODO:

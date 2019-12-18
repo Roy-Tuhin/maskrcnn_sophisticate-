@@ -3,7 +3,6 @@
 ## TODO: Instead of echo to .bashrc, echo it in this file
 
 source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/codehub.export.sh
-# source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/PS1.sh
 source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/ps1.sh
 
 ## commands
@@ -11,6 +10,7 @@ alias lt='ls -lrth'
 alias l='ls -lrth'
 alias gccselect='source ${LINUX_SCRIPT_HOME}/utils/gcc-select.sh'
 alias getip='source ${LINUX_SCRIPT_HOME}/utils/ip.sh'
+alias pykill="bash ${AI_HOME}/scripts/utils/pykill.sh"
 
 ## change directory
 alias lscripts="cd ${LINUX_SCRIPT_HOME}"

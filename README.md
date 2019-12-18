@@ -163,6 +163,7 @@ AIMLDL workflow and conventions for computer vision tasks.
   * API test scripts for different port simultaneously
   * queue and scheduler in prediction
 * **Bin List**
+  *  annon: verifydb.py to test with oasis release db change
   * production server configurations and scripts
     * as a service
     * load balancer

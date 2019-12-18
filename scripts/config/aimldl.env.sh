@@ -5,6 +5,7 @@ source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/ps1.sh
 
 ## commands
 alias lt='ls -lrth'
+alias l='ls -lrth'
 
 ## change directory
 alias aiml="cd ${AI_HOME}"
@@ -19,6 +20,3 @@ alias aiweights="cd ${AI_WEIGHTS_PATH}"
 alias aiapps="cd ${AI_APP}"
 alias aiweb="cd ${AI_WEB_APP}"
 alias aiscrpt="cd ${AI_HOME}/scripts"
-
-## util scripts
-alias pykill="bash ${AI_HOME}/scripts/utils/pykill.sh"

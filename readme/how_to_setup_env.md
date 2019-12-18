@@ -1,4 +1,4 @@
-# How to Setup Environment
+# How to Setup Environment - AIMLDL
 
 **NOTE:**
 * After system installation, all the python scripts should be run within the virtualenv setup until specified otherwise
@@ -6,26 +6,31 @@
   * a) **Absolute paths**:`/codehub/scripts/paths.py`
   * b) **Application configurations**:`/codehub/scripts/app.py`
   * c) **API documentation**: `/codehub/scripts/api_doc.py`
-  * d) **Local Custom Settings**: `/codehub/scripts/config.custom.sh`
+  * d) **Local Custom Settings**: `/codehub/scripts/aimldl.config.sh`
+
 
 ## 1. Change the local environment configurations
-  * get the details on the python environment settings
+
+* get the details on the python environment settings
   ```bash
   lsvirtualenv
   cdvirtualenv
   ```
-  * set the proper values for `AI_WSGIPythonPath` and `AI_WSGIPythonHome` accordingly in file: `/codehub/scripts/config.custom.sh`
+* set the proper values for `AI_WSGIPythonPath` and `AI_WSGIPythonHome` accordingly in file: `/codehub/scripts/aimldl.config.sh`
 
 
 ## 2. For getting the mount commands for remote system - **optional**
+
+* Utility for mount over `sshfs`
   ```bash
-  cd /codehub/scripts
+  cd /codehub/scripts/utils
   cp config.mount.example.sh config.mount.local.sh
   ```
 
 
 ## 3. Clone the internal git repos
-  * documentation and knowledge bank is not required in production setup
+
+* documentation and knowledge bank is not required in production setup
   ```bash
   cd /
   git clone xxxxx@xx.x.xx.100:/home/xxxx/yyyy/git-repo/aimldl-doc /aimldl-doc
@@ -35,12 +40,13 @@
 
 
 ## 4. Directory and environment variable setup
-  * This will create the required directory strucutres, environment varaibles, path and app configuration files
-    ```bash
-    cd /codehub/scripts
-    source setup.sh
-    ```
-  * All config files are generated here: `/codehub/config`
+
+* This will create the required directory strucutres, environment varaibles, path and app configuration files
+  ```bash
+  cd /codehub/scripts
+  source aimldl.setup.sh
+  ```
+* All config files are generated here: `/codehub/config`
 
 
 ## 5. Install Docker
@@ -107,6 +113,7 @@
     mongodb-compass-community
     ```
 
+
 ## 7. Create DNN Setup
 
 * **NOTE:**
@@ -127,8 +134,8 @@
 
 ## 8. Setup Pre-trained models
 
-1. the model configuration files should be available under: `/codehub/cfg/model/release`
-2. the model/weight files should be available under: `/aimldl-dat/release`. This should follow the below directory structue
+1. The model configuration files should be available under: `/codehub/cfg/model/release`
+2. The model/weight files should be available under: `/aimldl-dat/release`. This should follow the below directory structue
   ```bash
   ├── matterport
   │   └── coco_things
@@ -183,10 +190,10 @@
     cd /codehub/scripts/annon
     source run_release_modelinfo.sh <annon_db>
     ## Example:
-    source run_release_modelinfo.sh annon_v3
+    source run_release_modelinfo.sh oasis
     ```
 4. Verify if modelinfo is loaded in the database
-  * check in the database directly using mongoclient
+  * check the database directly using mongoclient
   * use annon workflow for verification:
     ```bash
     cd /codehub/apps/annon
