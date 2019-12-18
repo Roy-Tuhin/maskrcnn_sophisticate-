@@ -66,7 +66,7 @@
     ```bash
     docker container ps -a
     dids=$(docker container ps -a --format "{{.ID}}"); docker container rm $dids
-  ```
+    ```
 
 
 ## 6. Install MongoDB
