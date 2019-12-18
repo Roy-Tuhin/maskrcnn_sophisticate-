@@ -134,8 +134,8 @@
 
 ## 8. Setup Pre-trained models
 
-  1. The model configuration files should be available under: `/codehub/cfg/model/release`
-  2. The model/weight files should be available under: `/aimldl-dat/release`. This should follow the below directory structue
+1. The model configuration files should be available under: `/codehub/cfg/model/release`
+2. The model/weight files should be available under: `/aimldl-dat/release`. This should follow the below directory structue
     ```bash
     ├── matterport
     │   └── coco_things
