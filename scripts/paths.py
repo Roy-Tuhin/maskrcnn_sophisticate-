@@ -1,5 +1,5 @@
 __author__ = 'mangalbhaskar'
-__version__ = '1.0'
+__version__ = '2.0'
 """
 # Main file to generate all the absolute paths used anywhere in the workflow.
 # It uses the environment variables configuration generated.
@@ -19,7 +19,7 @@ import dotenv
 
 # Create .env file path
 this_dir = osp.dirname(__file__)
-dotenvPath = osp.join(this_dir,'config','export.sh')
+dotenvPath = osp.join(this_dir,'config','aimldl.export.sh')
 
 ## TODO: if dotenvPath does not exists, error and ask to generate environment variables by running setup script
 
