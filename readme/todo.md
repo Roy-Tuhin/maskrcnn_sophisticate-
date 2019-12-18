@@ -43,56 +43,62 @@ $ docker login --username=yourhubusername --email=youremail@company.com
 
 
 Mask_RCNN
+
+Training:
 * keras: 2.2.2, tensorflow: 1.9.0, CUDA-9.0
-* keras: 2.2.3 to 2.3.5, tensorflow: 1.131.1, CUDA-10
+* keras: 2.2.3 to 2.3.5, tensorflow: 1.13.1, CUDA-10.0
+
+Prediction:
+* In addition to above env, it also works with
+* keras: 2.2.4, tensorflow: 1.14.0, CUDA-10.0
 
 
 ## Bugs
 
-* Fix the tensorRT version in Docker file wrt to specific CUDA, cuDNN version. Currently, latest tensorRT also gets installed
-  ```
-  libnvinfer5:
-    Installed: 5.1.5-1+cuda10.1
-    Candidate: 5.1.5-1+cuda10.1
-    Version table:
-   *** 5.1.5-1+cuda10.1 500
-          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
-          100 /var/lib/dpkg/status
-       5.1.5-1+cuda10.0 500
-          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
-       5.1.2-1+cuda10.1 500
-          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
-       5.1.2-1+cuda10.0 500
-          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
-  (py_3_20191130_1909) @baaz@codehub-docker:16:25:26:tensorflow$apt-cache policy libnvinfer*
-  libnvinfer-dev:
-    Installed: (none)
-    Candidate: 6.0.1-1+cuda10.2
-    Version table:
-       6.0.1-1+cuda10.2 500
-          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
-       6.0.1-1+cuda10.1 500
-          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
-       6.0.1-1+cuda10.0 500
-          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
-       5.1.5-1+cuda10.1 500
-          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
-       5.1.5-1+cuda10.0 500
-          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
-       5.1.2-1+cuda10.1 500
-          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
-       5.1.2-1+cuda10.0 500
-          500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
-  ```
-
-## Bugs
-
-/codehub/scripts/aimldl.sh: line 434: lsvirtualenv: command not found
-/codehub/scripts/aimldl.sh: line 435: workon: command not found
-yml_filepath: /codehub/scripts/../config/paths.yml
-yml_filepath: /codehub/scripts/../config/app.yml
-
-
+* New setup errors: python virtual environment - todo
+    ```
+    ERROR: jupyter-console 6.0.0 has requirement prompt-toolkit<2.1.0,>=2.0.0, but you'll have prompt-toolkit 3.0.2 which is incompatible.
+    ERROR: locustio 0.13.5 has requirement gevent==1.5a2, but you'll have gevent 1.4.0 which is incompatible.
+    Installing collected packages: numpy, numexpr, scipy, Six, python-dateutil, pyparsing, kiwisolver, cycler,
+    ```
+* CUDA 10.2 stack till tensorRT - todo
+  * cuda: 10.2
+  * libnvinfer-dev: 6.0.1-1+cuda10.2
+* Fix the tensorRT version in Docker file wrt to specific CUDA, cuDNN version. Currently, latest tensorRT also gets installed - DONE
+    ```
+    libnvinfer5:
+      Installed: 5.1.5-1+cuda10.1
+      Candidate: 5.1.5-1+cuda10.1
+      Version table:
+     *** 5.1.5-1+cuda10.1 500
+            500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+            100 /var/lib/dpkg/status
+         5.1.5-1+cuda10.0 500
+            500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+         5.1.2-1+cuda10.1 500
+            500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+         5.1.2-1+cuda10.0 500
+            500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+    (py_3_20191130_1909) @baaz@codehub-docker:16:25:26:tensorflow$apt-cache policy libnvinfer*
+    libnvinfer-dev:
+      Installed: (none)
+      Candidate: 6.0.1-1+cuda10.2
+      Version table:
+         6.0.1-1+cuda10.2 500
+            500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+         6.0.1-1+cuda10.1 500
+            500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+         6.0.1-1+cuda10.0 500
+            500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+         5.1.5-1+cuda10.1 500
+            500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+         5.1.5-1+cuda10.0 500
+            500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+         5.1.2-1+cuda10.1 500
+            500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+         5.1.2-1+cuda10.0 500
+            500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
+    ```
 
 # Technotes
 

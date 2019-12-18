@@ -32,6 +32,8 @@ VM_HOME=${CHUB_HOME}/${VM_BASE}
 PY_VENV_PATH=${VM_HOME}/virtualenvs
 PY_VENV_NAME=py_${pyVer}_${__TIMESTAMP__}
 
+PY_VIRTUALENVWRAPPER=/usr/local/bin/virtualenvwrapper.sh
+
 WSGIPYTHONPATH=""
 WSGIPYTHONHOME=""
 
