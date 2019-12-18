@@ -77,6 +77,7 @@
 
 
 ## 3. Install CUDA, CUDNN and Related Packages
+
 * **mandatory packages**
   ```bash
   cd /codehub/scripts/system
@@ -87,6 +88,9 @@
   ```bash
   source tensorRT.install.sh
   ```
+* **NOTE:**
+  * `cuda-10.0-with-tensorrt.aptget-install.sh` is created for `cuda-10.0 stack till tensorflow installation`. This install the `apt-get` repository and does not need to have pre-downloaded `.deb` packages like the above scripts
+  * As forward this would be standardized and preferred mode to be used along side nvidia docker containers
 
 
 ## 4. Install System Utilities and Other Software Packages

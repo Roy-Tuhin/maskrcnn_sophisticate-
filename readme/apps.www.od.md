@@ -7,16 +7,17 @@
 
 ## Setup
 
-* Create the symlink to the apache root directory - **if Apache server is used with wsgi**
+* Create the symlink to the apache root directory - **if Apache server is used with wsgi** - skip this (only for advance usage)
   ```bash
   cd $HOME/public_html
   ln -s /codehub/apps/www/od
   sudo service apache2 restart
   ```
 * quick testing:
+  * switch to python working environment and then run following command:
   ```bash
   cd /codehub/apps/www/od/wsgi-bin
-  gunicorn web_server:app
+  gunicorn web_server:"main(API_MODEL_KEY='vidteq-ods-7', QUEUE='false')"
   ```
 * Test from the web
   * access the url from the web:`http://127.0.0.1:8000/`
@@ -26,8 +27,8 @@
   cd /codehub/scripts/api
   ## change the sample image name and path inside the shell script
   #
-  ## apicfg.sh -> change the configuration for testing
-  source curl_api.sh
+  ## apicfg.sh, apicfg.py -> change the configuration for testing
+  source pyapi.sh
   ```
 
 
@@ -70,20 +71,21 @@
 ## Quick API Testing
 
 1. using `curl`
-  ```bash
-  cd /codehub/scripts/api
-  ## apicfg.sh -> change the configuration for testing
-  source curl_api.sh
-  ```
+    ```bash
+    cd /codehub/scripts/api
+    ## apicfg.sh -> change the configuration for testing
+    source curl_api.sh
+    ```
 2. using `python`
-  ```bash
-  cd /codehub/scripts/api
-  ## apicfg.py -> change the configuration for testing
-  python call_api.py
-  ```
+    ```bash
+    cd /codehub/scripts/api
+    ## apicfg.py -> change the configuration for testing
+    python call_api.py
+    ```
 
 ##  Credits
-* pyimagesearch
+
+* **pyimagesearch**
   * [part-1](https://blog.keras.io/building-a-simple-keras-deep-learning-rest-api.html)
   * [part-2](https://www.pyimagesearch.com/2018/01/29/scalable-keras-deep-learning-rest-api/)
   * [Pyimagesearch: part-3: Deep learning in production with Keras, Redis, Flask, and Apache](https://www.pyimagesearch.com/2018/02/05/deep-learning-production-keras-redis-flask-apache/)

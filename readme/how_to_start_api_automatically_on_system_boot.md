@@ -1,15 +1,16 @@
+
 # How to deploy start api automatically on system boot
 
-* The service daemon are created using: `systemd`
+The service daemon are created using: `systemd`
 
-1. setup the proper paths for the conf files: `*.service`
-  ```bash
-  vi /codehub/scripts/config/systemd/gunicorn.service
-  ```
-2. run the script to create and enable service that gets started on system boot
-  ```bash
-  source /codehub/scripts/setup.services.sh
-  ```
+1. Setup the proper paths for the conf files: `*.service`
+    ```bash
+    vi /codehub/scripts/config/systemd/gunicorn.service
+    ```
+2. Run the script to create and enable service that gets started on system boot
+    ```bash
+    source /codehub/scripts/setup.services.sh
+    ```
 
 **NOTES:**
 * docker needs to be started before gunicorn server/service

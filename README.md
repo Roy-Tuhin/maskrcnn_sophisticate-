@@ -156,14 +156,17 @@ AIMLDL workflow and conventions for computer vision tasks.
 
 ## TODO
 
-* **High Priority**
+* **Bin List**
+  * specifications to be created for annotations: ods, rld, rbd
+  * annotation workflow to be updated for lanenet
+  * read/spec update on environment variables for AI and CODEHUB environment variables
+  * generate systemd scripts for gunicorn automatically from the setup scripts using user defined and detected options
+  *  annon: verifydb.py to test with oasis release db change
   * aimldl-cod workflow diagram
   * clear instructions on how to execute TEPPr workflow
   * multiple model support on different ports, same machine. That means concept of default model key needs to be overridden at the server start time
   * API test scripts for different port simultaneously
   * queue and scheduler in prediction
-* **Bin List**
-  *  annon: verifydb.py to test with oasis release db change
   * production server configurations and scripts
     * as a service
     * load balancer
