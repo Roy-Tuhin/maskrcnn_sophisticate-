@@ -55,7 +55,9 @@ function python_virtualenvwrapper_setup() {
   info "PY_VENV_PATH: ${PY_VENV_PATH}"
 
   export WORKON_HOME=${PY_VENV_PATH}
-  # source ${PY_VIRTUALENVWRAPPER}
+  if ! type lsvirtualenv > /dev/null; then
+    source ${PY_VIRTUALENVWRAPPER}
+  fi
 
   function create_and_setup_py_env() {
     local py=python3
@@ -117,29 +119,29 @@ function python_virtualenvwrapper_setup() {
     # deactivate
     # rmvirtualenv ${py_env_name}
 
-    ${pip} install -r ${LSCRIPTS}/python.requirements-test.txt
+    # ${pip} install -r ${LSCRIPTS}/python.requirements-test.txt
 
-    # ${pip} install -r ${LSCRIPTS}/python.requirements.txt
-    # ${pip} install -r ${LSCRIPTS}/python.requirements-extras.txt
-    # # ${pip} install -r ${LSCRIPTS}/python.requirements-ai.txt
-    # ${pip} install -r ${LSCRIPTS}/${AI_PYCUDA_FILE}
+    ${pip} install -r ${LSCRIPTS}/python.requirements.txt
+    ${pip} install -r ${LSCRIPTS}/python.requirements-extras.txt
+    # ${pip} install -r ${LSCRIPTS}/python.requirements-ai.txt
+    ${pip} install -r ${LSCRIPTS}/${AI_PYCUDA_FILE}
 
 
-    # info ""
-    # info "install OpenCV only in virtualenv: copy from system"
-    # info "# cp /usr/local/lib/python2.7/dist-packages/cv2.so <pathToVirtualEnv>/lib/python2.7/site-packages"
-    # info "# cp /usr/local/lib/python3.6/dist-packages/cv2.cpython-36m-x86_64-linux-gnu.so  <pathToVirtualEnv>/lib/python3.6/site-packages"
-    # info ""
-    # info "## copy pygpu manually to virtualenv (as somehow it does nto get installed directly on virtualenv)"
-    # info "## Try copying:"
-    # info "## pygpu-0.7.6+5.g8786e0f-py3.6-linux-x86_64.egg"
-    # info "## OR"
-    # info "## pygpu-0.7.6+5.g8786e0f-py3.6-linux-x86_64.egg/pygpu"
-    # info "# cp -r /usr/local/lib/python3.6/dist-packages/pygpu-0.7.6+5.g8786e0f-py3.6-linux-x86_64.egg/pygpu $PY_VENV_PATH/py_3-6-5_2018-11-20/lib/python3.6/site-packages/."
-    # info "# cp -r /usr/local/lib/python2.7/dist-packages/pygpu-0.7.6+5.g8786e0f-py2.7-linux-x86_64.egg/pygpu $PY_VENV_PATH/py_2-7-15_2018-11-20/lib/python2.7/site-packages/."
-    # info ""
+    info ""
+    info "install OpenCV only in virtualenv: copy from system"
+    info "# cp /usr/local/lib/python2.7/dist-packages/cv2.so <pathToVirtualEnv>/lib/python2.7/site-packages"
+    info "# cp /usr/local/lib/python3.6/dist-packages/cv2.cpython-36m-x86_64-linux-gnu.so  <pathToVirtualEnv>/lib/python3.6/site-packages"
+    info ""
+    info "## copy pygpu manually to virtualenv (as somehow it does nto get installed directly on virtualenv)"
+    info "## Try copying:"
+    info "## pygpu-0.7.6+5.g8786e0f-py3.6-linux-x86_64.egg"
+    info "## OR"
+    info "## pygpu-0.7.6+5.g8786e0f-py3.6-linux-x86_64.egg/pygpu"
+    info "# cp -r /usr/local/lib/python3.6/dist-packages/pygpu-0.7.6+5.g8786e0f-py3.6-linux-x86_64.egg/pygpu $PY_VENV_PATH/py_3-6-5_2018-11-20/lib/python3.6/site-packages/."
+    info "# cp -r /usr/local/lib/python2.7/dist-packages/pygpu-0.7.6+5.g8786e0f-py2.7-linux-x86_64.egg/pygpu $PY_VENV_PATH/py_2-7-15_2018-11-20/lib/python2.7/site-packages/."
+    info ""
 
-    # info "##-----------------X---X---X------------------------------##"
+    info "##-----------------X---X---X------------------------------##"
   }
 
   create_and_setup_py_env ${pyVer} ${pyEnvName}
