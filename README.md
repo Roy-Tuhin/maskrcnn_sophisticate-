@@ -28,6 +28,7 @@ tags: Ubuntu, Linux Scripts, docker, AIMLDL
       ```
 2. **Install the required software**
     * Ref: [How to Setup System and Install Required Software](readme/scripts.system.md)
+    * Before setting up AI environment, ensure that the python is installed and virtualenv is properly configured. Default path of virtualenv would be: `/codehub/virtualmachines/virtualenvs`. This is to ensure maximum portability.
 3. **Setup AI environment**
     * Ref: [How to Setup AI Environment](readme/how_to_setup_env.md)
 4. **Setup AI API**
