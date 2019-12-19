@@ -43,7 +43,7 @@ function python_virtualenvwrapper_install() {
     local _pip=pip$1
 
     ## Install virtualenv virtualenvwrapper
-    # sudo ${_pip} install virtualenv virtualenvwrapper
+    sudo ${_pip} install virtualenv virtualenvwrapper
     echo "virtualenv version::"
     virtualenv --version
 

@@ -49,9 +49,11 @@
 * All config files are generated here: `/codehub/config`
 
 
-## 5. Install Docker
+## 5. Install Docker stack
 
-1. Install docker-ce
+Docker stack: docker-ce, docker-compose, nvidia-container-runtime for docker
+
+1. Install `docker-ce`
     ```bash
     cd /codehub/scripts/docker
     source docker-ce.install.sh
@@ -66,6 +68,16 @@
     ```bash
     docker container ps -a
     dids=$(docker container ps -a --format "{{.ID}}"); docker container rm $dids
+    ```
+5. Install `docker-compose`
+    ```bash
+    cd /codehub/scripts/docker
+    source docker-compose.install.sh
+    ```
+6. Install and configure `nvidia-container-runtime`
+    ```bash
+    cd /codehub/scripts/docker
+    source nvidia-container-runtime.install.sh
     ```
 
 

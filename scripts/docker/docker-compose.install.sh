@@ -13,16 +13,23 @@
 #
 ##----------------------------------------------------------
 
-sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+function docker_compose_install() {
+  DOCKER_COMPOSE_VER=1.24.1
+  DOCKER_COMPOSE_VER=1.25.0
 
-sudo chmod +x /usr/local/bin/docker-compose
+  sudo curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VER}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
-# sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
 
-docker-compose --version
+  # sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
-## Uninstallation
-# sudo rm /usr/local/bin/docker-compose
+  docker-compose --version
 
-# docker run --gpus all nvidia/cuda:9.0-devel nvidia-smi
-# docker run --gpus all --rm nvidia/cuda nvidia-smi
+  ## Uninstallation
+  # sudo rm /usr/local/bin/docker-compose
+
+  # docker run --gpus all nvidia/cuda:9.0-devel nvidia-smi
+  # docker run --gpus all --rm nvidia/cuda nvidia-smi
+}
+
+docker_compose_install
