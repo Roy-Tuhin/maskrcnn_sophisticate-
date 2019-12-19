@@ -1,6 +1,6 @@
 #!/bin/bash
 export CHUB_WSGIPythonPath=
-export CVSROOT=:pserver:baaz@10.4.71.121:2401/data/CVS_REPO
+export CVSROOT=:pserver:flash@10.4.71.121:2401/data/CVS_REPO
 export CHUB_VM_HOME=/codehub/virtualmachines
 export CHUB_PY_ENVVARS=CHUB_APP:CHUB_HOME_EXT
 export CHUB_WEB_APP_LOGS=/codehub/logs/www

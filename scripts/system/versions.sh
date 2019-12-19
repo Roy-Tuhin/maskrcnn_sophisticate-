@@ -22,6 +22,8 @@ NVIDIA_DRIVER_VER="390"
 
 ## For CUDA 10.0 minimum nvidia driver requirement
 NVIDIA_DRIVER_VER="410"
+NVIDIA_DRIVER_VER="430"
+# NVIDIA_DRIVER_VER="435"
 
 ##----------------------------------------------------------
 ## Docker version

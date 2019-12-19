@@ -7,44 +7,49 @@
 ## How do I find out the model of my graphics card?
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/lscripts.config.sh
+function nvidia_ubuntu1804_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-# check for Graphics Hardware and System Architecture Details
-source $LINUX_SCRIPT_HOME/utils/gpu.info.sh
+  # check for Graphics Hardware and System Architecture Details
+  source ${LSCRIPTS}/utils/gpu.info.sh
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
+  info "Using NVIDIA_DRIVER_VER: ${NVIDIA_DRIVER_VER}"
 
-##----------------------------------------------------------
-## Nvidia Graphics Card Driver Installation
-## Tested on:
-## - Dell Latitude 5580 Laptop: Ubuntu 18.04 LTS
-## - Dell Desktop with Nvidia GTX 1080 Ti: Ubuntu 18.04 LTS
-##----------------------------------------------------------
+  if [ -z "${BASEPATH}" ]; then
+    BASEPATH="${HOME}/softwares"
+    info "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
 
-sudo apt -s purge 'nvidia-*'
-sudo apt-get -s purge 'cuda*'
-sudo apt-get -s purge 'cudnn*'
-sudo apt-get remove nvidia*
+  if [ -z "${NVIDIA_DRIVER_VER}" ]; then
+    NVIDIA_DRIVER_VER='430'
+    info "Unable to get NVIDIA_DRIVER_VER, using default version: ${NVIDIA_DRIVER_VER}"
+  fi
 
-sudo -E apt update
-sudo -E apt upgrade
+  ##----------------------------------------------------------
+  ## Nvidia Graphics Card Driver Installation
+  ## Tested on:
+  ## - Dell Latitude 5580 Laptop: Ubuntu 18.04 LTS
+  ## - Dell Desktop with Nvidia GTX 1080 Ti: Ubuntu 18.04 LTS
+  ##----------------------------------------------------------
 
-# install graphics driver
+  sudo apt remove 'nvidia-*'
+  sudo apt remove 'cuda*'
+  sudo apt remove 'cudnn*'
+  sudo apt remove 'nvidia*'
 
-sudo sh -c 'echo "blacklist nouveau\noptions nouveau modeset=0" > /etc/modprobe.d/disable-nouveau.conf'
+  sudo -E apt update
+  ## sudo -E apt upgrade
 
-NVIDIA_DRIVER_VER='390'
-sudo apt install nvidia-driver-$NVIDIA_DRIVER_VER
-sudo reboot
+  sudo sh -c 'echo "blacklist nouveau\noptions nouveau modeset=0" > /etc/modprobe.d/disable-nouveau.conf'
 
-# after successful Nvidia Driver installation
+  sudo apt install nvidia-driver-${NVIDIA_DRIVER_VER}
+  # sudo reboot
 
-source $LINUX_SCRIPT_HOME/nvidia-driver-info.sh
+  # after successful Nvidia Driver installation
+  # source ${LSCRIPTS}/nvidia-driver-info.sh
 
+}
+
+nvidia_ubuntu1804_install
