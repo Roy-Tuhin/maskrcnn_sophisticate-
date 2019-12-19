@@ -26,6 +26,7 @@ tags: Ubuntu, Linux Scripts, docker, AIMLDL
       ```bash
       wget -O - https://raw.githubusercontent.com/mangalbhaskar/codehub/master/scripts/codehub.init.sh | bash
       ```
+    * Close the terminal and open the new terminal for the next steps for the environment variables to reflect in the shell
 2. **Install the required software**
     * Ref: [How to Setup System and Install Required Software](readme/scripts.system.md)
     * Before setting up AI environment, ensure that the python is installed and virtualenv is properly configured. Default path of virtualenv would be: `/codehub/virtualmachines/virtualenvs`. This is to ensure maximum portability.

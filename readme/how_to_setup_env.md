@@ -16,7 +16,17 @@
   lsvirtualenv
   cdvirtualenv
   ```
-* set the proper values for `AI_WSGIPythonPath` and `AI_WSGIPythonHome` accordingly in file: `/codehub/scripts/aimldl.config.sh`
+* Set the proper values for `AI_PY_VENV_NAME` and `AI_WSGIPythonHome` accordingly in file: `/codehub/scripts/aimldl.config.sh`
+* Execute the `aimldl.setup.sh` script to regenrate configurations
+  ```bash
+  cd /codehub/scripts
+  source aimldl.setup.sh
+  ```
+* Check the python path by using `ls` command, this path should exists on the filesystem:
+  ```bash
+  ls -ltr ${AI_WSGIPythonPath}
+  ls -ltr ${AI_WSGIPythonHome}
+  ```
 
 
 ## 2. For getting the mount commands for remote system - **optional**

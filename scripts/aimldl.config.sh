@@ -18,14 +18,6 @@ AI_VIRTUALENVWRAPPER=/usr/local/bin/virtualenvwrapper.sh
 ## What Is /dev/shm And Its Practical Usage?
 ## https://www.cyberciti.biz/tips/what-is-devshm-and-its-practical-usage.html
 
-AI_PYVER=3
-AI_PY_VENV_NAME="py_3-6-8_2019-06-26"
-
-AI_WSGIPythonPath="${AI_PY_VENV_NAME}/bin"
-AI_WSGIPythonHome="${AI_PY_VENV_NAME}/lib/python3.6/site-packages/"
-
-# AI_WSGIPythonPath="py_3-6-5_2018-11-21/bin"
-# AI_WSGIPythonHome="py_3-6-5_2018-11-21/lib/python3.6/site-packages/"
 
 ## AI Top Level Directories
 AI_CFG_BASE_PATH="${AI_CODE_BASE_PATH}/cfg"
@@ -62,6 +54,7 @@ declare -a AI_DATA_DIRS=(
   "release"
 )
 
+
 declare -a AI_PY_ENVVARS=(
   'AI_APP'
   'AI_HOME_EXT'
@@ -79,6 +72,15 @@ declare -a AI_REMOTE_MACHINE_IDS=(
   "flash"
   "samba-100"
 )
+
+## ----------IMP--------------------##
+## This has to be changed manually, and aimldl.setup.sh needs to be executed again!
+AI_PYVER=3
+AI_PY_VENV_NAME="py_3-6-9_2019-12-19"
+
+AI_WSGIPythonPath="${AI_PY_VENV_NAME}/bin"
+AI_WSGIPythonHome="${AI_PY_VENV_NAME}/lib/python3.6/site-packages/"
+## ---------------------------------##
 
 AI_ANNON_DATA_HOME="/data/samba/Bangalore/prod/Bangalore_Maze_Exported_Data/ANNOTATIONS"
 AI_ANNON_DB="/aimldl-dat/data-gaze/AIML_Database"
@@ -99,3 +101,5 @@ AI_WEIGHTS_PATH="release" ## default value for production/CBR release
 
 ## uncomment and give custom relative path for model - should be used for development work
 # AI_WEIGHTS_PATH="logs"
+
+
