@@ -93,7 +93,7 @@ Docker stack: docker-ce, docker-compose, nvidia-container-runtime for docker
     * Build mongodb docker image
     * `mongodb` user and group id fixes. Refer [mongo custom image](https://github.com/mangalbhaskar/mongo/tree/master/4.1) 
       ```bash
-      cd /codehub/scripts/docker/mongo
+      cd /codehub/scripts/docker/dockerfiles/mongo
       source docker.buildimg.mongodb-userfix.sh <mongodb-version> <docker-image-tag>
       ## For Ubuntu 16.04
       source docker.buildimg.mongodb-userfix.sh 4.0 mongouid
@@ -103,12 +103,12 @@ Docker stack: docker-ce, docker-compose, nvidia-container-runtime for docker
     * Create mongodb docker container
       ```bash
       cd /codehub/scripts/docker
-      source docker.setup.sh
+      source docker.createcontainer-mongo.sh
       ```
     * Test mongodb docker container
       ```bash
       cd /codehub/scripts/docker
-      source docker.exec.sh
+      source docker.exec-mongo.sh
       ```
 2. **Install Mongo Client to access mongodb from UI** - **This is optional but preferred if you are new to mongodb**
     * [compass download](https://www.mongodb.com/products/compass)

@@ -67,25 +67,6 @@ DUSER_GRP_ID=$(id -g ${DUSER})
 DUSER_HOME="/home/${DUSER}"
 #
 
-## MongoDB configurations
-HOST_MONGODB_PORTS="27017"
-DOCKER_MONGODB_PORTS="27017"
-MONGODB_CONFIG_FILE="/aimldl-cfg/config/mongod.conf"
-# MONGO_INITDB_ROOT_USERNAME=""
-# MONGO_INITDB_ROOT_PASSWORD=""
-MONGODB_USER=$(id -un mongodb)
-MONGODB_USER_ID=$(id -u mongodb)
-MONGODB_GRP=$(id -gn mongodb)
-MONGODB_GRP_ID=$(id -g mongodb)
-
-MONGODB_VOLUMES=""
-MONGODB_VOLUMES="${MONGODB_VOLUMES} -v /aimldl-dat/data-mongodb:/data "
-MONGODB_VOLUMES="${MONGODB_VOLUMES} -v /aimldl-dat/data-mongodb/db:/data/db "
-MONGODB_VOLUMES="${MONGODB_VOLUMES} -v /aimldl-dat/data-mongodb/configdb:/data/configdb "
-
-MONGO_DB_PORTS=""
-MONGO_DB_PORTS="${MONGO_DB_PORTS} -p ${HOST_MONGODB_PORTS}:${DOCKER_MONGODB_PORTS}"
-
 DOCKER_PREFIX="codehub"
 #
 MAINTAINER='"mangalbhaskar <mangalbhaskar@gmail.com>"'
@@ -102,9 +83,12 @@ WORK_BASE_PATH="/${DOCKER_PREFIX}"
 SCRIPTS_BASE_PATH="/${DOCKER_PREFIX}-scripts"
 
 ## https://github.com/mangalbhaskar/aimldl/blob/master/readme/how_to_clone_and_create_the_git_repo_first_time_setup.md
-OTHR_BASE_PATHS="/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat /aimldl-cfg"
+OTHR_BASE_PATHS="/aimldl-cod /aimldl-rpt /aimldl-doc /aimldl-kbank /aimldl-dat"
 
-DOCKER_VOLUMES=""
+
+if [ -z ${DOCKER_VOLUMES} ]; then
+  DOCKER_VOLUMES=""
+fi
 
 DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /codehub:/codehub "
 
@@ -117,13 +101,15 @@ DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /codehub/scripts:${SCRIPTS_BASE_PATH} "
 DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-cod:/aimldl-cod "
 DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-cod/scripts:/aimldl-scripts "
 DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-dat:/aimldl-dat "
-DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-cfg:/aimldl-cfg "
 DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-rpt:/aimldl-rpt "
 DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-doc:/aimldl-doc "
 
 DOCKER_VOLUMES="${DOCKER_VOLUMES} ${MONGODB_VOLUMES} "
 
-DOCKER_PORTS=""
+if [ -z ${DOCKER_PORTS} ]; then
+  DOCKER_PORTS=""
+fi
+
 DOCKER_PORTS="${DOCKER_PORTS} ${MONGO_DB_PORTS}"
 
 DDISPLAY="${DISPLAY}"

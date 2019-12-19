@@ -43,6 +43,7 @@ function docker_envvars() {
 function restart_policy() {
   local restart=""
   restart="--restart always"
+
   echo "${restart}"
 }
 
@@ -50,11 +51,12 @@ function restart_policy() {
 function enable_nvidia_gpu() {
   local gpus=""
   gpus="--gpus all"
+
   echo "${gpus}"
 }
 
 
-function create_container() {
+function create_container_aidev() {
     ${DOCKER_CMD} ps -a --format "{{.Names}}" | grep "${DOCKER_CONTAINER_NAME}" 1>/dev/null
 
     if [ $? == 0 ]; then

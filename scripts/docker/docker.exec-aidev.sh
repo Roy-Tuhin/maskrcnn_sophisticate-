@@ -5,7 +5,7 @@
 ## https://docs.docker.com/engine/reference/commandline/exec/
 ### -------------------------------------------
 
-function exec_container() {
+function exec_container_aidev() {
   source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/docker.config.sh
 
   if [ ! -z $1 ]; then
@@ -20,4 +20,4 @@ function exec_container() {
   xhost -local:root 1>/dev/null 2>&1
 }
 
-exec_container $1
+exec_container_aidev $1
