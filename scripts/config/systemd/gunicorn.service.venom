@@ -5,9 +5,9 @@ After=network.target docker.service
 [Service]
 User=venom
 Group=venom
-WorkingDirectory=/aimldl-cod/apps/www/od/wsgi-bin
-Environment="PATH=/home/venom/virtualmachines/virtualenvs/py_3-6-9_2019-11-29/bin"
-ExecStart=/home/venom/virtualmachines/virtualenvs/py_3-6-9_2019-11-29/bin/gunicorn web_server:"main(API_MODEL_KEY='vidteq-rld-1', QUEUE='false')" -b "0.0.0.0:4100"
+WorkingDirectory=/codehub/apps/www/od/wsgi-bin
+Environment="PATH=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-20/bin"
+ExecStart=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-20/bin/gunicorn web_server:"main(API_MODEL_KEY='vidteq-rld-1', QUEUE='false')" -b "0.0.0.0:4100"
 
 [Install]
 WantedBy=multi-user.target
