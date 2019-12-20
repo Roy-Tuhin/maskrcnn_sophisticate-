@@ -11,16 +11,20 @@ __version__ = '1.0'
 import os
 import sys
 
-BASE_PATH_CFG = '/aimldl-cfg'
-APP_ROOT_DIR = os.path.join('/aimldl-cod','apps')
-WEB_APP_NAME = 'od'
+## This imports web application minimum configuration paths
+import web_cfg
+
+BASE_PATH_CONFIG = web_cfg.BASE_PATH_CONFIG
+APP_ROOT_DIR = web_cfg.APP_ROOT_DIR
+WEB_APP_NAME = web_cfg.WEB_APP_NAME
+
 sys.path.insert(0, APP_ROOT_DIR)
 
 # if APP_ROOT_DIR not in sys.path:
   # sys.path.insert(0, APP_ROOT_DIR)
 
 import _cfg_
-appcfg = _cfg_.load_appcfg(BASE_PATH_CFG)
+appcfg = _cfg_.load_appcfg(BASE_PATH_CONFIG)
 # print("appcfg: {}".format(appcfg))
 
 APP_PATHS = appcfg['PATHS']

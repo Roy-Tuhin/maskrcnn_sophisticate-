@@ -30,8 +30,11 @@ import logging.config
 from pymongo import MongoClient
 import json
 
-BASE_PATH_CFG = '/aimldl-cfg'
-APP_ROOT_DIR = os.path.join('/aimldl-cod','apps')
+## This imports web application minimum configuration paths
+import web_cfg
+
+BASE_PATH_CONFIG = web_cfg.BASE_PATH_CONFIG
+APP_ROOT_DIR = web_cfg.APP_ROOT_DIR
 
 if APP_ROOT_DIR not in sys.path:
   sys.path.insert(0, APP_ROOT_DIR)
@@ -277,7 +280,7 @@ def main(args):
   """Main entry for running the model server in the standalone mode for the queue
   """
   import _cfg_
-  appcfg = _cfg_.load_appcfg(BASE_PATH_CFG)
+  appcfg = _cfg_.load_appcfg(BASE_PATH_CONFIG)
   log.debug("appcfg: {}".format(appcfg))
 
   API_DEFAULT_MODEL_KEY = appcfg['APP']['API_DEFAULT_MODEL_KEY']

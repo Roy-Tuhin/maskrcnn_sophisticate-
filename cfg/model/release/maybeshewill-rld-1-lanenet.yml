@@ -1,4 +1,6 @@
-classes: null
+classes: 
+- BG
+- lane
 classinfo: null
 config: null
 dataset: tusimple

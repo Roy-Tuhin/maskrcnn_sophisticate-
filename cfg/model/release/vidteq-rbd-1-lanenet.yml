@@ -1,4 +1,6 @@
-classes: null
+classes: 
+- BG
+- boundary
 classinfo: null
 config: null
 dataset: lnd-241019_163948
@@ -12,4 +14,4 @@ org_name: vidteq
 problem_id: rbd
 rel_num: 1
 weights: null
-weights_path: vidteq/rbd/1/lanenet/weights/tusimple_lanenet_vgg_2019-10-25-11-51-47.ckpt-88002
+weights_path: vidteq/rbd/1/lanenet/weights/vidteq-rbd-1.pb
