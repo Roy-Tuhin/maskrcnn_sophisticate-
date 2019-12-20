@@ -6,8 +6,8 @@ After=network.target docker.service
 User=flash
 Group=flash
 WorkingDirectory=/aimldl-cod/apps/www/od/wsgi-bin
-Environment="PATH=/home/flash/virtualmachines/virtualenvs/py_3-6-9_2019-12-03/bin"
-ExecStart=/home/flash/virtualmachines/virtualenvs/py_3-6-9_2019-12-03/bin/gunicorn web_server:"main(API_MODEL_KEY='vidteq-rbd-1', QUEUE='false')" -b "0.0.0.0:4110"
+Environment="PATH=/home/flash/virtualmachines/virtualenvs/py_3-6-9_2019-12-19/bin"
+ExecStart=/home/flash/virtualmachines/virtualenvs/py_3-6-9_2019-12-19/bin/gunicorn web_server:"main(API_MODEL_KEY='vidteq-rbd-1', QUEUE='false')" -b "0.0.0.0:4110"
 
 [Install]
 WantedBy=multi-user.target

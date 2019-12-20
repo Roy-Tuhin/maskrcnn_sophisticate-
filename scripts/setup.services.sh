@@ -7,7 +7,7 @@
 
 source setup.sh
 sudo systemctl enable docker
-sudo cp /aimldl-cfg/systemd/gunicorn.service /etc/systemd/system/
+sudo cp /codehub/scripts/config/systemd/gunicorn.service /etc/systemd/system/
 sudo systemctl enable gunicorn.service
 
 ## https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs
