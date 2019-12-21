@@ -3,7 +3,7 @@ title: Codehub
 description: Codehub is the development environment toolchain
 author: Bhaskar Mangal
 created: 16th-Nov-2019
-updated: 17th-Dev-2019
+updated: 21st-Dec-2019
 tags: Ubuntu, Linux Scripts, docker, AIMLDL
 ---
 
