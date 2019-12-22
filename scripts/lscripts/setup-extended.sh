@@ -4,6 +4,9 @@ function system_setup_extended() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
 
+  ## extends pre.lite-install.sh
+  source ${LSCRIPTS}/pre.install.sh
+
   ##----------------------------------------------------------
   ### vim
   ##----------------------------------------------------------
