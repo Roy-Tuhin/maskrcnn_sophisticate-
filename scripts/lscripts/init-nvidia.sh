@@ -15,7 +15,7 @@ function init_nvidia() {
     source ${LSCRIPTS}/nvidia-ubuntu-1604.install.sh
   fi
 
-  # Ubuntu 18.04 LTS
+  ## Ubuntu 18.04 LTS
   if [[ ${LINUX_VERSION} == "18.04" ]]; then
     echo ${LINUX_VERSION}
     source ${LSCRIPTS}/nvidia-ubuntu-1804.install.sh
