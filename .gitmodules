@@ -4,3 +4,12 @@
 [submodule "scripts/docker/dockerfiles/mongo"]
 	path = scripts/docker/dockerfiles/mongo
 	url = https://github.com/mangalbhaskar/mongo.git
+[submodule "practice/mangal/snippets"]
+	path = practice/mangal/snippets
+	url = https://github.com/mangalbhaskar/snippets.git
+[submodule "practice/nikhil/codes"]
+	path = practice/nikhil/codes
+	url = https://github.com/nikhilbv/codes.git
+[submodule "practice/saqib/Cobham"]
+	path = practice/saqib/Cobham
+	url = https://github.com/saqibmobin/Cobham.git
