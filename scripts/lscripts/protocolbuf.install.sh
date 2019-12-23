@@ -61,44 +61,44 @@
 #sudo apt-get install autoconf automake libtool curl make g++ unzip
 #-------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
+function protocolbuf_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-source $LSCRIPTS/lscripts.config.sh
+  if [ -z "$BASEPATH" ]; then
+    BASEPATH="$HOME/softwares"
+    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+  fi
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
+  DIR="protobuf"
+  PROG_DIR="$BASEPATH/$DIR"
 
-DIR="protobuf"
-PROG_DIR="$BASEPATH/$DIR"
+  URL="https://github.com/google/$DIR.git"
 
-URL="https://github.com/google/$DIR.git"
+  echo "Number of threads will be used: $NUMTHREADS"
+  echo "BASEPATH: $BASEPATH"
+  echo "URL: $URL"
+  echo "PROG_DIR: $PROG_DIR"
 
-echo "Number of threads will be used: $NUMTHREADS"
-echo "BASEPATH: $BASEPATH"
-echo "URL: $URL"
-echo "PROG_DIR: $PROG_DIR"
+  if [ ! -d $PROG_DIR ]; then
+    git -C $PROG_DIR || git clone $URL $PROG_DIR
+  else
+    echo Git clone for $URL exists at: $PROG_DIR
+  fi
 
-if [ ! -d $PROG_DIR ]; then
-  git -C $PROG_DIR || git clone $URL $PROG_DIR
-else
-  echo Git clone for $URL exists at: $PROG_DIR
-fi
+  cd $PROG_DIR
+  git submodule update --init --recursive
+  echo "Executing: ./autogen.sh"
+  ./autogen.sh
+  echo "Executing: ./configure"
+  ./configure
 
-cd $PROG_DIR
-git submodule update --init --recursive
-echo "Executing: ./autogen.sh"
-./autogen.sh
-echo "Executing: ./configure"
-./configure
+  make -j$NUMTHREADS
+  make check -j$NUMTHREADS
+  sudo make install -j$NUMTHREADS
+  sudo ldconfig # refresh shared library cache
 
-make -j$NUMTHREADS
-make check -j$NUMTHREADS
-sudo make install -j$NUMTHREADS
-sudo ldconfig # refresh shared library cache
+  cd ${LSCRIPTS}
+}
 
-cd $LINUX_SCRIPT_HOME
-
+protocolbuf_install

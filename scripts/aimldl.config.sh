@@ -76,7 +76,7 @@ declare -a AI_REMOTE_MACHINE_IDS=(
 ## ----------IMP--------------------##
 ## This has to be changed manually, and aimldl.setup.sh needs to be executed again!
 AI_PYVER=3
-AI_PY_VENV_NAME="py_3-6-9_2019-12-19"
+AI_PY_VENV_NAME="py_3-6-9_2019-12-21"
 
 AI_WSGIPythonPath="${AI_PY_VENV_NAME}/bin"
 AI_WSGIPythonHome="${AI_PY_VENV_NAME}/lib/python3.6/site-packages/"

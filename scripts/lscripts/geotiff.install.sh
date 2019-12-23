@@ -23,70 +23,72 @@
 #
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/lscripts.config.sh
+function geotiff_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
+  if [ -z "$BASEPATH" ]; then
+    BASEPATH="$HOME/softwares"
+    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+  fi
 
-if [ -z "$GEOTIFF_VER" ]; then
-  GEOTIFF_VER="1.4.2"
-  echo "Unable to get GEOTIFF_VER version, falling back to default version#: $GEOTIFF_VER"
-fi
+  if [ -z "$GEOTIFF_VER" ]; then
+    GEOTIFF_VER="1.4.2"
+    echo "Unable to get GEOTIFF_VER version, falling back to default version#: $GEOTIFF_VER"
+  fi
 
-PROG='libgeotiff'
-DIR="$PROG-$GEOTIFF_VER"
-PROG_DIR="$BASEPATH/$PROG-$GEOTIFF_VER"
-FILE="$DIR.tar.gz"
+  PROG='libgeotiff'
+  DIR="$PROG-$GEOTIFF_VER"
+  PROG_DIR="$BASEPATH/$PROG-$GEOTIFF_VER"
+  FILE="$DIR.tar.gz"
 
-echo "$FILE"
-echo "Number of threads will be used: $NUMTHREADS"
-echo "BASEPATH: $BASEPATH"
-echo "PROG_DIR: $PROG_DIR"
+  echo "$FILE"
+  echo "Number of threads will be used: $NUMTHREADS"
+  echo "BASEPATH: $BASEPATH"
+  echo "PROG_DIR: $PROG_DIR"
 
-if [ ! -f $HOME/Downloads/$FILE ]; then
-  wget http://download.osgeo.org/geotiff/libgeotiff/$FILE -P $HOME/Downloads
-else
-  echo Not downloading as: $HOME/Downloads/$FILE already exists!
-fi
+  if [ ! -f $HOME/Downloads/$FILE ]; then
+    wget http://download.osgeo.org/geotiff/libgeotiff/$FILE -P $HOME/Downloads
+  else
+    echo Not downloading as: $HOME/Downloads/$FILE already exists!
+  fi
 
-if [ ! -d $BASEPATH/$DIR ]; then
-  tar xvfz $HOME/Downloads/$FILE -C $BASEPATH
-else
-  echo Extracted Dir already exists: $BASEPATH/$DIR
-fi
+  if [ ! -d $BASEPATH/$DIR ]; then
+    tar xvfz $HOME/Downloads/$FILE -C $BASEPATH
+  else
+    echo Extracted Dir already exists: $BASEPATH/$DIR
+  fi
 
-if [ -d $PROG_DIR/build ]; then
-  rm -rf $PROG_DIR/build
-fi
+  if [ -d $PROG_DIR/build ]; then
+    rm -rf $PROG_DIR/build
+  fi
 
-mkdir $PROG_DIR/build
-cd $PROG_DIR/build
-cmake -D WITH_JPEG=ON \
-      -D WITH_PROJ4=ON \
-      -D WITH_TIFF=ON \
-      -D WITH_TOWGS84=ON \
-      -D WITH_UTILITIES=ON \
-      -D WITH_ZLIB=ON \
-      -D TIFF_DIR=$BASEPATH/tiff-$TIFF_VER \
-      -D PROJ4_DIR=$BASEPATH/proj-$PROJ_VER  ..
+  mkdir $PROG_DIR/build
+  cd $PROG_DIR/build
+  cmake -D WITH_JPEG=ON \
+        -D WITH_PROJ4=ON \
+        -D WITH_TIFF=ON \
+        -D WITH_TOWGS84=ON \
+        -D WITH_UTILITIES=ON \
+        -D WITH_ZLIB=ON \
+        -D TIFF_DIR=$BASEPATH/tiff-$TIFF_VER \
+        -D PROJ4_DIR=$BASEPATH/proj-$PROJ_VER  ..
 
-# ccmake ..
+  # ccmake ..
 
-# WITH_JPEG                        ON                              
-# WITH_PROJ4                       ON                              
-# WITH_TIFF                        ON                              
-# WITH_TOWGS84                     ON                              
-# WITH_UTILITIES                   ON                              
-# WITH_ZLIB                        ON
+  # WITH_JPEG                        ON                              
+  # WITH_PROJ4                       ON                              
+  # WITH_TIFF                        ON                              
+  # WITH_TOWGS84                     ON                              
+  # WITH_UTILITIES                   ON                              
+  # WITH_ZLIB                        ON
 
-## enabled all the options
-make -j$NUMTHREADS
-sudo make install  ## install into build dir
+  ## enabled all the options
+  make -j$NUMTHREADS
+  sudo make install  ## install into build dir
 
-cd $LINUX_SCRIPT_HOME
+  cd ${LSCRIPTS}
+}
+
+geotiff_install

@@ -15,54 +15,57 @@
 #
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/lscripts.config.sh
+function proj_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
-if [ -z "$PROJ_VER" ]; then
-  PROJ_VER="4.9.3"
-  echo "Unable to get PROJ_VER version, falling back to default version#: $PROJ_VER"
-fi
 
-PROG='proj'
-DIR="$PROG-$PROJ_VER"
-PROG_DIR="$BASEPATH/$PROG-$PROJ_VER"
-FILE="$DIR.tar.gz"
+  if [ -z "$BASEPATH" ]; then
+    BASEPATH="$HOME/softwares"
+    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+  fi
+  if [ -z "$PROJ_VER" ]; then
+    PROJ_VER="4.9.3"
+    echo "Unable to get PROJ_VER version, falling back to default version#: $PROJ_VER"
+  fi
 
-echo "$FILE"
-echo "Number of threads will be used: $NUMTHREADS"
+  PROG='proj'
+  DIR="$PROG-$PROJ_VER"
+  PROG_DIR="$BASEPATH/$PROG-$PROJ_VER"
+  FILE="$DIR.tar.gz"
 
-if [ ! -f $HOME/Downloads/$FILE ]; then
-  wget http://download.osgeo.org/proj/$FILE -P $HOME/Downloads
-else
-  echo Not downloading as: $HOME/Downloads/$FILE already exists!
-fi
+  echo "$FILE"
+  echo "Number of threads will be used: $NUMTHREADS"
 
-if [ ! -d $HOME/softwares/$DIR ]; then
-  tar xvfz $HOME/Downloads/$PROG-$PROJ_VER.tar.gz -C $HOME/softwares
-else
-  echo Extracted Dir already exists: $HOME/softwares/$DIR
-fi
+  if [ ! -f $HOME/Downloads/$FILE ]; then
+    wget http://download.osgeo.org/proj/$FILE -P $HOME/Downloads
+  else
+    echo Not downloading as: $HOME/Downloads/$FILE already exists!
+  fi
 
-if [ -d $PROG_DIR/build ]; then
-  rm -rf $PROG_DIR/build
-fi
+  if [ ! -d $HOME/softwares/$DIR ]; then
+    tar xvfz $HOME/Downloads/$PROG-$PROJ_VER.tar.gz -C $HOME/softwares
+  else
+    echo Extracted Dir already exists: $HOME/softwares/$DIR
+  fi
 
-mkdir $PROG_DIR/build
-cd $PROG_DIR
-echo $(pwd)
-##./configure --prefix=/opt/source/$PROG-$PROJ_VER/build
-./configure
+  if [ -d $PROG_DIR/build ]; then
+    rm -rf $PROG_DIR/build
+  fi
 
-make -j$NUMTHREADS
-sudo make install -j$NUMTHREADS
+  mkdir $PROG_DIR/build
+  cd $PROG_DIR
+  echo $(pwd)
+  ##./configure --prefix=/opt/source/$PROG-$PROJ_VER/build
+  ./configure
 
-# ln -s $PROG_DIR $PROG
+  make -j$NUMTHREADS
+  sudo make install -j$NUMTHREADS
 
-cd $LINUX_SCRIPT_HOME
+  # ln -s $PROG_DIR $PROG
+
+  cd ${LSCRIPTS}
+}
+
+proj_install
