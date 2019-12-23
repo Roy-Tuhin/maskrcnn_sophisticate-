@@ -12,3 +12,4 @@ sudo apt -y install git
 sudo apt -y install gparted
 sudo apt -y install net-tools
 sudo apt -y install ppa-purge
+sudo apt -y install sshfs

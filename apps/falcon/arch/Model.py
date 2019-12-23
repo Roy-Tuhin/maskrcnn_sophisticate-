@@ -47,51 +47,6 @@ import json
 import aiofiles
 
 
-def get_datacfg(appcfg):
-  datacfg = appcfg.DATASET[appcfg.ACTIVE.DATASET].cfg
-  return datacfg
-
-
-def get_dbcfg(appcfg):
-  dbcfg = appcfg.DATASET[appcfg.ACTIVE.DATASET].dbcfg
-  return dbcfg
-
-
-def get_archcfg(appcfg):
-  archcfg = appcfg.ARCH[appcfg.ACTIVE.ARCH].cfg
-  return archcfg
-
-
-def get_modelcfg(model_info_path):
-  """
-  TODO: filepath or the modelinfo object
-  """
-  modelcfg = common.yaml_load(model_info_path)
-  return modelcfg
-
-
-def get_api_model_key(modelcfg):
-  api_model_key = modelcfg['org_name']+'-'+modelcfg['problem_id']+'-'+str(modelcfg['rel_num'])
-  return api_model_key
-
-
-def get_module(dnnarch):
-  dnnmod = import_module("falcon.arch."+dnnarch)
-  return dnnmod
-
-
-def get_module_fn(module, name):
-  fn = None
-  if module:
-    fn = getattr(module, name)
-    if not fn:
-      log.error("_get: function is not defined in the module:{}".format(name))
-  else:
-    log.error("module not defined: {}".format(module))
-
-  return fn
-
-
 def visualize(args, mode, appcfg):
   """Load and display given image_ids
   """
@@ -103,10 +58,10 @@ def visualize(args, mode, appcfg):
   subset = args.eval_on
   log.debug("subset: {}".format(subset))
 
-  datacfg = get_datacfg(appcfg)
-  dbcfg = get_dbcfg(appcfg)
+  datacfg = apputil.get_datacfg(appcfg)
+  dbcfg = apputil.get_dbcfg(appcfg)
 
-  dataset, num_classes, num_images, class_names, total_stats, total_verify = get_dataset_instance(appcfg, dbcfg, datacfg, subset)
+  dataset, num_classes, num_images, class_names, total_stats, total_verify = apputil.get_dataset_instance(appcfg, dbcfg, datacfg, subset)
   colors = viz.random_colors(len(class_names))
 
   log.debug("class_names: {}".format(class_names))
@@ -156,10 +111,10 @@ def inspect_annon(args, mode, appcfg):
   subset = args.eval_on
   log.debug("subset: {}".format(subset))
   
-  datacfg = get_datacfg(appcfg)
-  dbcfg = get_dbcfg(appcfg)
+  datacfg = apputil.get_datacfg(appcfg)
+  dbcfg = apputil.get_dbcfg(appcfg)
 
-  dataset, num_classes, num_images, class_names, total_stats, total_verify = get_dataset_instance(appcfg, dbcfg, datacfg, subset)
+  dataset, num_classes, num_images, class_names, total_stats, total_verify = apputil.get_dataset_instance(appcfg, dbcfg, datacfg, subset)
   colors = viz.random_colors(len(class_names))
 
   log.debug("class_names: {}".format(class_names))
@@ -177,9 +132,9 @@ def inspect_annon(args, mode, appcfg):
   log.debug("len(dataset.image_info): {}".format(len(dataset.image_info)))
   log.debug("len(dataset.image_ids): {}".format(len(dataset.image_ids)))
 
-  mod = get_module('inspect_annon')
+  mod = apputil.get_module('inspect_annon')
 
-  archcfg = get_archcfg(appcfg)
+  archcfg = apputil.get_archcfg(appcfg)
   log.debug("archcfg: {}".format(archcfg))
   cmdcfg = archcfg
 
@@ -187,9 +142,9 @@ def inspect_annon(args, mode, appcfg):
   cmdcfg.config.NAME = name
   cmdcfg.config.NUM_CLASSES = num_classes
 
-  dnnmod = get_module(cmdcfg.dnnarch)
+  dnnmod = apputil.get_module(cmdcfg.dnnarch)
 
-  get_dnncfg = get_module_fn(dnnmod, "get_dnncfg")
+  get_dnncfg = apputil.get_module_fn(dnnmod, "get_dnncfg")
   dnncfg = get_dnncfg(cmdcfg.config)
   log.debug("config.MINI_MASK_SHAPE: {}".format(dnncfg.MINI_MASK_SHAPE))
   log.debug("type(dnncfg.MINI_MASK_SHAPE): {}".format(type(dnncfg.MINI_MASK_SHAPE)))
@@ -201,14 +156,14 @@ def inspect_annon(args, mode, appcfg):
 def train(args, mode, appcfg):
   log.debug("train---------------------------->")
 
-  datacfg = get_datacfg(appcfg)
+  datacfg = apputil.get_datacfg(appcfg)
 
   ## Training dataset.
   subset = "train"
   log.info("subset: {}".format(subset))
-  dbcfg = get_dbcfg(appcfg)
+  dbcfg = apputil.get_dbcfg(appcfg)
 
-  dataset_train, num_classes_train, num_images_train, class_names_train, total_stats_train, total_verify_train = get_dataset_instance(appcfg, dbcfg, datacfg, subset)
+  dataset_train, num_classes_train, num_images_train, class_names_train, total_stats_train, total_verify_train = apputil.get_dataset_instance(appcfg, dbcfg, datacfg, subset)
   colors = viz.random_colors(len(class_names_train))
   
   log.info("-------")
@@ -225,7 +180,7 @@ def train(args, mode, appcfg):
   ## Validation dataset
   subset = "val"
   log.info("subset: {}".format(subset))
-  dataset_val, num_classes_val, num_images_val, class_names_val, total_stats_val, total_verify_val = get_dataset_instance(appcfg, dbcfg, datacfg, subset)
+  dataset_val, num_classes_val, num_images_val, class_names_val, total_stats_val, total_verify_val = apputil.get_dataset_instance(appcfg, dbcfg, datacfg, subset)
   
   log.info("-------")
   log.info("subset, class_names_val: {}, {}".format(subset, class_names_val))
@@ -241,7 +196,7 @@ def train(args, mode, appcfg):
   ## Ensure label sequence and class_names of train and val dataset are excatly same, if not abort training
   assert class_names_train == class_names_val
 
-  archcfg = get_archcfg(appcfg)
+  archcfg = apputil.get_archcfg(appcfg)
   log.debug("archcfg: {}".format(archcfg))
   cmdcfg = archcfg
 
@@ -281,13 +236,13 @@ def train(args, mode, appcfg):
 
   modelcfg_path = os.path.join(appcfg.PATHS.AI_MODEL_CFG_PATH, cmdcfg.model_info)
   log.info("modelcfg_path: {}".format(modelcfg_path))
-  modelcfg = get_modelcfg(modelcfg_path)
+  modelcfg = apputil.get_modelcfg(modelcfg_path)
 
   weights_path = apputil.get_abs_path(appcfg, modelcfg, 'AI_WEIGHTS_PATH')
   cmdcfg['weights_path'] = weights_path
 
-  dnnmod = get_module(cmdcfg.dnnarch)
-  load_model_and_weights = get_module_fn(dnnmod, "load_model_and_weights")
+  dnnmod = apputil.get_module(cmdcfg.dnnarch)
+  load_model_and_weights = apputil.get_module_fn(dnnmod, "load_model_and_weights")
   model = load_model_and_weights(mode, cmdcfg, appcfg)  
   
   modelinfocfg['log_dir'] = model.log_dir
@@ -298,14 +253,14 @@ def train(args, mode, appcfg):
 
   log.info("modelinfocfg: {}".format(modelinfocfg))
 
-  fn_create_modelinfo = get_module_fn(dnnmod, "create_modelinfo")
+  fn_create_modelinfo = apputil.get_module_fn(dnnmod, "create_modelinfo")
   modelinfo = fn_create_modelinfo(modelinfocfg)
   
   create_modelinfo = args.create_modelinfo
   try:
     if not create_modelinfo:
       log.info("Training...")
-      fn_train = get_module_fn(dnnmod, "train")
+      fn_train = apputil.get_module_fn(dnnmod, "train")
       fn_train(model, dataset_train, dataset_val, cmdcfg)
       log.info("Training Completed!!!")
   finally:
@@ -340,7 +295,7 @@ def predict(args, mode, appcfg):
 
   log.debug("predict---------------------------->")
 
-  archcfg = get_archcfg(appcfg)
+  archcfg = apputil.get_archcfg(appcfg)
   log.debug("archcfg: {}".format(archcfg))
   cmdcfg = archcfg
 
@@ -353,10 +308,10 @@ def predict(args, mode, appcfg):
 
   modelcfg_path = os.path.join(appcfg.PATHS.AI_MODEL_CFG_PATH, cmdcfg.model_info)
   log.info("modelcfg_path: {}".format(modelcfg_path))
-  modelcfg = get_modelcfg(modelcfg_path)
+  modelcfg = apputil.get_modelcfg(modelcfg_path)
 
   log.debug("modelcfg: {}".format(modelcfg))
-  api_model_key = get_api_model_key(modelcfg)
+  api_model_key = apputil.get_api_model_key(modelcfg)
   log.debug("api_model_key: {}".format(api_model_key))
   ## for prediction, get the label information from the model information
   class_names = apputil.get_class_names(modelcfg)
@@ -369,12 +324,12 @@ def predict(args, mode, appcfg):
   cmdcfg.config.NAME = name
   cmdcfg.config.NUM_CLASSES = num_classes
 
-  dnnmod = get_module(cmdcfg.dnnarch)
+  dnnmod = apputil.get_module(cmdcfg.dnnarch)
 
   weights_path = apputil.get_abs_path(appcfg, modelcfg, 'AI_WEIGHTS_PATH')
   cmdcfg['weights_path'] = weights_path
 
-  load_model_and_weights = get_module_fn(dnnmod, "load_model_and_weights")
+  load_model_and_weights = apputil.get_module_fn(dnnmod, "load_model_and_weights")
   model = load_model_and_weights(mode, cmdcfg, appcfg)
 
 
@@ -406,13 +361,13 @@ def evaluate(args, mode, appcfg):
   get_mask = True
   auto_show = False
 
-  datacfg = get_datacfg(appcfg)
-  dbcfg = get_dbcfg(appcfg)
+  datacfg = apputil.get_datacfg(appcfg)
+  dbcfg = apputil.get_dbcfg(appcfg)
 
   log.debug("appcfg: {}".format(appcfg))
   log.debug("datacfg: {}".format(datacfg))
   
-  dataset, num_classes, num_images, class_names, total_stats, total_verify = get_dataset_instance(appcfg, dbcfg, datacfg, subset)
+  dataset, num_classes, num_images, class_names, total_stats, total_verify = apputil.get_dataset_instance(appcfg, dbcfg, datacfg, subset)
   colors = viz.random_colors(len(class_names))
 
   log.debug("-------")
@@ -437,7 +392,7 @@ def evaluate(args, mode, appcfg):
   datacfg.classes = class_names
   datacfg.num_classes = num_classes
   
-  archcfg = get_archcfg(appcfg)
+  archcfg = apputil.get_archcfg(appcfg)
   log.debug("archcfg: {}".format(archcfg))
   cmdcfg = archcfg
 
@@ -450,7 +405,7 @@ def evaluate(args, mode, appcfg):
 
   modelcfg_path = os.path.join(appcfg.PATHS.AI_MODEL_CFG_PATH, cmdcfg.model_info)
   log.info("modelcfg_path: {}".format(modelcfg_path))
-  modelcfg = get_modelcfg(modelcfg_path)
+  modelcfg = apputil.get_modelcfg(modelcfg_path)
 
   ## for prediction, get the label information from the model information
   class_names_model = apputil.get_class_names(modelcfg)
@@ -526,9 +481,9 @@ def evaluate(args, mode, appcfg):
 
   log.debug("reportcfg: {}".format(reportcfg))
 
-  dnnmod = get_module(cmdcfg.dnnarch)
+  dnnmod = apputil.get_module(cmdcfg.dnnarch)
 
-  fn_evaluate = get_module_fn(dnnmod, "evaluate")
+  fn_evaluate = apputil.get_module_fn(dnnmod, "evaluate")
 
   evaluate_run_summary = fn_evaluate(mode, cmdcfg, appcfg, modelcfg, dataset, datacfg, class_names, reportcfg, get_mask)
 
@@ -543,61 +498,6 @@ def tdd(args, mode, appcfg):
   status = test.main(args, mode, appcfg)
 
   return status
-
-
-def get_dataset_instance(appcfg, dbcfg, datacfg, subset):
-  """
-  Get Dataset Instance
-  Load dataset and also provide stats:
-  dataset, num_classes, num_images, class_names, total_stats, total_verify
-
-  TODO
-  - remove dynamic dataclass loading, instead dynamic loading if required should be within the dataset class
-  """
-  log.info("-------------------------------->")
-  log.debug("datacfg: {}".format(datacfg))
-  log.debug("dbcfg: {}".format(dbcfg))
-  datamod = import_module('utils.'+datacfg.dataclass)
-  datamodcls = getattr(datamod, datacfg.dataclass)
-  name = datacfg.name
-  dataset = datamodcls(name)
-
-  total_stats = {}
-  TOTAL_IMG, TOTAL_ANNOTATION, TOTAL_CLASSES = 0,0,0
-
-  total_img, total_annotation, total_classes, annon = dataset.load_data(appcfg, dbcfg, datacfg, subset)
-  log.debug("total_img, total_annotation, total_classes: {}, {}, {}".format(total_img, total_annotation, total_classes))
-
-  total_stats[name] = [total_img, total_annotation, total_classes]
-
-  TOTAL_IMG = total_img
-  TOTAL_ANNOTATION = total_annotation
-  TOTAL_CLASSES = total_classes
-
-  total_verify = [TOTAL_IMG, TOTAL_ANNOTATION, TOTAL_CLASSES]
-
-  log.debug("total_stats, total_verify are in the following format: [Image, Annotation, Classes]")
-
-  ## Must call before using the dataset
-  ## TODO: fix it with the class_map of the loaded model's class_ids sequence for the evaluate command - critical BUG
-  dataset.prepare()
-
-  num_classes = len(dataset.classinfo)
-  num_images = dataset.num_images
-  class_names = [ i['name'] for i in dataset.classinfo]
-
-  ## length of class_names should include only single count of 'BG'
-  ## But, TOTAL_CLASSES gives count without 'BG' for individual dataset(s)
-  log.debug("return...: dataset, num_classes, num_images, class_names, total_stats, total_verify\n")
-  log.debug("num_classes: {}".format(num_classes))
-  log.debug("num_images: {}".format(num_images))
-  log.debug("class_names: {}".format(class_names))
-  log.debug("total_stats: {}".format(total_stats))
-  log.debug("total_verify: {}".format(total_verify))
-
-  log.debug("\n------xx-------xxx-------xx----->\n\n")
-
-  return dataset, num_classes, num_images, class_names, total_stats, total_verify
 
 
 async def do_insert(c, doc):
@@ -803,7 +703,7 @@ def detect_from_images(appcfg, dnnmod, images, path, model, class_names, cmdcfg,
   for d in ['splash', 'mask', 'annotations', 'viz']:
     common.mkdir_p(os.path.join(filepath,d))
 
-  detect = get_module_fn(dnnmod, "detect")
+  detect = apputil.get_module_fn(dnnmod, "detect")
 
   DBCFG = appcfg['APP']['DBCFG']
   CBIRCFG = DBCFG['CBIRCFG']
@@ -863,7 +763,7 @@ def detect_from_videos(appcfg, dnnmod, videos, path, model, class_names, cmdcfg,
 
   file_names = []
   res = []
-  detect = get_module_fn(dnnmod, "detect")
+  detect = apputil.get_module_fn(dnnmod, "detect")
   colors = viz.random_colors(len(class_names))
   log.debug("class_names: {}".format(class_names))
   log.debug("len(class_names), class_names: {},{}".format(len(class_names), class_names))

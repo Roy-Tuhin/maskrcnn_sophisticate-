@@ -50,8 +50,6 @@ logging.config.dictConfig(logcfg)
 
 # log = logging.getLogger('__main__.'+__name__)
 
-from falcon.arch import Model
-
 import apputil
 import img_common
 
@@ -143,14 +141,14 @@ def load_modelinfo(cfg, api_model_key):
     if modelcfg:
       mode = modelcfg['mode']
       dnnarch = modelcfg['dnnarch']
-      dnnmod = Model.get_module(dnnarch)
-      load_model_and_weights = Model.get_module_fn(dnnmod, "load_model_and_weights")
+      dnnmod = apputil.get_module(dnnarch)
+      load_model_and_weights = apputil.get_module_fn(dnnmod, "load_model_and_weights")
       model = load_model_and_weights(mode, modelcfg, cfg)
       log.info("model: {}".format(model))
 
-      detect = Model.get_module_fn(dnnmod, "detect")
-      detect_with_json = Model.get_module_fn(dnnmod, "detect_with_json")
-      detect_batch = Model.get_module_fn(dnnmod, "detect_batch")
+      detect = apputil.get_module_fn(dnnmod, "detect")
+      detect_with_json = apputil.get_module_fn(dnnmod, "detect_with_json")
+      detect_batch = apputil.get_module_fn(dnnmod, "detect_batch")
 
       modelinfo['API_MODEL_KEY'] = api_model_key
       modelinfo['MODEL'] = model

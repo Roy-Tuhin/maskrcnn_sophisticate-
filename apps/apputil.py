@@ -9,9 +9,22 @@ __version__ = '1.0'
 # --------------------------------------------------------
 """
 import os
+from importlib import import_module
+from easydict import EasyDict as edict
 
 import logging
 log = logging.getLogger('__main__.'+__name__)
+
+
+def yaml_load(filepath):
+  """Safe load YAML file as easy dictionary object
+  """
+  fc = None
+  with open(filepath, 'r') as f:
+    # fc = edict(yaml.load(f))
+    fc = edict(yaml.safe_load(f))
+
+  return fc
 
 
 def getOnlyFilesInDir(path):
@@ -126,3 +139,104 @@ def get_abs_path(appcfg, param, ptype=None):
 def get_modelinfo_filename(modelinfocfg):
   modelinfo_filename = modelinfocfg['org_name'] + '-' + modelinfocfg['name'] + '-'+ modelinfocfg['timestamp'] + '-' + modelinfocfg['dnnarch'] + '.yml'
   return modelinfo_filename
+
+
+def get_datacfg(appcfg):
+  datacfg = appcfg.DATASET[appcfg.ACTIVE.DATASET].cfg
+  return datacfg
+
+
+def get_dbcfg(appcfg):
+  dbcfg = appcfg.DATASET[appcfg.ACTIVE.DATASET].dbcfg
+  return dbcfg
+
+
+def get_archcfg(appcfg):
+  archcfg = appcfg.ARCH[appcfg.ACTIVE.ARCH].cfg
+  return archcfg
+
+
+def get_modelcfg(model_info_path):
+  """
+  TODO: filepath or the modelinfo object
+  """
+  modelcfg = yaml_load(model_info_path)
+  return modelcfg
+
+
+def get_api_model_key(modelcfg):
+  api_model_key = modelcfg['org_name']+'-'+modelcfg['problem_id']+'-'+str(modelcfg['rel_num'])
+  return api_model_key
+
+
+def get_module(dnnarch):
+  dnnmod = import_module("falcon.arch."+dnnarch)
+  return dnnmod
+
+
+def get_module_fn(module, name):
+  fn = None
+  if module:
+    fn = getattr(module, name)
+    if not fn:
+      log.error("_get: function is not defined in the module:{}".format(name))
+  else:
+    log.error("module not defined: {}".format(module))
+
+  return fn
+
+
+def get_dataset_instance(appcfg, dbcfg, datacfg, subset):
+  """
+  Get Dataset Instance
+  Load dataset and also provide stats:
+  dataset, num_classes, num_images, class_names, total_stats, total_verify
+
+  TODO
+  - remove dynamic dataclass loading, instead dynamic loading if required should be within the dataset class
+  """
+  log.info("-------------------------------->")
+  log.debug("datacfg: {}".format(datacfg))
+  log.debug("dbcfg: {}".format(dbcfg))
+  datamod = import_module('utils.'+datacfg.dataclass)
+  datamodcls = getattr(datamod, datacfg.dataclass)
+  name = datacfg.name
+  dataset = datamodcls(name)
+
+  total_stats = {}
+  TOTAL_IMG, TOTAL_ANNOTATION, TOTAL_CLASSES = 0,0,0
+
+  total_img, total_annotation, total_classes, annon = dataset.load_data(appcfg, dbcfg, datacfg, subset)
+  log.debug("total_img, total_annotation, total_classes: {}, {}, {}".format(total_img, total_annotation, total_classes))
+
+  total_stats[name] = [total_img, total_annotation, total_classes]
+
+  TOTAL_IMG = total_img
+  TOTAL_ANNOTATION = total_annotation
+  TOTAL_CLASSES = total_classes
+
+  total_verify = [TOTAL_IMG, TOTAL_ANNOTATION, TOTAL_CLASSES]
+
+  log.debug("total_stats, total_verify are in the following format: [Image, Annotation, Classes]")
+
+  ## Must call before using the dataset
+  ## TODO: fix it with the class_map of the loaded model's class_ids sequence for the evaluate command - critical BUG
+  dataset.prepare()
+
+  num_classes = len(dataset.classinfo)
+  num_images = dataset.num_images
+  class_names = [ i['name'] for i in dataset.classinfo]
+
+  ## length of class_names should include only single count of 'BG'
+  ## But, TOTAL_CLASSES gives count without 'BG' for individual dataset(s)
+  log.debug("return...: dataset, num_classes, num_images, class_names, total_stats, total_verify\n")
+  log.debug("num_classes: {}".format(num_classes))
+  log.debug("num_images: {}".format(num_images))
+  log.debug("class_names: {}".format(class_names))
+  log.debug("total_stats: {}".format(total_stats))
+  log.debug("total_verify: {}".format(total_verify))
+
+  log.debug("\n------xx-------xxx-------xx----->\n\n")
+
+  return dataset, num_classes, num_images, class_names, total_stats, total_verify
+
