@@ -51,19 +51,19 @@ function create_slideshow() {
   if [ -z ${paths_in} ]; then
     echo "paths is missing, using default path!"
 
-    local path1='/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719/images/images-p3-250219_AT5/'
-    local path2='/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719/images/images-p2-120619_AT2/'
-    local path3='/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719/images/images-p1-271218_AT0/'
-    local path4='/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719/images/images-p1-271218_AT0/'
-    local path5='/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719/images/images-p1-271218_AT0/'
-    local path6='/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719/images/images-p1-271218_AT0/'
-    local path7='/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719/images/images-p1-271218_AT0/'
+    local path1='/aimldl-dat/logs/lanenet/predict/201219_185020/source_image/'
+    local path2='/aimldl-dat/logs/lanenet/predict/201219_191645/source_image/'
+    local path3='/aimldl-dat/logs/lanenet/predict/201219_191924/source_image/'
+    # local path4='/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719/images/images-p1-271218_AT0/'
+    # local path5='/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719/images/images-p1-271218_AT0/'
+    # local path6='/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719/images/images-p1-271218_AT0/'
+    # local path7='/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719/images/images-p1-271218_AT0/'
 
-    local paths_in="${path1}"
-    local paths_in="${path1};${path2}"
+    # local paths_in="${path1}"
+    # local paths_in="${path1};${path2}"
     local paths_in="${path1};${path2};${path3}"
-    local paths_in="${path1};${path2};${path3};${path4}"
-    local paths_in="${path1};${path2};${path3};${path4};${path5}"
+    # local paths_in="${path1};${path2};${path3};${path4}"
+    # local paths_in="${path1};${path2};${path3};${path4};${path5}"
     # local paths_in="${path1};${path2};${path3};${path4};${path5};${path6}"
     # local paths_in="${path1};${path2};${path3};${path4};${path5};${path6};${path7}"
     # return
@@ -139,7 +139,7 @@ function create_slideshow() {
     # echo $title
 
     ## with border
-    fehcmd="feh -Y -q -D ${delay} -R 5 -B white -Z -z --scale-down -g ${width}x${height}+${xoffset}+${yoffset} -d --draw-tinted --draw-exif --no-screen-clip --auto-zoom ${path}"
+    fehcmd="feh -Y -q -D ${delay} -R 5 -B white --scale-down -g ${width}x${height}+${xoffset}+${yoffset} -d --draw-tinted --draw-exif --no-screen-clip --auto-zoom ${path}"
     
     ## borderless
     # fehcmd="feh -Y -q -D ${delay} -R 5 -B white -Z -z -x --scale-down -g ${width}x${height}+${xoffset} -d --draw-tinted --draw-exif --no-screen-clip --auto-zoom ${path}"
