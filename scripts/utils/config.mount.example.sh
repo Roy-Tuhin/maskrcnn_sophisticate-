@@ -17,7 +17,7 @@ source "${SCRIPTS_DIR}/config.custom.sh"
 # local_mount_path_for_remote_path="${AI_ENVVARS['AI_MNT']}/$mount_machprefix-$remote_machine_id${mount_dir_path}"
 
 ##
-## sudo sshfs -o ro,allow_other,default_permissions,uid=1001,gid=1001 swuser@10.4.71.100:/data/samba/Bangalore/prod/Bangalore_Maze_Exported_Data/ANNOTATIONS /aimldl-mnt/vtq-samba-100/AIML_Annotation
+## sudo sshfs -o nonempty,ro,allow_other,default_permissions,uid=$(id -u),gid=$(id -g) swuser@10.4.71.100:/data/samba/Bangalore/prod/Bangalore_Maze_Exported_Data/ANNOTATIONS /aimldl-mnt/vtq-samba-100/AIML_Annotation
 
 function mnt_annotation_dir() {
   debug "get_mnt_annon_params:============================"

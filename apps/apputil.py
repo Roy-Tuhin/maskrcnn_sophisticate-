@@ -11,6 +11,7 @@ __version__ = '1.0'
 import os
 from importlib import import_module
 from easydict import EasyDict as edict
+import yaml
 
 import logging
 log = logging.getLogger('__main__.'+__name__)

@@ -43,14 +43,18 @@ source ${LINUX_SCRIPT_HOME}/versions.sh
 source ${LINUX_SCRIPT_HOME}/utils/numthreads.sh
 source ${LINUX_SCRIPT_HOME}/utils/common.sh
 
-if [ -z $1 ]; then
-  # BUILD_FOR_CUDA_VER=9.0
-  BUILD_FOR_CUDA_VER=10.0
+
+BUILD_FOR_CUDA_VER=9.0
+# BUILD_FOR_CUDA_VER=10.0
+
+if [ ! -z $1 ]; then
+  BUILD_FOR_CUDA_VER=$1
 fi
 echo "BUILD_FOR_CUDA_VER: ${BUILD_FOR_CUDA_VER}"
 
 CUDACFG_FILEPATH=${LINUX_SCRIPT_HOME}/cudacfg-${BUILD_FOR_CUDA_VER}.sh
 AI_PYCUDA_FILE=python.requirements-ai-cuda-${BUILD_FOR_CUDA_VER}.txt
+echo "AI_PYCUDA_FILE: ${AI_PYCUDA_FILE}"
 
 if [ -f ${CUDACFG_FILEPATH} ]; then
   source ${CUDACFG_FILEPATH}
