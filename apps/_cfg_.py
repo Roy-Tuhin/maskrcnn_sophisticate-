@@ -217,7 +217,7 @@ def loadcfg(cmd, dbname, exp_id=None, eval_on=None):
   # ROOT_DIR = os.path.join(APP_ROOT_DIR,'..')
   # BASE_PATH_CFG = os.path.join(ROOT_DIR,'cfg')
   ROOT_DIR = os.getenv('AI_HOME')
-  BASE_PATH_CFG = os.getenv('AI_CFG')
+  BASE_PATH_CFG = os.getenv('AI_CONFIG')
   log.debug("ROOT_DIR: {}\nBASE_PATH_CFG:{}".format(ROOT_DIR, BASE_PATH_CFG))
 
   add_path(APP_ROOT_DIR)

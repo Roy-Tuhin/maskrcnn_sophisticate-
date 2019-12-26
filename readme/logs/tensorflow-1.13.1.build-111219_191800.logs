@@ -185,3 +185,7 @@ Use --verbose_failures to see the command lines of failed build steps.
 INFO: Elapsed time: 6402.079s, Critical Path: 753.05s
 INFO: 9140 processes: 9140 local.
 FAILED: Build did NOT complete successfully
+
+
+
+https://github.com/tensorflow/serving/issues/1190#issuecomment-564830168

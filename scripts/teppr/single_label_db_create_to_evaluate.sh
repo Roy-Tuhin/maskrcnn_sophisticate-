@@ -6,7 +6,7 @@
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )"
 
 function single_label_dbs() {
-  source "${SCRIPTS_DIR}/common.sh"
+  source "${SCRIPTS_DIR}/lscripts/utils/common.sh"
 
   local timestamp=$(date -d now +'%d%m%y_%H%M%S')
   local execution_start_time=$(date)

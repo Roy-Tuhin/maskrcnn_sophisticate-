@@ -2,25 +2,20 @@
 # declare -a no_of_dbs=($(seq 1 1 4)) ## 4 items
 
 declare -a annon_dbnames=(
-  "annon_v8"
-  "annon_v5"
+  "annon_v10"
 )
 
 declare -a aids_dbs=(
-  "PXL-281119_154739"
-  "PXL-151119_175327"
+  "PXL-251219_191904"
 )
 
 
-# archcfg="/aimldl-cfg/arch/281119_123250-AIE1-21-mask_rcnn.yml"
 declare -a archcfg=(
-  "/aimldl-cfg/arch/101219_152450-AIE1-22-mask_rcnn.yml"
-  "/aimldl-cfg/arch/101219_152632-AIE1-23-mask_rcnn.yml"
+  "${AI_CFG}/arch/251219_192746-AIE1-32-mask_rcnn.yml"
 )
 
 declare -a experiment_ids=(
-  "train-900ce199-8c0a-4ae6-b47f-12bd4a71f6ae"
-  "train-8daf9260-1724-4a8a-9917-742f9885b9b9"
+  "train-ce83dfd4-ef53-4cdd-b4e4-fe9269ac3869"
 )
 
 

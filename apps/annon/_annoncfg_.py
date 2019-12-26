@@ -178,7 +178,7 @@ DBCFG['ANNONCFG'] = {
   # ,'dbname': 'annon_v9'
   # ,'dbname': 'annon_v9'
   # ,'dbname': 'annon_v9'
-  ,'dbname': 'annon_v9'
+  ,'dbname': 'annon_v10'
   ,'dataclass': 'AnnonDataset'
   ,'name': 'hmd'
   ,'annon_type': 'hmd'

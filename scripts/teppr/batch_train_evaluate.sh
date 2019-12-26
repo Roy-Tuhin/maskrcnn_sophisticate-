@@ -7,7 +7,7 @@ function run_batch_train_evaluate(){
   echo -e '\e[1;32m'Begin Script: -------------------------------'\e[0m'
   local SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )"
 
-  source "${SCRIPTS_DIR}/common.sh"
+  source "${SCRIPTS_DIR}/lscripts/utils/common.sh"
   source batch_train_evaluate_cfg.sh
   source batch_train_evaluate_workload.sh
 
@@ -15,7 +15,7 @@ function run_batch_train_evaluate(){
 
   local pids=""
   local cfgfile=appcfg.py
-  local cfgfile_basepath='/aimldl-cod/scripts'
+  local cfgfile_basepath='/codehub/scripts'
 
   local timestamp=$(date -d now +'%d%m%y_%H%M%S')
 

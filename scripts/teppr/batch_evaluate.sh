@@ -12,7 +12,7 @@ echo -e '\e[1;32m'Begin Script: -------------------------------'\e[0m'
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )"
 
 function run_evaluate() {
-  source "${SCRIPTS_DIR}/common.sh"
+  source "${SCRIPTS_DIR}/lscripts/utils/common.sh"
   source batch_evaluate_cfg.sh
 
   info ${pyenv}
