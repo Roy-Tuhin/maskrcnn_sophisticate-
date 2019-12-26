@@ -50,15 +50,15 @@ function ceres_solver_install() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
 
-  if [ -z "$BASEPATH" ]; then
-    BASEPATH="$HOME/softwares"
-    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+  if [ -z "${BASEPATH}" ]; then
+    BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
 
-  if [ -z "$CERES_SOLVER_REL" ]; then
+  if [ -z "${CERES_SOLVER_REL}" ]; then
     CERES_SOLVER_REL="-1.14.0"
     CERES_SOLVER_REL_TAG="1.14.0"
-    echo "Unable to get CERES_SOLVER_REL version, falling back to default version#: $CERES_SOLVER_REL"
+    echo "Unable to get CERES_SOLVER_REL version, falling back to default version#: ${CERES_SOLVER_REL}"
   fi
 
   sudo apt -y install libsuitesparse-dev
@@ -67,39 +67,41 @@ function ceres_solver_install() {
   # CERES_SOLVER_REL="-1.10.0"
   # CERES_SOLVER_REL="-1.14.0"
   DIR="ceres-solver"
-  PROG_DIR="$BASEPATH/$DIR$CERES_SOLVER_REL"
+  PROG_DIR="${BASEPATH}/${DIR}${CERES_SOLVER_REL}"
 
-  URL="https://ceres-solver.googlesource.com/$DIR"
+  URL="https://ceres-solver.googlesource.com/${DIR}"
 
-  echo "Number of threads will be used: $NUMTHREADS"
-  echo "BASEPATH: $BASEPATH"
-  echo "URL: $URL"
-  echo "PROG_DIR: $PROG_DIR"
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-  if [ ! -d $PROG_DIR ]; then
-    git -C $PROG_DIR || git clone $URL $PROG_DIR
-    cd $PROG_DIR
-    git checkout $CERES_SOLVER_REL_TAG
+  if [ ! -d ${PROG_DIR} ]; then
+    git -C ${PROG_DIR} || git clone ${URL} ${PROG_DIR}
   else
-    echo Gid clone for $URL exists at: $PROG_DIR
+    echo Gid clone for ${URL} exists at: ${PROG_DIR}
   fi
 
   # http://faculty.cse.tamu.edu/davis/suitesparse.html
 
-  if [ -d $PROG_DIR/build ]; then
-    rm -rf $PROG_DIR/build
+  if [ -d ${PROG_DIR}/build ]; then
+    rm -rf ${PROG_DIR}/build
   fi
 
-  mkdir $PROG_DIR/build
+  cd ${PROG_DIR}
+  git pull
+  git checkout ${CERES_SOLVER_REL}_TAG
 
-  cd $PROG_DIR/build
+  mkdir ${PROG_DIR}/build
+
+  cd ${PROG_DIR}/build
   cmake .. -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC
 
   ## not required
   # ccmake ..
 
-  make -j$NUMTHREADS
-  sudo make install -j$NUMTHREADS
+  make -j${NUMTHREADS}
+  sudo make install -j${NUMTHREADS}
 
   cd ${LSCRIPTS}
 

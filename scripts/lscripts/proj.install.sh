@@ -21,51 +21,65 @@ function proj_install() {
   source ${LSCRIPTS}/lscripts.config.sh
 
 
-  if [ -z "$BASEPATH" ]; then
+  sudo apt install sqlite3
+
+  if [ -z "${BASEPATH}" ]; then
     BASEPATH="$HOME/softwares"
-    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
-  if [ -z "$PROJ_VER" ]; then
+  if [ -z "${PROJ_VER}" ]; then
     PROJ_VER="4.9.3"
-    echo "Unable to get PROJ_VER version, falling back to default version#: $PROJ_VER"
+    echo "Unable to get PROJ_VER version, falling back to default version#: ${PROJ_VER}"
   fi
 
   PROG='proj'
-  DIR="$PROG-$PROJ_VER"
-  PROG_DIR="$BASEPATH/$PROG-$PROJ_VER"
-  FILE="$DIR.tar.gz"
+  DIR="${PROG}-${PROJ_VER}"
+  PROG_DIR="${BASEPATH}/${PROG}-${PROJ_VER}"
+  FILE="${DIR}.tar.gz"
 
-  echo "$FILE"
-  echo "Number of threads will be used: $NUMTHREADS"
+  URL=http://download.osgeo.org/proj/${FILE}
 
-  if [ ! -f $HOME/Downloads/$FILE ]; then
-    wget http://download.osgeo.org/proj/$FILE -P $HOME/Downloads
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
+
+  if [ ! -f ${HOME}/Downloads/${FILE} ]; then
+    wget -c ${URL} -P ${HOME}/Downloads
   else
-    echo Not downloading as: $HOME/Downloads/$FILE already exists!
+    echo Not downloading as: ${HOME}/Downloads/${FILE} already exists!
   fi
 
-  if [ ! -d $HOME/softwares/$DIR ]; then
-    tar xvfz $HOME/Downloads/$PROG-$PROJ_VER.tar.gz -C $HOME/softwares
+  if [ ! -d ${PROG_DIR} ]; then
+    tar xvfz ${HOME}/Downloads/${FILE} -C ${BASEPATH}
   else
-    echo Extracted Dir already exists: $HOME/softwares/$DIR
+    echo Extracted Dir already exists: ${PROG_DIR}
   fi
 
-  if [ -d $PROG_DIR/build ]; then
-    rm -rf $PROG_DIR/build
+  if [ -d ${PROG_DIR}/build ]; then
+    rm -rf ${PROG_DIR}/build
   fi
 
-  mkdir $PROG_DIR/build
-  cd $PROG_DIR
+  mkdir ${PROG_DIR}/build
+  cd ${PROG_DIR}
   echo $(pwd)
-  ##./configure --prefix=/opt/source/$PROG-$PROJ_VER/build
+  ##./configure --prefix=/opt/source/${PROG}-${PROJ_VER}/build
   ./configure
 
-  make -j$NUMTHREADS
-  sudo make install -j$NUMTHREADS
+  make -j${NUMTHREADS}
+  sudo make install -j${NUMTHREADS}
 
-  # ln -s $PROG_DIR $PROG
+  # ln -s ${PROG_DIR} ${PROG}
 
   cd ${LSCRIPTS}
 }
 
 proj_install
+
+
+
+
+
+# configure: error: Please install sqlite3 binary.
+# make: *** No targets specified and no makefile found.  Stop.
+# make: *** No rule to make target 'install'.  Stop.

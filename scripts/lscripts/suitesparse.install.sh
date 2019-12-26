@@ -24,53 +24,56 @@ function suitesparse_install() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
 
-  if [ -z "$BASEPATH" ]; then
-    BASEPATH="$HOME/softwares"
-    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+  if [ -z "${BASEPATH}" ]; then
+    BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
-  if [ -z "$SUITE_PARSE_VER" ]; then
+  if [ -z "${SUITE_PARSE_VER}" ]; then
     SUITE_PARSE_VER="5.3.0"
-    echo "Unable to get SUITE_PARSE_VER version, falling back to default version#: $SUITE_PARSE_VER"
+    echo "Unable to get SUITE_PARSE_VER version, falling back to default version#: ${SUITE_PARSE_VER}"
   fi
 
   sudo apt -y install libsuitesparse-dev
 
   PROG='SuiteSparse'
-  DIR="$PROG-$SUITE_PARSE_VER"
-  PROG_DIR="$BASEPATH/$PROG-$SUITE_PARSE_VER"
-  FILE="$DIR.tar.gz"
+  DIR="${PROG}-${SUITE_PARSE_VER}"
+  # PROG_DIR="${BASEPATH}/${PROG}-${SUITE_PARSE_VER}"
+  PROG_DIR="${BASEPATH}/${PROG}"
+  FILE="${DIR}.tar.gz"
 
-  URL="http://faculty.cse.tamu.edu/davis/SuiteSparse/$FILE"
+  URL="http://faculty.cse.tamu.edu/davis/SuiteSparse/${FILE}"
 
-  echo "Number of threads will be used: $NUMTHREADS"
-  echo "BASEPATH: $BASEPATH"
-  echo "URL: $URL"
-  echo "PROG_DIR: $PROG_DIR"
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-  if [ ! -f $HOME/Downloads/$FILE ]; then
-    wget -c $URL -P $HOME/Downloads
+  if [ ! -f ${HOME}/Downloads/${FILE} ]; then
+    wget -c ${URL} -P ${HOME}/Downloads
   else
-    echo Not downloading as: $HOME/Downloads/$FILE already exists!
+    echo Not downloading as: ${HOME}/Downloads/${FILE} already exists!
   fi
 
-  if [ ! -d $HOME/softwares/$DIR ]; then
-    tar xvfz $HOME/Downloads/$FILE -C $HOME/softwares
+  if [ ! -d ${PROG_DIR} ]; then
+    tar xvfz ${HOME}/Downloads/${FILE} -C ${BASEPATH}
   else
-    echo Extracted Dir already exists: $HOME/softwares/$DIR
+    echo Extracted Dir already exists: ${PROG_DIR}
   fi
 
   ## gcc-5
   ## Refer SutieSparse README.txt
 
-  # make -j$NUMTHREADS ## with demo
-  make library -j$NUMTHREADS ## without demo
-  sudo make install -j$NUMTHREADS INSTALL=/usr/local
+  cd ${PROG_DIR}
 
-  cd $PROG_DIR/CHOLMOD
-  make -j$NUMTHREADS
+  # make -j${NUMTHREADS} ## with demo
+  make library -j${NUMTHREADS} ## without demo
+  sudo make install -j${NUMTHREADS} INSTALL=/usr/local
+
+  cd ${PROG_DIR}/CHOLMOD
+  make -j${NUMTHREADS}
   make install
 
-  # cd $PROG_DIR/CHOLMOD/Demo
+  # cd ${PROG_DIR}/CHOLMOD/Demo
   # wget -c https://sparse.tamu.edu/MM/ND/nd6k.tar.gz
   # ./cholmod_l_demo < nd6k.mtx
 
@@ -80,8 +83,6 @@ function suitesparse_install() {
   ##----------------------------------------------------------
   ## Build Logs
   ##----------------------------------------------------------
-
-
 
   # https://stackoverflow.com/questions/29481012/compiling-suitesparse-4-4-4-with-openblas-on-linux
 

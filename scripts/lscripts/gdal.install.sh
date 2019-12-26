@@ -22,49 +22,47 @@ function gdal_install() {
 
   swig -version
 
-  if [ -z "$BASEPATH" ]; then
-    BASEPATH="$HOME/softwares"
-    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+  if [ -z "${BASEPATH}" ]; then
+    BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
 
-  if [ -z "$GDAL_VER" ]; then
+  if [ -z "${GDAL_VER}" ]; then
     GDAL_VER="2.2.4"
-    echo "Unable to get GDAL_VER version, falling back to default version#: $GDAL_VER"
+    echo "Unable to get GDAL_VER version, falling back to default version#: ${GDAL_VER}"
   fi
 
   PROG='gdal'
-  DIR="$PROG-$GDAL_VER"
-  PROG_DIR="$BASEPATH/$PROG-$GDAL_VER"
-  FILE="$DIR.tar.gz"
-  URL="http://download.osgeo.org/gdal/$GDAL_VER/$FILE"
+  DIR="${PROG}-${GDAL_VER}"
+  PROG_DIR="${BASEPATH}/${PROG}-${GDAL_VER}"
+  FILE="${DIR}.tar.gz"
 
-  echo "$FILE"
-  echo "URL: $URL"
-  echo "Number of threads will be used: $NUMTHREADS"
-  echo "BASEPATH: $BASEPATH"
-  echo "PROG_DIR: $PROG_DIR"
+  URL="http://download.osgeo.org/gdal/${GDAL_VER}/${FILE}"
 
-  if [ ! -f $HOME/Downloads/$FILE ]; then
-    wget -c $URL -P $HOME/Downloads
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
+
+  if [ ! -f ${HOME}/Downloads/${FILE} ]; then
+    wget -c ${URL} -P ${HOME}/Downloads
   else
-    echo Not downloading as: $HOME/Downloads/$FILE already exists!
+    echo Not downloading as: ${HOME}/Downloads/${FILE} already exists!
   fi
 
-  if [ ! -d $BASEPATH/$DIR ]; then
-    tar xvfz $HOME/Downloads/$FILE -C $BASEPATH
-    echo "Extracting File: $HOME/Downloads/$FILE here: $BASEPATH/$DIR"
-    echo "Extracting...DONE!"
+  if [ ! -d ${PROG_DIR} ]; then
+    tar xvfz ${HOME}/Downloads/${FILE} -C ${BASEPATH}
   else
-    echo "Extracted Dir already exists: $BASEPATH/$DIR"
+    echo "Extracted Dir already exists: ${PROG_DIR}"
   fi
 
-  cd $BASEPATH/$DIR
+  cd ${PROG_DIR}
   echo $(pwd)
 
   # ./configure --help
 
   # https://lists.osgeo.org/pipermail/gdal-dev/2011-March/028237.html
-  make clean -j$NUMTHREADS
+  make clean -j${NUMTHREADS}
 
   ./configure --with-pg=/usr/bin/pg_config \
     --with-python \
@@ -96,8 +94,8 @@ function gdal_install() {
    #  --with-geotiff=internal \
    #  --with-jvm_lib_add_rpath
     
-  make -j$NUMTHREADS
-  sudo make install -j$NUMTHREADS
+  make -j${NUMTHREADS}
+  sudo make install -j${NUMTHREADS}
 
   cd ${LSCRIPTS}
 

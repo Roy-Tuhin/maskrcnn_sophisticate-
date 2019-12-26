@@ -22,49 +22,48 @@ function boost_install() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
 
-  if [ -z "$BASEPATH" ]; then
-    BASEPATH="$HOME/softwares"
-    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+  if [ -z "${BASEPATH}" ]; then
+    BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
 
-  if [ -z "$BOOST_VER" ]; then  
+  if [ -z "${BOOST_VER}" ]; then  
     BOOST_VER="1.64.0"
     ## OpenGV does not compiles with 1.67.0 which is the prerequiste for OpenSfM: 
     # BOOST_VER="1.67.0"
-    echo "Unable to get BOOST_VER version, falling back to default version#: $BOOST_VER"
+    echo "Unable to get BOOST_VER version, falling back to default version#: ${BOOST_VER}"
   fi
 
-  source ./numthreads.sh ##NUMTHREADS
   PROG='boost'
-  DIR="boost_"$(echo $BOOST_VER | sed -e 's/\./_/g')
-  PROG_DIR="$BASEPATH/$DIR"
-  FILE="$DIR.tar.gz"
+  DIR="boost_"$(echo ${BOOST_VER} | sed -e 's/\./_/g')
+  PROG_DIR="${BASEPATH}/${DIR}"
+  FILE="${DIR}.tar.gz"
 
-  URL="https://dl.bintray.com/boostorg/release/$BOOST_VER/source/$FILE"
+  URL="https://dl.bintray.com/boostorg/release/${BOOST_VER}/source/${FILE}"
 
-  echo "$URL"
-  echo "$FILE"
-  echo "Number of threads will be used: $NUMTHREADS"
-  echo "BASEPATH: $BASEPATH"
-  echo "PROG_DIR: $PROG_DIR"
+  echo "${URL}"
+  echo "${FILE}"
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-  if [ ! -f $HOME/Downloads/$FILE ]; then
-    wget $URL  -P $HOME/Downloads
+  if [ ! -f ${HOME}/Downloads/${FILE} ]; then
+    wget -c ${URL}  -P ${HOME}/Downloads
   else
-    echo Not downloading as: $HOME/Downloads/$FILE already exists!
+    echo Not downloading as: ${HOME}/Downloads/${FILE} already exists!
   fi
 
-  if [ ! -d $BASEPATH/$DIR ]; then
-    tar xvfz $HOME/Downloads/$FILE -C $BASEPATH
+  if [ ! -d ${PROG_DIR} ]; then
+    tar xvfz ${HOME}/Downloads/${FILE} -C ${BASEPATH}
   else
-    echo Extracted Dir already exists: $BASEPATH/$DIR
+    echo Extracted Dir already exists: ${PROG_DIR}
   fi
 
-  cd $PROG_DIR
+  cd ${PROG_DIR}
 
   sudo ./bootstrap.sh --prefix=/usr/local --with-libraries=all
   #sudo ./b2 install
-  sudo ./b2 install -j$NUMTHREADS
+  sudo ./b2 install -j${NUMTHREADS}
 
   # how-to-determine-the-boost-version-on-a-system
   echo 'find /usr -name "boost"'
@@ -73,7 +72,7 @@ function boost_install() {
 
   ## OpenSfM Dependencies
   # # export
-  # # BOOST_ROOT="$HOME/softwares/$DIR"
+  # # BOOST_ROOT="${HOME}/softwares/$DIR"
   # Boost_LIBRARYDIR="/usr/local/lib"
   # BOOST_INCLUDEDIR="/usr/local/include"
 
@@ -82,8 +81,8 @@ function boost_install() {
 
   # #sudo ln -s libboost_python35.so.1.67.0 libboost_python.so
   # #sudo ln -s libboost_numpy35.so.1.67.0 libboost_numpy.so
-  # sudo ln -s libboost_python35.so.$BOOST_VER libboost_python.so
-  # sudo ln -s libboost_numpy35.so.$BOOST_VER libboost_numpy.so
+  # sudo ln -s libboost_python35.so.${BOOST_VER} libboost_python.so
+  # sudo ln -s libboost_numpy35.so.${BOOST_VER} libboost_numpy.so
 
   # sudo apt-get install libboost-python-dev
 }
