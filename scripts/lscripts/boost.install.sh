@@ -70,6 +70,30 @@ function boost_install() {
   find /usr -name "boost"
   cat /usr/local/include/boost/version.hpp | grep BOOST_LIB_VERSION
 
+  cd ${LSCRIPTS}
+
+  ##----------------------------------------------------------
+  ## Build Logs
+  ##----------------------------------------------------------
+
+
+  # ...updated 17117 targets...
+  # find /usr -name "boost"
+  # /usr/local/include/boost
+  # /usr/local/include/boost/chrono/typeof/boost
+  # /usr/local/include/boost/hana/ext/boost
+  # /usr/include/boost
+  # /usr/include/boost/chrono/typeof/boost
+  # /usr/include/boost/hana/ext/boost
+  # /usr/include/CGAL/internal/boost
+  # /usr/include/CGAL/boost
+  # /usr/lib/python3/dist-packages/boost
+  # /usr/lib/python2.7/dist-packages/boost
+  # //  BOOST_LIB_VERSION must be defined to be the same as BOOST_VERSION
+  # #define BOOST_LIB_VERSION "1_72"
+
+  ##-------------
+
   ## OpenSfM Dependencies
   # # export
   # # BOOST_ROOT="${HOME}/softwares/$DIR"
