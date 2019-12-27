@@ -9,28 +9,30 @@
 #
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/lscripts.config.sh
+function haroopad_editor_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-if [ -z "$HAROOPAD_VER" ]; then
-  HAROOPAD_VER="0.13.1"
-  echo "Unable to get HAROOPAD_VER version, falling back to default version#: $HAROOPAD_VER"
-fi
+  if [ -z "${HAROOPAD_VER}" ]; then
+    HAROOPAD_VER="0.13.1"
+    echo "Unable to get HAROOPAD_VER version, falling back to default version#: ${HAROOPAD_VER}"
+  fi
 
-sudo -E apt -q -y install libgconf2-4
+  sudo -E apt -q -y install libgconf2-4
 
-PROG='haroopad'
-FILE="$PROG-v$HAROOPAD_VER-x64.deb"
-echo "$FILE"
+  PROG='haroopad'
+  FILE="${PROG}-v${HAROOPAD_VER}-x64.deb"
+  echo "$FILE"
 
-if [ ! -f $HOME/Downloads/$FILE ]; then
-  #wget https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.deb
-  wget https://bitbucket.org/rhiokim/haroopad-download/downloads/$FILE -P $HOME/Downloads
-else
-  echo Not downloading as: $HOME/Downloads/$FILE already exists!
-fi
+  if [ ! -f $HOME/Downloads/$FILE ]; then
+    #wget https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.deb
+    wget https://bitbucket.org/rhiokim/haroopad-download/downloads/$FILE -P $HOME/Downloads
+  else
+    echo Not downloading as: $HOME/Downloads/$FILE already exists!
+  fi
 
-sudo dpkg -i $HOME/Downloads/$FILE
+  sudo dpkg -i $HOME/Downloads/$FILE
+}
+
+haroopad_editor_install

@@ -5,7 +5,7 @@ function system_setup() {
   source ${LSCRIPTS}/lscripts.config.sh
 
   ## based on dockerfile builds
-  #source ${LSCRIPTS}/essential.sh
+  source ${LSCRIPTS}/essential.sh
 
   ##3. Copy softwares from `samba5/softwares/packages-for-new-system-install` to local system under `$HOME/Downloads` manually, or use `rsync`
   #

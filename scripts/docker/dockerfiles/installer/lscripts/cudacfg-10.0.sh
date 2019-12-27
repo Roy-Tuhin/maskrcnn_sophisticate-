@@ -17,6 +17,8 @@ CUDA_RELEASE="local-${CUDA_VER}.130-410.48_1.0-1_amd64"
 CUDA_PCKG="cuda-repo-ubuntu${CUDA_OS_REL}-${CUDA_REL}-${CUDA_RELEASE}.deb"
 # CUDA_REPO_KEY="10-0-local-10.0.130-410.48"
 CUDA_REPO_KEY="${CUDA_REL}-local-${CUDA_VER}.130-410.48"
+CUDA_REPO_KEY="cuda-repo-${CUDA_REL}-local/7fa2af80.pub"
+
 CUDA_URL="https://developer.download.nvidia.com/compute/cuda/${CUDA_VER}/secure/Prod/local_installers/${CUDA_PCKG}"
 CUDA_VERSION=${CUDA_VER}
 
@@ -64,6 +66,7 @@ TENSORFLOW_VER=${TF_VER}
 # TF_VERSION=${TENSORFLOW_VER}
 TF_RELEASE="v${TF_VER}"
 TF_BAZEL_VER="0.21.0"
+# TF_BAZEL_VER="1.1.0"
 
 ## compatible with TF 1.13.1
 KERAS_VER="2.2.3"

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 __TIMESTAMP__=$(date +%Y%m%d_%H%M)
+timestamp=${__TIMESTAMP__}
 
 LINUX_SCRIPT_BASE="system"
 LINUX_SCRIPT_HOME=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
@@ -43,16 +44,14 @@ source ${LINUX_SCRIPT_HOME}/versions.sh
 source ${LINUX_SCRIPT_HOME}/utils/numthreads.sh
 source ${LINUX_SCRIPT_HOME}/utils/common.sh
 
-
-BUILD_FOR_CUDA_VER=9.0
-# BUILD_FOR_CUDA_VER=10.0
-
-if [ ! -z $1 ]; then
-  BUILD_FOR_CUDA_VER=$1
+if [ -z $1 ]; then
+  # BUILD_FOR_CUDA_VER=9.0
+  BUILD_FOR_CUDA_VER=10.0
 fi
 echo "BUILD_FOR_CUDA_VER: ${BUILD_FOR_CUDA_VER}"
 
 CUDACFG_FILEPATH=${LINUX_SCRIPT_HOME}/cudacfg-${BUILD_FOR_CUDA_VER}.sh
+echo "CUDACFG_FILEPATH: ${CUDACFG_FILEPATH}"
 AI_PYCUDA_FILE=python.requirements-ai-cuda-${BUILD_FOR_CUDA_VER}.txt
 echo "AI_PYCUDA_FILE: ${AI_PYCUDA_FILE}"
 

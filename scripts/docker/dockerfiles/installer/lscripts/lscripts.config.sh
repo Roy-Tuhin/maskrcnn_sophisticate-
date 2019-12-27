@@ -28,8 +28,10 @@ BASEPATH="${CHUB_HOME}/${BASEDIR}"
 DOCKER_BASEPATH="/external4docker"
 ## Virtual Machines, Containers, Python virtual environments
 # VM_HOME=/${VM_BASE}
+pyVer=3
 VM_HOME=${CHUB_HOME}/${VM_BASE}
 PY_VENV_PATH=${VM_HOME}/virtualenvs
+PY_VENV_NAME=py_${pyVer}_${__TIMESTAMP__}
 
 WSGIPYTHONPATH=""
 WSGIPYTHONHOME=""
