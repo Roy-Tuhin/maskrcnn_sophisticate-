@@ -61,6 +61,9 @@ function libLAS_install() {
         -D WITH_PKGCONFIG=ON \
         -D WITH_TESTS=ON \
         -D WITH_UTILITIES=ON \
+        -D CMAKE_CXX_STANDARD=11 \
+        -D CMAKE_CXX_STANDARD_REQUIRED=ON \
+        -D CMAKE_CXX_EXTENSIONS=OFF \
         -D GDAL_DIR=${BASEPATH}/gdal-${GDAL_VER} \
         -D PROJ4_DIR=${BASEPATH}/proj-${PROJ_VER} \
         -D TIFF_DIR=${BASEPATH}/tiff-${TIFF_VER} ..
@@ -73,7 +76,31 @@ function libLAS_install() {
   make -j${NUMTHREADS}
   sudo make install -j${NUMTHREADS}
 
-  cd ${LSCRIPTS}
+  # cd ${LSCRIPTS}
+
+# https://github.com/libLAS/libLAS/issues/140
+# https://github.com/libLAS/libLAS/issues/164
+
+# https://gitweb.gentoo.org/repo/gentoo.git/tree/sci-geosciences/liblas/files/liblas-1.8.1-fix-overload-call.patch
+# change to
+# double primemValue = poSRS->GetPrimeMeridian();
+# double aUnit = poSRS->GetAngularUnits();
+
+# comment OSRFixupOrdering()
+
+# /codehub/external/libLAS/src/gt_citation.cpp:390:58: error: call of overloaded ‘GetPrimeMeridian(NULL)’ is ambiguous
+#          double primemValue = poSRS->GetPrimeMeridian(NULL);
+
+# /codehub/external/libLAS/src/gt_citation.cpp:393:55: error: call of overloaded ‘GetAngularUnits(NULL)’ is ambiguous
+#              double aUnit = poSRS->GetAngularUnits(NULL);
+
+
+# /codehub/external/libLAS/src/gt_wkt_srs.cpp:492:18: error: ‘class OGRSpatialReference’ has no member named ‘FixupOrdering’
+#              oSRS.FixupOrdering();
+#                   ^~~~~~~~~~~~~
+# /codehub/external/libLAS/src/gt_wkt_srs.cpp:1093:10: error: ‘class OGRSpatialReference’ has no member named ‘FixupOrdering’
+#      oSRS.FixupOrdering();
+
 }
 
 libLAS_install

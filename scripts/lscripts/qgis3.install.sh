@@ -38,11 +38,24 @@
 # add Ubuntu 18.04 specific repository of QGIS 3
 sudo sh -c 'echo "deb https://qgis.org/debian bionic main" > /etc/apt/sources.list.d/qgis3.list'
 # import the GPG key of QGIS 3 
-wget -O - https://qgis.org/downloads/qgis-2017.gpg.key | sudo gpg --import
+
+# sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key 51F523511C7028C3
+
+# wget -O - https://qgis.org/downloads/qgis-2017.gpg.key | sudo gpg --import
+
+# # verify whether the GPG key was imported correctly
+# gpg --fingerprint CAEB3DC3BDF7FB45
+# # add the GPG key of QGIS 3 to apt package manager:
+# gpg --export --armor CAEB3DC3BDF7FB45 | sudo apt-key add -
+
+# https://gis.stackexchange.com/questions/332245/error-adding-qgis-org-repository-public-key-to-apt-keyring/332247  
+# https://www.qgis.org/en/site/forusers/alldownloads.html
+
+wget -O - https://qgis.org/downloads/qgis-2019.gpg.key | sudo gpg --import
 # verify whether the GPG key was imported correctly
-gpg --fingerprint CAEB3DC3BDF7FB45
+gpg --fingerprint 51F523511C7028C3
 # add the GPG key of QGIS 3 to apt package manager:
-gpg --export --armor CAEB3DC3BDF7FB45 | sudo apt-key add -
+gpg --export --armor 51F523511C7028C3 | sudo apt-key add -
 # update the apt package repository cache
 sudo -E apt -y update
 # install QGIS 3
