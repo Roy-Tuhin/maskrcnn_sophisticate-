@@ -102,6 +102,16 @@ Prediction:
 
 # Technotes
 
+
+## Docker
+
+**TIPS**
+* to access remote mount point inside the docker; the container should be created/started after mounting remote filesystem locally
+
+* TODO:
+  * how to work on a docker container remotely
+
+
 ## Shell script
 
 * https://www.computerhope.com/unix/adduser.htm
@@ -113,11 +123,13 @@ Prediction:
 ## Git
 
 https://stackoverflow.com/questions/11868447/how-can-i-remove-an-entry-in-global-configuration-with-git-config
+```bash
 git config --global --edit
-
 git config --global --unset user.name
 git config --global --unset user.email
+```
 
+* How to use multi-user on the same repo on the same system
 
 
 ## Linux
@@ -163,3 +175,12 @@ git config --global --unset user.email
 * https://www.tensorflow.org/install/source
 * https://nanonets.com/blog/how-to-easily-detect-objects-with-deep-learning-on-raspberry-pi/
 * https://www.balena.io/fin/
+
+
+## Deep Learning
+
+* convert coco data to TF records
+  * https://github.com/CharlesShang/FastMaskRCNN/blob/master/libs/datasets/download_and_convert_coco.py
+* Image Augmentor
+  * https://github.com/mdbloice/Augmentor
+

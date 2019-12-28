@@ -101,7 +101,8 @@ def load_model_and_weights(mode, cmdcfg, appcfg):
   log.info("device: {}".format(device))
   log.info("dnncfg: {}".format(dnncfg))
 
-  log_dir_path = apputil.get_abs_path(appcfg, cmdcfg, 'AI_LOGS')
+  # log_dir_path = apputil.get_abs_path(appcfg, cmdcfg, 'AI_LOGS')
+  log_dir_path = cmdcfg['log_dir_path']
   with tf.device(device):
     model = modellib.MaskRCNN(mode=mode, config=dnncfg, model_dir=log_dir_path)
 
