@@ -103,7 +103,11 @@ def get_modelcfg(cfg, api_model_key=''):
     modelcfg = modelinfo.find_one(query, {'_id':0})
     if modelcfg:
       modelcfg['log_dir'] = log_dir
+
+      log_dir_path = apputil.get_abs_path(cfg, modelcfg, 'AI_LOGS')
       weights_path = apputil.get_abs_path(cfg, modelcfg, 'AI_WEIGHTS_PATH')
+
+      modelcfg['log_dir_path'] = log_dir_path
       modelcfg['weights_path'] = weights_path
   else:
     modelcfg = list(modelinfo.find(query, {'_id':0}))
