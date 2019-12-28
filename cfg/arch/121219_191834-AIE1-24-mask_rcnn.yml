@@ -85,7 +85,7 @@ evaluate:
   model_info: EVALUATE_MODEL_INFO
   dnnarch: mask_rcnn
   config:
-    DETECTION_MIN_CONFIDENCE: 0.8
+    DETECTION_MIN_CONFIDENCE: 0.98
     # DETECTION_MIN_CONFIDENCE: 0.5
     GPU_COUNT: 1
     IMAGES_PER_GPU: 1
