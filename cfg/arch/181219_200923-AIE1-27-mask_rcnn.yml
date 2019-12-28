@@ -27,29 +27,22 @@ train:
   mode: training
   device: /gpu:0
   weights: null
-  model_info: matterport-coco_things-1-mask_rcnn.yml
+  model_info: vidteq-hmd-121219_194203-mask_rcnn.yml
   dnnarch: mask_rcnn
   config:
     DETECTION_MIN_CONFIDENCE: 0.9
     GPU_COUNT: 1
     IMAGES_PER_GPU: 1
-    IMAGE_MAX_DIM: 1280
-    IMAGE_MIN_DIM: 720
+    IMAGE_MAX_DIM: 1024
+    IMAGE_MIN_DIM: 800
     STEPS_PER_EPOCH: 1000
   load_weights:
     by_name: true
-    exclude:
-    - mrcnn_class_logits
-    - mrcnn_bbox_fc
-    - mrcnn_bbox
-    - mrcnn_mask
+    exclude: null
   schedules:
-  - epochs: 40
-    layers: heads
-    learning_rate: 0.001
-  - epochs: 120
-    layers: 4+
-    learning_rate: 0.001
+  - epochs: 220
+    layers: all
+    learning_rate: 0.0001
 evaluate:
   allowed_file_type:
   - .txt
@@ -78,15 +71,14 @@ evaluate:
   mode: inference
   device: /gpu:0
   weights: null
-  # model_info: EVALUATE_MODEL_INFO
-  model_info: vidteq-hmd-031219_071805-mask_rcnn.yml
+  model_info: EVALUATE_MODEL_INFO
   dnnarch: mask_rcnn
   config:
-    DETECTION_MIN_CONFIDENCE: 0.95
+    DETECTION_MIN_CONFIDENCE: 0.9
     GPU_COUNT: 1
     IMAGES_PER_GPU: 1
-    IMAGE_MAX_DIM: 1280
-    IMAGE_MIN_DIM: 720
+    IMAGE_MAX_DIM: 1024
+    IMAGE_MIN_DIM: 800
   load_weights:
     by_name: true
     exclude:
