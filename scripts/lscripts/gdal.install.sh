@@ -22,51 +22,55 @@ function gdal_install() {
 
   swig -version
 
-  if [ -z "$BASEPATH" ]; then
-    BASEPATH="$HOME/softwares"
-    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+  if [ -z "${BASEPATH}" ]; then
+    BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
 
-  if [ -z "$GDAL_VER" ]; then
+  if [ -z "${GDAL_VER}" ]; then
     GDAL_VER="2.2.4"
-    echo "Unable to get GDAL_VER version, falling back to default version#: $GDAL_VER"
+    echo "Unable to get GDAL_VER version, falling back to default version#: ${GDAL_VER}"
   fi
 
   PROG='gdal'
-  DIR="$PROG-$GDAL_VER"
-  PROG_DIR="$BASEPATH/$PROG-$GDAL_VER"
-  FILE="$DIR.tar.gz"
-  URL="http://download.osgeo.org/gdal/$GDAL_VER/$FILE"
+  DIR="${PROG}-${GDAL_VER}"
+  PROG_DIR="${BASEPATH}/${PROG}-${GDAL_VER}"
+  FILE="${DIR}.tar.gz"
 
-  echo "$FILE"
-  echo "URL: $URL"
-  echo "Number of threads will be used: $NUMTHREADS"
-  echo "BASEPATH: $BASEPATH"
-  echo "PROG_DIR: $PROG_DIR"
+  URL="http://download.osgeo.org/gdal/${GDAL_VER}/${FILE}"
 
-  if [ ! -f $HOME/Downloads/$FILE ]; then
-    wget -c $URL -P $HOME/Downloads
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
+
+  if [ ! -f ${HOME}/Downloads/${FILE} ]; then
+    wget -c ${URL} -P ${HOME}/Downloads
   else
-    echo Not downloading as: $HOME/Downloads/$FILE already exists!
+    echo Not downloading as: ${HOME}/Downloads/${FILE} already exists!
   fi
 
-  if [ ! -d $BASEPATH/$DIR ]; then
-    tar xvfz $HOME/Downloads/$FILE -C $BASEPATH
-    echo "Extracting File: $HOME/Downloads/$FILE here: $BASEPATH/$DIR"
-    echo "Extracting...DONE!"
+  if [ ! -d ${PROG_DIR} ]; then
+    tar xvfz ${HOME}/Downloads/${FILE} -C ${BASEPATH}
   else
-    echo "Extracted Dir already exists: $BASEPATH/$DIR"
+    echo "Extracted Dir already exists: ${PROG_DIR}"
   fi
 
-  cd $BASEPATH/$DIR
+  cd ${PROG_DIR}
   echo $(pwd)
 
   # ./configure --help
 
   # https://lists.osgeo.org/pipermail/gdal-dev/2011-March/028237.html
-  make clean -j$NUMTHREADS
+  make clean -j${NUMTHREADS}
+
+  ## https://gis.stackexchange.com/questions/317109/build-gdal-with-proj-version-6
+  ## Up until gdal v2.4.1, you would do that by providing the --with-static-proj4= configure argument. However, it has been deprecated in gdal v3.0.0. As a result, you should now use the simpler --with-proj=.
 
   ./configure --with-pg=/usr/bin/pg_config \
+    --with-proj=/usr/local \
+    --with-geotiff=/usr/local \
+    --with-local \
     --with-python \
     --with-sfcgal \
     --with-qhull \
@@ -96,14 +100,41 @@ function gdal_install() {
    #  --with-geotiff=internal \
    #  --with-jvm_lib_add_rpath
     
-  make -j$NUMTHREADS
-  sudo make install -j$NUMTHREADS
+  make -j${NUMTHREADS}
+  sudo make install -j${NUMTHREADS}
 
   cd ${LSCRIPTS}
 
   ##----------------------------------------------------------
   ## Build Logs and Errors
   ##----------------------------------------------------------
+# ude/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -DHAVE_XERCES -I/usr/include -I/usr/include/xercesc -I/codehub/external/gdal-3.0.2/port -I/usr/include/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -c -o ../o/ceossar.lo ceossar.c
+# geotiff.cpp: In function ‘void GTiffDatasetLibGeotiffErrorCallback(GTIF*, int, const char*, ...)’:
+# geotiff.cpp:10925:26: error: ‘LIBGEOTIFF_WARNING’ was not declared in this scope
+#      CPLErrorV( (level == LIBGEOTIFF_WARNING ) ? CE_Warning : CE_Failure,
+#                           ^~~~~~~~~~~~~~~~~~
+# /bin/bash /codehub/external/gdal-3.0.2/libtool --mode=compile --silent --tag=CXX g++ -I/codehub/external/gdal-3.0.2/port -I/codehub/external/gdal-3.0.2/gcore -I/codehub/external/gdal-3.0.2/alg -I/codehub/external/gdal-3.0.2/ogr -I/codehub/external/gdal-3.0.2/ogr/ogrsf_frmts -I/codehub/external/gdal-3.0.2/gnm -I/codehub/external/gdal-3.0.2/apps -DHAVE_AVX_AT_COMPILE_TIME -DHAVE_SSSE3_AT_COMPILE_TIME -DHAVE_SSE_AT_COMPILE_TIME -g -O2  -Wall -Wextra -Winit-self -Wunused-parameter -Wformat -Werror=format-security -Wno-format-nonliteral -Wlogical-op -Wshadow -Werror=vla -Wdate-time -Wnull-dereference -Wduplicated-cond -Wfloat-conversion -Wmissing-declarations -Wnon-virtual-dtor -Woverloaded-virtual -fno-operator-names -Wzero-as-null-pointer-constant -Wsuggest-override -Wimplicit-fallthrough  -DGNM_ENABLED -I/codehub/external/gdal-3.0.2/port -I/usr/include/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -DHAVE_XERCES -I/usr/include -I/usr/include/xercesc -I/codehub/external/gdal-3.0.2/port -I/usr/include/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -c -o ../o/bsbdataset.lo bsbdataset.cpp
+# geotiff.cpp:10925:26: note: suggested alternative: ‘LIBGEOTIFF_VERSION’
+#      CPLErrorV( (level == LIBGEOTIFF_WARNING ) ? CE_Warning : CE_Failure,
+#                           ^~~~~~~~~~~~~~~~~~
+#                           LIBGEOTIFF_VERSION
+# geotiff.cpp: In function ‘GTIF* GTiffDatasetGTIFNew(TIFF*)’:
+# geotiff.cpp:10936:18: error: ‘GTIFNewEx’ was not declared in this scope
+#      GTIF* gtif = GTIFNewEx(hTIFF, GTiffDatasetLibGeotiffErrorCallback, nullptr);
+#                   ^~~~~~~~~
+# geotiff.cpp:10936:18: note: suggested alternative: ‘GTIFNew’
+#      GTIF* gtif = GTIFNewEx(hTIFF, GTiffDatasetLibGeotiffErrorCallback, nullptr);
+#                   ^~~~~~~~~
+#                   GTIFNew
+# geotiff.cpp:10939:9: error: ‘GTIFAttachPROJContext’ was not declared in this scope
+#          GTIFAttachPROJContext(gtif, OSRGetProjTLSContext());
+#          ^~~~~~~~~~~~~~~~~~~~~
+# ../../GDALmake.opt:637: recipe for target '../o/geotiff.lo' failed
+# make[2]: *** [../o/geotiff.lo] Error 1
+# make[2]: Leaving directory '/codehub/external/gdal-3.0.2/frmts/gtiff'
+# GNUmakefile:15: recipe for target 'gtiff-install-obj' failed
+# make[1]: *** [gtiff-install-obj] Error 2
+# make[1]: *** Waiting for unfinished jobs....
 
   # CXX/LD -o .build_release/examples/siamese/convert_mnist_siamese_data.bin
   # /usr/local/lib//.usr.//local./.lib//lib./.libgdal.so.20/:. .undefined/ libreference/ libgdal.so.20to:  `undefinedTIFFReadDirectory @referenceLIBTIFF_4.0 'to

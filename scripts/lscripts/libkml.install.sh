@@ -17,7 +17,7 @@
 ##----------------------------------------------------------
 ## Issues and Fixes
 ##----------------------------------------------------------
-## LIBKML_VER 1.3.0 has build Issues
+## LIBKML_REL 1.3.0 has build Issues
 ## https://github.com/libkml/libkml/issues/253
 #
 ## minizip libminizip-dev installation fixed the minizip error while building with git clone.
@@ -54,15 +54,15 @@ function libkml_install() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
 
-  if [ -z "$BASEPATH" ]; then
-    BASEPATH="$HOME/softwares"
-    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+  if [ -z "${BASEPATH}" ]; then
+    BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
 
-  if [ -z "$LIBKML_VER" ]; then
-    # LIBKML_VER="1.2.0"
-    LIBKML_VER="1.3.0"
-    echo "Unable to get LIBKML_VER version, falling back to default version#: $LIBKML_VER"
+  if [ -z "${LIBKML_REL}" ]; then
+    # LIBKML_REL="1.2.0"
+    LIBKML_REL="1.3.0"
+    echo "Unable to get LIBKML_REL version, falling back to default version#: ${LIBKML_REL}"
   fi
 
   sudo -E apt -q -y install swig
@@ -71,24 +71,28 @@ function libkml_install() {
   sudo -E apt -q -y install minizip libminizip-dev
 
   PROG='libkml'
-  PROG_DIR="$BASEPATH/$PROG"
+  PROG_DIR="${BASEPATH}/${PROG}"
 
-  URL="https://github.com/libkml/$PROG.git"
+  URL="https://github.com/libkml/${PROG}.git"
   # URL="https://github.com/libkml/libkml/tree/synced_upstream"
 
-  echo "Number of threads will be used: $NUMTHREADS"
-  echo "BASEPATH: $BASEPATH"
-  echo "URL: $URL"
-  echo "PROG_DIR: $PROG_DIR"
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-  if [ ! -d $PROG_DIR ]; then
-    git -C $PROG_DIR || git clone $URL $PROG_DIR
+  if [ ! -d ${PROG_DIR} ]; then
+    git -C ${PROG_DIR} || git clone ${URL} ${PROG_DIR}
   else
-    echo Git clone for $URL exists at: $PROG_DIR
+    echo Git clone for ${URL} exists at: ${PROG_DIR}
   fi
 
-  mkdir $PROG_DIR/build
-  cd $PROG_DIR/build
+  cd ${PROG_DIR}
+  git pull
+  git checkout ${LIBKML_REL}
+
+  mkdir ${PROG_DIR}/build
+  cd ${PROG_DIR}/build
   cmake -D WITH_JAVA=ON \
         -D WITH_PYTHON=ON \
         -D WITH_SWIG=OFF ..
@@ -99,8 +103,8 @@ function libkml_install() {
   # WITH_SWIG                        OFF 
 
   #make distclean
-  make -j$NUMTHREADS
-  sudo make install -j$NUMTHREADS  ## install into build dir
+  make -j${NUMTHREADS}
+  sudo make install -j${NUMTHREADS}  ## install into build dir
 
   cd ${LSCRIPTS}
 
@@ -108,29 +112,29 @@ function libkml_install() {
   ## TBD: option to clone or install from zip/tar file
   ##----------------------------------------------------------
 
-  # DIR="$PROG-$LIBKML_VER"
-  # PROG_DIR="$BASEPATH/$PROG-$LIBKML_VER"
-  # FILE="$PROG-$LIBKML_VER.tar.gz"
+  # DIR="$PROG-${LIBKML_REL}"
+  # PROG_DIR="${BASEPATH}/$PROG-${LIBKML_REL}"
+  # FILE="$PROG-${LIBKML_REL}.tar.gz"
 
   # echo "$FILE"
-  # echo "PROG_DIR: $PROG_DIR"
+  # echo "PROG_DIR: ${PROG_DIR}"
 
-  # if [ ! -f $HOME/Downloads/$FILE ]; then
-  #  wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/libkml/$FILE -P $HOME/Downloads
+  # if [ ! -f ${HOME}/Downloads/$FILE ]; then
+  #  wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/libkml/$FILE -P ${HOME}/Downloads
   # else
-  #  echo Not downloading as: $HOME/Downloads/$FILE already exists!
+  #  echo Not downloading as: ${HOME}/Downloads/$FILE already exists!
   # fi
 
-  # if [ ! -d $BASEPATH/$DIR ]; then
-  #   tar xvfz $HOME/Downloads/$FILE -C $BASEPATH
+  # if [ ! -d ${BASEPATH}/$DIR ]; then
+  #   tar xvfz ${HOME}/Downloads/$FILE -C ${BASEPATH}
   # else
-  #   echo Extracted Dir already exists: $BASEPATH/$DIR
+  #   echo Extracted Dir already exists: ${BASEPATH}/$DIR
   # fi
 
-  # cd $PROG_DIR
+  # cd ${PROG_DIR}
   # ./configure
-  # cmake ../libkml-$LIBKML_VER
-  # make -j$NUMTHREADS
+  # cmake ../libkml-${LIBKML_REL}
+  # make -j${NUMTHREADS}
   # sudo make install  ## install into build dir
   # cd $LINUX_SCRIPT_HOME
   ##----------------------------------------------------------

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 __TIMESTAMP__=$(date +%Y%m%d_%H%M)
+timestamp=${__TIMESTAMP__}
 
 LINUX_SCRIPT_BASE="lscripts"
 LINUX_SCRIPT_HOME=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
@@ -32,6 +33,8 @@ VM_HOME=${CHUB_HOME}/${VM_BASE}
 PY_VENV_PATH=${VM_HOME}/virtualenvs
 PY_VENV_NAME=py_${pyVer}_${__TIMESTAMP__}
 
+PY_VIRTUALENVWRAPPER=/usr/local/bin/virtualenvwrapper.sh
+
 WSGIPYTHONPATH=""
 WSGIPYTHONHOME=""
 
@@ -48,7 +51,9 @@ fi
 echo "BUILD_FOR_CUDA_VER: ${BUILD_FOR_CUDA_VER}"
 
 CUDACFG_FILEPATH=${LINUX_SCRIPT_HOME}/cudacfg-${BUILD_FOR_CUDA_VER}.sh
+echo "CUDACFG_FILEPATH: ${CUDACFG_FILEPATH}"
 AI_PYCUDA_FILE=python.requirements-ai-cuda-${BUILD_FOR_CUDA_VER}.txt
+echo "AI_PYCUDA_FILE: ${AI_PYCUDA_FILE}"
 
 if [ -f ${CUDACFG_FILEPATH} ]; then
   source ${CUDACFG_FILEPATH}

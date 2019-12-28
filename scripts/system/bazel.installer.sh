@@ -14,9 +14,9 @@
 
 
 function bazel_install() {
-  local SCRIPTS_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  local SCRIPTS_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   echo ${SCRIPTS_DIR}
-  source ${SCRIPTS_DIR}/config.custom.sh
+  source ${SCRIPTS_DIR}/lscripts.config.sh
 
   # # echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
   # # curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -

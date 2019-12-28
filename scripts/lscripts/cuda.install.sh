@@ -87,8 +87,8 @@ function cuda_install() {
 
   if [ -f $HOME/Downloads/${CUDA_PCKG} ]; then
     ## Remove Any existing CUDA and CUDNN installation
-    #sudo apt -s purge 'cuda*'
-    #sudo apt -s purge 'cudnn*'
+    sudo apt -s purge 'cuda*'
+    sudo apt -s purge 'cudnn*'
 
     # sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
     # sudo dpkg -i cuda-repo-ubuntu1404_8.0.44-1_amd64.deb

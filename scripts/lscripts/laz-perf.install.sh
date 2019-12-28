@@ -17,46 +17,46 @@ function laz_perf_install() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
 
-  if [ -z "$BASEPATH" ]; then
+  if [ -z "${BASEPATH}" ]; then
     BASEPATH="$HOME/softwares"
-    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
-  if [ -z "$LAZ_PERF_REL_TAG" ]; then
-    LAZ_PERF_REL_TAG="1.3.0"
-    echo "Unable to get LAZ_PERF_REL_TAG version, falling back to default version#: $LAZ_PERF_REL_TAG"
+  if [ -z "${LAZ_PERF_REL}" ]; then
+    LAZ_PERF_REL="1.3.0"
+    echo "Unable to get LAZ_PERF_REL version, falling back to default version#: ${LAZ_PERF_REL}"
   fi
 
   DIR="laz-perf"
-  PROG_DIR="$BASEPATH/$DIR"
+  PROG_DIR="${BASEPATH}/${DIR}"
 
-  URL="https://github.com/hobu/$DIR.git"
+  URL="https://github.com/hobu/${DIR}.git"
 
-  echo "Number of threads will be used: $NUMTHREADS"
-  echo "BASEPATH: $BASEPATH"
-  echo "URL: $URL"
-  echo "PROG_DIR: $PROG_DIR"
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-  if [ ! -d $PROG_DIR ]; then
-    git -C $PROG_DIR || git clone $URL $PROG_DIR
-    cd $PROG_DIR
-    git checkout $LAZ_PERF_REL_TAG
+  if [ ! -d ${PROG_DIR} ]; then
+    git -C ${PROG_DIR} || git clone ${URL} ${PROG_DIR}
+    cd ${PROG_DIR}
+    git checkout ${LAZ_PERF_REL}
   else
-    echo Gid clone for $URL exists at: $PROG_DIR
+    echo Gid clone for ${URL} exists at: ${PROG_DIR}
   fi
 
-  if [ -d $PROG_DIR/build ]; then
-    rm -rf $PROG_DIR/build
+  if [ -d ${PROG_DIR}/build ]; then
+    rm -rf ${PROG_DIR}/build
   fi
 
-  mkdir $PROG_DIR/build
-  cd $PROG_DIR/build
+  mkdir ${PROG_DIR}/build
+  cd ${PROG_DIR}/build
   cmake ..
 
   # ### not required
   # ## ccmake ..
 
-  make -j$NUMTHREADS
-  sudo make install -j$NUMTHREADS
+  make -j${NUMTHREADS}
+  sudo make install -j${NUMTHREADS}
 
   cd ${LSCRIPTS}
 }

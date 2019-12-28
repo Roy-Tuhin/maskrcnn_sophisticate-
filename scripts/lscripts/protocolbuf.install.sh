@@ -65,37 +65,41 @@ function protocolbuf_install() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
 
-  if [ -z "$BASEPATH" ]; then
-    BASEPATH="$HOME/softwares"
-    echo "Unable to get BASEPATH, using default path#: $BASEPATH"
+  if [ -z "${BASEPATH}" ]; then
+    BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
 
   DIR="protobuf"
-  PROG_DIR="$BASEPATH/$DIR"
+  PROG_DIR="${BASEPATH}/$DIR"
 
-  URL="https://github.com/google/$DIR.git"
+  URL="https://github.com/google/${DIR}.git"
 
-  echo "Number of threads will be used: $NUMTHREADS"
-  echo "BASEPATH: $BASEPATH"
-  echo "URL: $URL"
-  echo "PROG_DIR: $PROG_DIR"
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-  if [ ! -d $PROG_DIR ]; then
-    git -C $PROG_DIR || git clone $URL $PROG_DIR
+  if [ ! -d ${PROG_DIR} ]; then
+    git -C ${PROG_DIR} || git clone ${URL} ${PROG_DIR}
   else
-    echo Git clone for $URL exists at: $PROG_DIR
+    echo Git clone for ${URL} exists at: ${PROG_DIR}
   fi
 
-  cd $PROG_DIR
+  ## TOD: check if clone is not completed successfully, then dir would alread exists, but then build will fail
+  cd ${PROG_DIR}
+  git pull
+  git checkout ${PROTOBUF_REL}
+
   git submodule update --init --recursive
   echo "Executing: ./autogen.sh"
   ./autogen.sh
   echo "Executing: ./configure"
   ./configure
 
-  make -j$NUMTHREADS
-  make check -j$NUMTHREADS
-  sudo make install -j$NUMTHREADS
+  make -j${NUMTHREADS}
+  make check -j${NUMTHREADS}
+  sudo make install -j${NUMTHREADS}
   sudo ldconfig # refresh shared library cache
 
   cd ${LSCRIPTS}

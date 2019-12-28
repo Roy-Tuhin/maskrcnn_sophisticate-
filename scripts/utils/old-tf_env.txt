@@ -1,0 +1,1614 @@
+
+== check python ===================================================
+python version: 3.6.9
+python branch: 
+python build version: ('default', 'Nov  7 2019 10:44:02')
+python compiler version: GCC 8.3.0
+python implementation: CPython
+
+
+== check os platform ===============================================
+os: Linux
+os kernel version: #40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019
+os release version: 5.0.0-37-generic
+os platform: Linux-5.0.0-37-generic-x86_64-with-Ubuntu-18.04-bionic
+linux distribution: ('Ubuntu', '18.04', 'bionic')
+linux os distribution: ('Ubuntu', '18.04', 'bionic')
+mac version: ('', ('', '', ''), '')
+uname: uname_result(system='Linux', node='baaz-pc', release='5.0.0-37-generic', version='#40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019', machine='x86_64', processor='x86_64')
+architecture: ('64bit', 'ELF')
+machine: x86_64
+
+
+== are we in docker =============================================
+No
+
+== compiler =====================================================
+c++ (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0
+Copyright (C) 2017 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+== check pips ===================================================
+googleapis-common-protos          1.6.0      
+numpy                             1.17.4     
+protobuf                          3.11.1     
+tensorflow-estimator              1.13.0     
+tensorflow-gpu                    1.13.1     
+tensorflow-model-optimization     0.2.1      
+
+== check for virtualenv =========================================
+True
+
+== tensorflow import ============================================
+tf.version.VERSION = 1.13.1
+tf.version.GIT_VERSION = b'v1.13.1-0-g6612da8951'
+tf.version.COMPILER_VERSION = 4.8.5
+Sanity check: array([1], dtype=int32)
+     26181:	find library=libc.so.6 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/libc.so.6
+     26181:	
+     26181:	find library=libpthread.so.0 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/libpthread.so.0
+     26181:	
+     26181:	find library=libdl.so.2 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/libdl.so.2
+     26181:	
+     26181:	find library=libutil.so.1 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/libutil.so.1
+     26181:	
+     26181:	find library=libexpat.so.1 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/libexpat.so.1
+     26181:	
+     26181:	find library=libz.so.1 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/libz.so.1
+     26181:	
+     26181:	find library=libm.so.6 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/libm.so.6
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/libpthread.so.0
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/libc.so.6
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/libm.so.6
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/libz.so.1
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/libexpat.so.1
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/libutil.so.1
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/libdl.so.2
+     26181:	
+     26181:	
+     26181:	initialize program: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/bin/python
+     26181:	
+     26181:	
+     26181:	transferring control: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/bin/python
+     26181:	
+     26181:	find library=libffi.so.6 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/libffi.so.6
+     26181:	
+     26181:	
+     26181:	calling init: /usr/lib/x86_64-linux-gnu/libffi.so.6
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_ctypes.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	find library=libopenblasp-r0-34a18dc3.3.7.so [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/_multiarray_umath.cpython-36m-x86_64-linux-gnu.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/tls/haswell/x86_64/libopenblasp-r0-34a18dc3.3.7.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/tls/haswell/libopenblasp-r0-34a18dc3.3.7.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/tls/x86_64/libopenblasp-r0-34a18dc3.3.7.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/tls/libopenblasp-r0-34a18dc3.3.7.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/haswell/x86_64/libopenblasp-r0-34a18dc3.3.7.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/haswell/libopenblasp-r0-34a18dc3.3.7.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/x86_64/libopenblasp-r0-34a18dc3.3.7.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/libopenblasp-r0-34a18dc3.3.7.so
+     26181:	
+     26181:	find library=libgfortran-ed201abd.so.3.0.0 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/_multiarray_umath.cpython-36m-x86_64-linux-gnu.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/libgfortran-ed201abd.so.3.0.0
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/libgfortran-ed201abd.so.3.0.0
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/libopenblasp-r0-34a18dc3.3.7.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/_multiarray_umath.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/_multiarray_tests.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/linalg/lapack_lite.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/linalg/_umath_linalg.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	find library=libbz2.so.1.0 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/libbz2.so.1.0
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/libbz2.so.1.0
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_bz2.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	find library=liblzma.so.5 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/liblzma.so.5
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/liblzma.so.5
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_lzma.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	find library=libmpdec.so.2 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/libmpdec.so.2
+     26181:	
+     26181:	
+     26181:	calling init: /usr/lib/x86_64-linux-gnu/libmpdec.so.2
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_decimal.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/fft/_pocketfft_internal.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/mtrand.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/common.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/bounded_integers.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/mt19937.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/bit_generator.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	find library=libcrypto.so.1.1 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/libcrypto.so.1.1
+     26181:	
+     26181:	
+     26181:	calling init: /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_hashlib.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/philox.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/pcg64.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/sfc64.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/generator.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	find library=libtensorflow_framework.so [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/tls/haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/tls/haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/tls/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/tls/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U_S_Stensorflow_Spython_C_Upywrap_Utensorflow_Uinternal.so___Utensorflow/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccublas___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccusolver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudart___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/tls/haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/tls/haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/tls/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/tls/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../tls/haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../tls/haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../tls/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../tls/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../haswell/x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../haswell/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../x86_64/libtensorflow_framework.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libtensorflow_framework.so
+     26181:	
+     26181:	find library=libcublas.so.10.0 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/libcublas.so.10.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libcublas.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libcublas.so.10.0
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/local/cuda-10.0/targets/x86_64-linux/lib/libcublas.so.10.0
+     26181:	
+     26181:	find library=libcusolver.so.10.0 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/libcusolver.so.10.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libcusolver.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libcusolver.so.10.0
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/local/cuda-10.0/targets/x86_64-linux/lib/libcusolver.so.10.0
+     26181:	
+     26181:	find library=libcudart.so.10.0 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/libcudart.so.10.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libcudart.so.10.0
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libcudart.so.10.0
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/local/cuda-10.0/targets/x86_64-linux/lib/libcudart.so.10.0
+     26181:	
+     26181:	find library=libgomp.so.1 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/libgomp.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libgomp.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libgomp.so.1
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/libgomp.so.1
+     26181:	
+     26181:	find library=librt.so.1 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/librt.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/librt.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/librt.so.1
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/librt.so.1
+     26181:	
+     26181:	find library=libstdc++.so.6 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/libstdc++.so.6
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libstdc++.so.6
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libstdc++.so.6
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+     26181:	
+     26181:	find library=libgcc_s.so.1 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/libgcc_s.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libgcc_s.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libgcc_s.so.1
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/libgcc_s.so.1
+     26181:	
+     26181:	find library=libcuda.so.1 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libtensorflow_framework.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/x86_64/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/x86_64/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccuda_Udriver___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/haswell/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/x86_64/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/tls/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/haswell/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/x86_64/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../../_solib_local/_U@local_Uconfig_Ucuda_S_Scuda_Ccudnn___Uexternal_Slocal_Uconfig_Ucuda_Scuda_Scuda_Slib/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libcuda.so.1
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/libcuda.so.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libcuda.so.1
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libcuda.so.1
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/libcuda.so.1
+     26181:	
+     26181:	find library=libcudnn.so.7 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libtensorflow_framework.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libcudnn.so.7
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/libcudnn.so.7
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libcudnn.so.7
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libcudnn.so.7
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/libcudnn.so.7
+     26181:	
+     26181:	find library=libnvidia-fatbinaryloader.so.435.21 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libtensorflow_framework.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libnvidia-fatbinaryloader.so.435.21
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libnvidia-fatbinaryloader.so.435.21
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libnvidia-fatbinaryloader.so.435.21
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/libnvidia-fatbinaryloader.so.435.21
+     26181:	
+     26181:	
+     26181:	calling init: /usr/lib/x86_64-linux-gnu/libnvidia-fatbinaryloader.so.435.21
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/librt.so.1
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/libgcc_s.so.1
+     26181:	
+     26181:	
+     26181:	calling init: /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+     26181:	
+     26181:	
+     26181:	calling init: /usr/lib/x86_64-linux-gnu/libcudnn.so.7
+     26181:	
+     26181:	
+     26181:	calling init: /usr/lib/x86_64-linux-gnu/libcuda.so.1
+     26181:	
+     26181:	
+     26181:	calling init: /usr/lib/x86_64-linux-gnu/libgomp.so.1
+     26181:	
+     26181:	
+     26181:	calling init: /usr/local/cuda-10.0/targets/x86_64-linux/lib/libcudart.so.10.0
+     26181:	
+     26181:	
+     26181:	calling init: /usr/local/cuda-10.0/targets/x86_64-linux/lib/libcusolver.so.10.0
+     26181:	
+     26181:	
+     26181:	calling init: /usr/local/cuda-10.0/targets/x86_64-linux/lib/libcublas.so.10.0
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libtensorflow_framework.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so
+     26181:	
+     26181:	find library=libhdfs.so [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libtensorflow_framework.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libhdfs.so
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/..:../local_config_cuda/cuda/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/lib64/tls/haswell:../local_config_cuda/cuda/lib64/tls/x86_64:../local_config_cuda/cuda/lib64/tls:../local_config_cuda/cuda/lib64/haswell/x86_64:../local_config_cuda/cuda/lib64/haswell:../local_config_cuda/cuda/lib64/x86_64:../local_config_cuda/cuda/lib64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/tls:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64/haswell:../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64:../local_config_cuda/cuda/extras/CUPTI/lib64		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/libhdfs.so
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/haswell/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/tls/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/haswell/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/lib64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/haswell/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/tls/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/haswell/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/x86_64/libhdfs.so
+     26181:	  trying file=../local_config_cuda/cuda/extras/CUPTI/lib64/libhdfs.so
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	 search path=/lib/x86_64-linux-gnu/tls/haswell/x86_64:/lib/x86_64-linux-gnu/tls/haswell:/lib/x86_64-linux-gnu/tls/x86_64:/lib/x86_64-linux-gnu/tls:/lib/x86_64-linux-gnu/haswell/x86_64:/lib/x86_64-linux-gnu/haswell:/lib/x86_64-linux-gnu/x86_64:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu/tls/haswell/x86_64:/usr/lib/x86_64-linux-gnu/tls/haswell:/usr/lib/x86_64-linux-gnu/tls/x86_64:/usr/lib/x86_64-linux-gnu/tls:/usr/lib/x86_64-linux-gnu/haswell/x86_64:/usr/lib/x86_64-linux-gnu/haswell:/usr/lib/x86_64-linux-gnu/x86_64:/usr/lib/x86_64-linux-gnu:/lib/tls/haswell/x86_64:/lib/tls/haswell:/lib/tls/x86_64:/lib/tls:/lib/haswell/x86_64:/lib/haswell:/lib/x86_64:/lib:/usr/lib/tls/haswell/x86_64:/usr/lib/tls/haswell:/usr/lib/tls/x86_64:/usr/lib/tls:/usr/lib/haswell/x86_64:/usr/lib/haswell:/usr/lib/x86_64:/usr/lib		(system search path)
+     26181:	  trying file=/lib/x86_64-linux-gnu/tls/haswell/x86_64/libhdfs.so
+     26181:	  trying file=/lib/x86_64-linux-gnu/tls/haswell/libhdfs.so
+     26181:	  trying file=/lib/x86_64-linux-gnu/tls/x86_64/libhdfs.so
+     26181:	  trying file=/lib/x86_64-linux-gnu/tls/libhdfs.so
+     26181:	  trying file=/lib/x86_64-linux-gnu/haswell/x86_64/libhdfs.so
+     26181:	  trying file=/lib/x86_64-linux-gnu/haswell/libhdfs.so
+     26181:	  trying file=/lib/x86_64-linux-gnu/x86_64/libhdfs.so
+     26181:	  trying file=/lib/x86_64-linux-gnu/libhdfs.so
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/tls/haswell/x86_64/libhdfs.so
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/tls/haswell/libhdfs.so
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/tls/x86_64/libhdfs.so
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/tls/libhdfs.so
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/haswell/x86_64/libhdfs.so
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/haswell/libhdfs.so
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/x86_64/libhdfs.so
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/libhdfs.so
+     26181:	  trying file=/lib/tls/haswell/x86_64/libhdfs.so
+     26181:	  trying file=/lib/tls/haswell/libhdfs.so
+     26181:	  trying file=/lib/tls/x86_64/libhdfs.so
+     26181:	  trying file=/lib/tls/libhdfs.so
+     26181:	  trying file=/lib/haswell/x86_64/libhdfs.so
+     26181:	  trying file=/lib/haswell/libhdfs.so
+     26181:	  trying file=/lib/x86_64/libhdfs.so
+     26181:	  trying file=/lib/libhdfs.so
+     26181:	  trying file=/usr/lib/tls/haswell/x86_64/libhdfs.so
+     26181:	  trying file=/usr/lib/tls/haswell/libhdfs.so
+     26181:	  trying file=/usr/lib/tls/x86_64/libhdfs.so
+     26181:	  trying file=/usr/lib/tls/libhdfs.so
+     26181:	  trying file=/usr/lib/haswell/x86_64/libhdfs.so
+     26181:	  trying file=/usr/lib/haswell/libhdfs.so
+     26181:	  trying file=/usr/lib/x86_64/libhdfs.so
+     26181:	  trying file=/usr/lib/libhdfs.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_opcode.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/google/protobuf/internal/_api_implementation.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/google/protobuf/pyext/_message.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_csv.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/termios.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/framework/fast_tensor_util.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_json.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	find library=libuuid.so.1 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/lib/x86_64-linux-gnu/libuuid.so.1
+     26181:	
+     26181:	
+     26181:	calling init: /lib/x86_64-linux-gnu/libuuid.so.1
+     26181:	
+     26181:	find library=libssl.so.1.1 [0]; searching
+     26181:	 search cache=/etc/ld.so.cache
+     26181:	  trying file=/usr/lib/x86_64-linux-gnu/libssl.so.1.1
+     26181:	
+     26181:	
+     26181:	calling init: /usr/lib/x86_64-linux-gnu/libssl.so.1.1
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_ssl.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	find library=libhdf5-beac1db3.so.103.0.0 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/_errors.cpython-36m-x86_64-linux-gnu.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/tls/haswell/x86_64/libhdf5-beac1db3.so.103.0.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/tls/haswell/libhdf5-beac1db3.so.103.0.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/tls/x86_64/libhdf5-beac1db3.so.103.0.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/tls/libhdf5-beac1db3.so.103.0.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/haswell/x86_64/libhdf5-beac1db3.so.103.0.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/haswell/libhdf5-beac1db3.so.103.0.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/x86_64/libhdf5-beac1db3.so.103.0.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/libhdf5-beac1db3.so.103.0.0
+     26181:	
+     26181:	find library=libhdf5_hl-db841637.so.100.1.1 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/_errors.cpython-36m-x86_64-linux-gnu.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/libhdf5_hl-db841637.so.100.1.1
+     26181:	
+     26181:	find library=libsz-1c7dd0cf.so.2.0.1 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/.		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/libhdf5-beac1db3.so.103.0.0)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./tls/haswell/x86_64/libsz-1c7dd0cf.so.2.0.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./tls/haswell/libsz-1c7dd0cf.so.2.0.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./tls/x86_64/libsz-1c7dd0cf.so.2.0.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./tls/libsz-1c7dd0cf.so.2.0.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./haswell/x86_64/libsz-1c7dd0cf.so.2.0.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./haswell/libsz-1c7dd0cf.so.2.0.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./x86_64/libsz-1c7dd0cf.so.2.0.1
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./libsz-1c7dd0cf.so.2.0.1
+     26181:	
+     26181:	find library=libaec-2147abcd.so.0.0.4 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/.		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/libhdf5-beac1db3.so.103.0.0)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./libaec-2147abcd.so.0.0.4
+     26181:	
+     26181:	find library=libz-a147dcb0.so.1.2.3 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/.		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/libhdf5-beac1db3.so.103.0.0)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./libz-a147dcb0.so.1.2.3
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./libz-a147dcb0.so.1.2.3
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./libaec-2147abcd.so.0.0.4
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./libsz-1c7dd0cf.so.2.0.1
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/libhdf5-beac1db3.so.103.0.0
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/libhdf5_hl-db841637.so.100.1.1
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/_errors.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/defs.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/_objects.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/_conv.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5r.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5t.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/utils.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26190:	find library=libc.so.6 [0]; searching
+     26190:	 search cache=/etc/ld.so.cache
+     26190:	  trying file=/lib/x86_64-linux-gnu/libc.so.6
+     26190:	
+     26190:	
+     26190:	calling init: /lib/x86_64-linux-gnu/libc.so.6
+     26190:	
+     26190:	
+     26190:	initialize program: /bin/sh
+     26190:	
+     26190:	
+     26190:	transferring control: /bin/sh
+     26190:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5z.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5a.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5s.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5p.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5ac.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/_proxy.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5d.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5ds.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5f.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5g.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5i.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5fd.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5pl.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5o.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5l.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/_lib/_ccallback_c.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/_lib/_uarray/_uarray.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/fft/_pocketfft/pypocketfft.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/_sparsetools.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/_csparsetools.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_shortest_path.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_tools.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_traversal.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_min_spanning_tree.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_flow.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_matching.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_reordering.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	find library=libjpeg-3b10b538.so.9.3.0 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/_imaging.cpython-36m-x86_64-linux-gnu.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/tls/haswell/x86_64/libjpeg-3b10b538.so.9.3.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/tls/haswell/libjpeg-3b10b538.so.9.3.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/tls/x86_64/libjpeg-3b10b538.so.9.3.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/tls/libjpeg-3b10b538.so.9.3.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/haswell/x86_64/libjpeg-3b10b538.so.9.3.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/haswell/libjpeg-3b10b538.so.9.3.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/x86_64/libjpeg-3b10b538.so.9.3.0
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/libjpeg-3b10b538.so.9.3.0
+     26181:	
+     26181:	find library=libopenjp2-b3d7668a.so.2.3.1 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/_imaging.cpython-36m-x86_64-linux-gnu.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/libopenjp2-b3d7668a.so.2.3.1
+     26181:	
+     26181:	find library=libtiff-8267adfe.so.5.4.0 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/_imaging.cpython-36m-x86_64-linux-gnu.so)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/libtiff-8267adfe.so.5.4.0
+     26181:	
+     26181:	find library=liblzma-6cd627ed.so.5.2.4 [0]; searching
+     26181:	 search path=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./tls/haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./tls/haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./tls/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./tls:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./haswell/x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./haswell:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./x86_64:/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/.		(RPATH from file /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/libtiff-8267adfe.so.5.4.0)
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./tls/haswell/x86_64/liblzma-6cd627ed.so.5.2.4
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./tls/haswell/liblzma-6cd627ed.so.5.2.4
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./tls/x86_64/liblzma-6cd627ed.so.5.2.4
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./tls/liblzma-6cd627ed.so.5.2.4
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./haswell/x86_64/liblzma-6cd627ed.so.5.2.4
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./haswell/liblzma-6cd627ed.so.5.2.4
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./x86_64/liblzma-6cd627ed.so.5.2.4
+     26181:	  trying file=/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./liblzma-6cd627ed.so.5.2.4
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./liblzma-6cd627ed.so.5.2.4
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/libjpeg-3b10b538.so.9.3.0
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/libtiff-8267adfe.so.5.4.0
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/libopenjp2-b3d7668a.so.2.3.1
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/_imaging.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/ndimage/_nd_image.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/ndimage/_ni_label.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/_fblas.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/_flapack.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/_flinalg.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/_solve_toeplitz.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/_decomp_update.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/cython_blas.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/cython_lapack.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/conversion.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/c_timestamp.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/nattype.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/np_datetime.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/timezones.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/tzconversion.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/timedeltas.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/offsets.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/ccalendar.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/strptime.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/fields.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/parsing.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/period.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/frequencies.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/timestamps.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/resolution.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/hashtable.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/missing.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/lib.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslib.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/algos.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/interval.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/properties.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/hashing.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/ops.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/index.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/join.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/sparse.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/indexing.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/internals.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/mmap.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/reshape.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/matplotlib/ft2font.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/kiwisolver.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/matplotlib/_path.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/window.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/skiplist.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/groupby.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/reduction.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/parsers.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/json.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/writers.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/util/_move.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/io/msgpack/_packer.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/io/msgpack/_unpacker.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+     26181:	
+     26181:	calling init: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/testing.cpython-36m-x86_64-linux-gnu.so
+     26181:	
+/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:526: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:527: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:528: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:529: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:530: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:535: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/bin/python [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /lib/x86_64-linux-gnu/libutil.so.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /lib/x86_64-linux-gnu/libexpat.so.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /lib/x86_64-linux-gnu/libz.so.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_ctypes.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/lib/x86_64-linux-gnu/libffi.so.6 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/_multiarray_umath.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/_multiarray_tests.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/linalg/lapack_lite.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/linalg/_umath_linalg.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_bz2.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /lib/x86_64-linux-gnu/libbz2.so.1.0 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_lzma.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /lib/x86_64-linux-gnu/liblzma.so.5 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_decimal.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/lib/x86_64-linux-gnu/libmpdec.so.2 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/fft/_pocketfft_internal.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/mtrand.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/common.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/bounded_integers.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/mt19937.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/bit_generator.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_hashlib.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/philox.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/pcg64.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/sfc64.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/random/generator.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/_pywrap_tensorflow_internal.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/../libtensorflow_framework.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/local/cuda-10.0/targets/x86_64-linux/lib/libcublas.so.10.0 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/local/cuda-10.0/targets/x86_64-linux/lib/libcusolver.so.10.0 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/local/cuda-10.0/targets/x86_64-linux/lib/libcudart.so.10.0 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/lib/x86_64-linux-gnu/libgomp.so.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/lib/x86_64-linux-gnu/libcuda.so.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/lib/x86_64-linux-gnu/libcudnn.so.7 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/lib/x86_64-linux-gnu/libnvidia-fatbinaryloader.so.435.21 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_opcode.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/google/protobuf/internal/_api_implementation.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/google/protobuf/pyext/_message.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_csv.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/termios.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/tensorflow/python/framework/fast_tensor_util.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_json.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /lib/x86_64-linux-gnu/libuuid.so.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/_ssl.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/lib/x86_64-linux-gnu/libssl.so.1.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/_errors.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/defs.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/_objects.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/_conv.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5r.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5t.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/utils.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5z.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5a.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5s.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5p.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5ac.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/_proxy.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5d.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5ds.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5f.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5g.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5i.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5fd.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5pl.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5o.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/h5l.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/libhdf5_hl-db841637.so.100.1.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/libhdf5-beac1db3.so.103.0.0 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./libsz-1c7dd0cf.so.2.0.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./libaec-2147abcd.so.0.0.4 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /lib/x86_64-linux-gnu/libdl.so.2 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/_lib/_ccallback_c.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/_lib/_uarray/_uarray.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/fft/_pocketfft/pypocketfft.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/_sparsetools.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/_csparsetools.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_shortest_path.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_tools.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_traversal.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_min_spanning_tree.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_flow.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_matching.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/sparse/csgraph/_reordering.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/_imaging.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/libopenjp2-b3d7668a.so.2.3.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/libtiff-8267adfe.so.5.4.0 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/libjpeg-3b10b538.so.9.3.0 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/h5py/.libs/./libz-a147dcb0.so.1.2.3 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/PIL/.libs/./liblzma-6cd627ed.so.5.2.4 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /lib/x86_64-linux-gnu/librt.so.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/ndimage/_nd_image.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/ndimage/_ni_label.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/_fblas.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/_flapack.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/_flinalg.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/_solve_toeplitz.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/_decomp_update.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/cython_blas.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/scipy/linalg/cython_lapack.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/libopenblasp-r0-34a18dc3.3.7.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/numpy/core/../.libs/libgfortran-ed201abd.so.3.0.0 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/conversion.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/c_timestamp.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/nattype.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/np_datetime.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/timezones.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/tzconversion.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/timedeltas.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/offsets.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/ccalendar.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/strptime.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/fields.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/parsing.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/period.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/frequencies.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/timestamps.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslibs/resolution.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/hashtable.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/missing.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/lib.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/tslib.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/algos.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/interval.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/properties.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/hashing.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/ops.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/index.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/join.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/sparse.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/indexing.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/internals.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/lib-dynload/mmap.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/reshape.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/matplotlib/ft2font.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/kiwisolver.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/matplotlib/_path.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/window.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/skiplist.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/groupby.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/reduction.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/parsers.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/json.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/writers.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/util/_move.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/io/msgpack/_packer.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/io/msgpack/_unpacker.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /usr/lib/x86_64-linux-gnu/libstdc++.so.6 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /lib/x86_64-linux-gnu/libgcc_s.so.1 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /lib/x86_64-linux-gnu/libm.so.6 [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /codehub/virtualmachines/virtualenvs/py_3-6-9_2019-12-18/lib/python3.6/site-packages/pandas/_libs/testing.cpython-36m-x86_64-linux-gnu.so [0]
+     26181:	
+     26181:	
+     26181:	calling fini: /lib/x86_64-linux-gnu/libpthread.so.0 [0]
+     26181:	
+
+== env ==========================================================
+LD_LIBRARY_PATH is unset
+DYLD_LIBRARY_PATH is unset
+
+== nvidia-smi ===================================================
+Thu Dec 26 15:39:19 2019       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 435.21       Driver Version: 435.21       CUDA Version: 10.1     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  GeForce 940MX       Off  | 00000000:01:00.0 Off |                  N/A |
+| N/A   45C    P0    N/A /  N/A |   1022MiB /  2004MiB |      1%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|    0      3221      G   /usr/lib/xorg/Xorg                           164MiB |
+|    0      3411      G   /usr/bin/gnome-shell                         173MiB |
+|    0      3847      G   /usr/lib/firefox/firefox                       1MiB |
+|    0      6698      C   ...ualenvs/py_3-6-9_2019-12-18/bin/python3   616MiB |
+|    0     24762      G   ...quest-channel-token=3370538509814199830    53MiB |
++-----------------------------------------------------------------------------+
+
+== cuda libs  ===================================================
+/usr/local/cuda-10.0/doc/man/man7/libcudart.so.7
+/usr/local/cuda-10.0/doc/man/man7/libcudart.7
+/usr/local/cuda-10.0/targets/x86_64-linux/lib/libcudart_static.a
+/usr/local/cuda-10.0/targets/x86_64-linux/lib/libcudart.so.10.0.130
+
+== tensorflow installed from info ==================
+
+== python version  ==============================================
+(major, minor, micro, releaselevel, serial)
+(3, 6, 9, 'final', 0)
+
+== bazel version  ===============================================
+Build label: 1.1.0
+Build target: bazel-out/k8-opt/bin/src/main/java/com/google/devtools/build/lib/bazel/BazelServer_deploy.jar
+Build time: Mon Oct 21 08:44:00 2019 (1571647440)
+Build timestamp: 1571647440
+Build timestamp as int: 1571647440
