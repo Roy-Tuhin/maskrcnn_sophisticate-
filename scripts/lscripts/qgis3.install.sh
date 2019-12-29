@@ -62,6 +62,15 @@ sudo -E apt -y update
 sudo -E apt install -y qgis python-qgis qgis-plugin-grass
 
 
+# Setting up qgis-providers (1:3.10.1+28bionic) ...
+# /usr/lib/qgis/crssync: /usr/local/lib/libtiff.so.5: no version information available (required by /usr/lib/libgdal.so.20)
+# /usr/lib/qgis/crssync: /usr/local/lib/libtiff.so.5: no version information available (required by /usr/lib/x86_64-linux-gnu/libpoppler.so.73)
+# /usr/lib/qgis/crssync: /usr/local/lib/libtiff.so.5: no version information available (required by /usr/lib/x86_64-linux-gnu/libgeotiff.so.2)
+# Setting up libqgis-server3.10.1 (1:3.10.1+28bionic) ...
+
+
+
+
 # source ./lscripts.config.sh
 
 # if [ -z "$BASEPATH" ]; then

@@ -35,54 +35,57 @@
 ## sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
 ## sudo apt install libcunit1 libcunit1-dev
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
+/codehub/scripts/lscripts/libght_install.sh
 
-source $LSCRIPTS/lscripts.config.sh
+function libght_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
+  if [ -z "${BASEPATH}" ]; then
+    BASEPATH="$HOME/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
 
-sudo apt install -y libxml2-dev
-# sudo apt install -y liblas-dev # some issue with libght
-sudo apt install -y libcunit1 libcunit1-dev
+  sudo apt install -y libxml2-dev
+  # sudo apt install -y liblas-dev # some issue with libght
+  sudo apt install -y libcunit1 libcunit1-dev
 
-## Un-comment or install separately
-## If followed the given sequence, this would already be installed
+  ## Un-comment or install separately
+  ## If followed the given sequence, this would already be installed
 
-# source $LINUX_SCRIPT_HOME/laz-perf.install.sh
+  # source $LINUX_SCRIPT_HOME/laz-perf.install.sh
 
-DIR="libght"
-PROG_DIR="$BASEPATH/$DIR"
+  DIR="libght"
+  PROG_DIR="${BASEPATH}/${DIR}"
 
-URL="https://github.com/pramsey/$DIR.git"
+  URL="https://github.com/pramsey/${DIR}.git"
 
-echo "Number of threads will be used: $NUMTHREADS"
-echo "BASEPATH: $BASEPATH"
-echo "URL: $URL"
-echo "PROG_DIR: $PROG_DIR"
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: $URL"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-if [ ! -d $PROG_DIR ]; then
-  git -C $PROG_DIR || git clone $URL $PROG_DIR
-else
-  echo Git clone for $URL exists at: $PROG_DIR
-fi
+  if [ ! -d ${PROG_DIR} ]; then
+    git -C ${PROG_DIR} || git clone $URL ${PROG_DIR}
+  else
+    echo Git clone for $URL exists at: ${PROG_DIR}
+  fi
 
-if [ -d $PROG_DIR/build ]; then
-  rm -rf $PROG_DIR/build
-fi
+  if [ -d ${PROG_DIR}/build ]; then
+    rm -rf ${PROG_DIR}/build
+  fi
 
-mkdir $PROG_DIR/build
-cd $PROG_DIR/build
-cmake ..
+  mkdir ${PROG_DIR}/build
+  cd ${PROG_DIR}/build
+  cmake ..
 
-### Not required
-## ccmake ..
+  ### Not required
+  ## ccmake ..
 
-make -j$NUMTHREADS
-sudo make install -j$NUMTHREADS
+  make -j${NUMTHREADS}
+  sudo make install -j${NUMTHREADS}
 
-cd $LINUX_SCRIPT_HOME
+  cd ${LSCRIPTS}
+}
+
+libght_install
