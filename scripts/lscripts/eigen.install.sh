@@ -12,53 +12,56 @@
 #
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
+function eigen_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-source $LSCRIPTS/lscripts.config.sh
+  if [ -z "${BASEPATH}" ]; then
+    local BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
+  if [ -z "${EIGEN_REL}" ]; then
+    local EIGEN_REL="3.3.5"
+    echo "Unable to get EIGEN_REL version, falling back to default version#: ${EIGEN_REL}"
+  fi
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
-if [ -z "$EIGEN_REL_TAG" ]; then
-  EIGEN_REL_TAG="3.3.5"
-  echo "Unable to get EIGEN_REL_TAG version, falling back to default version#: $EIGEN_REL_TAG"
-fi
+  local PROG='eigen'
+  local DIR="${PROG}"
+  local PROG_DIR="${BASEPATH}/${PROG}"
 
-PROG='eigen'
-DIR="$PROG"
-PROG_DIR="$BASEPATH/$PROG"
+  # local URL="https://github.com/eigenteam/${DIR}-git-mirror.git"
+  local URL="https://gitlab.com/libeigen/${DIR}.git"
 
-URL="https://github.com/eigenteam/$DIR-git-mirror.git"
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-echo "Number of threads will be used: $NUMTHREADS"
-echo "BASEPATH: $BASEPATH"
-echo "URL: $URL"
-echo "PROG_DIR: $PROG_DIR"
+  if [ ! -d ${PROG_DIR} ]; then
+    git -C ${PROG_DIR} || git clone ${URL} ${PROG_DIR}
+  else
+    echo Git clone for ${URL} exists at: ${PROG_DIR}
+  fi
 
-if [ ! -d $PROG_DIR ]; then
-  git -C $PROG_DIR || git clone $URL $PROG_DIR
-  cd $PROG_DIR
-  git checkout $EIGEN_REL_TAG
-else
-  echo Git clone for $URL exists at: $PROG_DIR
-fi
+  cd ${PROG_DIR}
+  git pull
+  git checkout ${EIGEN_REL}
 
-if [ -d $PROG_DIR/build ]; then
-  rm -rf $PROG_DIR/build
-fi
+  if [ -d ${PROG_DIR}/build ]; then
+    rm -rf ${PROG_DIR}/build
+  fi
 
-mkdir $PROG_DIR/build
-cd $PROG_DIR/build
-cmake ..
+  mkdir ${PROG_DIR}/build
+  cd ${PROG_DIR}/build
+  cmake ..
 
-ccmake ..
-make -j$NUMTHREADS
+  ## ccmake ..
+  make -j${NUMTHREADS}
 
-## Note: not installing eigen to /usr/local as it may risk corrupting other dependend programs, infact most of them
-# sudo make install -j$NUMTHREADS
+  ## Note: not installing eigen to /usr/local as it may risk corrupting other dependend programs, infact most of them
+  # sudo make install -j${NUMTHREADS}
 
-cd $LINUX_SCRIPT_HOME
+  cd ${LSCRIPTS}
+}
 
+eigen_install

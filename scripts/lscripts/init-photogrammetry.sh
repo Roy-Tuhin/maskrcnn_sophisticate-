@@ -21,14 +21,18 @@ function init_photogrammetry() {
 
   source ${LSCRIPTS}/pdal.install.sh
 
-  source ${LSCRIPTS}/entwine.install.sh  ## some error
+  # source ${LSCRIPTS}/entwine.install.sh  ## openssl needs to be compiled, error
+
   source ${LSCRIPTS}/simple-web-server.install.sh
 
   source ${LSCRIPTS}/vtk.install.sh
 
-  source ${LSCRIPTS}/lopocs.pointcloud.install.sh
+  ## deprecating, as not updated over 2 years now, need to see the real usage and alternate solutions
+  # source ${LSCRIPTS}/lopocs.pointcloud.install.sh
 
   source ${LSCRIPTS}/pcl.install.sh
+
+  source ${LSCRIPTS}/eigen.install.sh
   source ${LSCRIPTS}/opengv.install.sh
 
   source ${LSCRIPTS}/opencv.install.sh

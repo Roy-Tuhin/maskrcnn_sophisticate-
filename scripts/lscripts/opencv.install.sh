@@ -5,12 +5,18 @@
 ## Tested on Ubuntu 16.04 LTS, Ubuntu 18.04 LTS
 ##----------------------------------------------------------
 
-source ./opencv.prerequisite.sh
 
-# Download
-source ./opencv.get.sh
+function opencv_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-# git clone https://github.com/opencv/opencv.git $HOME/softwares/opencv
+  source ${LSCRIPTS}/opencv.prerequisite.sh
 
-# Compile and Build
-# source ./opencv.compile.sh
+  ## Download
+  source ${LSCRIPTS}/opencv.get.sh
+
+  ## Compile and Build
+  # source ${LSCRIPTS}/opencv.compile.sh
+}
+
+opencv_install

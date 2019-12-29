@@ -99,7 +99,10 @@ local BOOST_VER="1.64.0"
 #local BOOST_VER="1.67.0"
 local BOOST_VER="1.72.0"
 ##----------------------------------------------------------
-local EIGEN_REL_TAG="3.3.5"
+# https://gitlab.com/libeigen/eigen
+local EIGEN_REL="3.3.5"
+## after migration
+local EIGEN_REL="3.3"
 ##----------------------------------------------------------
 local MPIR_REL_TAG="mpir-3.0.0"
 ##----------------------------------------------------------
@@ -135,6 +138,7 @@ local ENTWINE_VER="2.1.0"
 ##----------------------------------------------------------
 local SIMPLE_WEB_SERVER_VER="v3.0.2"
 ##----------------------------------------------------------
+# https://vtk.org/download/
 local VTK_VER="7.1"
 local VTK_BUILD="1"
 local VTK_RELEASE="${VTK_VER}.${VTK_BUILD}"
@@ -142,10 +146,19 @@ local VTK_RELEASE="${VTK_VER}.${VTK_BUILD}"
 local VTK_VER="8.1"
 local VTK_BUILD="0"
 local VTK_RELEASE="${VTK_VER}.${VTK_BUILD}"
+
+local VTK_VER="8.2"
+local VTK_BUILD="0"
+local VTK_RELEASE="${VTK_VER}.${VTK_BUILD}"
+
+# https://github.com/Kitware/VTK
+
 ##----------------------------------------------------------
-local OpenCV_VER_CHECKOUT="3.3.0"
-local OpenCV_VER_CHECKOUT="3.4.1"
-local OpenCV_VER_CHECKOUT="3.4.2"
+# https://github.com/opencv/opencv/releases
+local OpenCV_REL="3.3.0"
+local OpenCV_REL="3.4.1"
+local OpenCV_REL="3.4.2"
+local OpenCV_REL="4.2.0"
 ##----------------------------------------------------------
 local HAROOPAD_VER="0.13.1"
 ##----------------------------------------------------------

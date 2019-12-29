@@ -27,22 +27,22 @@ function pcl_install() {
   source ${LSCRIPTS}/lscripts.config.sh
 
   if [ -z "${BASEPATH}" ]; then
-    BASEPATH="${HOME}/softwares"
+    local BASEPATH="${HOME}/softwares"
     echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
 
   if [ -z "${PCL_REL}" ]; then
-    PCL_REL="pcl-1.9.1"
+    local PCL_REL="pcl-1.9.1"
     echo "Unable to get PCL_REL version, falling back to default version#: ${PCL_REL}"
   fi
 
   ## Uncomment if not installed using pre.install.sh
   # source ./pcl.prerequisite.install.sh
 
-  DIR="pcl"
-  PROG_DIR="${BASEPATH}/${DIR}"
+  local DIR="pcl"
+  local PROG_DIR="${BASEPATH}/${DIR}"
 
-  URL="https://github.com/PointCloudLibrary/${DIR}.git"
+  local URL="https://github.com/PointCloudLibrary/${DIR}.git"
 
   echo "Number of threads will be used: ${NUMTHREADS}"
   echo "BASEPATH: ${BASEPATH}"
@@ -72,22 +72,22 @@ function pcl_install() {
 
   cmake -D BUILD_CUDA=ON \
         -D BUILD_GPU=ON \
-        -D WITH_OPENGL=ON \
-        -D BUILD_simulation=ON \
-        -D WITH_DOCS=ON \
-        -D BUILD_apps=ON \
+        -D WITH_OPENGL=OFF \
+        -D BUILD_simulation=OFF \
+        -D WITH_DOCS=OFF \
+        -D BUILD_apps=OFF \
         -D BUILD_apps_3d_rec_framework=ON \
         -D BUILD_apps_point_cloud_editor=ON \
         -D CUDA_SDK_ROOT_DIR=/usr/local/cuda \
         -D CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda \
-        -D WITH_OPENNI=ON \
-        -D WITH_OPENNI2=ON \
+        -D WITH_OPENNI=OFF \
+        -D WITH_OPENNI2=OFF \
         -D BUILD_people=ON \
         -D BUILD_examples=OFF \
-        -D WITH_TUTORIALS=ON ..
+        -D WITH_TUTORIALS=OFF ..
 
-  # cmake ..
-  # ccmake ..
+  ## ccmake ..
+
   make -j${NUMTHREADS}
   sudo make install -j${NUMTHREADS}
 
@@ -97,6 +97,43 @@ function pcl_install() {
   # ## Build Logs
   # ##----------------------------------------------------------
 
+  # -- Installing: /usr/local/bin/pcl_sim_viewer
+  # CMake Error at simulation/tools/cmake_install.cmake:50 (file):
+  #   file RPATH_CHANGE could not write new RPATH:
+
+  #     /usr/local/lib
+
+  #   to the file:
+
+  #     /usr/local/bin/pcl_sim_viewer
+
+  #   No valid ELF RPATH or RUNPATH entry exists in the file; Error reading ELF
+  #   identification.
+  # Call Stack (most recent call first):
+  #   simulation/cmake_install.cmake:93 (include)
+  #   cmake_install.cmake:102 (include)
+
+
+  # Makefile:73: recipe for target 'install' failed
+  # make: *** [install] Error 1
+
+
+  # -- Installing: /usr/local/bin/pcl_voxel_grid
+  # CMake Error at tools/cmake_install.cmake:330 (file):
+  #   file RPATH_CHANGE could not write new RPATH:
+
+  #     /usr/local/lib
+
+  #   to the file:
+
+  #     /usr/local/bin/pcl_voxel_grid
+
+  #   No valid ELF RPATH or RUNPATH entry exists in the file; Error reading ELF
+  #   identification.
+  # Call Stack (most recent call first):
+  #   cmake_install.cmake:104 (include)
+
+    
   # ##----------------------------------------------------------
   # ## Ubuntu 18.04 LTS
   # ##----------------------------------------------------------

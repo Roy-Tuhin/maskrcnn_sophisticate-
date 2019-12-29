@@ -106,6 +106,7 @@ function cuda_install() {
 
     #sudo -E apt -q -y install cuda-toolkit-9-1
     sudo -E apt -q -y install cuda-toolkit-${CUDA_REL}
+    sudo -E apt -q -y install cuda-samples-${CUDA_REL}
 
     ##----------------------------------------------------------
     ## Meta Packages Available for CUDA 9.1

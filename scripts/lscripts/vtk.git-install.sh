@@ -13,7 +13,7 @@
 ##----------------------------------------------------------
 
 
-function vtk_install() {
+function vtk_git_install() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
 
@@ -23,46 +23,48 @@ function vtk_install() {
   fi
 
   if [ -z "$VTK_RELEASE" ]; then
-    local VTK_VER="8.2"
+    local VTK_VER="8.1"
     local VTK_BUILD="0"
-    local VTK_RELEASE="${VTK_VER}.${VTK_BUILD}"
-    echo "Unable to get VTK_RELEASE version, falling back to default version#: ${VTK_RELEASE}"
+    local VTK_RELEASE="$VTK_VER.$VTK_BUILD"
+    echo "Unable to get VTK_RELEASE version, falling back to default version#: $VTK_RELEASE"
   fi
 
   local PROG='VTK'
-  local DIR=${PROG}-${VTK_RELEASE}
-  local PROG_DIR="${BASEPATH}/${PROG}-${VTK_RELEASE}"
-  local FILE="${DIR}.tar.gz"
+  local DIR=$PROG-$VTK_RELEASE
+  local PROG_DIR="${BASEPATH}/$PROG-$VTK_RELEASE"
+  local FILE="$DIR.tar.gz"
 
-  local URL="http://www.vtk.org/files/release/${VTK_VER}/${FILE}"
+  local URL="http://www.vtk.org/files/release/$VTK_VER/$FILE"
 
+  echo "$FILE"
+  echo "URL: $URL"
   echo "Number of threads will be used: ${NUMTHREADS}"
   echo "BASEPATH: ${BASEPATH}"
-  echo "URL: ${URL}"
   echo "PROG_DIR: ${PROG_DIR}"
 
   echo "Installing dependencies..."
   sudo apt-get install libqt5x11extras5-dev
   sudo apt-get install qttools5-dev
 
-  if [ ! -f ${HOME}/Downloads/${FILE} ]; then
-    wget -c ${URL} -P ${HOME}/Downloads
+  if [ ! -f $HOME/Downloads/$FILE ]; then
+    wget -c $URL -P $HOME/Downloads
   else
-    echo "Not downloading as: ${HOME}/Downloads/${FILE} already exists!"
+    echo "Not downloading as: $HOME/Downloads/$FILE already exists!"
   fi
 
-  if [ ! -d ${BASEPATH}/${DIR} ]; then
-    # tar xvfz ${HOME}/Downloads/${FILE} -C ${BASEPATH} #verbose
-    tar xfz ${HOME}/Downloads/${FILE} -C ${BASEPATH} #silent mode
-    echo "Extracting File: ${HOME}/Downloads/${FILE} here: ${BASEPATH}/${DIR}"
+  if [ ! -d ${BASEPATH}/$DIR ]; then
+    # tar xvfz $HOME/Downloads/$FILE -C ${BASEPATH} #verbose
+    tar xfz $HOME/Downloads/$FILE -C ${BASEPATH} #silent mode
+    echo "Extracting File: $HOME/Downloads/$FILE here: ${BASEPATH}/$DIR"
     echo "Extracting...DONE!"
   else
-    echo "Extracted Dir already exists: ${BASEPATH}/${DIR}"
+    echo "Extracted Dir already exists: ${BASEPATH}/$DIR"
   fi
 
   if [ -d ${PROG_DIR}/build ]; then
     rm -rf ${PROG_DIR}/build
   fi
+
 
   mkdir -p ${PROG_DIR}/build
   cd ${PROG_DIR}/build
@@ -93,7 +95,7 @@ function vtk_install() {
 
   # ## android paths
   # ## https://stackoverflow.com/questions/10969753/android-command-not-found
-  # export ANDROID_HOME=${HOME}/android/sdk
+  # export ANDROID_HOME=$HOME/android/sdk
   # export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 
   # ## ANDROID_ARCH_ABI (Application Binary Interface, or ABI. )
@@ -104,7 +106,7 @@ function vtk_install() {
   #       -D VTK_ANDROID_BUILD=ON \
   #       -D ANDROID_NATIVE_API_LEVEL=26 \
   #       -D ANDROID_ARCH_ABI=x86_64 \
-  #       -D ANDROID_NDK=${HOME}/android/sdk/ndk-bundle ..
+  #       -D ANDROID_NDK=$HOME/android/sdk/ndk-bundle ..
 
   # cp -R ${PROG_DIR}/build/CMakeExternals/Install/vtk-android ${BASEPATH}/.
 
@@ -250,4 +252,4 @@ function vtk_install() {
   #      linked by target "vtkIOODBC" in directory /home/thanos/softwares/VTK-8.1.0/IO/ODBC
 }
 
-vtk_install
+vtk_git_install
