@@ -23,7 +23,8 @@ local NVIDIA_DRIVER_VER="390"
 ## For CUDA 10.0 minimum nvidia driver requirement
 local NVIDIA_DRIVER_VER="410"
 local NVIDIA_DRIVER_VER="430"
-# NVIDIA_DRIVER_VER="435"
+local NVIDIA_DRIVER_VER="435"
+# local NVIDIA_DRIVER_VER="440"
 
 ##----------------------------------------------------------
 ## Docker version

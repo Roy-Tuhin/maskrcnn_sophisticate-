@@ -166,9 +166,9 @@ function opencv_compile() {
     -D WITH_QT=ON \
     -D WITH_GTK=ON \
     -D WITH_VTK=ON \
-    -D WITH_OPENMP=ON \
-    -D WITH_OPENGL=ON \
-    -D WITH_OPENCL=ON \
+    -D WITH_OPENMP=OFF \
+    -D WITH_OPENGL=OFF \
+    -D WITH_OPENCL=OFF \
     -D WITH_JPEG=ON \
     -D WITH_PNG=ON \
     -D WITH_JASPER=ON \
@@ -226,12 +226,25 @@ function opencv_compile() {
   # sudo make install -j${NUMTHREADS}
 
 
-  cd ${LSCRIPTS}
+  # cd ${LSCRIPTS}
 
 
   ##----------------------------------------------------------
   ## Build Logs
   ##----------------------------------------------------------
+
+  # /codehub/external/opencv_contrib/modules
+
+  # # https://stackoverflow.com/questions/10085945/set-cflags-and-cxxflags-options-using-cmake
+  # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I/usr/local/include -L/usr/local/lib")
+  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I/usr/local/include")
+  # set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/usr/local/lib")
+
+  # It appends the correct directory, including paths for the C and C++ compiler flags and the correct directory path for the linker flags.
+
+  # Note: C++ compiler (c++) doesn't support -L, so we have to use CMAKE_EXE_LINKER_FLAGS
+  # # //usr/lib/libgdal.so.20: undefined reference to `TIFFLastDirectory@LIBTIFF_4.0'
+
 
   # https://github.com/opencv/opencv_contrib/issues/1786
   # https://docs.nvidia.com/cuda/video-decoder/index.html
