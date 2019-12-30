@@ -3,7 +3,7 @@
 
 import os
 import sys
-
+import json
 import random
 import math
 import re
@@ -19,6 +19,10 @@ import yaml
 import logging
 import logging.config
 from easydict import EasyDict as edict
+
+#prediction
+from detectron2.engine import DefaultPredictor
+from detectron2.utils.visualizer import ColorMode
 
 AI_CODE_BASE_PATH = '/codehub'
 BASE_PATH_CONFIG = os.path.join(AI_CODE_BASE_PATH,'config')
@@ -47,6 +51,7 @@ from detectron2.data import MetadataCatalog, DatasetCatalog
 from detectron2.config import config
 from detectron2.engine import DefaultTrainer
 
+this = sys.modules[__name__]
 
 def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode):
     # print(anns)
@@ -96,6 +101,7 @@ def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode):
 
             obj["bbox_mode"] = bbox_mode
             obj["category_id"] = id_map[obj["lbl_id"]] ## category_id
+            # obj["segmentation"] = None
             objs.append(obj)
 
         record["annotations"] = objs
@@ -164,8 +170,26 @@ def get_data(subset):
     return appcfg, class_ids, id_map, imgs, anns
 
 
+def load_and_register_dataset(name, subset):
+    appcfg, class_ids, id_map, imgs, anns = get_data(subset)
 
-def train():
+    DatasetCatalog.register(name+"_"+subset, lambda subset=subset: get_dataset_dicts(appcfg, class_ids, id_map, imgs, anns, BoxMode.XYWH_ABS))
+    # DatasetCatalog.register("balloon_" + d, lambda d=d: get_balloon_dicts("/aimldl-dat/temp/balloon/" + d))
+    # MetadataCatalog.get(name+"_"+subset).set(thing_classes=["balloon"])
+
+    metadata = MetadataCatalog.get(name+"_"+subset)
+    metadata.thing_classes = class_ids
+    metadata.thing_dataset_id_to_contiguous_id = id_map
+    log.info("metadata: {}".format(metadata))
+
+    return metadata
+
+
+def train(args, mode, appcfg):
+    name = 'hmd'
+    for subset in ["train", "val"]:
+        metadata = load_and_register_dataset(name, subset)
+
     # N = 20
     # for d in random.sample(dataset_dicts, N):
     # #     print(d)
@@ -187,7 +211,7 @@ def train():
     cfg.MODEL.WEIGHTS = "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl"  # initialize from model zoo
     cfg.SOLVER.IMS_PER_BATCH = 2
     cfg.SOLVER.BASE_LR = 0.00025
-    cfg.SOLVER.MAX_ITER = 300    # 300 iterations seems good enough, but you can certainly train longer
+    # cfg.SOLVER.MAX_ITER = 300    # 300 iterations seems good enough, but you can certainly train longer
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3  # only has one class (ballon)
 
@@ -197,19 +221,137 @@ def train():
     trainer.train()
 
 
-if __name__ == '__main__':
+def visualize_predictions(im, outputs, metadata):
+    v = visualizer.Visualizer(im[:, :, ::-1],
+                   metadata=metadata, 
+                   scale=0.8, 
+                   instance_mode=ColorMode.SEGMENTATION   # remove the colors of unsegmented pixels
+    )
+    v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+    cv2.imshow('', v.get_image()[:, :, ::-1])
+    cv2.waitKey(0)
 
+
+def predict(args, mode, appcfg):
+    N = 10
     name = 'hmd'
-    for subset in ["train", "val"]:
-        appcfg, class_ids, id_map, imgs, anns = get_data(subset)
+    subset = "train"
+    dataset_name = name+"_"+subset
 
-        DatasetCatalog.register(name+"_"+subset, lambda subset=subset: get_dataset_dicts(appcfg, class_ids, id_map, imgs, anns, BoxMode.XYWH_ABS))
-        # DatasetCatalog.register("balloon_" + d, lambda d=d: get_balloon_dicts("/aimldl-dat/temp/balloon/" + d))
-        # MetadataCatalog.get(name+"_"+subset).set(thing_classes=["balloon"])
+    cfg = config.get_cfg()
+    cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
+    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7   # set the testing threshold for this model
+    cfg.DATASETS.TEST = (dataset_name)
+    print("cfg: {}".format(cfg))
+    
+    metadata = load_and_register_dataset(name, subset)
+    dataset_dicts = DatasetCatalog.get(dataset_name)
 
-        metadata = MetadataCatalog.get(name+"_"+subset)
-        metadata.thing_classes = class_ids
-        metadata.thing_dataset_id_to_contiguous_id = id_map
-        log.info("metadata: {}".format(metadata))
+    predictor = DefaultPredictor(cfg)
 
-    train()
+    output_pred_filepath = os.path.join(cfg.OUTPUT_DIR, 'pred.json')
+
+    N =20
+    
+    with open(output_pred_filepath,'a') as fw:
+        # for i, d in enumerate(dataset_dicts):
+        for d in random.sample(dataset_dicts, N):
+            image_filepath = d["file_name"]
+            # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114342_16718_zed_l_057.jpg"
+            im = cv2.imread(image_filepath)
+            outputs = predictor(im)
+            one = { 'result' : outputs, 'filepath': image_filepath}
+            fw.write(json.dumps(str(one)))
+            fw.write('\n')
+
+            print(one)
+            # visualize_predictions(im, outputs, metadata)
+            v = visualizer.Visualizer(im[:, :, ::-1],
+                   metadata=metadata, 
+                   scale=0.8, 
+                   instance_mode=ColorMode.SEGMENTATION   # remove the colors of unsegmented pixels
+            )
+            v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+            cv2.imshow('', v.get_image()[:, :, ::-1])
+            cv2.waitKey(0)
+
+
+def main(args):
+  """TODO: JSON RESPONSE
+  All errors and json response needs to be JSON compliant and with proper HTTP Response code
+  A common function should take responsibility to convert into API response
+  """
+  try:
+    log.info("----------------------------->\nargs:{}".format(args))
+    mode = args.mode
+    cmd = args.command
+
+    fn = getattr(this, cmd)
+
+    log.debug("fn: {}".format(fn))
+    log.debug("cmd: {}".format(cmd))
+    log.debug("---x---x---x---")
+    if fn:
+      ## Within the specific command, route to python module for specific architecture
+      fn(args, mode, appcfg)
+    else:
+      log.error("Unknown fn:{}".format(cmd))
+  except Exception as e:
+    log.error("Exception occurred", exc_info=True)
+
+  return
+
+
+def parse_args(commands):
+  import argparse
+  from argparse import RawTextHelpFormatter
+  
+  ## Parse command line arguments
+  parser = argparse.ArgumentParser(
+    description='DNN Application Framework.\n * Refer: `paths.yml` environment and paths configurations.\n\n',formatter_class=RawTextHelpFormatter)
+
+  parser.add_argument("command",
+    metavar="<command>",
+    help="{}".format(', '.join(commands)))
+
+  args = parser.parse_args()    
+
+  # Validate arguments
+  cmd = args.command
+
+  cmd_supported = False
+
+  for c in commands:
+    if cmd == c:
+      cmd_supported = True
+
+  if not cmd_supported:
+    log.error("'{}' is not recognized.\n"
+          "Use any one: {}".format(cmd,', '.join(commands)))
+    sys.exit(-1)
+
+  if cmd == "evaluate":
+    mode = "inference"
+  elif cmd == "predict":
+    mode = "inference"
+  elif cmd == "train":
+    mode = "training"
+  elif cmd == "visualize":
+    mode = "training"
+  elif cmd == "inspect_annon":
+    mode = "training"
+  else:
+    mode = "inference"
+    raise Exception("Undefined command!")
+
+  args.mode = mode
+
+  return args
+
+
+if __name__ == '__main__':
+    commands = ['train', 'predict', 'evaluate', 'visualize', 'inspect_annon']
+    args = parse_args(commands)
+    log.debug("args: {}".format(args))
+
+    main(args)
