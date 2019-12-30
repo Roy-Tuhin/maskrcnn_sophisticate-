@@ -5,6 +5,7 @@
 ## Tested on Ubuntu 16.04 LTS, Ubuntu 18.04 LTS
 ##----------------------------------------------------------
 
+
 function init_photogrammetry() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
@@ -37,7 +38,7 @@ function init_photogrammetry() {
 
   source ${LSCRIPTS}/opencv.install.sh
 
-  source ${LSCRIPTS}/openSfM.install.sh
+  source ${LSCRIPTS}/OpenSfM.install.sh
 
   source ${LSCRIPTS}/cloudcompare.install.sh
   source ${LSCRIPTS}/vcglib.install.sh
