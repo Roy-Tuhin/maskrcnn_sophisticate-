@@ -1,3 +1,0 @@
-BFS{
-   com.tcs.bfsarch.security.module.BFSLoginModule required debug=true;
-};

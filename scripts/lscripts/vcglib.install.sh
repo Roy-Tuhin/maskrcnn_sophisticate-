@@ -12,34 +12,41 @@
 #
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/lscripts.config.sh
+function vcglib_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
+  if [ -z "${BASEPATH}" ]; then
+    local BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
 
-DIR="vcglib"
-PROG_DIR="$BASEPATH/$DIR"
+  local DIR="vcglib"
+  local PROG_DIR="${BASEPATH}/${DIR}"
 
-URL="https://github.com/cnr-isti-vclab/$DIR.git"
+  local URL="https://github.com/cnr-isti-vclab/${DIR}.git"
 
-echo "BASEPATH: $BASEPATH"
-echo "URL: $URL"
-echo "PROG_DIR: $PROG_DIR"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-if [ ! -d $PROG_DIR ]; then  
-  git -C $PROG_DIR || git clone $URL $PROG_DIR
-  # https://github.com/cnr-isti-vclab/meshlab/issues/258
-  git checkout devel
-else
-  echo Git clone for $URL exists at: $PROG_DIR
-fi
+  if [ ! -d ${PROG_DIR} ]; then  
+    git -C ${PROG_DIR} || git clone ${URL} ${PROG_DIR}
+  else
+    echo Git clone for ${URL} exists at: ${PROG_DIR}
+  fi
 
-# cd $LINUX_SCRIPT_HOME
+  local VCGLIB_REL="v1.0.1"
 
-## meslab requires it to be present at the same level for compilation
+  cd ${PROG_DIR}
+  git pull
+  git checkout ${VCGLIB_REL}
+
+  # cd ${LSCRIPTS}
+
+  ## https://github.com/cnr-isti-vclab/meshlab/issues/258
+  ## meslab requires it to be present at the same level for compilation
+}
+
+vcglib_install

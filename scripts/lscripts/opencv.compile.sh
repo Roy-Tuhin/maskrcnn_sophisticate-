@@ -202,11 +202,28 @@ function opencv_compile() {
     -D WITH_IPP=OFF \
     -D opencv_dnn_PERF_CAFFE=OFF \
     -D ENABLE_PRECOMPILED_HEADERS=OFF \
+    -D OPENCV_ENABLE_NONFREE=ON \
+    -D INSTALL_C_EXAMPLES=ON \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
     -D opencv_dnn_PERF_CLCAFFE=OFF  ..
+
+
+# -D TIFF_INCLUDE_DIR=/usr/local/include                                                                                                                                                       
+# -D CMAKE_CXX_FLAGS=-I/usr/local/include -I/codehub/external/opencv/modules/dnn/include -I/codehub/external/opencv_contrib/modules/text/include
+# -D CMAKE_C_FLAGS=-I/usr/local/include -I/codehub/external/opencv/modules/dnn/include -I/codehub/external/opencv_contrib/modules/text/include -L/usr/local/lib                             
+# -D CMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib                                                                                                                                                         
+
+# -D BUILD_opencv_structured_light=OFF                     
+# https://github.com/opencv/opencv/issues/9695
+
+#     -D CMAKE_SHARED_LINKER_FLAGS=-latomic \
+
+# https://github.com/opencv/opencv/issues/15665
+
+# cd /home/pi/projects/opencv/build/modules/python3 && /usr/bin/c++  -D_USE_MATH_DEFINES -D__OPENCV_BUILD=1 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS -Dopencv_python3_EXPORTS -I/home/pi/projects/opencv/build -I/home/pi/projects/opencv/modules/python/python3/include -I/home/pi/projects/opencv/build/modules/python3 -I/home/pi/projects/opencv/modules/core/include -I/home/pi/projects/opencv/modules/flann/include -I/home/pi/projects/opencv/modules/imgproc/include -I/home/pi/projects/opencv/modules/ml/include -I/home/pi/projects/opencv_contrib/modules/phase_unwrapping/include -I/home/pi/projects/opencv/modules/photo/include -I/home/pi/projects/opencv_contrib/modules/plot/include -I/home/pi/projects/opencv_contrib/modules/quality/include -I/home/pi/projects/opencv_contrib/modules/reg/include -I/home/pi/projects/opencv_contrib/modules/surface_matching/include -I/home/pi/projects/opencv_contrib/modules/xphoto/include -I/home/pi/projects/opencv/modules/features2d/include -I/home/pi/projects/opencv_contrib/modules/freetype/include -I/home/pi/projects/opencv_contrib/modules/fuzzy/include -I/home/pi/projects/opencv_contrib/modules/hfs/include -I/home/pi/projects/opencv_contrib/modules/img_hash/include -I/home/pi/projects/opencv/modules/imgcodecs/include -I/home/pi/projects/opencv_contrib/modules/line_descriptor/include -I/home/pi/projects/opencv_contrib/modules/saliency/include -I/home/pi/projects/opencv/modules/videoio/include -I/home/pi/projects/opencv/modules/calib3d/include -I/home/pi/projects/opencv_contrib/modules/datasets/include -I/home/pi/projects/opencv/modules/highgui/include -I/home/pi/projects/opencv/modules/objdetect/include -I/home/pi/projects/opencv_contrib/modules/rgbd/include -I/home/pi/projects/opencv_contrib/modules/shape/include -I/home/pi/projects/opencv_contrib/modules/structured_light/include -I/home/pi/projects/opencv/modules/video/include -I/home/pi/projects/opencv_contrib/modules/videostab/include -I/home/pi/projects/opencv_contrib/modules/xfeatures2d/include -I/home/pi/projects/opencv_contrib/modules/ximgproc/include -I/home/pi/projects/opencv_contrib/modules/xobjdetect/include -I/home/pi/projects/opencv_contrib/modules/aruco/include -I/home/pi/projects/opencv_contrib/modules/bgsegm/include -I/home/pi/projects/opencv_contrib/modules/bioinspired/include -I/home/pi/projects/opencv_contrib/modules/ccalib/include -I/home/pi/projects/opencv_contrib/modules/dpm/include -I/home/pi/projects/opencv_contrib/modules/face/include -I/home/pi/projects/opencv_contrib/modules/optflow/include -I/home/pi/projects/opencv/modules/stitching/include -I/home/pi/projects/opencv_contrib/modules/superres/include -I/home/pi/projects/opencv_contrib/modules/tracking/include -I/home/pi/projects/opencv/modules/python/src2 -I/home/pi/projects/opencv/build/modules/python_bindings_generator -isystem /usr/include/python3.7m -isystem /usr/lib/python3/dist-packages/numpy/core/include  -fsigned-char -W -Wall -Werror=return-type -Werror=non-virtual-dtor -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Winit-self -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -pthread -fomit-frame-pointer -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -Wno-unused-function -Wno-deprecated-declarations -Wno-overloaded-virtual -Wno-undef -O3 -DNDEBUG  -DNDEBUG -fPIC   -std=c++11 -o CMakeFiles/opencv_python3.dir/__/src2/cv2.cpp.o -c /home/pi/projects/opencv/modules/python/src2/cv2.cpp
+
   # https://github.com/opencv/opencv/issues/10975
   ## -D WITH_PROTOBUF=ON is required for DNN
-
-
   #   -D WITH_CUDA=ON \
   #   -D CUDA_FAST_MATH=ON \
   #   -D CUDA_NVCC_FLAGS=-D_FORCE_INLINES \
@@ -232,6 +249,28 @@ function opencv_compile() {
   ##----------------------------------------------------------
   ## Build Logs
   ##----------------------------------------------------------
+
+  #   In file included from /codehub/external/opencv/modules/python/src2/cv2.cpp:35:0:
+  # /codehub/external/opencv/build/modules/python_bindings_generator/pyopencv_generated_include.h:49:10: fatal error: opencv2/dnn/dict.hpp: No such file or directory
+  #  #include "opencv2/dnn/dict.hpp"
+  #           ^~~~~~~~~~~~~~~~~~~~~~
+  # In file included from /codehub/external/opencv/modules/python/src2/cv2.cpp:35:0:
+  # /codehub/external/opencv/build/modules/python_bindings_generator/pyopencv_generated_include.h:49:10: fatal error: opencv2/dnn/dict.hpp: No such file or directory
+  #  #include "opencv2/dnn/dict.hpp"
+  #           ^~~~~~~~~~~~~~~~~~~~~~
+  # compilation terminated.
+  # compilation terminated.
+  # modules/python3/CMakeFiles/opencv_python3.dir/build.make:62: recipe for target 'modules/python3/CMakeFiles/opencv_python3.dir/__/src2/cv2.cpp.o' failed
+  # make[2]: *** [modules/python3/CMakeFiles/opencv_python3.dir/__/src2/cv2.cpp.o] Error 1
+  # modules/python2/CMakeFiles/opencv_python2.dir/build.make:62: recipe for target 'modules/python2/CMakeFiles/opencv_python2.dir/__/src2/cv2.cpp.o' failed
+  # make[2]: *** [modules/python2/CMakeFiles/opencv_python2.dir/__/src2/cv2.cpp.o] Error 1
+  # CMakeFiles/Makefile2:6804: recipe for target 'modules/python3/CMakeFiles/opencv_python3.dir/all' failed
+  # make[1]: *** [modules/python3/CMakeFiles/opencv_python3.dir/all] Error 2
+  # make[1]: *** Waiting for unfinished jobs....
+  # CMakeFiles/Makefile2:6692: recipe for target 'modules/python2/CMakeFiles/opencv_python2.dir/all' failed
+  # make[1]: *** [modules/python2/CMakeFiles/opencv_python2.dir/all] Error 2
+  # Makefile:162: recipe for target 'all' failed
+  # make: *** [all] Error 2
 
   # /codehub/external/opencv_contrib/modules
 

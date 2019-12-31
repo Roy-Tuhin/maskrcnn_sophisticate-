@@ -21,5 +21,12 @@
 #
 ##----------------------------------------------------------
 
-source ./vcglib.install.sh
-source ./meshlab.install.sh
+
+function meshlab_vcglib_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  # source ${LSCRIPTS}/lscripts.config.sh
+  source ${LSCRIPTS}/vcglib.install.sh
+  source ${LSCRIPTS}/meshlab.install.sh
+}
+
+meshlab_vcglib_install

@@ -21,19 +21,19 @@ function pdal_install() {
   source ${LSCRIPTS}/lscripts.config.sh
 
   if [ -z "${BASEPATH}" ]; then
-    BASEPATH="${HOME}/softwares"
+    local BASEPATH="${HOME}/softwares"
     echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
 
   if [ -z "${PDAL_REL}" ]; then
-    PDAL_REL="2.0.1"
+    local PDAL_REL="2.0.1"
     echo "Unable to get PDAL_REL version, falling back to default version#: ${PDAL_REL}"
   fi
 
-  DIR='PDAL'
-  PROG_DIR="${BASEPATH}/${DIR}"
+  local DIR='PDAL'
+  local PROG_DIR="${BASEPATH}/${DIR}"
 
-  URL="https://github.com/PDAL/${DIR}.git"
+  local URL="https://github.com/PDAL/${DIR}.git"
 
   echo "Number of threads will be used: ${NUMTHREADS}"
   echo "BASEPATH: ${BASEPATH}"

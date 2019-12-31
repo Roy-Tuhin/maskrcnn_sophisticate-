@@ -82,9 +82,11 @@ AI_WSGIPythonPath="${AI_PY_VENV_NAME}/bin"
 AI_WSGIPythonHome="${AI_PY_VENV_NAME}/lib/python3.6/site-packages/"
 ## ---------------------------------##
 
+AI_DATA_GAZE="/aimldl-dat/data-gaze"
 AI_ANNON_DATA_HOME="/data/samba/Bangalore/prod/Bangalore_Maze_Exported_Data/ANNOTATIONS"
 AI_ANNON_DB="/aimldl-dat/data-gaze/AIML_Database"
 AI_ANNON_DB_TEST="/aimldl-dat/data-gaze/AIML_Database_Test"
+AI_AIDS_DB="/aimldl-dat/data-gaze/AIML_Aids"
 # AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation"
 # AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/*/annotations"
 # AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719"
