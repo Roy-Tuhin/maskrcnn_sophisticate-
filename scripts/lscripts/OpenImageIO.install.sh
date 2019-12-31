@@ -10,89 +10,105 @@
 #
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/lscripts.config.sh
+function OpenImageIO_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
+  if [ -z "${BASEPATH}" ]; then
+    local BASEPATH="$HOME/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
 
-sudo apt -y install python-openimageio openimageio-tools libopenimageio1.7 libopenimageio-doc libopenimageio-dev ## alternative to Build
+  if [ -z "${OpenImageIO_REL}" ]; then
+    local OpenImageIO_REL="Release-2.1.9.0"
+    echo "Unable to get OpenImageIO_REL version, falling back to default version#: ${OpenImageIO_REL}"
+  fi
 
-PROG="oiio"
-DIR="$PROG"
-PROG_DIR="$BASEPATH/$PROG"
+  sudo apt -y install python-openimageio openimageio-tools libopenimageio1.7 libopenimageio-doc libopenimageio-dev ## alternative to Build
 
-URL="https://github.com/OpenImageIO/$PROG.git"
+  local PROG="oiio"
+  local DIR="${PROG}"
+  local PROG_DIR="${BASEPATH}/${PROG}"
 
-echo "Number of threads will be used: $NUMTHREADS"
-echo "BASEPATH: $BASEPATH"
-echo "URL: $URL"
-echo "PROG_DIR: $PROG_DIR"
+  local URL="https://github.com/OpenImageIO/${PROG}.git"
 
-if [ ! -d $PROG_DIR ]; then
-  ## git version 1.6+
-  # git clone --recursive $URL
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-  ## git version >= 2.8
-  ## git clone --recurse-submodules -j8 $URL $PROG_DIR
-  git -C $PROG_DIR || git clone $URL $PROG_DIR
-  # git checkout v2.3.0
-else
-  echo Git clone for $URL exists at: $PROG_DIR
-fi
+  if [ ! -d ${PROG_DIR} ]; then
+    ## git version 1.6+
+    # git clone --recursive ${URL}
+
+    ## git version >= 2.8
+    ## git clone --recurse-submodules -j8 ${URL} ${PROG_DIR}
+    git -C ${PROG_DIR} || git clone ${URL} ${PROG_DIR}
+    # git checkout v2.3.0
+  else
+    echo Git clone for ${URL} exists at: ${PROG_DIR}
+  fi
+
+  cd ${PROG_DIR}
+  git pull
+  git checkout ${OpenImageIO_REL}
+
+  if [ -d ${PROG_DIR}/build ]; then
+    rm -rf ${PROG_DIR}/build
+  fi
+
+  mkdir ${PROG_DIR}/build
+  cd ${PROG_DIR}/build
+
+  cmake -DBUILD_DOCS=OFF \
+        -DBUILD_TESTING=OFF \
+        -DINSTALL_DOCS=OFF \
+        -DOIIO_BUILD_TESTS=OFF \
+        -DOIIO_BUILD_TOOLS=OFF \
+        -DSTOP_ON_WARNING=OFF \
+        -DUSE_DICOM=OFF \
+        -DUSE_CPP=11 \
+        -DUSE_LIBRAW=OFF \
+        -DUSE_NUKE=OFF \
+        -DUSE_OCIO=OFF \
+        -DBUILD_MISSING_DEPS=ON \
+        -DBUILDSTATIC=ON \
+        -DBUILD_OIIOUTIL_ONLY=ON \
+        -DPYLIB_INCLUDE_SONAME=ON \
+        -DUSE_fPIC=ON \
+        -DBUILDSTATIC=OFF \
+        -DCMAKE_CXX_FLAGS=-I/usr/local/include \
+        -DCMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib \
+        -DUSE_PYTHON=ON \
+        -DPYTHON_VERSION=3.6 ..
+
+  # ccmake ..
+
+  make -j${NUMTHREADS}
+  # sudo make install -j${NUMTHREADS}
 
 
-mkdir $PROG_DIR/build
-cd $PROG_DIR/build
-cmake -DBUILD_DOCS=OFF \
-      -DBUILD_TESTING=OFF \
-      -DINSTALL_DOCS=OFF \
-      -DOIIO_BUILD_TESTS=OFF \
-      -DOIIO_BUILD_TOOLS=OFF \
-      -DSTOP_ON_WARNING=OFF \
-      -DUSE_DICOM=OFF \
-      -DUSE_CPP=11 \
-      -DUSE_LIBRAW=OFF \
-      -DUSE_NUKE=OFF \
-      -DUSE_OCIO=OFF \
-      -DBUILD_MISSING_DEPS=ON \
-      -DBUILDSTATIC=ON \
-      -DBUILD_OIIOUTIL_ONLY=ON \
-      -DPYLIB_INCLUDE_SONAME=ON \
-      -DUSE_fPIC=ON \
-      -DBUILDSTATIC=OFF \
-      -DUSE_PYTHON=ON ..
+  # cd ${LSCRIPTS}
 
 
+  ##----------------------------------------------------------
+  ## Build Logs
+  ##----------------------------------------------------------
 
-ccmake ..
-make -j$NUMTHREADS
-# sudo make install -j$NUMTHREADS
+  ## https://github.com/OpenImageIO/oiio/issues/1589
 
+  # [ 78%] Linking CXX executable filter_test
+  # libOpenImageIO.so.2.0.1: undefined reference to `Imf_2_3::Header::type[abi:cxx11]() const'
+  # libOpenImageIO.so.2.0.1: undefined reference to `typeinfo for Iex_2_3::BaseExc'
+  # libOpenImageIO.so.2.0.1: undefined reference to `Imf_2_3::FrameBuffer::insert(char const*, Imf_2_3::
 
-# cd $LINUX_SCRIPT_HOME
+  # https://stackoverflow.com/questions/10851247/how-to-activate-c-11-in-cmake
 
+  # find . -iname "*" -type f -exec grep -inH --color="auto" "OPENEXR_HOME" {} \;
+  # ./Makefile:191:ifneq (${OPENEXR_HOME},)
+  # ./Makefile:192:MY_CMAKE_FLAGS += -DOPENEXR_ROOT_DIR:STRING=${OPENEXR_HOME}
+  # 23:08:22:oiio$pwd
+}
 
-##----------------------------------------------------------
-## Build Logs
-##----------------------------------------------------------
-
-## https://github.com/OpenImageIO/oiio/issues/1589
-
-# [ 78%] Linking CXX executable filter_test
-# libOpenImageIO.so.2.0.1: undefined reference to `Imf_2_3::Header::type[abi:cxx11]() const'
-# libOpenImageIO.so.2.0.1: undefined reference to `typeinfo for Iex_2_3::BaseExc'
-# libOpenImageIO.so.2.0.1: undefined reference to `Imf_2_3::FrameBuffer::insert(char const*, Imf_2_3::
-
-# https://stackoverflow.com/questions/10851247/how-to-activate-c-11-in-cmake
-
-# find . -iname "*" -type f -exec grep -inH --color="auto" "OPENEXR_HOME" {} \;
-# ./Makefile:191:ifneq (${OPENEXR_HOME},)
-# ./Makefile:192:MY_CMAKE_FLAGS += -DOPENEXR_ROOT_DIR:STRING=${OPENEXR_HOME}
-# 23:08:22:oiio$pwd
-
+OpenImageIO_install

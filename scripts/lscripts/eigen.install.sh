@@ -10,6 +10,11 @@
 ## http://eigen.tuxfamily.org/index.php?title=Main_Page
 ## https://github.com/eigenteam/eigen-git-mirror
 #
+## https://gitlab.com/libeigen/eigen/blob/master/INSTALL
+## Eigen consists only of header files, hence there is nothing to compile
+## before you can use it. Moreover, these header files do not depend on your
+## platform, they are the same for everybody.
+#
 ##----------------------------------------------------------
 
 function eigen_install() {
@@ -53,10 +58,17 @@ function eigen_install() {
 
   mkdir ${PROG_DIR}/build
   cd ${PROG_DIR}/build
-  cmake ..
 
+  # # cmake ..
+  # cmake -DBUILD_SHARED_LIBS=ON \
+  #   -DCMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib \
+  #   -DCMAKE_INSTALL_PREFIX=/usr/local \
+  #   -DCMAKE_CXX_FLAGS=-I/usr/local/include \
+  #   -DCMAKE_C_FLAGS="-I/usr/local/include -L/usr/local/lib" ..
+
+  make install
   ## ccmake ..
-  make -j${NUMTHREADS}
+  # make -j${NUMTHREADS}
 
   ## Note: not installing eigen to /usr/local as it may risk corrupting other dependend programs, infact most of them
   # sudo make install -j${NUMTHREADS}

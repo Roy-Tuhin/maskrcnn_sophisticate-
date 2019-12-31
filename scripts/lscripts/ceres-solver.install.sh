@@ -95,7 +95,12 @@ function ceres_solver_install() {
   mkdir ${PROG_DIR}/build
 
   cd ${PROG_DIR}/build
-  cmake .. -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC
+  cmake -DCMAKE_C_FLAGS=-fPIC \
+        -DCMAKE_CXX_FLAGS=-fPIC \
+        -DCMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib \
+        -DCMAKE_CXX_FLAGS=-I/usr/local/include \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCMAKE_INSTALL_PREFIX=/usr/local ..
 
   ## not required
   # ccmake ..

@@ -62,17 +62,23 @@ function opengv_install() {
     rm -rf ${PROG_DIR}/build
   fi
 
+  # git submodule update --init --recursive
+
   mkdir ${PROG_DIR}/build
   cd ${PROG_DIR}/build
   ## enable PYTHON for openSfM
-  cmake -D BUILD_PYTHON=ON ..
+  cmake -DBUILD_PYTHON=ON \
+        -DCMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib \
+        -DCMAKE_CXX_FLAGS=-I/usr/local/include \
+        -DCMAKE_C_FLAGS="-I/usr/local/include -L/usr/local/lib" \
+        -DBUILD_SHARED_LIBS=ON ..
 
   ## ccmake ..
 
-  make -j${NUMTHREADS}
-  sudo make install -j${NUMTHREADS}
+  # make -j${NUMTHREADS}
+  # sudo make install -j${NUMTHREADS}
 
-  cd ${LSCRIPTS}
+  # cd ${LSCRIPTS}
 
 
   ##----------------------------------------------------------
@@ -91,6 +97,7 @@ function opengv_install() {
   # CMake Error at python/CMakeLists.txt:7 (pybind11_add_module):
   #   Unknown CMake command "pybind11_add_module".
 
+  # git submodule update --init --recursive
   ##----------------------------------------------------------
 
   # https://stackoverflow.com/questions/5327325/conflict-between-boost-opencv-and-eigen-libraries
