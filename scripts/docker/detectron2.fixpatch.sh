@@ -16,6 +16,6 @@ pip install arrow pandas
 pip install scikit-image
 
 
-cd /codehub/apps/falcon
+cd /codehub/apps
 
-jupyter notebook --ip 0.0.0.0 --port 8888 --no-browser --allow-root
+# jupyter notebook --ip 0.0.0.0 --port 8888 --no-browser --allow-root
