@@ -25,6 +25,7 @@
 ##  - https://github.com/xianyi/OpenBLAS
 #
 ## https://github.com/alicevision/AliceVision/blob/develop/INSTALL.md
+## https://github.com/alicevision/AliceVisionDependencies/tree/master/ci
 #
 ##----------------------------------------------------------
 
@@ -94,6 +95,8 @@ function alicevision_install() {
     -DALICEVISION_BUILD_TESTS=ON \
     -DALICEVISION_BUILD_EXAMPLES=ON \
     -DALICEVISION_BUILD_DEPENDENCIES=OFF \
+    -DALICEVISION_USE_RPATH=OFF \
+    -DALICEVISION_USE_OCVSIFT=ON \
     -DAV_BUILD_CUDA=ON \
     -DALICEVISION_BUILD_SHARED=ON \
     -DALICEVISION_USE_OPENGV=ON \
@@ -107,6 +110,7 @@ function alicevision_install() {
     -DCMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib \
     -DCMAKE_INSTALL_PREFIX=/usr/local \
     -DCMAKE_CXX_FLAGS=-I/usr/local/include \
+    -DOPENIMAGEIO_LIBRARY:FILEPATH=/usr/local/lib/libOpenImageIO_Util.so \
     -DOPENIMAGEIO_LIBRARY_DIR_HINTS:PATH=/usr/local/lib \
     -DOPENIMAGEIO_INCLUDE_DIR:PATH=/usr/local/include \
     -DOPENGV_DIR:PATH=/usr/local \

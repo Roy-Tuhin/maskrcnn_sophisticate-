@@ -73,7 +73,7 @@ function opengv_install() {
   ## enable PYTHON for openSfM
   cmake -DBUILD_PYTHON=ON \
         -DCMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib \
-        -DCMAKE_CXX_FLAGS=-I/usr/local/include \
+        -DCMAKE_CXX_FLAGS="-I/usr/local/include -DEIGEN_DONT_ALIGN_STATICALLY=1 -DEIGEN_DONT_VECTORIZE=1" \
         -DCMAKE_C_FLAGS="-I/usr/local/include -L/usr/local/lib" \
         -DPYBIND11_INSTALL=ON .. \
         -DBUILD_SHARED_LIBS=ON ..

@@ -176,6 +176,12 @@ local OpenDroneMap_REL="v0.9.1"
 ##----------------------------------------------------------
 local OpenImageIO_REL="Release-2.1.9.0"
 ##----------------------------------------------------------
+# https://github.com/AcademySoftwareFoundation/openexr/releases
+local OPENEXR_REL="v2.4.0"
+##----------------------------------------------------------
+# https://github.com/alembic/alembic/releases
+local ALEMBIC_REL="1.7.12"
+##----------------------------------------------------------
 local GEOGRAM_VER="1.7.3"
 ##----------------------------------------------------------
 local MESHROOM_REL="v2019.2.0"
