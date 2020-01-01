@@ -45,7 +45,10 @@ function opengv_install() {
   ## URL="https://github.com/laurentkneip/${DIR}"
 
   ### https://github.com/mapillary/OpenSfM/issues/212
-  local URL="https://github.com/paulinus/${DIR}.git"
+  # local URL="https://github.com/paulinus/${DIR}.git"
+
+  ## AliceVision
+  URL="https://github.com/laurentkneip/${DIR}.git"
 
   echo "Number of threads will be used: ${NUMTHREADS}"
   echo "BASEPATH: ${BASEPATH}"
@@ -62,7 +65,8 @@ function opengv_install() {
     rm -rf ${PROG_DIR}/build
   fi
 
-  # git submodule update --init --recursive
+  ## python/pybind11
+  git submodule update --init --recursive
 
   mkdir ${PROG_DIR}/build
   cd ${PROG_DIR}/build
@@ -71,6 +75,7 @@ function opengv_install() {
         -DCMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib \
         -DCMAKE_CXX_FLAGS=-I/usr/local/include \
         -DCMAKE_C_FLAGS="-I/usr/local/include -L/usr/local/lib" \
+        -DPYBIND11_INSTALL=ON .. \
         -DBUILD_SHARED_LIBS=ON ..
 
   ## ccmake ..

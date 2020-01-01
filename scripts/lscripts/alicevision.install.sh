@@ -32,9 +32,18 @@
 function alicevision_install() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
+
+  ## Dependencies
   # source ${LSCRIPTS}/cmake.upgrade.sh
+  # source ${LSCRIPTS}/eigen.install.sh
+  # source ${LSCRIPTS}/ceres-solver.install.sh
+  # source ${LSCRIPTS}/opengv.install.sh
+  # source ${LSCRIPTS}/geogram.install.sh
   # source ${LSCRIPTS}/popsift.install.sh
   # source ${LSCRIPTS}/OpenImageIO.install.sh
+  # source ${LSCRIPTS}/magma.install.sh
+  # source ${LSCRIPTS}/uncertaintyTE.install.sh
+  # source ${LSCRIPTS}/popsift.install.sh
 
   if [ -z "${BASEPATH}" ]; then
     local BASEPATH="${HOME}/softwares"
@@ -73,12 +82,40 @@ function alicevision_install() {
   mkdir ${PROG_DIR}/build
   cd ${PROG_DIR}/build
 
-  # cmake ..
-  cmake -DBUILD_SHARED_LIBS=ON \
+  ## export OPENGV_DIR="/usr/local"
+  ## export OPENGV_INCLUDE_DIR="/usr/local/include"
+  ## export OPENGV_LIBRARY="/usr/local/lib"
+
+  ## -DALICEVISION_USE_OPENMP=ON \
+  ## -DALICEVISION_REQUIRE_CERES_WITH_SUITESPARSE=OFF
+  ## DALICEVISION_USE_OPENGV is optional, enabling it thrown error for opengv and eigen not found
+
+  cmake -DCMAKE_BUILD_TYPE=Release \
+    -DALICEVISION_BUILD_TESTS=ON \
+    -DALICEVISION_BUILD_EXAMPLES=ON \
+    -DALICEVISION_BUILD_DEPENDENCIES=OFF \
+    -DAV_BUILD_CUDA=ON \
+    -DALICEVISION_BUILD_SHARED=ON \
+    -DALICEVISION_USE_OPENGV=ON \
+    -DOPENGV_DIR:PATH=/usr/local \
+    -DALICEVISION_REQUIRE_CERES_WITH_SUITESPARSE=ON \
+    -DALICEVISION_USE_POPSIFT=ON \
+    -DPopSift_DIR:PATH=/usr/local/lib/cmake/PopSift \
+    -DALICEVISION_USE_OPENCV=ON \
+    -DOpenCV_DIR:PATH=/usr/local/lib/cmake/opencv4 \
+    -DALICEVISION_USE_RPATH=OFF \
     -DCMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib \
     -DCMAKE_INSTALL_PREFIX=/usr/local \
     -DCMAKE_CXX_FLAGS=-I/usr/local/include \
+    -DOPENIMAGEIO_LIBRARY_DIR_HINTS:PATH=/usr/local/lib \
+    -DOPENIMAGEIO_INCLUDE_DIR:PATH=/usr/local/include \
+    -DOPENGV_DIR:PATH=/usr/local \
+    -DOPENGV_INCLUDE_DIR:PATH=/usr/local/include \
+    -DOPENGV_LIBRARY:PATH=/usr/local/lib \
+    -DEIGEN_INCLUDE_DIRS:PATH=/usr/local/include/eigen3 \
+    -DCMAKE_MODULE_PATH:PATH=/usr/local/share/eigen3/cmake \
     -DCMAKE_C_FLAGS="-I/usr/local/include -L/usr/local/lib" ..
+
 
   # make -j${NUMTHREADS}
   # sudo make install -j${NUMTHREADS}
@@ -86,10 +123,45 @@ function alicevision_install() {
   # cd ${LSCRIPTS}
 
 
+
+
+
   ##----------------------------------------------------------
   ## Build Logs
   ##----------------------------------------------------------
 
+  # /usr/local/share/eigen3/cmake/Eigen3Config.cmake
+  # https://riptutorial.com/cmake/example/22950/use-find-package-and-find-package--cmake-modules
+  # /codehub/external/AliceVision/src/cmake/FindOpenGV.cmake
+
+
+  # https://gist.github.com/italic-r/a045c122ef4a8be4a6357c937f45e393
+
+  # https://github.com/alicevision/AliceVision/blob/develop/INSTALL.md
+  # -- By default, Ceres required SuiteSparse to ensure best performances. if you explicitly need to build without it, you can use the option: -DALICEVISION_REQUIRE_CERES_WITH_SUITESPARSE=OFF
+
+  # -- Could NOT find Alembic (missing: Alembic_DIR)
+  # -- Could NOT find CCTag (missing: CCTag_DIR)
+
+
+  # -- Looking for Eigen dependency...
+  # CMake Warning at src/cmake/FindOpenGV.cmake:30 (FIND_PACKAGE):
+  #   By not providing "FindEigen.cmake" in CMAKE_MODULE_PATH this project has
+  #   asked CMake to find a package configuration file provided by "Eigen", but
+  #   CMake did not find one.
+
+  #   Could not find a package configuration file provided by "Eigen" with any of
+  #   the following names:
+
+  #     EigenConfig.cmake
+  #     eigen-config.cmake
+
+  #   Add the installation prefix of "Eigen" to CMAKE_PREFIX_PATH or set
+  #   "Eigen_DIR" to a directory containing one of the above files.  If "Eigen"
+  #   provides a separate development package or SDK, be sure it has been
+  #   installed.
+  # Call Stack (most recent call first):
+  #   src/CMakeLists.txt:604 (find_package)
   # -- Did not find MOSEK header
   # -- Did not find MOSEK library
   # -- Could not find mosek library on this machine.

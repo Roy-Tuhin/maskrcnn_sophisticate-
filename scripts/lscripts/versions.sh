@@ -184,5 +184,7 @@ local CloudCompare_REL="v2.10.3"
 ##----------------------------------------------------------
 local HAROOPAD_VER="0.13.1"
 ##----------------------------------------------------------
-local MAGMA_VER="2.5.0-rc1"
+# http://icl.utk.edu/projectsfiles/magma/downloads/
+local MAGMA_VER="2.5.1"
+local MAGMA_VER="2.5.2"
 ##----------------------------------------------------------
