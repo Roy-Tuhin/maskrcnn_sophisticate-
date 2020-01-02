@@ -6,6 +6,8 @@
 #
 ## https://github.com/alicevision/meshroom
 #
+## wget -c https://gitlab.com/alicevision/trainedVocabularyTreeData/raw/master/vlfeat_K80L3.SIFT.tree
+#
 ##----------------------------------------------------------
 
 
@@ -47,6 +49,8 @@ function meshroom_install() {
     echo Git clone for ${URL} exists at: ${PROG_DIR}
   fi
 
+  # git clone https://gitlab.com/alicevision/trainedVocabularyTreeData.git
+
   cd ${PROG_DIR}
   git pull
   git checkout ${MESHROOM_REL}
@@ -54,8 +58,6 @@ function meshroom_install() {
   if [ -d ${PROG_DIR}/build ]; then
     rm -rf ${PROG_DIR}/build
   fi
-
-  cd ${PROG_DIR}
 
   # pip install -r requirements.txt
 

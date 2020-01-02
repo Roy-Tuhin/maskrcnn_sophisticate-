@@ -1,3 +1,104 @@
+./src/aliceVision/localization/CMakeFiles/aliceVision_localization.dir/build.make
+
+
+
+find . -iname "*.*" -type f -exec grep -inH --color=auto "libaliceVision_lightingEstimation" {} \;
+find . -iname "*.*" -type f -exec grep -inH --color=auto "aliceVision_convertRAW" {} \;
+
+
+============
+
+[ 53%] Linking CXX shared library ../../../../Linux-x86_64/libaliceVision_lInftyComputerVision.so
+[ 53%] Built target aliceVision_lInftyComputerVision
+[ 53%] Linking CXX shared library ../../../Linux-x86_64/libaliceVision_lightingEstimation.so
+[ 53%] Built target aliceVision_lightingEstimation
+[ 53%] Linking CXX executable ../../../Linux-x86_64/aliceVision_convertRAW
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageSpec::attribute(OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::TypeDesc, void const*)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::read(int, int, bool, OpenImageIO_v2_1::TypeDesc, bool (*)(void*, float), void*)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageSpec::ImageSpec(OpenImageIO_v2_1::TypeDesc)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::ImageBuf()'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBufAlgo::paste(OpenImageIO_v2_1::ImageBuf&, int, int, int, int, OpenImageIO_v2_1::ImageBuf const&, OpenImageIO_v2_1::ROI, int)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageInput::open(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, OpenImageIO_v2_1::ImageSpec const*)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::ImageBuf(OpenImageIO_v2_1::string_view, int, int, OpenImageIO_v2_1::ImageCache*, OpenImageIO_v2_1::ImageSpec const*)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBufAlgo::channel_sum(OpenImageIO_v2_1::ImageBuf&, OpenImageIO_v2_1::ImageBuf const&, OpenImageIO_v2_1::span<float const, -1l>, OpenImageIO_v2_1::ROI, int)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::ImageBuf(OpenImageIO_v2_1::ImageSpec const&, void*)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::~ImageBuf()'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::roi() const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageSpec::ImageSpec(int, int, int, OpenImageIO_v2_1::TypeDesc)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::ImageBuf(OpenImageIO_v2_1::ImageSpec const&, OpenImageIO_v2_1::InitializePixels)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::initialized() const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::write(OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::TypeDesc, OpenImageIO_v2_1::string_view, bool (*)(void*, float), void*) const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::spec() const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::nchannels() const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::get_pixels(OpenImageIO_v2_1::ROI, OpenImageIO_v2_1::TypeDesc, void*, long, long, long) const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBufAlgo::colorconvert(OpenImageIO_v2_1::ImageBuf&, OpenImageIO_v2_1::ImageBuf const&, OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::string_view, bool, OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::ColorConfig*, OpenImageIO_v2_1::ROI, int)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::copy(OpenImageIO_v2_1::ImageBuf const&, OpenImageIO_v2_1::TypeDesc)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageSpec::get_string_attribute(OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::string_view) const'
+collect2: error: ld returned 1 exit status
+src/software/convert/CMakeFiles/aliceVision_convertRAW.dir/build.make:114: recipe for target 'Linux-x86_64/aliceVision_convertRAW-1.0' failed
+make[2]: *** [Linux-x86_64/aliceVision_convertRAW-1.0] Error 1
+CMakeFiles/Makefile2:4256: recipe for target 'src/software/convert/CMakeFiles/aliceVision_convertRAW.dir/all' failed
+make[1]: *** [src/software/convert/CMakeFiles/aliceVision_convertRAW.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+[ 53%] Linking CXX executable ../../../Linux-x86_64/aliceVision_utils_split360Images
+CMakeFiles/aliceVision_utils_split360Images.dir/main_split360Images.cpp.o: In function `splitDualFisheye(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)':
+main_split360Images.cpp:(.text+0x78b): undefined reference to `OpenImageIO_v2_1::ImageBuf::ImageBuf()'
+main_split360Images.cpp:(.text+0x82b): undefined reference to `OpenImageIO_v2_1::ImageBuf::ImageBuf()'
+main_split360Images.cpp:(.text+0x90e): undefined reference to `OpenImageIO_v2_1::ImageBufAlgo::cut(OpenImageIO_v2_1::ImageBuf&, OpenImageIO_v2_1::ImageBuf const&, OpenImageIO_v2_1::ROI, int)'
+main_split360Images.cpp:(.text+0xd22): undefined reference to `OpenImageIO_v2_1::ImageBuf::~ImageBuf()'
+main_split360Images.cpp:(.text+0xd3a): undefined reference to `OpenImageIO_v2_1::ImageBuf::~ImageBuf()'
+main_split360Images.cpp:(.text+0xe2b): undefined reference to `OpenImageIO_v2_1::ImageBuf::~ImageBuf()'
+main_split360Images.cpp:(.text+0xe43): undefined reference to `OpenImageIO_v2_1::ImageBuf::~ImageBuf()'
+CMakeFiles/aliceVision_utils_split360Images.dir/main_split360Images.cpp.o: In function `splitEquirectangular(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long, unsigned long)':
+main_split360Images.cpp:(.text+0x1b62): undefined reference to `OpenImageIO_v2_1::ImageBuf::ImageBuf()'
+main_split360Images.cpp:(.text+0x1b80): undefined reference to `OpenImageIO_v2_1::ImageBuf::specmod()'
+main_split360Images.cpp:(.text+0x1d06): undefined reference to `OpenImageIO_v2_1::ImageSpec::attribute(OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::TypeDesc, void const*)'
+main_split360Images.cpp:(.text+0x1d6f): undefined reference to `OpenImageIO_v2_1::ImageSpec::attribute(OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::TypeDesc, void const*)'
+main_split360Images.cpp:(.text+0x1dc4): undefined reference to `OpenImageIO_v2_1::ImageSpec::attribute(OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::TypeDesc, void const*)'
+main_split360Images.cpp:(.text+0x20b0): undefined reference to `OpenImageIO_v2_1::ImageBuf::~ImageBuf()'
+main_split360Images.cpp:(.text+0x245c): undefined reference to `OpenImageIO_v2_1::ImageBuf::~ImageBuf()'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::read(int, int, bool, OpenImageIO_v2_1::TypeDesc, bool (*)(void*, float), void*)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageSpec::ImageSpec(OpenImageIO_v2_1::TypeDesc)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBufAlgo::paste(OpenImageIO_v2_1::ImageBuf&, int, int, int, int, OpenImageIO_v2_1::ImageBuf const&, OpenImageIO_v2_1::ROI, int)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageInput::open(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, OpenImageIO_v2_1::ImageSpec const*)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::ImageBuf(OpenImageIO_v2_1::string_view, int, int, OpenImageIO_v2_1::ImageCache*, OpenImageIO_v2_1::ImageSpec const*)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBufAlgo::channel_sum(OpenImageIO_v2_1::ImageBuf&, OpenImageIO_v2_1::ImageBuf const&, OpenImageIO_v2_1::span<float const, -1l>, OpenImageIO_v2_1::ROI, int)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::ImageBuf(OpenImageIO_v2_1::ImageSpec const&, void*)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::roi() const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageSpec::ImageSpec(int, int, int, OpenImageIO_v2_1::TypeDesc)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::ImageBuf(OpenImageIO_v2_1::ImageSpec const&, OpenImageIO_v2_1::InitializePixels)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::initialized() const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::write(OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::TypeDesc, OpenImageIO_v2_1::string_view, bool (*)(void*, float), void*) const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::spec() const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::nchannels() const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::get_pixels(OpenImageIO_v2_1::ROI, OpenImageIO_v2_1::TypeDesc, void*, long, long, long) const'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBufAlgo::colorconvert(OpenImageIO_v2_1::ImageBuf&, OpenImageIO_v2_1::ImageBuf const&, OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::string_view, bool, OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::ColorConfig*, OpenImageIO_v2_1::ROI, int)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageBuf::copy(OpenImageIO_v2_1::ImageBuf const&, OpenImageIO_v2_1::TypeDesc)'
+../../../Linux-x86_64/libaliceVision_image.so.2.2: undefined reference to `OpenImageIO_v2_1::ImageSpec::get_string_attribute(OpenImageIO_v2_1::string_view, OpenImageIO_v2_1::string_view) const'
+collect2: error: ld returned 1 exit status
+src/software/utils/CMakeFiles/aliceVision_utils_split360Images.dir/build.make:114: recipe for target 'Linux-x86_64/aliceVision_utils_split360Images-1.0' failed
+make[2]: *** [Linux-x86_64/aliceVision_utils_split360Images-1.0] Error 1
+CMakeFiles/Makefile2:5271: recipe for target 'src/software/utils/CMakeFiles/aliceVision_utils_split360Images.dir/all' failed
+make[1]: *** [src/software/utils/CMakeFiles/aliceVision_utils_split360Images.dir/all] Error 2
+[ 53%] Linking CXX shared library ../../../Linux-x86_64/libaliceVision_hdr.so
+[ 53%] Built target aliceVision_hdr
+[ 53%] Linking CXX shared library ../../../Linux-x86_64/libaliceVision_feature.so
+[ 53%] Built target aliceVision_feature
+[ 53%] Linking CXX shared library ../../../Linux-x86_64/libaliceVision_geometry.so
+[ 53%] Built target aliceVision_geometry
+[ 53%] Linking CXX executable ../../../Linux-x86_64/MeshSDFilter
+/usr/bin/c++  -I/usr/local/include -march=skylake -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mfma -mbmi2 -mavx2 -mno-sse4a -mno-xop -mno-fma4 -mno-avx512f -mno-avx512vl -mno-avx512pf -mno-avx512er -mno-avx512cd -mno-avx512dq -mno-avx512bw -mno-avx512ifma -mno-avx512vbmi -Werror=return-type -Werror=switch -Werror=return-local-addr -fopenmp -Wall -Wextra -O3 -march=native -mtune=native  -L/usr/local/lib -rdynamic CMakeFiles/MeshSDFilter.dir/MeshSDFilter.cpp.o  -o ../../../Linux-x86_64/MeshSDFilter   -L/usr/local/cuda/lib64  -L/usr/local  -Wl,-rpath,/usr/local/cuda/lib64:/usr/local -fopenmp ../../../Linux-x86_64/libOpenMesh.a 
+[ 53%] Built target MeshSDFilter
+[ 53%] Linking CXX executable ../../../Linux-x86_64/MeshDenoiser
+/usr/bin/c++  -I/usr/local/include -march=skylake -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mfma -mbmi2 -mavx2 -mno-sse4a -mno-xop -mno-fma4 -mno-avx512f -mno-avx512vl -mno-avx512pf -mno-avx512er -mno-avx512cd -mno-avx512dq -mno-avx512bw -mno-avx512ifma -mno-avx512vbmi -Werror=return-type -Werror=switch -Werror=return-local-addr -fopenmp -Wall -Wextra -O3 -march=native -mtune=native  -L/usr/local/lib -rdynamic CMakeFiles/MeshDenoiser.dir/MeshDenoiser.cpp.o  -o ../../../Linux-x86_64/MeshDenoiser   -L/usr/local/cuda/lib64  -L/usr/local  -Wl,-rpath,/usr/local/cuda/lib64:/usr/local -fopenmp ../../../Linux-x86_64/libOpenMesh.a 
+[ 53%] Built target MeshDenoiser
+Makefile:129: recipe for target 'all' failed
+make: *** [all] Error 2
+
+
+================================
+
+
 [ 42%] Linking CXX executable ../../../Linux-x86_64/aliceVision_test_image_resampling
 /usr/bin/ld: warning: libboost_regex.so.1.65.1, needed by /usr/lib/libOpenImageIO.so, may conflict with libboost_regex.so.1.72.0
 CMakeFiles/aliceVision_test_image_resampling.dir/resampling_test.cpp.o: In function `std::vector<OpenImageIO_v2_1::ParamValue, std::allocator<OpenImageIO_v2_1::ParamValue> >::~vector()':
