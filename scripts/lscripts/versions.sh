@@ -27,6 +27,15 @@ local NVIDIA_DRIVER_VER="435"
 # local NVIDIA_DRIVER_VER="440"
 
 ##----------------------------------------------------------
+local CMAKE_VER="3.11"
+local CMAKE_BUILD="0"
+#
+local CMAKE_VER="3.16"
+local CMAKE_BUILD="0"
+#
+local CMAKE_REL="${CMAKE_VER}.${CMAKE_BUILD}"
+
+##----------------------------------------------------------
 ## Docker version
 ##----------------------------------------------------------
 ## for Nvidia container runtime for GPU docker
@@ -163,9 +172,25 @@ local OpenCV_REL="4.2.0"
 ##----------------------------------------------------------
 local OpenSfM_REL="v0.3.0"
 ##----------------------------------------------------------
+local OpenDroneMap_REL="v0.9.1"
+##----------------------------------------------------------
+local OpenImageIO_REL="Release-2.1.9.0"
+##----------------------------------------------------------
+# https://github.com/AcademySoftwareFoundation/openexr/releases
+local OPENEXR_REL="v2.4.0"
+##----------------------------------------------------------
+# https://github.com/alembic/alembic/releases
+local ALEMBIC_REL="1.7.12"
+##----------------------------------------------------------
+local GEOGRAM_VER="1.7.3"
+##----------------------------------------------------------
+local MESHROOM_REL="v2019.2.0"
+##----------------------------------------------------------
 local CloudCompare_REL="v2.10.3"
 ##----------------------------------------------------------
 local HAROOPAD_VER="0.13.1"
 ##----------------------------------------------------------
-local MAGMA_VER="2.5.0-rc1"
+# http://icl.utk.edu/projectsfiles/magma/downloads/
+local MAGMA_VER="2.5.1"
+local MAGMA_VER="2.5.2"
 ##----------------------------------------------------------

@@ -14,10 +14,11 @@
 ## https://ci.appveyor.com/project/cignoni/meshlab
 #
 ## meshlap_full.pro fails with error for plugin compilation
-## https://github.com/cnr-isti-vclab/meshlab/blob/master/src/README.md
+## https://github.com/cnr-isti-vclab/meshlab/blob/master/src/READit stME.md
+#
+## https://snapcraft.io/install/meshlab/ubuntu
 #
 ##----------------------------------------------------------
-
 
 function meshlab_install() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
@@ -85,4 +86,8 @@ function meshlab_install() {
   ## https://github.com/cnr-isti-vclab/meshlab/issues/258
 }
 
-meshlab_install
+# meshlab_install
+
+
+sudo apt -y install snapd
+sudo snap -y install meshlab

@@ -9,53 +9,82 @@
 #
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
-
-source $LSCRIPTS/lscripts.config.sh
-
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
 
 
-PROG="popsift"
-DIR="$PROG"
-PROG_DIR="$BASEPATH/$PROG"
+function popsift_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-URL="https://github.com/alicevision/$PROG.git"
+  ## upgrade to cmake 3.16.0
+  ## https://codeyarns.com/2019/03/20/caffe-cuda_cublas_device_library-error/
+  # source ${LSCRIPTS}/cmake.upgrade.sh
 
-echo "Number of threads will be used: $NUMTHREADS"
-echo "BASEPATH: $BASEPATH"
-echo "URL: $URL"
-echo "PROG_DIR: $PROG_DIR"
+  if [ -z "${BASEPATH}" ]; then
+    local BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
 
-if [ ! -d $PROG_DIR ]; then
-  ## git version 1.6+
-  # git clone --recursive $URL
+  sudo apt install libdevil-dev
 
-  ## git version >= 2.8
-  # git clone --recurse-submodules -j8 $URL $PROG_DIR
-  git -C $PROG_DIR || git clone $URL $PROG_DIR
-else
-  echo Git clone for $URL exists at: $PROG_DIR
-fi
+  local PROG="popsift"
+  local DIR="${PROG}"
+  local PROG_DIR="${BASEPATH}/${PROG}"
 
-if [ -d $PROG_DIR/build ]; then
-  rm -rf $PROG_DIR/build
-fi
+  local URL="https://github.com/alicevision/${PROG}.git"
 
-mkdir $PROG_DIR/build
-cd $PROG_DIR/build
-cmake ..
-make -j$NUMTHREADS
-sudo make install -j$NUMTHREADS
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-cd $LINUX_SCRIPT_HOME
+  if [ ! -d ${PROG_DIR} ]; then
+    ## git version 1.6+
+    # git clone --recursive ${URL}
+
+    ## git version >= 2.8
+    # git clone --recurse-submodules -j8 ${URL} ${PROG_DIR}
+    git -C ${PROG_DIR} || git clone ${URL} ${PROG_DIR}
+  else
+    echo Git clone for ${URL} exists at: ${PROG_DIR}
+  fi
+
+  if [ -d ${PROG_DIR}/build ]; then
+    rm -rf ${PROG_DIR}/build
+  fi
+
+  mkdir ${PROG_DIR}/build
+  cd ${PROG_DIR}/build
+  cmake ..
+
+  # cmake -D BUILD_SHARED_LIBS=ON \
+  #   -D CMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib \
+  #   -D CMAKE_INSTALL_PREFIX=/usr/local \
+  #   -D CMAKE_CXX_FLAGS=-I/usr/local/include \
+  #   -D CMAKE_C_FLAGS="-I/usr/local/include -L/usr/local/lib" ..
+
+  make -j${NUMTHREADS}
+  sudo make install -j${NUMTHREADS}
+
+  cd ${LSCRIPTS}
 
 
-##----------------------------------------------------------
-## Build Logs
-##----------------------------------------------------------
+  ##----------------------------------------------------------
+  ## Build Logs
+  ##----------------------------------------------------------
+
+  # libIL.so: undefined reference to `TIFFSetErrorHandler@LIBTIFF_4.0'
+
+  # https://codeyarns.com/2019/03/20/caffe-cuda_cublas_device_library-error/
+
+  # CMake Error: The following variables are used in this project, but they are set to NOTFOUND.
+  # Please set them or make sure they are set and tested correctly in the CMake files:
+  # CUDA_cublas_device_LIBRARY (ADVANCED)
+  #     linked by target "popsift" in directory /codehub/external/popsift/src
+
+  # -- Configuring incomplete, errors occurred!
+  # See also "/codehub/external/popsift/build/CMakeFiles/CMakeOutput.log".
+  # See also "/codehub/external/popsift/build/CMakeFiles/CMakeError.log".
+
+}
+
+popsift_install

@@ -4,7 +4,7 @@
 
 docker container stop detectron2_2 && docker container rm detectron2_2
 
-docker run --gpus=all -it --name detectron2_2 -p 8888:8888 --env="DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw"  --volume="/aimldl-cod:/aimldl-cod:rw"  --volume="/codehub:/codehub:rw" --volume="/aimldl-dat:/aimldl-dat:rw" detectron2:v0
+docker run --gpus=all -it --name detectron2 -p 8888:8888 --ipc=host --env="DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw"  --volume="/aimldl-cod:/aimldl-cod:rw"  --volume="/codehub:/codehub:rw" --volume="/aimldl-dat:/aimldl-dat:rw" detectron2:v0
 
 xhost + local:detectron2_2
 docker container start detectron2_2

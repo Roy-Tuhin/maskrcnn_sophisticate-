@@ -51,25 +51,25 @@ function ceres_solver_install() {
   source ${LSCRIPTS}/lscripts.config.sh
 
   if [ -z "${BASEPATH}" ]; then
-    BASEPATH="${HOME}/softwares"
+    local BASEPATH="${HOME}/softwares"
     echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
   fi
 
   if [ -z "${CERES_SOLVER_REL}" ]; then
-    CERES_SOLVER_REL="-1.14.0"
-    CERES_SOLVER_REL_TAG="1.14.0"
+    local CERES_SOLVER_REL="-1.14.0"
+    local CERES_SOLVER_REL_TAG="1.14.0"
     echo "Unable to get CERES_SOLVER_REL version, falling back to default version#: ${CERES_SOLVER_REL}"
   fi
 
   sudo apt -y install libsuitesparse-dev
 
-  # CERES_SOLVER_REL=""
-  # CERES_SOLVER_REL="-1.10.0"
-  # CERES_SOLVER_REL="-1.14.0"
-  DIR="ceres-solver"
-  PROG_DIR="${BASEPATH}/${DIR}${CERES_SOLVER_REL}"
+  # local CERES_SOLVER_REL=""
+  # local CERES_SOLVER_REL="-1.10.0"
+  # local CERES_SOLVER_REL="-1.14.0"
+  local DIR="ceres-solver"
+  local PROG_DIR="${BASEPATH}/${DIR}${CERES_SOLVER_REL}"
 
-  URL="https://ceres-solver.googlesource.com/${DIR}"
+  local URL="https://ceres-solver.googlesource.com/${DIR}"
 
   echo "Number of threads will be used: ${NUMTHREADS}"
   echo "BASEPATH: ${BASEPATH}"
@@ -94,8 +94,13 @@ function ceres_solver_install() {
 
   mkdir ${PROG_DIR}/build
 
+  ## https://github.com/alicevision/AliceVisionDependencies/blob/master/ci/install-ceres.sh
   cd ${PROG_DIR}/build
-  cmake .. -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC
+  cmake -DCMAKE_C_FLAGS=-fPIC \
+        -DCMAKE_CXX_FLAGS="-fPIC -I/usr/local/include -DEIGEN_DONT_ALIGN_STATICALLY=1 -DEIGEN_DONT_VECTORIZE=1" \
+        -DCMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCMAKE_INSTALL_PREFIX=/usr/local ..
 
   ## not required
   # ccmake ..

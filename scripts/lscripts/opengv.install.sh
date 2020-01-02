@@ -45,7 +45,10 @@ function opengv_install() {
   ## URL="https://github.com/laurentkneip/${DIR}"
 
   ### https://github.com/mapillary/OpenSfM/issues/212
-  local URL="https://github.com/paulinus/${DIR}.git"
+  # local URL="https://github.com/paulinus/${DIR}.git"
+
+  ## AliceVision
+  URL="https://github.com/laurentkneip/${DIR}.git"
 
   echo "Number of threads will be used: ${NUMTHREADS}"
   echo "BASEPATH: ${BASEPATH}"
@@ -62,17 +65,25 @@ function opengv_install() {
     rm -rf ${PROG_DIR}/build
   fi
 
+  ## python/pybind11
+  git submodule update --init --recursive
+
   mkdir ${PROG_DIR}/build
   cd ${PROG_DIR}/build
   ## enable PYTHON for openSfM
-  cmake -D BUILD_PYTHON=ON ..
+  cmake -DBUILD_PYTHON=ON \
+        -DCMAKE_EXE_LINKER_FLAGS=-L/usr/local/lib \
+        -DCMAKE_CXX_FLAGS="-I/usr/local/include -DEIGEN_DONT_ALIGN_STATICALLY=1 -DEIGEN_DONT_VECTORIZE=1" \
+        -DCMAKE_C_FLAGS="-I/usr/local/include -L/usr/local/lib" \
+        -DPYBIND11_INSTALL=ON .. \
+        -DBUILD_SHARED_LIBS=ON ..
 
   ## ccmake ..
 
-  make -j${NUMTHREADS}
-  sudo make install -j${NUMTHREADS}
+  # make -j${NUMTHREADS}
+  # sudo make install -j${NUMTHREADS}
 
-  cd ${LSCRIPTS}
+  # cd ${LSCRIPTS}
 
 
   ##----------------------------------------------------------
@@ -91,6 +102,7 @@ function opengv_install() {
   # CMake Error at python/CMakeLists.txt:7 (pybind11_add_module):
   #   Unknown CMake command "pybind11_add_module".
 
+  # git submodule update --init --recursive
   ##----------------------------------------------------------
 
   # https://stackoverflow.com/questions/5327325/conflict-between-boost-opencv-and-eigen-libraries

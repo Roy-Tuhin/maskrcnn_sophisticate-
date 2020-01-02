@@ -20,6 +20,9 @@ import logging
 import logging.config
 from easydict import EasyDict as edict
 
+from detectron2.evaluation import COCOEvaluator, inference_on_dataset
+from detectron2.data import build_detection_test_loader
+
 #prediction
 from detectron2.engine import DefaultPredictor
 from detectron2.utils.visualizer import ColorMode
@@ -42,6 +45,11 @@ logging.config.dictConfig(logcfg)
 appcfg = _cfg_.load_appcfg(BASE_PATH_CONFIG)
 appcfg = edict(appcfg)
 
+HOST = "10.4.71.69"
+AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119"
+appcfg['APP']['DBCFG']['PXLCFG']['host'] = HOST
+appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'] = AI_ANNON_DATA_HOME_LOCAL
+
 ## TODO: fix the path if any loading problem comes
 ## AI_DETECTRON_ROOT = "/codehub/external/detectron2"
 
@@ -52,6 +60,22 @@ from detectron2.config import config
 from detectron2.engine import DefaultTrainer
 
 this = sys.modules[__name__]
+
+
+def visualize_predictions(im, outputs, metadata):
+    v = visualizer.Visualizer(im[:, :, ::-1],
+                   metadata=metadata, 
+                   scale=0.8, 
+                   instance_mode=ColorMode.SEGMENTATION   # remove the colors of unsegmented pixels
+    )
+    v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+    cv2.imshow('', v.get_image()[:, :, ::-1])
+    cv2.waitKey(0)
+
+
+def get_dataset_name(name, subset):
+    return name + '_' + subset
+
 
 def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode):
     # print(anns)
@@ -110,36 +134,31 @@ def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode):
     return dataset_dicts
 
 
-def get_data(subset):
+def get_data(subset, _appcfg):
     ## TODO: to be passed through cfg
-    HOST = "10.4.71.69"
-    AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119"
 
     cmd = "train"
     dbname = "PXL-291119_180404"
     exp_id = "train-422d30b0-f518-4203-9c4d-b36bd8796c62"
     eval_on = subset
-
-    appcfg['APP']['DBCFG']['PXLCFG']['host'] = HOST
-    appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'] = AI_ANNON_DATA_HOME_LOCAL
-    # log.debug(appcfg)
-    # log.info(appcfg['APP']['DBCFG']['PXLCFG'])
-    # log.info(appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'])
+    # log.debug(_appcfg)
+    # log.info(_appcfg['APP']['DBCFG']['PXLCFG'])
+    # log.info(_appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'])
 
     ## datacfg and dbcfg
-    _cfg_.load_datacfg(cmd, appcfg, dbname, exp_id, eval_on)
-    datacfg = apputil.get_datacfg(appcfg)
-    dbcfg = apputil.get_dbcfg(appcfg)
+    _cfg_.load_datacfg(cmd, _appcfg, dbname, exp_id, eval_on)
+    datacfg = apputil.get_datacfg(_appcfg)
+    dbcfg = apputil.get_dbcfg(_appcfg)
     # log.info("datacfg: {}".format(datacfg))
     # log.info("dbcfg: {}".format(dbcfg))
 
     ## archcfg, cmdcfg
-    _cfg_.load_archcfg(cmd, appcfg, dbname, exp_id, eval_on)
-    archcfg = apputil.get_archcfg(appcfg)
+    _cfg_.load_archcfg(cmd, _appcfg, dbname, exp_id, eval_on)
+    archcfg = apputil.get_archcfg(_appcfg)
     log.debug("archcfg: {}".format(archcfg))
     cmdcfg = archcfg
 
-    dataset, num_classes, num_images, class_names, total_stats, total_verify = apputil.get_dataset_instance(appcfg, dbcfg, datacfg, subset)
+    dataset, num_classes, num_images, class_names, total_stats, total_verify = apputil.get_dataset_instance(_appcfg, dbcfg, datacfg, subset)
 
     log.debug("class_names: {}".format(class_names))
     log.debug("len(class_names): {}".format(len(class_names)))
@@ -167,13 +186,13 @@ def get_data(subset):
     imgs = annon.loadImgs(img_ids)
     anns = [annon.imgToAnns[img_id] for img_id in img_ids]
 
-    return appcfg, class_ids, id_map, imgs, anns
+    return class_ids, id_map, imgs, anns
 
 
-def load_and_register_dataset(name, subset):
-    appcfg, class_ids, id_map, imgs, anns = get_data(subset)
+def load_and_register_dataset(name, subset, _appcfg):
+    class_ids, id_map, imgs, anns = get_data(subset, _appcfg)
 
-    DatasetCatalog.register(name+"_"+subset, lambda subset=subset: get_dataset_dicts(appcfg, class_ids, id_map, imgs, anns, BoxMode.XYWH_ABS))
+    DatasetCatalog.register(name+"_"+subset, lambda subset=subset: get_dataset_dicts(_appcfg, class_ids, id_map, imgs, anns, BoxMode.XYWH_ABS))
     # DatasetCatalog.register("balloon_" + d, lambda d=d: get_balloon_dicts("/aimldl-dat/temp/balloon/" + d))
     # MetadataCatalog.get(name+"_"+subset).set(thing_classes=["balloon"])
 
@@ -185,10 +204,12 @@ def load_and_register_dataset(name, subset):
     return metadata
 
 
-def train(args, mode, appcfg):
+###----------
+
+def train(args, mode, _appcfg):
     name = 'hmd'
     for subset in ["train", "val"]:
-        metadata = load_and_register_dataset(name, subset)
+        metadata = load_and_register_dataset(name, subset, _appcfg)
 
     # N = 20
     # for d in random.sample(dataset_dicts, N):
@@ -221,25 +242,17 @@ def train(args, mode, appcfg):
     trainer.train()
 
 
-def visualize_predictions(im, outputs, metadata):
-    v = visualizer.Visualizer(im[:, :, ::-1],
-                   metadata=metadata, 
-                   scale=0.8, 
-                   instance_mode=ColorMode.SEGMENTATION   # remove the colors of unsegmented pixels
-    )
-    v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-    cv2.imshow('', v.get_image()[:, :, ::-1])
-    cv2.waitKey(0)
-
-
-def predict(args, mode, appcfg):
-    N = 10
-    name = 'hmd'
+def predict(args, mode, _appcfg):
+    name = "hmd"
     subset = "train"
-    dataset_name = name+"_"+subset
+    dataset_name = get_dataset_name(name, subset)
 
     cfg = config.get_cfg()
+    cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+
+    cfg.OUTPUT_DIR = "/codehub/apps/detectron2/release"
     cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
+
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7   # set the testing threshold for this model
     cfg.DATASETS.TEST = (dataset_name)
     print("cfg: {}".format(cfg))
@@ -249,17 +262,21 @@ def predict(args, mode, appcfg):
 
     predictor = DefaultPredictor(cfg)
 
+
     output_pred_filepath = os.path.join(cfg.OUTPUT_DIR, 'pred.json')
 
-    N =20
-    
+    N = 1
     with open(output_pred_filepath,'a') as fw:
         # for i, d in enumerate(dataset_dicts):
         for d in random.sample(dataset_dicts, N):
             image_filepath = d["file_name"]
             # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114342_16718_zed_l_057.jpg"
+            # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114252_16716_zed_l_099.jpg"
             im = cv2.imread(image_filepath)
-            outputs = predictor(im)
+         
+            # outputs = predictor(im)
+            outputs = predictor.model(im)
+
             one = { 'result' : outputs, 'filepath': image_filepath}
             fw.write(json.dumps(str(one)))
             fw.write('\n')
@@ -269,11 +286,50 @@ def predict(args, mode, appcfg):
             v = visualizer.Visualizer(im[:, :, ::-1],
                    metadata=metadata, 
                    scale=0.8, 
-                   instance_mode=ColorMode.SEGMENTATION   # remove the colors of unsegmented pixels
+                   instance_mode=ColorMode.SEGMENTATION
             )
             v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
             cv2.imshow('', v.get_image()[:, :, ::-1])
             cv2.waitKey(0)
+
+
+def evaluate(args, mode, _appcfg):
+    name = "hmd"
+    subset = "train"
+    dataset_name = get_dataset_name(name, subset)
+
+    metadata = load_and_register_dataset(name, subset, _appcfg)
+
+
+    cfg = config.get_cfg()
+    cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    cfg.DATASETS.TEST = (dataset_name)
+
+    cfg.OUTPUT_DIR = "/codehub/apps/detectron2/release"
+    cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
+
+    cfg.DATALOADER.NUM_WORKERS = 1
+    cfg.SOLVER.IMS_PER_BATCH = 1
+    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset
+    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3
+
+    # mapper = DatasetMapper(cfg, False)
+    _loader = build_detection_test_loader(cfg, dataset_name)
+    evaluator = COCOEvaluator(dataset_name, cfg, False, output_dir=cfg.OUTPUT_DIR)
+
+    # trainer = DefaultTrainer(cfg)
+    # trainer.resume_or_load(resume=False)
+    # trainer.model
+
+    predictor = DefaultPredictor(cfg)
+    model = predictor.model
+
+    inference_on_dataset(model, _loader, evaluator)
+
+
+def tdd(args, mode, _appcfg):
+    log.info("Test Driven Development: TDD")
+    log.info("_appcfg: {}".format(_appcfg))
 
 
 def main(args):
@@ -342,7 +398,6 @@ def parse_args(commands):
     mode = "training"
   else:
     mode = "inference"
-    raise Exception("Undefined command!")
 
   args.mode = mode
 
@@ -350,7 +405,7 @@ def parse_args(commands):
 
 
 if __name__ == '__main__':
-    commands = ['train', 'predict', 'evaluate', 'visualize', 'inspect_annon']
+    commands = ['train', 'predict', 'evaluate', 'visualize', 'inspect_annon', 'tdd']
     args = parse_args(commands)
     log.debug("args: {}".format(args))
 
