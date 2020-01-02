@@ -17,52 +17,48 @@ function run_batch_train_evaluate(){
 
   for dataset in "${datasets[@]}"; do
 
-    local timestamp_job_create_start=$(date -d now +'%d%m%y_%H%M%S')
-
-    ## TODO: careful: somehow working, but not sure why single quotes to be there
     timestamp=$(date -d now +'%d%m%y_%H%M%S')
+    dataset_train=${AI_AIDS_DB}/${dataset}/training
 
-    prog_log=$log_base_path/train/lanenet-$timestamp.log 2>&1
 
     ##-----------Train
+    prog_log=$base_log_dir/train/lanenet-$timestamp.log
     info "Executing this command... train"
     info "Log file: ${prog_log}"
 
-    ## Uncomment if training is required
-    echo "python ${prog_train} --dataset ${dataset_path} --weights_path ${pre_trained_model} -m 0 1>$prog_log"
-    python ${prog_train} --dataset ${dataset_path} --weights_path ${pre_trained_model} -m 0 1>$prog_log
+    echo "python ${prog_train} --net vgg --dataset ${dataset_train} --weights_path ${pre_trained_model} -m 0 1>$prog_log 2>&1"
+    # python ${prog_train} --net vgg --dataset ${dataset_train} --weights_path ${pre_trained_model} -m 0 1>$prog_log 2>&1
 
 
-    ## To ensure no dummy prog running
     pids=$(pgrep -f ${prog_train})
     info "These ${prog_train} pids will be killed: ${pids}"
     pkill -f ${prog_train}
 
-    model_path 
+    ckpt_path=$(ls -td ${ckpt_basepath}* | head -n 1) 
+    ckpt=$(ls -t ${ckpt_path} | head -1 | cut -d. -f1-2 ) 
 
+    model=${ckpt_path}/${ckpt}
 
+    dataset_eval=$(ls ${AI_AIDS_DB}/${dataset}/testing/)
+    dataset_eval_path=${AI_AIDS_DB}/${dataset}/testing/${dataset_eval}
 
-    ##-----------Evaluate
-    for eval_on in "${on_param[@]}"; do
+    #-----------Evaluate
+    info "Executing this command... evaluate"
 
-      info "Executing this command... evaluate"
+    echo "python ${prog_evaluate} evaluate --src ${dataset_eval_path} --weights_path ${model}" 
+    # python ${prog_evaluate} evaluate --src ${dataset_eval_path} --weights_path ${model}
 
-      info "python ${prog_evaluate} evaluate --dataset_dir ${aids_db_name} --weights_path ${weights_path} 
-      # python ${prog_falcon} evaluate --dataset ${aids_db_name} --on ${eval_on} --iou ${iou} --exp ${expid_evaluate} 1>${evaluate_prog_log} 2>&1
+    ## Kill exisiting python programs before starting new
+    pids=$(pgrep -f ${prog_evaluate})
+    info "These ${prog_evaluate} pids will be killed: ${pids}"
+    pkill -f ${prog_evaluate}
 
-      info "===x==x==x==="
-
-      ## Kill exisiting python programs before starting new
-      pids=$(pgrep -f ${prog_evaluate})
-      info "These ${prog_evaluate} pids will be killed: ${pids}"
-      pkill -f ${prog_evaluate}
-    done
-
+    info "===x==x==x==="
   done
 
   execution_end_time=$(date)
   info "execution_end_time: ${execution_end_time}"
-  info "summary_filepath: ${summary_filepath}"
+  # info "summary_filepath: ${summary_filepath}"
   echo -e '\e[0;31m'End Script: -------x-------x-------x-------'\e[0m'
 }
 
