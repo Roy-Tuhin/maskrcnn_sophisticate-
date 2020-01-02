@@ -1,3 +1,7 @@
-# model=$(stat -c '%n' /home/nikhil/Documents/* | sort -k1,1nr | head -1)
-model=$(stat -c '%n' /aimldl-dat/logs/lanenet/model/061219_175743/* | sort -k1,1nr | head -1)
-echo ${model}
+#!/bin/bash
+
+model_basepath=/aimldl-dat/logs/lanenet/model/
+model_path=$(ls -td ${model_basepath}* | head -n 1) 
+model=$(ls -t ${model_path} | head -1 | cut -d. -f1-2 ) 
+
+echo ${model_path}/${model}
