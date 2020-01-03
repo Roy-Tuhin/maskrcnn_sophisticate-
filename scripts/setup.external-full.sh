@@ -1,0 +1,12 @@
+git clone https://github.com/sercant/android-segmentation-app.git
+git clone https://github.com/mangalbhaskar/codehub.git
+git clone https://github.com/mangalbhaskar/cloudy_vision.git
+git clone https://github.com/mangalbhaskar/cloudy_vision_web.git
+git clone https://github.com/ductm104/echocardiography.git
+git clone https://github.com/mangalbhaskar/keras-retinanet
+git clone https://github.com/amir-abdi/keras_to_tensorflow.git
+git clone https://github.com/nikhilbv/lanenet-lane-detection.git
+git clone https://github.com/mapbox/mapbox-vision-android.git
+git clone https://github.com/mangalbhaskar/Mask_RCNN.git
+git clone https://github.com/gustavz/Mobile_Mask_RCNN.git
+git clone https://github.com/nikhilbv/TuSimple-lane-classes.git
