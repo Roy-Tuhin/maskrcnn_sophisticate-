@@ -19,13 +19,15 @@ function get_git_urls() {
   touch ${FILE}
   ls -ltr ${FILE}
 
-  echo "FILE: ${FILE}"
   echo "DIR_ARRAY: ${DIR_ARRAY[@]}"
+  echo "==========================="
 
+  echo "FILE: ${FILE}"
+  echo "==========================="
   for repo in "${DIR_ARRAY[@]}"; do
     cd ${repo}
     local LINE=$(echo "git clone https:"$(git remote -v | grep -i fetch | cut -d':' -f2 | cut -d' ' -f1))
-    echo "LINE: ${LINE}"
+    echo "${LINE}"
     grep -qF "${LINE}" "${FILE}" || echo "${LINE}" >> "${FILE}"
   done
 
