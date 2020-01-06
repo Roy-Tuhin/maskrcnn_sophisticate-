@@ -76,9 +76,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       ${PYTHON} \
       ${PYTHON}-dev \
       ${PYTHON}-pip \
+      ${PYTHON}-tk \
       swig \
       grep \
       vim \
+      feh \
       sudo \
       libpng-dev \
       libjpeg-dev \

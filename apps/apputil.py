@@ -199,7 +199,10 @@ def get_dataset_instance(appcfg, dbcfg, datacfg, subset):
   log.info("-------------------------------->")
   log.debug("datacfg: {}".format(datacfg))
   log.debug("dbcfg: {}".format(dbcfg))
-  datamod = import_module('utils.'+datacfg.dataclass)
+
+  # datamod = import_module('utils.'+datacfg.dataclass)
+  ## TODO: detecron2 specific change, to be tested, looks good but still to keep a watch on it
+  datamod = import_module('falcon.utils.'+datacfg.dataclass)
   datamodcls = getattr(datamod, datacfg.dataclass)
   name = datacfg.name
   dataset = datamodcls(name)
