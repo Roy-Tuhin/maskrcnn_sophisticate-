@@ -4,28 +4,28 @@
 ### common configurations
 ##----------------------------------------------------------
 
-MACHINE_ARCH=$(uname -m)
+local MACHINE_ARCH=$(uname -m)
 
-USER_ID=$(id -u)
-GRP_ID=$(id -g)
+local USER_ID=$(id -u)
+local GRP_ID=$(id -g)
 
-USR=$(id -u -n)
-GRP=$(id -g -n)
+local USR=$(id -u -n)
+local GRP=$(id -g -n)
 
-LOCAL_HOST=`hostname`
+local LOCAL_HOST=`hostname`
 
-OSTYPE=$(uname -s) ## Linux, Darwin
+local OSTYPE=$(uname -s) ## Linux, Darwin
 
 ### -------------------------------------------
 ## TODO: make parameterized function to return specific color code
 
-nocolor='\e[0m'    # text reset
-biwhi='\e[1;97m';
-bired='\e[1;91m';
-biyel='\e[1;93m';
-gre='\e[0;32m';
-on_ired='\e[0;101m';
-icya='\e[0;96m';
+local nocolor='\e[0m'    # text reset
+local biwhi='\e[1;97m';
+local bired='\e[1;91m';
+local biyel='\e[1;93m';
+local gre='\e[0;32m';
+local on_ired='\e[0;101m';
+local icya='\e[0;96m';
 
 # # regular           bold                underline           high intensity      boldhigh intens     background          high intensity backgrounds
 # bla='\e[0;30m';     bbla='\e[1;30m';    ubla='\e[4;30m';    ibla='\e[0;90m';    bibla='\e[1;90m';   on_bla='\e[40m';    on_ibla='\e[0;100m';
@@ -68,9 +68,9 @@ function get_now() {
 }
 
 function print_time() {
-  END_TIME=$(get_now)
-  ELAPSED_TIME=$(echo "$END_TIME - $START_TIME" | bc -l)
-  MESSAGE="Took ${ELAPSED_TIME} seconds"
+  local END_TIME=$(get_now)
+  local ELAPSED_TIME=$(echo "$END_TIME - $START_TIME" | bc -l)
+  local MESSAGE="Took ${ELAPSED_TIME} seconds"
   info "${MESSAGE}"
 }
 
