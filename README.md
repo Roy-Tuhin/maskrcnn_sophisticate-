@@ -35,7 +35,8 @@ tags: ubuntu, linuxscripts, docker, aimldl, android, raspberry-pi
       ```bash
       wget -O - https://raw.githubusercontent.com/mangalbhaskar/codehub/master/scripts/codehub.init.sh | bash
       ```
-    * Close the terminal and open the new terminal for the next steps for the environment variables to reflect in the shell
+    * **IMP NOTE:**
+      * Close the terminal and **open the new terminal for the next steps** for the environment variables to reflect in the shell
 2. **Install the required software**
     * Ref: [How to Setup System and Install Required Software](readme/scripts.system.md)
     * Before setting up AI environment, ensure that the python is installed and virtualenv is properly configured. Default path of virtualenv would be: `/codehub/virtualmachines/virtualenvs`. This is to ensure maximum portability.
@@ -53,36 +54,34 @@ tags: ubuntu, linuxscripts, docker, aimldl, android, raspberry-pi
 * [hub.docker.com - mangalbhaskar/aimldl](https://hub.docker.com/r/mangalbhaskar/aimldl)
 
 
-## Design Philosophy
+## Design Philosophy - Development workflow
 
-* **Development workflow - `codehub`**
-  * **Save time by automating the repetitive steps** in setting up the development environment and toolchain
-    * Provide sustainable and re-producible setup workflow and data-pipeline
-  * **Ease the migrating from one system to another**, in case of new setup after formatting of the system, system crashes
-    * **Enforce consistency** in software development activities across individuals and team
-    * **Taking care of system nuances** like change in the user name, uid, gid and other subtle yet critical differences
-  * **Maintaining diversity in project dependencies** by providing consistent docker containers, virtual environments
-  * **Compatibility** for different type of devices; desktop/laptops, mobile, raspberry-pi and other edge devices
-  * **Multi-purpose built** for tasks with or without docker containers
-    * Computer Vision and Image Processing
-    * AI: Machine Learning, Deep Learning
-    * Deep Learning
-    * 3D GIS - Photogrammetry, Point Cloud, LiDAR, 3D Modeling
-    * Data Analysis, Data Visualization
-    * VR, AR
-    * Computer Graphics, VFX, 3D
-  * **`codehub` strive to strike this by providing flexible conventions to:**
-    * Creates the directory setup for code, data, configurations, logs etc.
-      * Creating separate directories based on functionality, growth rate, expected size and velocity of change
-      * All the top level directories can be managed independently
-      * Top level directories can be stored on different remote locations and mounted locally to work across distributed systems
-    * Creating consistent local and remote system mount points with proper permissions for distributed system workflow
-    * Creating up-to-date documentations, specifications and knowledge sharing collaterals
-    * Empowers to implement the distributed workflow across different machines and devices
-    * Creates a dedicated AI workflow referred as: **`aimldl`**
-      * Plug-n-play of different DNN architectures, external software components and libraries
-    * Empowering individuals to setup the practice code repo that is shared within team
-    * Encouraging seamless integration with cloud services - storage, apis, project management tools, communication channels
+* **Save time by automating the repetitive steps** in setting up the development environment and toolchain
+  * Provide sustainable and re-producible setup workflow and data-pipeline
+* **Ease the migrating from one system to another**, in case of new setup after formatting of the system, system crashes
+  * **Enforce consistency** in software development activities across individuals and team
+  * **Taking care of system nuances** like change in the user name, uid, gid and other subtle yet critical differences
+* **Maintaining diversity in project dependencies** by providing consistent docker containers, virtual environments
+* **Compatibility** for different type of devices; desktop/laptops, mobile, raspberry-pi and other edge devices
+* **Multi-purpose built** for tasks with or without docker containers
+  * Computer Vision and Image Processing
+  * AI: Machine Learning, Deep Learning
+  * 3D GIS - Photogrammetry, Point Cloud, LiDAR, 3D Modeling
+  * Data Analysis, Data Visualization
+  * VR, AR
+  * Computer Graphics, VFX, 3D
+* **`codehub` strive to strike this by providing flexible conventions to:**
+  * Creates the directory setup for code, data, configurations, logs etc.
+    * Creating separate directories based on functionality, growth rate, expected size and velocity of change
+    * All the top level directories can be managed independently
+    * Top level directories can be stored on different remote locations and mounted locally to work across distributed systems
+  * Creating consistent local and remote system mount points with proper permissions for distributed system workflow
+  * Creating up-to-date documentations, specifications and knowledge sharing collaterals
+  * Empowers to implement the distributed workflow across different machines and devices
+  * Creates a dedicated AI workflow referred as: **`aimldl`**
+    * Plug-n-play of different DNN architectures, external software components and libraries
+  * Empowering individuals to setup the practice code repo that is shared within team
+  * Encouraging seamless integration with cloud services - storage, apis, project management tools, communication channels
 
 
 ## Howto's
