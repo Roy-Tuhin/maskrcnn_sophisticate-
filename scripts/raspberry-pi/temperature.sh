@@ -19,17 +19,18 @@ echo "-------------------------------------------"
 ## CPU temp: Divide it by 1000 to get the ARM CPU temperature in more human readable format:
 
 echo "CPU temp, GPU temp"
-echo "$(/opt/vc/bin/vcgencmd measure_temp), $(($(cat /sys/class/thermal/thermal_zone0/temp)/1000))'C"
+echo "$(/opt/vc/bin/vcgencmd measure_temp | cut -d'=' f2),$(($(cat /sys/class/thermal/thermal_zone0/temp)/1000))'C"
 
-## Infinite loop till any key is pressed
-if [ -t 0 ]; then
-  old_tty=$(stty --save)
-  stty raw -echo min 0
-fi
-while
-  IFS= read -r REPLY
-  [ -z "$REPLY" ]
-  echo "$(/opt/vc/bin/vcgencmd measure_temp), $(($(cat /sys/class/thermal/thermal_zone0/temp)/1000))'C"
-  sleep 0.1
-do :; done
-if [ -t 0 ]; then stty "$old_tty"; fi
+# ## Infinite loop till any key is pressed - NOT working; do not execute danger!!
+## kill with pkill -f temperature.sh
+# if [ -t 0 ]; then
+#   old_tty=$(stty --save)
+#   stty raw -echo min 0
+# fi
+# while
+#   IFS= read -r REPLY
+#   [ -z "$REPLY" ]
+#   echo "$(/opt/vc/bin/vcgencmd measure_temp), $(($(cat /sys/class/thermal/thermal_zone0/temp)/1000))'C"
+#   sleep 0.1
+# do :; done
+# if [ -t 0 ]; then stty "$old_tty"; fi
