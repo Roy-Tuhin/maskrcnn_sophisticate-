@@ -54,7 +54,7 @@ tags: ubuntu, linuxscripts, docker, aimldl, android, raspberry-pi
 * [hub.docker.com - mangalbhaskar/aimldl](https://hub.docker.com/r/mangalbhaskar/aimldl)
 
 
-## Design Philosophy - Development workflow
+## Design Philosophy
 
 * **Save time by automating the repetitive steps** in setting up the development environment and toolchain
   * Provide sustainable and re-producible setup workflow and data-pipeline
@@ -71,13 +71,15 @@ tags: ubuntu, linuxscripts, docker, aimldl, android, raspberry-pi
   * VR, AR
   * Computer Graphics, VFX, 3D
 * **`codehub` strive to strike this by providing flexible conventions to:**
-  * Creates the directory setup for code, data, configurations, logs etc.
-    * Creating separate directories based on functionality, growth rate, expected size and velocity of change
+  * Create directories for code, data, configurations, logs etc.
+    * Creating separate directories based on functionality, growth rate in expected size and velocity of change
     * All the top level directories can be managed independently
     * Top level directories can be stored on different remote locations and mounted locally to work across distributed systems
   * Creating consistent local and remote system mount points with proper permissions for distributed system workflow
   * Creating up-to-date documentations, specifications and knowledge sharing collaterals
-  * Empowers to implement the distributed workflow across different machines and devices
+  * Empowers the developer to implement the distributed workflow across different machines and devices
+  * Provide automation scripts
+  * Limits to linux specific projects only
   * Creates a dedicated AI workflow referred as: **`aimldl`**
     * Plug-n-play of different DNN architectures, external software components and libraries
   * Empowering individuals to setup the practice code repo that is shared within team
