@@ -240,6 +240,9 @@ def train(args, mode, appcfg):
   log.info("modelcfg_path: {}".format(modelcfg_path))
   modelcfg = apputil.get_modelcfg(modelcfg_path)
 
+  log_dir_path = apputil.get_abs_path(appcfg, cmdcfg, 'AI_LOGS')
+  cmdcfg['log_dir_path'] = log_dir_path
+
   weights_path = apputil.get_abs_path(appcfg, modelcfg, 'AI_WEIGHTS_PATH')
   cmdcfg['weights_path'] = weights_path
 
