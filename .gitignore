@@ -36,6 +36,7 @@
 # !workspaces/
 
 **/*bk
+**/node_modules
 **/*.pyc
 **/*__pycache__
 **/*.swp
