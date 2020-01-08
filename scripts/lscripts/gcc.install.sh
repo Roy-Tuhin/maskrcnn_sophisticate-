@@ -13,10 +13,10 @@
 #
 ##----------------------------------------------------------
 
-sudo -E apt -q -y install gcc-7 g++-7
+# sudo -E apt -q -y install gcc-7 g++-7
 sudo -E apt -q -y install gcc-6 g++-6
 sudo -E apt -q -y install gcc-5 g++-5
-sudo -E apt -q -y install gcc-4.8 g++-4.8
+# sudo -E apt -q -y install gcc-4.8 g++-4.8
 
 
 function gcc_update_alternatives() {

@@ -189,6 +189,7 @@ local MESHROOM_REL="v2019.2.0"
 local CloudCompare_REL="v2.10.3"
 ##----------------------------------------------------------
 local HAROOPAD_VER="0.13.1"
+local FREEFILESYNC_VER="10.19"
 ##----------------------------------------------------------
 # http://icl.utk.edu/projectsfiles/magma/downloads/
 local MAGMA_VER="2.5.1"

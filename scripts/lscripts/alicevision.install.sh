@@ -27,6 +27,8 @@
 ## https://github.com/alicevision/AliceVision/blob/develop/INSTALL.md
 ## https://github.com/alicevision/AliceVisionDependencies/tree/master/ci
 #
+## https://github.com/alicevision/AliceVision/releases/download/v2.2.0/AliceVision-2.2.0-linux.tar.gz
+#
 ##----------------------------------------------------------
 
 
@@ -92,8 +94,8 @@ function alicevision_install() {
   ## DALICEVISION_USE_OPENGV is optional, enabling it thrown error for opengv and eigen not found
 
   cmake -DCMAKE_BUILD_TYPE=Release \
-    -DALICEVISION_BUILD_TESTS=ON \
-    -DALICEVISION_BUILD_EXAMPLES=ON \
+    -DALICEVISION_BUILD_TESTS=OFF \
+    -DALICEVISION_BUILD_EXAMPLES=OFF \
     -DALICEVISION_BUILD_DEPENDENCIES=OFF \
     -DALICEVISION_USE_RPATH=OFF \
     -DALICEVISION_USE_OCVSIFT=ON \
@@ -113,9 +115,10 @@ function alicevision_install() {
     -DOPENIMAGEIO_LIBRARY:FILEPATH=/usr/local/lib/libOpenImageIO_Util.so \
     -DOPENIMAGEIO_LIBRARY_DIR_HINTS:PATH=/usr/local/lib \
     -DOPENIMAGEIO_INCLUDE_DIR:PATH=/usr/local/include \
+    -DOPENEXR_INCLUDE_DIR:PATH=/usr/local/include \
+    -DOPENIMAGEIO_LIBRARIES:PATH=/usr/local/lib \
     -DOPENGV_DIR:PATH=/usr/local \
     -DOPENGV_INCLUDE_DIR:PATH=/usr/local/include \
-    -DOPENGV_LIBRARY:PATH=/usr/local/lib \
     -DEIGEN_INCLUDE_DIRS:PATH=/usr/local/include/eigen3 \
     -DCMAKE_MODULE_PATH:PATH=/usr/local/share/eigen3/cmake \
     -DCMAKE_C_FLAGS="-I/usr/local/include -L/usr/local/lib" ..

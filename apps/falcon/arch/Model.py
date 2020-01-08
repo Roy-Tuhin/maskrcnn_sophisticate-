@@ -53,7 +53,8 @@ def visualize(args, mode, appcfg):
   log.debug("-------------------------------->")
   log.debug("visualizing annotations...")
 
-  from falcon.utils import visualize, compute
+  from falcon.utils import compute
+  from falcon.utils import visualize as _visualize
 
   subset = args.eval_on
   log.debug("subset: {}".format(subset))
@@ -91,12 +92,13 @@ def visualize(args, mode, appcfg):
       log.debug("class_ids: {}".format(class_ids))
 
       ## Display image and instances
-      # visualize.display_top_masks(image, mask, class_ids, class_names)
+      # _visualize.display_top_masks(image, mask, class_ids, class_names)
       ## Compute Bounding box
       
       bbox = compute.extract_bboxes(mask)
       log.debug("bbox: {}".format(bbox))
-      visualize.display_instances(image, bbox, mask, class_ids, class_names, show_bbox=False)
+      # _visualize.display_instances(image, bbox, mask, class_ids, class_names, show_bbox=False)
+      _visualize.display_instances(image, bbox, mask, class_ids, class_names)
       # return image, bbox, mask, class_ids, class_names
     else:
       log.error("error reading image with image_id: {}".format(image_id))

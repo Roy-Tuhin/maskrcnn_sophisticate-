@@ -30,6 +30,7 @@
 !scripts/
 !_site/
 !tests/
+!external-src/
 # !tmp/
 # !tools/
 # !workspaces/

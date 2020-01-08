@@ -103,6 +103,7 @@ DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-cod/scripts:/aimldl-scripts "
 DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-dat:/aimldl-dat "
 DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-rpt:/aimldl-rpt "
 DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-doc:/aimldl-doc "
+DOCKER_VOLUMES="${DOCKER_VOLUMES} -v /aimldl-mnt:/aimldl-mnt "
 
 DOCKER_VOLUMES="${DOCKER_VOLUMES} ${MONGODB_VOLUMES} "
 
