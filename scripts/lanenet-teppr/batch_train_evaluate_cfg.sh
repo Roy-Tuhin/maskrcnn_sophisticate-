@@ -5,8 +5,6 @@ execution_start_time=$(date)
 
 arch=lanenet
 
-pre_trained_model=$AI_LANENET_ROOT/model/tusimple_lanenet_vgg/tusimple_lanenet_vgg.ckpt
-
 prog_train=$AI_LANENET_ROOT/tools/train_lanenet.py
 prog_evaluate=$AI_LANENET_ROOT/tools/predict.py
 
