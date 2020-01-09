@@ -2,21 +2,24 @@
 # declare -a no_of_dbs=($(seq 1 1 4)) ## 4 items
 
 declare -a annon_dbnames=(
-  "annon_v10"
+  "annon_v9"
+  "annon_v9"
 )
 
 declare -a aids_dbs=(
-  "PXL-251219_191904"
+  "PXL-291119_180404"
+  "PXL-291119_180404"
 )
 
 
 declare -a archcfg=(
-  "${AI_CFG}/arch/251219_192746-AIE1-32-mask_rcnn.yml"
+  "${AI_CFG}/arch/090120_193700-AIE1-38-mask_rcnn.yml"
+  "${AI_CFG}/arch/090120_193910-AIE1-39-mask_rcnn.yml"
 )
 
-declare -a experiment_ids=(
-  "train-ce83dfd4-ef53-4cdd-b4e4-fe9269ac3869"
-)
+# declare -a experiment_ids=(
+#   "train-ce83dfd4-ef53-4cdd-b4e4-fe9269ac3869"
+# )
 
 
 ## use in cased when training is successful but evaluate failed

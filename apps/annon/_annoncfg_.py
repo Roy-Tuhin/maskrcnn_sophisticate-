@@ -148,6 +148,7 @@ DBCFG = {}
 ## Redis server configuration
 DBCFG['REDIS'] = {
   'host': 'localhost'
+  # 'host': '10.4.71.69'
   ,'port': 6379
   ,'db': 0
   ,'image_queue': 'image_queue'
@@ -159,6 +160,7 @@ DBCFG['REDIS'] = {
 ## CBIR - Content Based Image Retrival Database configuration
 DBCFG['CBIRDB'] = {
   'host': 'localhost'
+  # 'host': '10.4.71.69'
   ,'port': 27017
   ,'username': ''
   ,'password': ''
@@ -168,6 +170,7 @@ DBCFG['CBIRDB'] = {
 ## Annotation Database configuration
 DBCFG['ANNONCFG'] = {
   'host': 'localhost'
+  # 'host': '10.4.71.69'
   ,'port': 27017
   ,'username': ''
   ,'password': ''
@@ -178,7 +181,7 @@ DBCFG['ANNONCFG'] = {
   # ,'dbname': 'annon_v9'
   # ,'dbname': 'annon_v9'
   # ,'dbname': 'annon_v9'
-  ,'dbname': 'annon_v10'
+  ,'dbname': 'annon_v11'
   ,'dataclass': 'AnnonDataset'
   ,'name': 'hmd'
   ,'annon_type': 'hmd'
@@ -190,6 +193,7 @@ DBCFG['ANNONCFG'] = {
 ## AI Datasets (AIDS) Database configuration
 DBCFG['PXLCFG'] = {
   'host': 'localhost'
+  # 'host': '10.4.71.69'
   ,'port': 27017
   ,'username': ''
   ,'password': ''
@@ -205,6 +209,7 @@ DBCFG['PXLCFG'] = {
 ## Release Model Database configuration
 DBCFG['OASISCFG'] = {
   'host': 'localhost'
+  # 'host': '10.4.71.69'
   ,'port': 27017
   ,'username': ''
   ,'password': ''

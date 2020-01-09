@@ -253,6 +253,9 @@ def train(model, dataset_train, dataset_val, cmdcfg):
   log.info("---------------------------->")
   log.info("cmdcfg: {}".format(cmdcfg))
   schedule = cmdcfg.schedules
+
+  augmentation = apputil.get_augmentation_imgaug(cmdcfg)
+
   for stage in schedule:
     log.debug(cmdcfg)
 
@@ -264,7 +267,7 @@ def train(model, dataset_train, dataset_val, cmdcfg):
       ,epochs=stage.epochs
       ,layers=stage.layers
       ,stage=stage
-      ,augmentation=None
+      ,augmentation=augmentation
       ,custom_callbacks=None
       ,no_augmentation_sources=None
     )
@@ -488,6 +491,9 @@ def evaluate(mode, cmdcfg, appcfg, modelcfg, dataset, datacfg, class_names, repo
   log.info("---------------------------->")
 
   dnncfg = get_dnncfg(cmdcfg.config)
+
+  log_dir_path = apputil.get_abs_path(appcfg, cmdcfg, 'AI_LOGS')
+  cmdcfg['log_dir_path'] = log_dir_path
   model = load_model_and_weights(mode, cmdcfg, appcfg)
 
   save_viz_and_json = reportcfg['save_viz_and_json']

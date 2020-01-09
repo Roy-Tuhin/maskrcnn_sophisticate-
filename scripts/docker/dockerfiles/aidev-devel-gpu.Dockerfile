@@ -81,6 +81,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       grep \
       vim \
       feh \
+      uuid-runtime \
       sudo \
       libpng-dev \
       libjpeg-dev \
