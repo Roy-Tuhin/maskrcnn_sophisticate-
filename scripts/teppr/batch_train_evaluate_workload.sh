@@ -3,15 +3,18 @@
 
 declare -a annon_dbnames=(
   "annon_v9"
+  "annon_v9"
 )
 
 declare -a aids_dbs=(
+  "PXL-291119_180404"
   "PXL-291119_180404"
 )
 
 
 declare -a archcfg=(
-  "${AI_CFG}/arch/090120_151820-TST1-38-mask_rcnn.yml"
+  "${AI_CFG}/arch/090120_193700-AIE1-38-mask_rcnn.yml"
+  "${AI_CFG}/arch/090120_193910-AIE1-39-mask_rcnn.yml"
 )
 
 # declare -a experiment_ids=(
