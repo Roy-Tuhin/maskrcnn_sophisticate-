@@ -331,12 +331,14 @@ def predict(args, mode, appcfg):
 
   dnnmod = apputil.get_module(cmdcfg.dnnarch)
 
+  log_dir_path = apputil.get_abs_path(appcfg, cmdcfg, 'AI_LOGS')
+  cmdcfg['log_dir_path'] = log_dir_path
+
   weights_path = apputil.get_abs_path(appcfg, modelcfg, 'AI_WEIGHTS_PATH')
   cmdcfg['weights_path'] = weights_path
 
   load_model_and_weights = apputil.get_module_fn(dnnmod, "load_model_and_weights")
   model = load_model_and_weights(mode, cmdcfg, appcfg)
-
 
   path_dtls = apputil.get_path_dtls(args, appcfg)
   log.debug("path_dtls: {}".format(path_dtls))

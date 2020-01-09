@@ -17,6 +17,10 @@ AIMLDL_ENV=production ##development
 $ docker login --username=yourhubusername --email=youremail@company.com
 
 
+## TODO Docker Container
+
+
+
 
 
 ## TODO

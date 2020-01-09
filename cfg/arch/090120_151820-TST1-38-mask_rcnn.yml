@@ -80,7 +80,7 @@ evaluate:
   mode: inference
   device: /gpu:0
   weights: null
-  model_info: 
+  model_info: EVALUATE_MODEL_INFO
   dnnarch: mask_rcnn
   config:
     DETECTION_MIN_CONFIDENCE: 0.9

@@ -295,7 +295,7 @@ def predict(args, mode, _appcfg):
 
 def evaluate(args, mode, _appcfg):
     name = "hmd"
-    subset = "train"
+    subset = "test"
     dataset_name = get_dataset_name(name, subset)
 
     metadata = load_and_register_dataset(name, subset, _appcfg)
@@ -312,6 +312,7 @@ def evaluate(args, mode, _appcfg):
     cfg.SOLVER.IMS_PER_BATCH = 1
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3
+    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7
 
     # mapper = DatasetMapper(cfg, False)
     _loader = build_detection_test_loader(cfg, dataset_name)

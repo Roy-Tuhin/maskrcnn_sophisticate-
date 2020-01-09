@@ -488,6 +488,9 @@ def evaluate(mode, cmdcfg, appcfg, modelcfg, dataset, datacfg, class_names, repo
   log.info("---------------------------->")
 
   dnncfg = get_dnncfg(cmdcfg.config)
+
+  log_dir_path = apputil.get_abs_path(appcfg, cmdcfg, 'AI_LOGS')
+  cmdcfg['log_dir_path'] = log_dir_path
   model = load_model_and_weights(mode, cmdcfg, appcfg)
 
   save_viz_and_json = reportcfg['save_viz_and_json']

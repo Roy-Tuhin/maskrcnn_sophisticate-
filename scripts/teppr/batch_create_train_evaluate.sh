@@ -47,10 +47,10 @@ function run_batch_train_evaluate(){
     echo 's/annon_v[0-9]*/'${annon_dbname}'/g' ${cfg_filepath}
     sed -i 's/annon_v[0-9]*/'${annon_dbname}'/g' ${cfg_filepath}
 
-    timestamp=$(date -d now +'%d%m%y_%H%M%S')
-    prog_log="${base_log_dir}/train.output-${timestamp}.log"
+    local timestamp=$(date -d now +'%d%m%y_%H%M%S')
+    local prog_log="${base_log_dir}/train.output-${timestamp}.log"
 
-    aids_db_name=${aids_dbs[${index}]}
+    local aids_db_name=${aids_dbs[${index}]}
 
     ##-----------create training experiment
     info ${prog_teppr} create --type experiment --from ${archcfg} --to ${aids_db_name} --exp train 1>>${prog_log} 2>&1
@@ -71,12 +71,13 @@ function run_batch_train_evaluate(){
 
     # local modelinfo_file = $(grep -oE -m 1 "vidteq-hmd-"[0-9]*_[0-9]*"-mask_rcnn.yml" ${prog_log})
     local modelinfo_file=$(grep -oE "TRAIN:MODELINFO_FILEPATH: .*$" ${prog_log} | cut -d' ' -f2 | rev | cut -d'/' -f1 | rev)
+
     info "modelinfo_file: ${modelinfo_file}"
     echo "sed -i 's/EVALUATE_MODEL_INFO/${modelinfo_file}/g' ${archcfg}"
     sed -i "s/EVALUATE_MODEL_INFO/${modelinfo_file}/g" ${archcfg}
 
     ## To ensure no dummy prog running
-    pids=$(pgrep -f ${prog_falcon})
+    local pids=$(pgrep -f ${prog_falcon})
     info "These ${prog_falcon} pids will be killed: ${pids}"
     pkill -f ${prog_falcon}
 
@@ -84,6 +85,10 @@ function run_batch_train_evaluate(){
     python ${prog_teppr} create --type experiment --from ${archcfg} --to ${aids_db_name} --exp evaluate 1>>${prog_log} 2>&1
 
     local expid_evaluate=$(grep "CFG(Annotation Database) res:" ${prog_log} | rev | cut -d' ' -f1 | rev | tail -n 1)
+
+    # ## comment above code if to test from evaluate loop only and use hard coded values
+    # local modelinfo_file="vidteq-hmd-090120_160136-mask_rcnn.yml"
+    # local expid_evaluate="evaluate-5f4b0497-8dcd-47d8-85d7-d6a579f3d909"
 
     info "sno,count,uuid,cmd,eval_on,username,aids_db_name,expid,prog_log,iou,rpt_imagelist_filepath,rpt_metric_filepath,rpt_summary_filepath"
     info "$__RUN_BATCH_CMD_COUNT__,${index},${uuid},'train',,${username},${aids_db_name},${expid},${prog_log},,,,"
@@ -93,7 +98,7 @@ function run_batch_train_evaluate(){
 
     ##-----------Evaluate
     for eval_on in "${on_param[@]}"; do
-      evaluate_prog_log="${base_log_dir}/evaluate_$(echo ${iou} | replace '.' '')-${eval_on}-${aids_db_name}-${timestamp}.log"
+      local evaluate_prog_log="${base_log_dir}/evaluate_$(echo ${iou} | replace '.' '')-${eval_on}-${aids_db_name}-${timestamp}.log"
 
       info "Executing this command...evaluate"
       info "Log file: ${evaluate_prog_log}"
@@ -103,9 +108,9 @@ function run_batch_train_evaluate(){
       python ${prog_falcon} evaluate --dataset ${aids_db_name} --on ${eval_on} --iou ${iou} --exp ${expid_evaluate} 1>${evaluate_prog_log} 2>&1
 
       if [ -f ${evaluate_prog_log} ]; then
-        rpt_imagelist_filepath=$(grep "EVALUATE_REPORT:IMAGELIST" ${evaluate_prog_log} | cut -d':' -f3)
-        rpt_metric_filepath=$(grep "EVALUATE_REPORT:METRIC" ${evaluate_prog_log} | cut -d':' -f3)
-        rpt_summary_filepath=$(grep "EVALUATE_REPORT:SUMMARY" ${evaluate_prog_log} | cut -d':' -f3)
+        local rpt_imagelist_filepath=$(grep "EVALUATE_REPORT:IMAGELIST" ${evaluate_prog_log} | cut -d':' -f3)
+        local rpt_metric_filepath=$(grep "EVALUATE_REPORT:METRIC" ${evaluate_prog_log} | cut -d':' -f3)
+        local rpt_summary_filepath=$(grep "EVALUATE_REPORT:SUMMARY" ${evaluate_prog_log} | cut -d':' -f3)
       fi
 
       export __RUN_BATCH_CMD_COUNT__=$(($__RUN_BATCH_CMD_COUNT__+1))
@@ -114,7 +119,7 @@ function run_batch_train_evaluate(){
       info "===x==x==x==="
 
       ## Kill exisiting python programs before starting new
-      pids=$(pgrep -f ${prog_falcon})
+      local pids=$(pgrep -f ${prog_falcon})
       info "These ${prog_falcon} pids will be killed: ${pids}"
       pkill -f ${prog_falcon}
     done
@@ -123,7 +128,7 @@ function run_batch_train_evaluate(){
     sed -i "s/${modelinfo_file}/EVALUATE_MODEL_INFO/g" ${archcfg}
   done
 
-  execution_end_time=$(date)
+  local execution_end_time=$(date)
   info "execution_end_time: ${execution_end_time}"
   info "summary_filepath: ${summary_filepath}"
   echo -e '\e[0;31m'End Script: -------x-------x-------x-------'\e[0m'
