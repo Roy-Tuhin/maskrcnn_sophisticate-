@@ -253,6 +253,9 @@ def train(model, dataset_train, dataset_val, cmdcfg):
   log.info("---------------------------->")
   log.info("cmdcfg: {}".format(cmdcfg))
   schedule = cmdcfg.schedules
+
+  augmentation = apputil.get_augmentation_imgaug(cmdcfg)
+
   for stage in schedule:
     log.debug(cmdcfg)
 
@@ -264,7 +267,7 @@ def train(model, dataset_train, dataset_val, cmdcfg):
       ,epochs=stage.epochs
       ,layers=stage.layers
       ,stage=stage
-      ,augmentation=None
+      ,augmentation=augmentation
       ,custom_callbacks=None
       ,no_augmentation_sources=None
     )

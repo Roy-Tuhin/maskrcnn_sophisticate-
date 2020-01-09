@@ -244,3 +244,29 @@ def get_dataset_instance(appcfg, dbcfg, datacfg, subset):
 
   return dataset, num_classes, num_images, class_names, total_stats, total_verify
 
+
+def get_augmentation_imgaug(cmdcfg):
+  """
+  returns the instance of augmentation using imgaug based on input cmdcfg configuration
+
+  For reference Only:
+  
+    augmentation_list_items = getattr(getattr(imgaug, 'augmenters'),'Fliplr')
+    augmentation = imgaug.augmenters.Sometimes(0.5, [
+      imgaug.augmenters.Fliplr(0.5),
+      imgaug.augmenters.GaussianBlur(sigma=(0.0, 5.0))
+    ])
+  """
+  augmentation = None
+  if 'imgaug' in cmdcfg and cmdcfg['imgaug']:
+    import imgaug
+    aug_items = []
+    for aug_type, aug_val in cmdcfg['imgaug']['augmenters'].items():
+      aug_fn = getattr(imgaug.augmenters, aug_type)
+      aug_item = aug_fn(aug_val)
+      log.debug("aug_item {}".format(aug_item))
+      aug_items.append(aug_item)
+
+      ## TODO parameterize sometimes through config
+      augmentation = imgaug.augmenters.Sometimes(1, aug_items)
+  return augmentation
