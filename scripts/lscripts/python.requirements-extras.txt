@@ -21,3 +21,5 @@ repoze.lru
 tqdm
 
 Jinja2
+
+Augmentor

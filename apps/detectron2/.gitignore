@@ -1,0 +1,16 @@
+/*
+
+
+## Whitelist some files
+!.gitignore
+!*.md
+!*.py
+
+**/*bk
+**/*.pyc
+**/*__pycache__
+**/*.swp
+**/*.local.*
+**/temp.*
+**/*.ipynb_checkpoints
+**/*.py.*

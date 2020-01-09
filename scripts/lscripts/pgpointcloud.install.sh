@@ -27,46 +27,48 @@
 #
 ##---------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/lscripts.config.sh
+function pgpointcloud_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-## Un-comment or install separately
-## If followed the given sequence, this would already be installed
+  ## Un-comment or install separately
+  ## If followed the given sequence, this would already be installed
 
-# source $LINUX_SCRIPT_HOME/libght.install.sh
+  # source ${LSCRIPTS}/libght.install.sh
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
+  if [ -z "${BASEPATH}" ]; then
+    BASEPATH="${HOME}/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
 
-sudo -E apt -q -y install postgresql-server-dev-all
+  sudo -E apt -q -y install postgresql-server-dev-all
 
-DIR="pointcloud"
-PROG_DIR="$BASEPATH/$DIR"
+  DIR="pointcloud"
+  PROG_DIR="${BASEPATH}/${DIR}"
 
-URL="https://github.com/pgpointcloud/$DIR.git"
+  URL="https://github.com/pgpointcloud/${DIR}.git"
 
-echo "Number of threads will be used: $NUMTHREADS"
-echo "BASEPATH: $BASEPATH"
-echo "URL: $URL"
-echo "PROG_DIR: $PROG_DIR"
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-if [ ! -d $PROG_DIR ]; then
-  git -C $PROG_DIR || git clone $URL $PROG_DIR
-else
-  echo Git clone for $URL exists at: $PROG_DIR
-fi
+  if [ ! -d ${PROG_DIR} ]; then
+    git -C ${PROG_DIR} || git clone ${URL} ${PROG_DIR}
+  else
+    echo Git clone for ${URL} exists at: ${PROG_DIR}
+  fi
 
-cd $PROG_DIR
-./autogen.sh
-./configure
-make -j$NUMTHREADS
-sudo make install -j$NUMTHREADS
-# test
-make check -j$NUMTHREADS
+  cd ${PROG_DIR}
+  ./autogen.sh
+  ./configure
+  make -j${NUMTHREADS}
+  sudo make install -j${NUMTHREADS}
+  # test
+  make check -j${NUMTHREADS}
 
-cd $LINUX_SCRIPT_HOME
+  cd ${LSCRIPTS}
+}
+
+pgpointcloud_install

@@ -1,12 +1,37 @@
 #!/bin/bash
 
-# ls -d $PWD/*
-basepath_dir=/aimldl-cod/external
-DIR_ARRAY=($(ls -d ${basepath_dir}/*))
+function get_git_urls() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  # echo ${LSCRIPTS}
 
-filepath="/codehub/tmp/aimldlcod.external.jarvis.sh"
+  ## ls -d $PWD/*
+  local basepath_dir=/aimldl-cod/external
 
-echo "DIR_ARRAY: ${DIR_ARRAY[@]}"
+  local basepath_dir=/codehub/external
+  declare DIR_ARRAY=($(ls -d ${basepath_dir}/*))
 
-## //cd 
-echo "git clone https:"$(git remote -v | grep -i fetch | cut -d':' -f2 | cut -d' ' -f1) >> 
+  ## local FILE="/codehub/tmp/aimldlcod.external.jarvis.sh"
+  ## local FILE=/codehub/tmp/$(date +"%d%m%y_%H%M%S-%N_XXXXXX")-external.sh
+  ## mktemp ${FILE}
+
+  local FILE=${LSCRIPTS}/setup.external-full.sh
+
+  touch ${FILE}
+  ls -ltr ${FILE}
+
+  echo "DIR_ARRAY: ${DIR_ARRAY[@]}"
+  echo "==========================="
+
+  echo "FILE: ${FILE}"
+  echo "==========================="
+  for repo in "${DIR_ARRAY[@]}"; do
+    cd ${repo}
+    local LINE=$(echo "git clone https:"$(git remote -v | grep -i fetch | cut -d':' -f2 | cut -d' ' -f1))
+    echo "${LINE}"
+    grep -qF "${LINE}" "${FILE}" || echo "${LINE}" >> "${FILE}"
+  done
+
+  cd ${LSCRIPTS}
+}
+
+get_git_urls

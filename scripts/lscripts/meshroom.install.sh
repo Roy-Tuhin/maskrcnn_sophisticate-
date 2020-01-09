@@ -6,80 +6,93 @@
 #
 ## https://github.com/alicevision/meshroom
 #
+## wget -c https://gitlab.com/alicevision/trainedVocabularyTreeData/raw/master/vlfeat_K80L3.SIFT.tree
+#
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/lscripts.config.sh
+function meshroom_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
+  if [ -z "${BASEPATH}" ]; then
+    local BASEPATH="$HOME/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
 
-sudo apt -y install libpng-dev libjpeg-dev libtiff-dev libxxf86vm1 libxxf86vm-dev libxi-dev libxrandr-dev
+  if [ -z "${MESHROOM_REL}" ]; then
+    local MESHROOM_REL="v2019.2.0"
+    echo "Unable to get MESHROOM_REL version, falling back to default version#: ${MESHROOM_REL}"
+  fi
 
-PROG="meshroom"
-DIR="$PROG"
-PROG_DIR="$BASEPATH/$PROG"
+  sudo apt -y install libpng-dev libjpeg-dev libtiff-dev libxxf86vm1 libxxf86vm-dev libxi-dev libxrandr-dev
 
-URL="https://github.com/alicevision/$PROG.git"
+  local PROG="meshroom"
+  local DIR="$PROG"
+  local PROG_DIR="${BASEPATH}/${PROG}"
 
-echo "Number of threads will be used: $NUMTHREADS"
-echo "BASEPATH: $BASEPATH"
-echo "URL: $URL"
-echo "PROG_DIR: $PROG_DIR"
+  local URL="https://github.com/alicevision/${PROG}.git"
 
-if [ ! -d $PROG_DIR ]; then
-  ## git version 1.6+
-  # git clone --recursive $URL
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-  ## git version >= 2.8
-  git clone --recurse-submodules -j8 $URL $PROG_DIR
-  # git -C $PROG_DIR || git clone $URL $PROG_DIR
-else
-  echo Git clone for $URL exists at: $PROG_DIR
-fi
+  if [ ! -d ${PROG_DIR} ]; then
+    ## git version 1.6+
+    # git clone --recursive ${URL}
 
-if [ -d $PROG_DIR/build ]; then
-  rm -rf $PROG_DIR/build
-fi
+    ## git version >= 2.8
+    git clone --recurse-submodules -j${NUMTHREADS} ${URL} ${PROG_DIR}
+    # git -C ${PROG_DIR} || git clone ${URL} ${PROG_DIR}
+  else
+    echo Git clone for ${URL} exists at: ${PROG_DIR}
+  fi
 
-cd $PROG_DIR
+  # git clone https://gitlab.com/alicevision/trainedVocabularyTreeData.git
 
-pip install -r requirements.txt
+  cd ${PROG_DIR}
+  git pull
+  git checkout ${MESHROOM_REL}
 
-# cd $LINUX_SCRIPT_HOME
+  if [ -d ${PROG_DIR}/build ]; then
+    rm -rf ${PROG_DIR}/build
+  fi
 
+  # pip install -r requirements.txt
 
-##----------------------------------------------------------
-## Build Logs
-##----------------------------------------------------------
-
-# -- Found OpenEXR: /usr/include (found version "2.2.0") 
-# CMake Warning at src/cmake/FindOpenEXR.cmake:164 (message):
-#   ILMBASE_INCLUDE_DIR: /usr/include;/usr/include/OpenEXR
-# Call Stack (most recent call first):
-#   src/CMakeLists.txt:269 (find_package)
+  # cd ${LSCRIPTS}
 
 
-# -- OpenEXR found. (Version 2.2.0)
-# CMake Warning at src/cmake/FindOpenEXR.cmake:164 (message):
-#   ILMBASE_INCLUDE_DIR: /usr/include;/usr/include/OpenEXR
-# Call Stack (most recent call first):
-#   src/cmake/FindOpenImageIO.cmake:1 (find_package)
-#   src/CMakeLists.txt:279 (find_package)
+  ##----------------------------------------------------------
+  ## Build Logs
+  ##----------------------------------------------------------
+
+  # -- Found OpenEXR: /usr/include (found version "2.2.0") 
+  # CMake Warning at src/cmake/FindOpenEXR.cmake:164 (message):
+  #   ILMBASE_INCLUDE_DIR: /usr/include;/usr/include/OpenEXR
+  # Call Stack (most recent call first):
+  #   src/CMakeLists.txt:269 (find_package)
 
 
-# CMake Error at src/cmake/FindOpenImageIO.cmake:28 (message):
-#   Failed to find OpenImageIO - Could not find OpenImageIO include directory,
-#   set OPENIMAGEIO_INCLUDE_DIR to directory containing OpenImageIO/imageio.h
-# Call Stack (most recent call first):
-#   src/cmake/FindOpenImageIO.cmake:90 (openimageio_report_not_found)
-#   src/CMakeLists.txt:279 (find_package)
+  # -- OpenEXR found. (Version 2.2.0)
+  # CMake Warning at src/cmake/FindOpenEXR.cmake:164 (message):
+  #   ILMBASE_INCLUDE_DIR: /usr/include;/usr/include/OpenEXR
+  # Call Stack (most recent call first):
+  #   src/cmake/FindOpenImageIO.cmake:1 (find_package)
+  #   src/CMakeLists.txt:279 (find_package)
 
 
-# -- Configuring incomplete, errors occurred!
-# See also "/home/bhaskar/softwares/AliceVision/build/CMakeFiles/CMakeOutput.log".
+  # CMake Error at src/cmake/FindOpenImageIO.cmake:28 (message):
+  #   Failed to find OpenImageIO - Could not find OpenImageIO include directory,
+  #   set OPENIMAGEIO_INCLUDE_DIR to directory containing OpenImageIO/imageio.h
+  # Call Stack (most recent call first):
+  #   src/cmake/FindOpenImageIO.cmake:90 (openimageio_report_not_found)
+  #   src/CMakeLists.txt:279 (find_package)
+
+
+  # -- Configuring incomplete, errors occurred!
+  # See also "/home/bhaskar/softwares/AliceVision/build/CMakeFiles/CMakeOutput.log".
+}
+
+meshroom_install

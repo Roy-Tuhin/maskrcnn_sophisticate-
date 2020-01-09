@@ -1,9 +1,0 @@
-Profile Type : A
-Use default Node and Cell name : Y
-Application Server Profile directory doesn't exists
-Creating Application Server Profile.....
-Application Server profile created
-The SOAP port for server is  8889
-You can access the Admin Console on port : 9069
-Starting the server created...
-Server started...

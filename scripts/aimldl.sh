@@ -167,7 +167,9 @@ function aimldl_main() {
     ## TODO: if the environment varaibles are present in custom config file, then override the default values created here
     AI_ENVVARS['AI_ANNON_DATA_HOME']="${AI_ANNON_DATA_HOME}"
     AI_ENVVARS['AI_ANNON_DATA_HOME_LOCAL']="${AI_ANNON_DATA_HOME_LOCAL}"
+    AI_ENVVARS['AI_DATA_GAZE']="${AI_DATA_GAZE}"
     AI_ENVVARS['AI_ANNON_DB']="${AI_ANNON_DB}"
+    AI_ENVVARS['AI_AIDS_DB']="${AI_AIDS_DB}"
 
     AI_ENVVARS['AI_PY_ENVVARS']=$(IFS=:; printf '%s' "${ai_py_envvars[*]}")
 

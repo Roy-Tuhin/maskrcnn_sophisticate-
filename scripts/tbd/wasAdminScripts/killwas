@@ -1,2 +1,0 @@
-
-ps -eaf | grep $userName | grep $profileName

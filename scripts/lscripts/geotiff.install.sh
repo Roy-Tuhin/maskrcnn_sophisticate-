@@ -74,8 +74,8 @@ function geotiff_install() {
         -D WITH_TOWGS84=ON \
         -D WITH_UTILITIES=ON \
         -D WITH_ZLIB=ON \
-        -D TIFF_DIR=${BASEPATH}/tiff-$TIFF_VER \
-        -D PROJ4_DIR=${BASEPATH}/proj-$PROJ_VER  ..
+        -D TIFF_DIR=${BASEPATH}/tiff-${TIFF_VER} \
+        -D PROJ4_DIR=${BASEPATH}/proj-${PROJ_VER}  ..
 
   # ccmake ..
 

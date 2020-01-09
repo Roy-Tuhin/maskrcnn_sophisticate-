@@ -1,0 +1,61 @@
+#!/bin/bash
+
+export __RUN_BATCH_CMD_COUNT__=0
+
+function run_batch_train_evaluate(){
+  echo -e '\e[1;32m'Begin Script: -------------------------------'\e[0m'
+  local SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")/.." && pwd )"
+
+  source "${SCRIPTS_DIR}/lscripts/utils/common.sh"
+  source batch_train_evaluate_cfg.sh
+  source batch_train_evaluate_workload.sh
+
+  workon ${pyenv}
+
+  local timestamp=$(date -d now +'%d%m%y_%H%M%S')
+
+  for config in "${configs[@]}"; do
+
+    local cfg_path=$base_log_dir/cfg/${config}
+
+    ##-----------Train
+    local prog_log=$base_log_dir/train/lanenet-$timestamp.log
+    info "Executing this command... train"
+    info "Log file: ${prog_log}"
+
+    echo "python ${prog_train} --cfg ${cfg_path} -m 0 1>$prog_log 2>&1"
+    # python python ${prog_train} --cfg ${cfg_path} -m 0 1>$prog_log 2>&1
+
+    local pids=$(pgrep -f ${prog_train})
+    info "These ${prog_train} pids will be killed: ${pids}"
+    pkill -f ${prog_train}
+
+    local ckpt_path=$(ls -td ${ckpt_basepath}* | head -n 1) 
+    local ckpt=$(ls -t ${ckpt_path} | head -1 | cut -d. -f1-2) 
+
+    local model=${ckpt_path}/${ckpt}
+    info "Model to be evaluated on: ${model}"
+    echo "sed -i 's/EVALUATE_MODEL_INFO/${model}/g' ${cfg_path}"
+    sed -i "s:EVALUATE_MODEL_INFO:${model}:g" ${cfg_path}
+
+    #-----------Evaluate
+    info "Executing this command... evaluate"
+
+    echo "python ${prog_evaluate} evaluate --cfg ${cfg_path}" 
+    # python ${prog_evaluate} evaluate --cfg ${cfg_path}
+
+    ## Kill exisiting python programs before starting new
+    local pids=$(pgrep -f ${prog_evaluate})
+    info "These ${prog_evaluate} pids will be killed: ${pids}"
+    pkill -f ${prog_evaluate}
+
+    info "===x==x==x==="
+  done
+
+  local execution_end_time=$(date)
+  info "execution_end_time: ${execution_end_time}"
+  # info "summary_filepath: ${summary_filepath}"
+  echo -e '\e[0;31m'End Script: -------x-------x-------x-------'\e[0m'
+}
+
+run_batch_train_evaluate

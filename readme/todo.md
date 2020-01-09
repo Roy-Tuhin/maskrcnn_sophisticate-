@@ -16,6 +16,45 @@ AIMLDL_ENV=production ##development
 
 $ docker login --username=yourhubusername --email=youremail@company.com
 
+
+
+
+## TODO
+
+* **Bin List**
+  * specifications to be created for annotations: ods, rld, rbd
+  * annotation workflow to be updated for lanenet
+  * read/spec update on environment variables for AI and CODEHUB environment variables
+  * generate systemd scripts for gunicorn automatically from the setup scripts using user defined and detected options
+  *  annon: verifydb.py to test with oasis release db change
+  * aimldl-cod workflow diagram
+  * clear instructions on how to execute TEPPr workflow
+  * multiple model support on different ports, same machine. That means concept of default model key needs to be overridden at the server start time
+  * API test scripts for different port simultaneously
+  * queue and scheduler in prediction
+  * production server configurations and scripts
+    * as a service
+    * load balancer
+    * multi-model support
+    * tensorflow memory management
+    * mAP reports on published models
+    * stress-test reports
+  * docker command errors: provide debug logs when using docker shell scripts to the command line
+  * Starting AI API port: throw error if DB connection is not up and running
+  * annon - creating AI datasets should have same labels in different splits; currently gets different labels - bug
+  * script to clone internal git repo for the first time setup, give the required inputs in the local config setup
+  * docker script `gpg vs gpg2` conditional selection in docker image - put a note in mongodb setup
+  * AI model version management using `git-lfs`
+  * Full interation of TEPPr workflow items
+  * tensorboard enhancements
+  * integration of lanenet
+  * hyper-tuning mask_rcnn
+  * system stats usage reports
+  * API usage stats in DB, prediction results and feature vector for CBIR consumption
+  * motion_rcnn and medicalkitdetection for 3D extraction from mask_rcnn
+  * `common.py` code redundancy to be removed
+
+
 ---
 
 ## Different Container for uilding Scalable AI as a microservice
@@ -100,66 +139,8 @@ Prediction:
             500 https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64  Packages
     ```
 
-# Technotes
 
-## Shell script
+03rd-Aug-2018:
+1. Ubuntu 16.04 LTS vs Ubuntu 18.04 LTS Flag creation in configuration file
+  - to enable Ubuntu version specific installation
 
-* https://www.computerhope.com/unix/adduser.htm
-* https://www.cyberciti.biz/faq/linux-change-user-group-uid-gid-for-all-owned-files/
-* https://wiki.bash-hackers.org/scripting/debuggingtips
-* https://stackoverflow.com/questions/17804007/how-to-show-line-number-when-executing-bash-script
-
-
-## Git
-
-https://stackoverflow.com/questions/11868447/how-can-i-remove-an-entry-in-global-configuration-with-git-config
-git config --global --edit
-
-git config --global --unset user.name
-git config --global --unset user.email
-
-
-
-## Linux
-
-**Create Linux Bootable USB**
-* https://github.com/balena-io/etcher#debian-and-ubuntu-based-package-repository-gnulinux-x86x64
-* https://linuxize.com/post/how-to-create-a-bootable-linux-usb-drive/
-  ```bash
-  echo "deb https://deb.etcher.io stable etcher" | sudo tee /etc/apt/sources.list.d/balena-etcher.list
-  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61
-  sudo apt-get update
-  sudo apt-get install balena-etcher-electron
-  #
-  ## uninstall
-  # sudo apt-get remove balena-etcher-electron
-  # sudo rm /etc/apt/sources.list.d/balena-etcher.list
-  # sudo apt-get update
-  ```
-
-## IoT
-
-* https://www.balena.io
-
-
-* https://www.tensorflow.org/lite/performance/post_training_quant
-* https://colab.research.google.com/github/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/performance/post_training_quant.ipynb
-* https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/performance/post_training_quant.ipynb
-* https://www.tensorflow.org/model_optimization/guide/get_started
-* https://medium.com/tensorflow/tensorflow-model-optimization-toolkit-pruning-api-42cac9157a6a
-* https://medium.com/tensorflow/tensorflow-model-optimization-toolkit-post-training-integer-quantization-b4964a1ea9ba
-* https://medium.com/tensorflow/what-exactly-is-this-tfx-thing-1ac9e56531c
-* https://medium.com/tensorflow/smilear-iqiyis-mobile-ar-solution-based-on-tensorflow-lite-7b39347b1b8d
-* https://www.silverlineelectronics.in/raspberry-pi-3-board-pack-for-android-thing.html
-* https://www.raspberrypi.org/search/camera+for+AI
-* https://www.raspberrypi.org/documentation/raspbian/applications/camera.md
-* https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up
-* https://github.com/tensorflow/examples/blob/master/lite/examples/object_detection/raspberry_pi/README.md
-* https://www.tensorflow.org/lite/examples/
-* https://medium.com/tensorflow/introducing-the-model-optimization-toolkit-for-tensorflow-254aca1ba0a3
-* https://medium.com/tensorflow/tensorflow-model-optimization-toolkit-float16-quantization-halves-model-size-cc113c75a2fa
-* https://medium.com/tensorflow
-* https://github.com/tensorflow/model-optimization
-* https://www.tensorflow.org/install/source
-* https://nanonets.com/blog/how-to-easily-detect-objects-with-deep-learning-on-raspberry-pi/
-* https://www.balena.io/fin/

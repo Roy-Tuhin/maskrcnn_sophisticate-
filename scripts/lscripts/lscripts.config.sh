@@ -1,44 +1,44 @@
 #!/bin/bash
 
-__TIMESTAMP__=$(date +%Y%m%d_%H%M)
-timestamp=${__TIMESTAMP__}
+local __TIMESTAMP__=$(date +%Y%m%d_%H%M)
+local timestamp=${__TIMESTAMP__}
 
-LINUX_SCRIPT_BASE="lscripts"
-LINUX_SCRIPT_HOME=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+local LINUX_SCRIPT_BASE="lscripts"
+local LINUX_SCRIPT_HOME=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
 
 # BASHRC_FILE="${LINUX_SCRIPT_HOME}/config/bashrc"
-BASHRC_FILE=${HOME}/.bashrc
+local BASHRC_FILE=${HOME}/.bashrc
 #echo ${BASHRC_FILE}
-USER_BASHRC_FILE="${HOME}/.bashrc"
+local USER_BASHRC_FILE="${HOME}/.bashrc"
 
-APACHE_HOME='${HOME}/public_html'
+local APACHE_HOME='${HOME}/public_html'
 
-LINUX_VERSION="$(lsb_release -sr)"
-LINUX_CODE_NAME=$(lsb_release -sc)
-LINUX_ID=$(lsb_release -si) ## Ubuntu, Kali
+local LINUX_VERSION="$(lsb_release -sr)"
+local LINUX_CODE_NAME=$(lsb_release -sc)
+local LINUX_ID=$(lsb_release -si) ## Ubuntu, Kali
 
-# pyVer=3
+# local pyVer=3
 
-BASEDIR="external"
-CHUB_DIR="codehub"
-VM_BASE="virtualmachines"
-CHUB_HOME="/${CHUB_DIR}"
-## BASEPATH="${HOME}/${BASEDIR}"
-BASEPATH="${CHUB_HOME}/${BASEDIR}"
-DOCKER_BASEPATH="/external4docker"
+local BASEDIR="external"
+local CHUB_DIR="codehub"
+local VM_BASE="virtualmachines"
+local CHUB_HOME="/${CHUB_DIR}"
+## local BASEPATH="${HOME}/${BASEDIR}"
+local BASEPATH="${CHUB_HOME}/${BASEDIR}"
+local DOCKER_BASEPATH="/external4docker"
 ## Virtual Machines, Containers, Python virtual environments
-# VM_HOME=/${VM_BASE}
-pyVer=3
-VM_HOME=${CHUB_HOME}/${VM_BASE}
-PY_VENV_PATH=${VM_HOME}/virtualenvs
-PY_VENV_NAME=py_${pyVer}_${__TIMESTAMP__}
+# local VM_HOME=/${VM_BASE}
+local pyVer=3
+local VM_HOME=${CHUB_HOME}/${VM_BASE}
+local PY_VENV_PATH=${VM_HOME}/virtualenvs
+local PY_VENV_NAME=py_${pyVer}_${__TIMESTAMP__}
 
-PY_VIRTUALENVWRAPPER=/usr/local/bin/virtualenvwrapper.sh
+local PY_VIRTUALENVWRAPPER=/usr/local/bin/virtualenvwrapper.sh
 
-WSGIPYTHONPATH=""
-WSGIPYTHONHOME=""
+local WSGIPYTHONPATH=""
+local WSGIPYTHONHOME=""
 
-ANDROID_HOME=${CHUB_HOME}/android/sdk
+local ANDROID_HOME=${CHUB_HOME}/android/sdk
 
 source ${LINUX_SCRIPT_HOME}/versions.sh
 source ${LINUX_SCRIPT_HOME}/utils/numthreads.sh
@@ -46,13 +46,14 @@ source ${LINUX_SCRIPT_HOME}/utils/common.sh
 
 if [ -z $1 ]; then
   # BUILD_FOR_CUDA_VER=9.0
-  BUILD_FOR_CUDA_VER=10.0
+  local BUILD_FOR_CUDA_VER=10.0
 fi
 echo "BUILD_FOR_CUDA_VER: ${BUILD_FOR_CUDA_VER}"
 
-CUDACFG_FILEPATH=${LINUX_SCRIPT_HOME}/cudacfg-${BUILD_FOR_CUDA_VER}.sh
+local CUDACFG_FILEPATH=${LINUX_SCRIPT_HOME}/cudacfg-${BUILD_FOR_CUDA_VER}.sh
 echo "CUDACFG_FILEPATH: ${CUDACFG_FILEPATH}"
-AI_PYCUDA_FILE=python.requirements-ai-cuda-${BUILD_FOR_CUDA_VER}.txt
+
+local AI_PYCUDA_FILE=python.requirements-ai-cuda-${BUILD_FOR_CUDA_VER}.txt
 echo "AI_PYCUDA_FILE: ${AI_PYCUDA_FILE}"
 
 if [ -f ${CUDACFG_FILEPATH} ]; then

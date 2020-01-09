@@ -12,48 +12,60 @@
 #
 ##----------------------------------------------------------
 
-if [ -z $LSCRIPTS ];then
-  LSCRIPTS="."
-fi
 
-source $LSCRIPTS/lscripts.config.sh
+function simple_webserver_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-if [ -z "$BASEPATH" ]; then
-  BASEPATH="$HOME/softwares"
-  echo "Unable to get BASEPATH, using default path#: $BASEPATH"
-fi
+  if [ -z "${BASEPATH}" ]; then
+    local BASEPATH="$HOME/softwares"
+    echo "Unable to get BASEPATH, using default path#: ${BASEPATH}"
+  fi
 
-DIR="Simple-Web-Server"
-PROG_DIR="$BASEPATH/$DIR"
+  if [ -z "${SIMPLE_WEB_SERVER_VER}" ]; then
+    local SIMPLE_WEB_SERVER_VER="v3.0.2"
+    echo "Unable to get SIMPLE_WEB_SERVER_VER version, falling back to default version#: ${SIMPLE_WEB_SERVER_VER}"
+  fi
 
-URL="https://github.com/eidheim/$DIR.git"
+  local DIR="Simple-Web-Server"
+  local PROG_DIR="${BASEPATH}/${DIR}"
 
-echo "Number of threads will be used: $NUMTHREADS"
-echo "BASEPATH: $BASEPATH"
-echo "URL: $URL"
-echo "PROG_DIR: $PROG_DIR"
+  # local URL="https://github.com/eidheim/${DIR}.git"
+  local URL="https://gitlab.com/eidheim/${DIR}.git"
 
-if [ ! -d $PROG_DIR ]; then
-  git -C $PROG_DIR || git clone $URL $PROG_DIR
-else
-  echo Gid clone for $URL exists at: $PROG_DIR
-fi
+  echo "Number of threads will be used: ${NUMTHREADS}"
+  echo "BASEPATH: ${BASEPATH}"
+  echo "URL: ${URL}"
+  echo "PROG_DIR: ${PROG_DIR}"
 
-if [ -d $PROG_DIR/build ]; then
-  rm -rf $PROG_DIR/build
-fi
+  if [ ! -d ${PROG_DIR} ]; then
+    git -C ${PROG_DIR} || git clone ${URL} ${PROG_DIR}
+  else
+    echo Gid clone for ${URL} exists at: ${PROG_DIR}
+  fi
 
-mkdir $PROG_DIR/build
-cd $PROG_DIR/build
-cmake ..
+  cd ${PROG_DIR}
+  git pull
+  git checkout ${SIMPLE_WEB_SERVER_VER}
 
-### not required
-## ccmake ..
+  if [ -d ${PROG_DIR}/build ]; then
+    rm -rf ${PROG_DIR}/build
+  fi
 
-make -j$NUMTHREADS
-sudo make install -j$NUMTHREADS
+  mkdir ${PROG_DIR}/build
+  cd ${PROG_DIR}/build
+  cmake ..
 
-cd $LINUX_SCRIPT_HOME
+  ### not required
+  ## ccmake ..
 
-# Run the server and client examples: ./build/http_examples
-# Direct your favorite browser to for instance http://localhost:8080/
+  make -j${NUMTHREADS}
+  sudo make install -j${NUMTHREADS}
+
+  cd ${LSCRIPTS}
+
+  # Run the server and client examples: ./build/http_examples
+  # Direct your favorite browser to for instance http://localhost:8080/
+}
+
+simple_webserver_install

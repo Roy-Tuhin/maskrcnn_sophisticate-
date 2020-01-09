@@ -67,10 +67,11 @@ function gdal_install() {
   ## https://gis.stackexchange.com/questions/317109/build-gdal-with-proj-version-6
   ## Up until gdal v2.4.1, you would do that by providing the --with-static-proj4= configure argument. However, it has been deprecated in gdal v3.0.0. As a result, you should now use the simpler --with-proj=.
 
-  ./configure --with-pg=/usr/bin/pg_config \
+  CPPFLAGS=-I/usr/local/include LDFLAGS=-L/usr/local/lib ./configure --with-pg=/usr/bin/pg_config \
     --with-proj=/usr/local \
-    --with-geotiff=/usr/local \
-    --with-local \
+    --with-libtiff=/usr/local \
+    --with-geotiff=/usr/lib/x86_64-linux-gnu \
+    --with-local=/usr/local \
     --with-python \
     --with-sfcgal \
     --with-qhull \
@@ -81,6 +82,8 @@ function gdal_install() {
     --with-jvm_lib \
     --with-jvm_lib_add_rpath
 
+  ## this worked
+  # CPPFLAGS=-I/usr/local/include LDFLAGS=-L/usr/local/lib  ./configure --with-pg=/usr/bin/pg_config     --with-proj=/usr/local     --with-libtiff=/usr/local     --with-geotiff=/usr/lib/x86_64-linux-gnu --with-python     --with-sfcgal     --with-qhull     --with-freexl     --with-libjson_c     --with-python     --with-java     --with-jvm_lib     --with-jvm_lib_add_rpath --with-local=/usr/local
 
   # ldd `which gdalinfo` | grep -i tif 
 
@@ -108,33 +111,45 @@ function gdal_install() {
   ##----------------------------------------------------------
   ## Build Logs and Errors
   ##----------------------------------------------------------
-# ude/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -DHAVE_XERCES -I/usr/include -I/usr/include/xercesc -I/codehub/external/gdal-3.0.2/port -I/usr/include/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -c -o ../o/ceossar.lo ceossar.c
-# geotiff.cpp: In function ‘void GTiffDatasetLibGeotiffErrorCallback(GTIF*, int, const char*, ...)’:
-# geotiff.cpp:10925:26: error: ‘LIBGEOTIFF_WARNING’ was not declared in this scope
-#      CPLErrorV( (level == LIBGEOTIFF_WARNING ) ? CE_Warning : CE_Failure,
-#                           ^~~~~~~~~~~~~~~~~~
-# /bin/bash /codehub/external/gdal-3.0.2/libtool --mode=compile --silent --tag=CXX g++ -I/codehub/external/gdal-3.0.2/port -I/codehub/external/gdal-3.0.2/gcore -I/codehub/external/gdal-3.0.2/alg -I/codehub/external/gdal-3.0.2/ogr -I/codehub/external/gdal-3.0.2/ogr/ogrsf_frmts -I/codehub/external/gdal-3.0.2/gnm -I/codehub/external/gdal-3.0.2/apps -DHAVE_AVX_AT_COMPILE_TIME -DHAVE_SSSE3_AT_COMPILE_TIME -DHAVE_SSE_AT_COMPILE_TIME -g -O2  -Wall -Wextra -Winit-self -Wunused-parameter -Wformat -Werror=format-security -Wno-format-nonliteral -Wlogical-op -Wshadow -Werror=vla -Wdate-time -Wnull-dereference -Wduplicated-cond -Wfloat-conversion -Wmissing-declarations -Wnon-virtual-dtor -Woverloaded-virtual -fno-operator-names -Wzero-as-null-pointer-constant -Wsuggest-override -Wimplicit-fallthrough  -DGNM_ENABLED -I/codehub/external/gdal-3.0.2/port -I/usr/include/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -DHAVE_XERCES -I/usr/include -I/usr/include/xercesc -I/codehub/external/gdal-3.0.2/port -I/usr/include/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -c -o ../o/bsbdataset.lo bsbdataset.cpp
-# geotiff.cpp:10925:26: note: suggested alternative: ‘LIBGEOTIFF_VERSION’
-#      CPLErrorV( (level == LIBGEOTIFF_WARNING ) ? CE_Warning : CE_Failure,
-#                           ^~~~~~~~~~~~~~~~~~
-#                           LIBGEOTIFF_VERSION
-# geotiff.cpp: In function ‘GTIF* GTiffDatasetGTIFNew(TIFF*)’:
-# geotiff.cpp:10936:18: error: ‘GTIFNewEx’ was not declared in this scope
-#      GTIF* gtif = GTIFNewEx(hTIFF, GTiffDatasetLibGeotiffErrorCallback, nullptr);
-#                   ^~~~~~~~~
-# geotiff.cpp:10936:18: note: suggested alternative: ‘GTIFNew’
-#      GTIF* gtif = GTIFNewEx(hTIFF, GTiffDatasetLibGeotiffErrorCallback, nullptr);
-#                   ^~~~~~~~~
-#                   GTIFNew
-# geotiff.cpp:10939:9: error: ‘GTIFAttachPROJContext’ was not declared in this scope
-#          GTIFAttachPROJContext(gtif, OSRGetProjTLSContext());
-#          ^~~~~~~~~~~~~~~~~~~~~
-# ../../GDALmake.opt:637: recipe for target '../o/geotiff.lo' failed
-# make[2]: *** [../o/geotiff.lo] Error 1
-# make[2]: Leaving directory '/codehub/external/gdal-3.0.2/frmts/gtiff'
-# GNUmakefile:15: recipe for target 'gtiff-install-obj' failed
-# make[1]: *** [gtiff-install-obj] Error 2
-# make[1]: *** Waiting for unfinished jobs....
+
+  # https://trac.osgeo.org/gdal/wiki/BuildingOnUnix
+  # https://gis.stackexchange.com/questions/317109/build-gdal-with-proj-version-6?answertab=active#tab-top
+  # https://gis.stackexchange.com/questions/317109/build-gdal-with-proj-version-6
+  # just a note: CPLUS_INCLUDE_PATH and C_INCLUDE_PATH are not the equivalent of LD_LIBRARY_PATH. LD_LIBRARY_PATH serves the ld (the dynamic linker at runtime) whereas the equivalent of the former two that serves your C/C++ compiler with the location of libraries is LIBRARY_PATH.
+
+  # CPPFLAGS=-I/usr/local/include LDFLAGS=-L/path/to/proj/lib ./configure --prefix=/install/gdal/here
+
+
+  # ude/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -DHAVE_XERCES -I/usr/include -I/usr/include/xercesc -I/codehub/external/gdal-3.0.2/port -I/usr/include/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -c -o ../o/ceossar.lo ceossar.c
+  # geotiff.cpp: In function ‘void GTiffDatasetLibGeotiffErrorCallback(GTIF*, int, const char*, ...)’:
+  # geotiff.cpp:10925:26: error: ‘LIBGEOTIFF_WARNING’ was not declared in this scope
+  #      CPLErrorV( (level == LIBGEOTIFF_WARNING ) ? CE_Warning : CE_Failure,
+  #                           ^~~~~~~~~~~~~~~~~~
+  # /bin/bash /codehub/external/gdal-3.0.2/libtool --mode=compile --silent --tag=CXX g++ -I/codehub/external/gdal-3.0.2/port -I/codehub/external/gdal-3.0.2/gcore -I/codehub/external/gdal-3.0.2/alg -I/codehub/external/gdal-3.0.2/ogr -I/codehub/external/gdal-3.0.2/ogr/ogrsf_frmts -I/codehub/external/gdal-3.0.2/gnm -I/codehub/external/gdal-3.0.2/apps -DHAVE_AVX_AT_COMPILE_TIME -DHAVE_SSSE3_AT_COMPILE_TIME -DHAVE_SSE_AT_COMPILE_TIME -g -O2  -Wall -Wextra -Winit-self -Wunused-parameter -Wformat -Werror=format-security -Wno-format-nonliteral -Wlogical-op -Wshadow -Werror=vla -Wdate-time -Wnull-dereference -Wduplicated-cond -Wfloat-conversion -Wmissing-declarations -Wnon-virtual-dtor -Woverloaded-virtual -fno-operator-names -Wzero-as-null-pointer-constant -Wsuggest-override -Wimplicit-fallthrough  -DGNM_ENABLED -I/codehub/external/gdal-3.0.2/port -I/usr/include/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -DHAVE_XERCES -I/usr/include -I/usr/include/xercesc -I/codehub/external/gdal-3.0.2/port -I/usr/include/openjpeg-2.3 -I/usr/include  -DGDAL_COMPILATION -c -o ../o/bsbdataset.lo bsbdataset.cpp
+  # geotiff.cpp:10925:26: note: suggested alternative: ‘LIBGEOTIFF_VERSION’
+  #      CPLErrorV( (level == LIBGEOTIFF_WARNING ) ? CE_Warning : CE_Failure,
+  #                           ^~~~~~~~~~~~~~~~~~
+  #                           LIBGEOTIFF_VERSION
+  # geotiff.cpp: In function ‘GTIF* GTiffDatasetGTIFNew(TIFF*)’:
+  # geotiff.cpp:10936:18: error: ‘GTIFNewEx’ was not declared in this scope
+  #      GTIF* gtif = GTIFNewEx(hTIFF, GTiffDatasetLibGeotiffErrorCallback, nullptr);
+  #                   ^~~~~~~~~
+  # geotiff.cpp:10936:18: note: suggested alternative: ‘GTIFNew’
+  #      GTIF* gtif = GTIFNewEx(hTIFF, GTiffDatasetLibGeotiffErrorCallback, nullptr);
+  #                   ^~~~~~~~~
+  #                   GTIFNew
+  # geotiff.cpp:10939:9: error: ‘GTIFAttachPROJContext’ was not declared in this scope
+  #          GTIFAttachPROJContext(gtif, OSRGetProjTLSContext());
+  #          ^~~~~~~~~~~~~~~~~~~~~
+  # ../../GDALmake.opt:637: recipe for target '../o/geotiff.lo' failed
+  # make[2]: *** [../o/geotiff.lo] Error 1
+  # make[2]: Leaving directory '/codehub/external/gdal-3.0.2/frmts/gtiff'
+  # GNUmakefile:15: recipe for target 'gtiff-install-obj' failed
+  # make[1]: *** [gtiff-install-obj] Error 2
+  # make[1]: *** Waiting for unfinished jobs....
+
+  ## -------------------------------------------------------------------
+  ## -------------------------------------------------------------------
 
   # CXX/LD -o .build_release/examples/siamese/convert_mnist_siamese_data.bin
   # /usr/local/lib//.usr.//local./.lib//lib./.libgdal.so.20/:. .undefined/ libreference/ libgdal.so.20to:  `undefinedTIFFReadDirectory @referenceLIBTIFF_4.0 'to

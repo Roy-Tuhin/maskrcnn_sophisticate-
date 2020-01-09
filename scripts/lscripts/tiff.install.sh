@@ -50,11 +50,14 @@ function tiff_install() {
     echo Extracted Dir already exists: ${PROG_DIR}
   fi
 
-  # nb: build dir already exists
-
+  ## nb: build dir already exists
+  ## https://stackoverflow.com/questions/29578561/trouble-with-building-the-correct-libtiff-version-in-ubuntu
   cd ${PROG_DIR}
   make clean -j${NUMTHREADS}
-  ./configure
+  # ./configure
+  ./configure --enable-defer-strile-load \
+              --enable-chunky-strip-read \
+              --enable-cxx
   make -j${NUMTHREADS}
   sudo make install  ## install into build dir
 

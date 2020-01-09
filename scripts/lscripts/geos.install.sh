@@ -56,8 +56,9 @@ function geos_install() {
   # sudo apt-get install build-essential swig python-dev
   sudo -E apt -y install swig
 
+  ## not required in 3.8.0
   # http://osgeo-org.1560.x6.nabble.com/GEOS-753-cannot-build-geos-3-5-0-td5233885.html
-  wget -c https://trac.osgeo.org/geos/export/HEAD/trunk/cmake/modules/GenerateSourceGroups.cmake -P ${PROG_DIR}/cmake/modules
+  # wget -c https://trac.osgeo.org/geos/export/HEAD/trunk/cmake/modules/GenerateSourceGroups.cmake -P ${PROG_DIR}/cmake/modules
 
   if [ -d ${PROG_DIR}/build ]; then
     rm -rf ${PROG_DIR}/build

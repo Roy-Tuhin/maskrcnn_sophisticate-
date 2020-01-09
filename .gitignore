@@ -30,11 +30,13 @@
 !scripts/
 !_site/
 !tests/
+!external-src/
 # !tmp/
 # !tools/
 # !workspaces/
 
 **/*bk
+**/node_modules
 **/*.pyc
 **/*__pycache__
 **/*.swp
