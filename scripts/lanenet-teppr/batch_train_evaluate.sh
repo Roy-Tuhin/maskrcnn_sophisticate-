@@ -41,8 +41,8 @@ function run_batch_train_evaluate(){
     #-----------Evaluate
     info "Executing this command... evaluate"
 
-    echo "python ${prog_evaluate} evaluate --cfg ${cfg_path}" 
-    # python ${prog_evaluate} evaluate --cfg ${cfg_path}
+    echo "python ${prog_evaluate} evaluate --cfg ${cfg_path} --orientation ${orientation}" 
+    # python ${prog_evaluate} evaluate --cfg ${cfg_path} --orientation ${orientation}
 
     ## Kill exisiting python programs before starting new
     local pids=$(pgrep -f ${prog_evaluate})
@@ -58,4 +58,10 @@ function run_batch_train_evaluate(){
   echo -e '\e[0;31m'End Script: -------x-------x-------x-------'\e[0m'
 }
 
-run_batch_train_evaluate
+orientation=$1
+if [ -z $orientation ]; then
+  echo "orientation is missing!"
+  return
+fi
+
+run_batch_train_evaluate $orientation
