@@ -35,7 +35,7 @@ train:
     IMAGES_PER_GPU: 1
     IMAGE_MAX_DIM: 1280
     IMAGE_MIN_DIM: 720
-    STEPS_PER_EPOCH: 10000
+    STEPS_PER_EPOCH: 1000
   load_weights:
     by_name: true
     exclude:

@@ -35,7 +35,7 @@ train:
     IMAGES_PER_GPU: 1
     IMAGE_MAX_DIM: 1280
     IMAGE_MIN_DIM: 720
-    STEPS_PER_EPOCH: 10000
+    STEPS_PER_EPOCH: 1000
   load_weights:
     by_name: true
     exclude:
@@ -80,7 +80,7 @@ evaluate:
   mode: inference
   device: /gpu:0
   weights: null
-  model_info: EVALUATE_MODEL_INFO
+  model_info: vidteq-hmd-090120_200931-mask_rcnn.yml
   dnnarch: mask_rcnn
   config:
     DETECTION_MIN_CONFIDENCE: 0.9
