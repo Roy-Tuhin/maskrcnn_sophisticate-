@@ -1,0 +1,146 @@
+creator: 'AIE1'
+train:
+  allowed_file_type:
+  - .txt
+  - .csv
+  - .yml
+  - .json
+  allowed_image_type:
+  - .pdf
+  - .png
+  - .jpg
+  - .jpeg
+  - .gif
+  allowed_video_type:
+  - .mp4
+  train_mode: training
+  test_mode: inference
+  dbname: TRAIN_DBNAME
+  splits: 
+  - train
+  - val
+  - test
+  annon_type: hmd
+  dataclass: AnnonDataset
+  name: hmd
+  framework_type: keras
+  mode: training
+  device: /gpu:0
+  weights: null
+  model_info: vidteq-hmd-201219_182640-mask_rcnn.yml
+  dnnarch: mask_rcnn
+  config:
+    DETECTION_MIN_CONFIDENCE: 0.9
+    GPU_COUNT: 1
+    IMAGES_PER_GPU: 1
+    IMAGE_MAX_DIM: 1024
+    IMAGE_MIN_DIM: 800
+    STEPS_PER_EPOCH: 1000
+  load_weights:
+    by_name: true
+    exclude:
+    - mrcnn_class_logits
+    - mrcnn_bbox_fc
+    - mrcnn_bbox
+    - mrcnn_mask
+  schedules:
+  - epochs: 40
+    initial_epoch: 0
+    layers: heads
+    learning_rate: 0.001
+  - epochs: 100
+    layers: 4+
+    learning_rate: 0.001
+  - epochs: 140
+    layers: all
+    learning_rate: 0.0001
+  - epochs: 200
+    layers: all
+    learning_rate: 0.00001
+  imgaug:
+    augmenters:
+      Fliplr: 1.0
+evaluate:
+  allowed_file_type:
+  - .txt
+  - .csv
+  - .yml
+  - .json
+  allowed_image_type:
+  - .pdf
+  - .png
+  - .jpg
+  - .jpeg
+  - .gif
+  allowed_video_type:
+  - .mp4
+  train_mode: training
+  test_mode: inference
+  dbname: EVALUATE_DBNAME
+  splits: 
+  - train
+  - val
+  - test
+  annon_type: hmd
+  dataclass: AnnonDataset
+  name: hmd
+  framework_type: keras
+  mode: inference
+  device: /gpu:0
+  weights: null
+  model_info: EVALUATE_MODEL_INFO
+  dnnarch: mask_rcnn
+  config:
+    DETECTION_MIN_CONFIDENCE: 0.9
+    GPU_COUNT: 1
+    IMAGES_PER_GPU: 1
+    IMAGE_MAX_DIM: 1024
+    IMAGE_MIN_DIM: 800
+  load_weights:
+    by_name: true
+    exclude:
+    - mrcnn_class_logits
+    - mrcnn_bbox_fc
+    - mrcnn_bbox
+    - mrcnn_mask
+  save_viz_and_json: false
+  evaluate_no_of_result: -1
+  iou_threshold: 0.5
+predict:
+  allowed_file_type:
+  - .txt
+  - .csv
+  - .yml
+  - .json
+  allowed_image_type:
+  - .pdf
+  - .png
+  - .jpg
+  - .jpeg
+  - .gif
+  allowed_video_type:
+  - .mp4
+  train_mode: training
+  test_mode: inference
+  dbname: PXL-011019_230854_041019_122148
+  framework_type: keras
+  mode: inference
+  device: /gpu:0
+  weights: null
+  model_info: vidteq-hmd-1-mask_rcnn.yml
+  dnnarch: mask_rcnn
+  config:
+    DETECTION_MIN_CONFIDENCE: 0.8
+    GPU_COUNT: 1
+    IMAGES_PER_GPU: 1
+    IMAGE_MAX_DIM: 1920
+    IMAGE_MIN_DIM: 1080
+  load_weights:
+    by_name: true
+    exclude:
+    - mrcnn_class_logits
+    - mrcnn_bbox_fc
+    - mrcnn_bbox
+    - mrcnn_mask
+  save_viz_and_json: false
+  iou_threshold: 0.5
