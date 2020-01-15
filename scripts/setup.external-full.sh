@@ -47,7 +47,12 @@ git clone https://gitlab.com/calledbymountains/DetectionDatasetManagement.git
 git clone https://github.com/facebookresearch/maskrcnn-benchmark.git
 git clone https://github.com/pfjaeger/medicaldetectiontoolkit.git
 git clone https://github.com/ClementPinard/SfmLearner-Pytorch.git
-
+##
+git clone https://github.com/r9y9/Tacotron-2.git
+git clone https://github.com/r9y9/wavenet_vocoder.git
+git clone https://github.com/CorentinJ/Real-Time-Voice-Cloning.git
+git clone https://github.com/resemble-ai/Resemblyzer.git
+git clone https://github.com/Rayhane-mamah/Tacotron-2.git
 ##
 # git clone https://github.com/a-mma/AquilaDB.git
 # ##
