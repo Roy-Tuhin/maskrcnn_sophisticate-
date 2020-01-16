@@ -16,18 +16,21 @@ import logging
 import numpy as np
 from PIL import Image
 import cv2
+import tensorflow as tf
 
 ## custom imports
 import common
 import apputil
 
-
-import tensorflow as tf
-
 ## arch specific code
 from config import global_config
 from lanenet_model import lanenet
-from lanenet_model import lanenet_postprocess
+# from lanenet_model import lanenet_postprocess
+
+# ## To disable tensorflow debugging logs
+# # https://stackoverflow.com/questions/35911252/disable-tensorflow-debugging-information
+# logging.getLogger('tensorflow').setLevel(logging.ERROR)
+# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 log = logging.getLogger('__main__.'+__name__)
 
@@ -132,6 +135,8 @@ def train(model, dataset_train, dataset_val, cmdcfg):
   log.info("---------------------------->")
   log.info("cmdcfg: {}".format(cmdcfg))
 
+  from tools import train
+
 
 def detect(model, verbose=1, modelcfg=None, image_name=None, im_non_numpy=None, im=None):
   pred_json = detect_with_json(model, verbose=verbose, modelcfg=modelcfg, image_name=image_name, im_non_numpy=im_non_numpy)
@@ -145,6 +150,12 @@ def detect_batch(model, verbose=1, modelcfg=None, image_name=None, im_non_numpy=
 def detect_with_json(model, verbose=1, modelcfg=None, image_name=None, im_non_numpy=None, colors=None, get_mask=False, class_names=None):
   CFG = global_config.cfg
   # weights_path = modelcfg['weights_path']
+  
+  t_start = time.time()
+  
+  # lanenet_postprocess_mod = import_module("lanenet_model."+'lanenet_postprocess_'+orientation)
+  lanenet_postprocess_mod = get_postprocess(modelcfg)
+
   postprocess_result = None
 
   ## TODO: check if im.shape is not a valid shape then only resize
@@ -160,13 +171,14 @@ def detect_with_json(model, verbose=1, modelcfg=None, image_name=None, im_non_nu
   binary_seg_ret = graph.get_tensor_by_name("lanenet/final_binary_output:0")
   instance_seg_ret = graph.get_tensor_by_name("lanenet/final_pixel_embedding_output:0")
 
-  postprocessor = lanenet_postprocess.LaneNetPostProcessor()
+  postprocessor = lanenet_postprocess_mod.LaneNetPostProcessor()
 
   # Set sess configuration
   sess_config = tf.ConfigProto()
   sess_config.gpu_options.per_process_gpu_memory_fraction = CFG.TEST.GPU_MEMORY_FRACTION
   sess_config.gpu_options.allow_growth = CFG.TRAIN.TF_ALLOW_GROWTH
   sess_config.gpu_options.allocator_type = 'BFC'
+
 
   with tf.Session(graph=graph, config=sess_config) as sess:
     binary_seg_image, instance_seg_image = sess.run(
@@ -191,6 +203,10 @@ def detect_with_json(model, verbose=1, modelcfg=None, image_name=None, im_non_nu
     'width' : 1280,
     'height' : 720
   }
+
+  t_cost = time.time() - t_start
+  log.info('Single imgae inference cost time: {:.5f}s'.format(t_cost))
+  
   return pred_json
 
 
@@ -224,6 +240,14 @@ def convert_to_via(pred_json, label='lane'):
   # pred_json['regions'] = regions
 
   # return pred_json
+
+def get_postprocess(modelcfg):
+  problem_id = modelcfg['problem_id']
+  if problem_id == 'rld' or 'rbd':
+    orientation = 'vLine'
+  else:
+    orientation = 'hLine'
+  return import_module("lanenet_model."+'lanenet_postprocess_'+orientation)
 
 
 def tdd(path, weights_path):
