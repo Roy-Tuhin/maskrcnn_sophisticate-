@@ -1,5 +1,9 @@
 #!/bin/bash
 
+## usage
+# enter orientation manually
+# source batch_train_evaluate.sh vLine 1>${AI_LOGS}/lanenet/batch/batch_train_evaluate-$(date -d now +'%d%m%y_%H%M%S').log 2>&1
+
 export __RUN_BATCH_CMD_COUNT__=0
 
 function run_batch_train_evaluate(){
@@ -9,6 +13,7 @@ function run_batch_train_evaluate(){
   source "${SCRIPTS_DIR}/lscripts/utils/common.sh"
   source batch_train_evaluate_cfg.sh
   source batch_train_evaluate_workload.sh
+  cd ${AI_LANENET_ROOT}
 
   workon ${pyenv}
 
@@ -16,33 +21,31 @@ function run_batch_train_evaluate(){
 
   for config in "${configs[@]}"; do
 
-    local cfg_path=$base_log_dir/cfg/${config}
-
     ##-----------Train
     local prog_log=$base_log_dir/train/lanenet-$timestamp.log
     info "Executing this command... train"
     info "Log file: ${prog_log}"
 
-    echo "python ${prog_train} --cfg ${cfg_path} -m 0 1>$prog_log 2>&1"
-    # python python ${prog_train} --cfg ${cfg_path} -m 0 1>$prog_log 2>&1
+    echo "python ${prog_train} --cfg ${config} 1>$prog_log 2>&1"
+    python ${prog_train} --cfg ${config} 1>$prog_log 2>&1
 
     local pids=$(pgrep -f ${prog_train})
     info "These ${prog_train} pids will be killed: ${pids}"
     pkill -f ${prog_train}
 
-    local ckpt_path=$(ls -td ${ckpt_basepath}* | head -n 1) 
-    local ckpt=$(ls -t ${ckpt_path} | head -1 | cut -d. -f1-2) 
+    local ckpt_path=$(ls -t ${ckpt_basepath} | head -n 1) 
+    local ckpt=$(ls -t ${ckpt_basepath}/${ckpt_path} | head -1 | cut -d. -f1-2) 
 
-    local model=${ckpt_path}/${ckpt}
+    local model=${ckpt_basepath}/${ckpt_path}/${ckpt}
     info "Model to be evaluated on: ${model}"
-    echo "sed -i 's/EVALUATE_MODEL_INFO/${model}/g' ${cfg_path}"
-    sed -i "s:EVALUATE_MODEL_INFO:${model}:g" ${cfg_path}
+    echo "sed -i 's:EVALUATE_MODEL_INFO:${model}/g' ${config}"
+    sed -i "s:EVALUATE_MODEL_INFO:${model}:g" ${config}
 
     #-----------Evaluate
     info "Executing this command... evaluate"
 
-    echo "python ${prog_evaluate} evaluate --cfg ${cfg_path} --orientation ${orientation}" 
-    # python ${prog_evaluate} evaluate --cfg ${cfg_path} --orientation ${orientation}
+    echo "python ${prog_evaluate} evaluate --cfg ${config} --orientation ${orientation}" 
+    python ${prog_evaluate} evaluate --cfg ${config} --orientation ${orientation}
 
     ## Kill exisiting python programs before starting new
     local pids=$(pgrep -f ${prog_evaluate})

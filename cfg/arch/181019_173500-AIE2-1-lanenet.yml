@@ -17,8 +17,8 @@ train:
   train_mode: training
   test_mode: inference
   dbname: null
-  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-181219_190809/training
-  splits: 
+  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-251119_114944/training
+  splits:   
   - train
   - val
   - test
@@ -29,13 +29,13 @@ train:
   mode: training
   device: /gpu:0
   weights: null
-  weights_path: null
+  weights_path: /codehub/external/lanenet-lane-detection/model/tusimple_lanenet_vgg/tusimple_lanenet_vgg.ckpt
   model: null
-  model_info: 
+  model_info: null
   dnnarch: lanenet
   config: 
     # Set the shadownet training epochs
-    EPOCHS: 10000
+    EPOCHS: 100
     # Set the display step
     DISPLAY_STEP: 1
     # Set the test display step during training process
@@ -71,6 +71,11 @@ train:
     GPU_NUM: 1
   load_weights: null
   schedules: null
+  output_dir: null
+  model_save_dir: null
+  tboard_save_dir: null
+  model_save_path: null
+  tboard_save_path: null
 evaluate:
   allowed_file_type:
   - .txt
@@ -88,7 +93,7 @@ evaluate:
   train_mode: training
   test_mode: inference
   dbname: null
-  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-181219_190809/testing/test-tusimple.json 
+  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-251119_114944/testing/test-tusimple.json 
   splits: 
   - train
   - val
@@ -100,9 +105,8 @@ evaluate:
   mode: inference
   device: /gpu:0
   weights: null
-  weights_path: lanenet/model/181219_194839/tusimple_lanenet_vgg_2019-12-18-19-48-45.ckpt-26001
-  model_info: vidteq-rld-181219_194839-lanenet.yml
-  # model: /aimldl-dat/logs/lanenet/model/181219_194839/tusimple_lanenet_vgg_2019-12-18-19-48-45.ckpt-26001
+  weights_path: EVALUATE_MODEL_INFO
+  model_info: null
   dnnarch: lanenet
   config: 
     # Set the GPU resource used during testing process
@@ -112,9 +116,15 @@ evaluate:
     # Set the test batch size
     BATCH_SIZE: 2
   load_weights: null
-  save_viz_and_json: false
+  save_viz_and_json: True
   evaluate_no_of_result: -1
   iou_threshold: null
+  output_image_dir: null
+  source_image_path: null
+  binary_mask_path: null
+  instance_mask_path: null
+  pred_json_path: null
+  eval_json_path: null
 predict:
   allowed_file_type:
   - .txt
@@ -140,8 +150,15 @@ predict:
   dnnarch: lanenet
   config: null
   load_weights: null
-  save_viz_and_json: false
+  save_viz_and_json: True
   iou_threshold: null
+  iou_threshold: null
+  output_image_dir: null
+  source_image_path: null
+  binary_mask_path: null
+  instance_mask_path: null
+  pred_json_path: null
+  eval_json_path: null
 postprocess:
   config: 
     # Set the post process connect components analysis min area threshold
