@@ -86,4 +86,4 @@ git clone https://github.com/Rayhane-mamah/Tacotron-2.git
 # git clone https://github.com/alicevision/qmlAlembic.git
 # git clone https://github.com/cnr-isti-vclab/vcglib.git
 # git clone https://gitlab.com/eidheim/Simple-Web-Server.git
-# git clone https://gitlab.com/alicevision/trainedVocabularyTreeData.git
+# git clone https://gitlab.com/alicevision/trainedVocabularyTreeData.gitgit clone https://github.com/yangliupku/retinanet_detection.git
