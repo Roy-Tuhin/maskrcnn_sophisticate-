@@ -258,6 +258,14 @@ function aimldl_main() {
           sudo chown -R $(id -un):$(id -gn) ${ai_kbank_base_path}
         fi
         ;;
+      "vm")
+        local ai_vm_base_path=${AI_ENVVARS['AI_VM_HOME']}
+        ok "ai_vm_base_path: ${ai_vm_base_path}"
+        if [ ! -d ${ai_vm_base_path} ]; then
+          sudo mkdir -p ${ai_vm_base_path}
+          sudo chown -R $(id -un):$(id -gn) ${ai_vm_base_path}
+        fi
+        ;;
       *)
         echo "Unknown option to create_base_paths function!"
         ;;
@@ -308,6 +316,7 @@ function aimldl_main() {
     create_base_paths "doc"
     create_base_paths "rpt"
     create_base_paths "kbk"
+    create_base_paths "vm"
   }
 
 

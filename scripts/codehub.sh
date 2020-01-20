@@ -97,7 +97,8 @@ function codehub_main() {
 
     CHUB_ENVVARS['CHUB_HOME']="${CHUB_HOME}"
 
-    CHUB_ENVVARS['CHUB_CONFIG']="${CHUB_ENVVARS['CHUB_HOME']}/config"
+    CHUB_ENVVARS['CHUB_CONFIG']="${CHUB_ENVVARS['CHUB_HOME']}-config"
+
     CHUB_ENVVARS['CHUB_DATA']="${CHUB_ENVVARS['CHUB_HOME']}/data"
     CHUB_ENVVARS['CHUB_DOWNLOADS']="${CHUB_ENVVARS['CHUB_HOME']}/downloads"
     CHUB_ENVVARS['CHUB_HOME_EXT']="${CHUB_ENVVARS['CHUB_HOME']}/external"
@@ -128,6 +129,7 @@ function codehub_main() {
       info "$i===>${CHUB_ENVVARS['CHUB_HOME']}/${codehubdir}"
       CHUB_DIR_PATHS[$i]="${CHUB_ENVVARS['CHUB_HOME']}/${codehubdir}"
     done
+    CHUB_DIR_PATHS+=( "${CHUB_ENVVARS['CHUB_CONFIG']}" )
     debug "CHUB_DIR_PATHS: ${CHUB_DIR_PATHS[*]}"
   }
 
@@ -205,25 +207,25 @@ function codehub_main() {
   }
 
 
-  # function create_symlinks() {
-  #   debug 'create_symlinks:============================'
+  function create_symlinks() {
+    debug 'create_symlinks:============================'
 
-  #   declare -a symlinks=(
-  #     CHUB_ENVVARS['APACHE_HOME']
-  #   )
+    declare -a symlinks=(
+      ${CHUB_ENVVARS['CHUB_CONFIG']}
+    )
 
-  #   for slink in "${symlinks[@]}"; do
-  #     slink_dir=${CHUB_ENVVARS['CHUB_HOME']}/$(echo ${slink} | cut -d'-' -f 2)
-  #     if [ ! -L "${slink_dir}" ]; then
-  #       echo "creating..."
-  #       info ln -s ${slink} ${slink_dir}
-  #       ln -s ${slink} ${slink_dir}
-  #     else
-  #       info Already Exists: ln -s ${slink} ${slink_dir}
-  #     fi
-  #     # ln -s ${slink} ${slink_dir}
-  #   done
-  # }
+    for slink in "${symlinks[@]}"; do
+      slink_dir=${CHUB_ENVVARS['CHUB_HOME']}/$(echo ${slink} | cut -d'-' -f 2)
+      if [ ! -L "${slink_dir}" ]; then
+        echo "creating..."
+        info ln -s ${slink} ${slink_dir}
+        ln -s ${slink} ${slink_dir}
+      else
+        info Already Exists: ln -s ${slink} ${slink_dir}
+      fi
+      # ln -s ${slink} ${slink_dir}
+    done
+  }
 
 
   function __copy_config_files__() {
