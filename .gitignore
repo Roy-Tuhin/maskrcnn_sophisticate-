@@ -35,6 +35,8 @@
 # !tools/
 # !workspaces/
 
+
+scripts/config/*.export.sh
 **/*bk
 **/node_modules
 **/*.pyc
