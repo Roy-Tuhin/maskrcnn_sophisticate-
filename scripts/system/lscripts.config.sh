@@ -21,17 +21,20 @@ local LINUX_ID=$(lsb_release -si) ## Ubuntu, Kali
 
 local BASEDIR="external"
 local CHUB_DIR="codehub"
-local VM_BASE="virtualmachines"
 local CHUB_HOME="/${CHUB_DIR}"
 ## local BASEPATH="${HOME}/${BASEDIR}"
 local BASEPATH="${CHUB_HOME}/${BASEDIR}"
 local DOCKER_BASEPATH="/external4docker"
+
 ## Virtual Machines, Containers, Python virtual environments
-# local VM_HOME=/${VM_BASE}
 local pyVer=3
-local VM_HOME=${CHUB_HOME}/${VM_BASE}
-local PY_VENV_PATH=${VM_HOME}/virtualenvs
 local PY_VENV_NAME=py_${pyVer}_${__TIMESTAMP__}
+local PY_VENV_LINK_NAME=py_${pyVer}
+local VM_BASE="virtualmachines"
+# local VM_HOME=/${VM_BASE}
+# local VM_HOME="${CHUB_HOME}/${VM_BASE}"
+local VM_HOME="/${VM_BASE}"
+local PY_VENV_PATH="${VM_HOME}/virtualenvs"
 
 local PY_VIRTUALENVWRAPPER=/usr/local/bin/virtualenvwrapper.sh
 
@@ -44,12 +47,7 @@ source ${LINUX_SCRIPT_HOME}/versions.sh
 source ${LINUX_SCRIPT_HOME}/utils/numthreads.sh
 source ${LINUX_SCRIPT_HOME}/utils/common.sh
 
-if [ -z $1 ]; then
-  # BUILD_FOR_CUDA_VER=9.0
-  local BUILD_FOR_CUDA_VER=10.0
-fi
 echo "BUILD_FOR_CUDA_VER: ${BUILD_FOR_CUDA_VER}"
-
 local CUDACFG_FILEPATH=${LINUX_SCRIPT_HOME}/cudacfg-${BUILD_FOR_CUDA_VER}.sh
 echo "CUDACFG_FILEPATH: ${CUDACFG_FILEPATH}"
 

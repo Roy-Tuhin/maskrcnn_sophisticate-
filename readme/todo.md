@@ -20,6 +20,44 @@ $ docker login --username=yourhubusername --email=youremail@company.com
 ## TODO Docker Container
 
 
+- docker working of mask-rcnn issues
+  - take user input for installation -> get the python environment name
+  - use symlink for python environment using a common name
+  - high computation time
+
+- backward compatibility
+  - moving the virtualenv to abs path can work with the symlink creation
+    ```bash
+    mkdir -p /virtualmachines/virtualenvs; rm -rf /virtualmachines/virtualenvs; ln -s /codehub/virtualmachines/virtualenvs /virtualmachines/virtualenvs
+    ```
+
+
+- Conver logs and data-mongo directories to symlinks
+  * /codehub/scripts/utils/dir_to_link.sh
+
+
+- annon - change the format to mscoco
+- support for tfrecords
+- enhance spec for classification
+- user acceptance criteria for new model
+- qgis python plugin - AI based
+
+
+* Take user specific inputs for the configuration
+
+* Create symlinks to all the release models inside the log directory -> so devloper can use release models witht he log file path without chaning the configuration
+e
+
+**Change List**
+
+* BUILD_FOR_CUDA_VER is added in version.sh, defaults to 10.0
+* virtual env path is moved out of codehub and now it's the system root by default
+* config is moved out of codehub and now it's at the system root by default as /codehub-config
+* /aimldl-dat/logs and /aimldl-dat/data-mongo are now symlinks
+
+
+* aimldl.setup issues:
+  - hard dependency on python due to paths.yml and app.yml file creation
 
 
 

@@ -37,12 +37,10 @@ function aimldl_setup() {
 
   create_symlinks
 
-  create_config_files
-
-  create_config_files_aimldl
-
   debug "${AI_ENVVARS}"
   debug $(lsvirtualenv -b | grep ^py_3 | tr '\n' ',' | cut -d',' -f1)
+
+  create_config_files
 }
 
 aimldl_setup
