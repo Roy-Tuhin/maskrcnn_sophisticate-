@@ -203,6 +203,7 @@ def detect_with_json(model, verbose=1, modelcfg=None, image_name=None, im_non_nu
     'width' : 1280,
     'height' : 720
   }
+  pred_json["size"] = 0
 
   t_cost = time.time() - t_start
   log.info('Single imgae inference cost time: {:.5f}s'.format(t_cost))
