@@ -11,12 +11,12 @@
 
 ## https://github.com/tensorflow/tensorflow/tree/master/tensorflow/tools/dockerfiles
 
-BUILD_FOR_CUDA_VER=10.0
+local BUILD_FOR_CUDA_VER=10.0
 
 source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/lscripts/lscripts.config.sh ${BUILD_FOR_CUDA_VER}
 source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/aimldl.config.sh
 
-CODEHUB_ENV_FILE=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/config/codehub.env.sh
+local CODEHUB_ENV_FILE=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/config/codehub.env.sh
 
 declare -a CODEHUB_DIRS=(
   "android"
@@ -40,7 +40,6 @@ declare -a CODEHUB_DIRS=(
   "_site"
   "tests"
   "tools"
-  "config"
   "tmp"
   "workspaces"
 )
@@ -51,10 +50,10 @@ declare -a CH_PY_ENVVARS=(
 )
 
 ## change CVSUSER to appropriate value, be default uses system user
-CVSUSER=$(whoami)
-CVSSERVER="10.4.71.121"
-CVSPORT="2401"
-CVSROOT=":pserver:${CVSUSER}@${CVSSERVER}:${CVSPORT}/data/CVS_REPO"
+local CVSUSER=$(whoami)
+local CVSSERVER="10.4.71.121"
+local CVSPORT="2401"
+local CVSROOT=":pserver:${CVSUSER}@${CVSSERVER}:${CVSPORT}/data/CVS_REPO"
 
 ## ----
 function update_env_file(){
