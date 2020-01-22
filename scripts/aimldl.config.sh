@@ -77,6 +77,8 @@ declare -a AI_REMOTE_MACHINE_IDS=(
 ## This has to be changed manually, and aimldl.setup.sh needs to be executed again!
 AI_PYVER=3
 AI_PY_VENV_NAME="py_3-6-9_2019-12-21"
+## for 'alpha' system
+AI_PY_VENV_NAME="py_3-6-8_2019-12-25"
 
 AI_WSGIPythonPath="${AI_PY_VENV_NAME}/bin"
 AI_WSGIPythonHome="${AI_PY_VENV_NAME}/lib/python3.6/site-packages/"
@@ -93,6 +95,8 @@ AI_AIDS_DB="/aimldl-dat/data-gaze/AIML_Aids"
 AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_290719"
 AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_240919_121321"
 AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719"
+AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_job_181219"
+AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_281219_125647"
 # AI_ANNON_DATA_HOME="${AI_ANNON_DATA_HOME_LOCAL}"
 
 ## Inspired by:
