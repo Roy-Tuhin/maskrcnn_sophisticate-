@@ -41,5 +41,5 @@ declare -a on_param=(val)
 # declare -a aids_dbs=("PXL-151119_175327" "PXL-151119_175327" "PXL-151119_175327")
 # declare -a experiment_ids=("evaluate-97591269-f016-4a66-9467-823fa1d2b834" "evaluate-8390df7a-da12-4d8f-bc32-1f1beaf66981" "evaluate-52f8d1ce-fcd2-416e-b753-1cad073b778e")
 
-declare -a aids_dbs=("PXL-151119_175327" "PXL-151119_175327" "PXL-151119_175327" "PXL-151119_175327" "PXL-151119_175327")
-declare -a experiment_ids=("evaluate-97591269-f016-4a66-9467-823fa1d2b834" "evaluate-8390df7a-da12-4d8f-bc32-1f1beaf66981" "evaluate-52f8d1ce-fcd2-416e-b753-1cad073b778e" "evaluate-9e3e151d-bb1e-41cb-b38a-8c6e63db91c2" "evaluate-a0f58f78-b31c-4d27-bc5f-d69a7d9208b2")
+declare -a aids_dbs=("PXL-301219_174758")
+declare -a experiment_ids=("evaluate-6c0de61f-6bb8-47fa-9817-eb9b6584bfb2")

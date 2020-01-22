@@ -27,7 +27,7 @@ train:
   mode: training
   device: /gpu:0
   weights: null
-  model_info: matterport-coco_things-1-mask_rcnn.yml
+  model_info: vidteq-hmd-201219_182640-mask_rcnn.yml
   dnnarch: mask_rcnn
   config:
     DETECTION_MIN_CONFIDENCE: 0.9
@@ -59,7 +59,7 @@ train:
     learning_rate: 0.00001
   imgaug:
     augmenters:
-      Fliplr: 0.5
+      Fliplr: 0.25
 evaluate:
   allowed_file_type:
   - .txt
