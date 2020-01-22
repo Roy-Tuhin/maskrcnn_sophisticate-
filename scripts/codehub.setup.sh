@@ -27,6 +27,8 @@ function codehub_setup() {
 
   inject_in_bashrc
 
+  create_symlinks
+
   create_config_files
 }
 

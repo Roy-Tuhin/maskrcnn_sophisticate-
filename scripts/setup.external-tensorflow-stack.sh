@@ -14,7 +14,3 @@ git clone https://github.com/tensorflow/examples.git
 git clone https://github.com/tensorflow/models.git
 git clone https://github.com/tensorflow/tfx.git
 git clone https://github.com/tensorflow/docs.git
-
-
-## Mobile Examples
-* https://github.com/tensorflow/examples/tree/master/lite/examples/object_detection/android

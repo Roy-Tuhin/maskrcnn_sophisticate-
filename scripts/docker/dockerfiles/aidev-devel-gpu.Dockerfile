@@ -9,6 +9,10 @@
 ## https://github.com/moby/moby/issues/29110
 ## https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b
 
+## Enable ssh for the docker container
+## https://sean.lane.sh/posts/2019/07/Running-the-Real-Time-Voice-Cloning-project-in-Docker/
+
+
 ARG BASE_IMAGE_NAME=${BASE_IMAGE_NAME}
 # FROM nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
 FROM ${BASE_IMAGE_NAME}

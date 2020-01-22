@@ -258,6 +258,14 @@ function aimldl_main() {
           sudo chown -R $(id -un):$(id -gn) ${ai_kbank_base_path}
         fi
         ;;
+      "vm")
+        local ai_vm_base_path=${AI_ENVVARS['AI_VM_HOME']}
+        ok "ai_vm_base_path: ${ai_vm_base_path}"
+        if [ ! -d ${ai_vm_base_path} ]; then
+          sudo mkdir -p ${ai_vm_base_path}
+          sudo chown -R $(id -un):$(id -gn) ${ai_vm_base_path}
+        fi
+        ;;
       *)
         echo "Unknown option to create_base_paths function!"
         ;;
@@ -286,18 +294,44 @@ function aimldl_main() {
     create_base_paths "data"
 
     local data_dir_path
+    local that_dir
+    local timestamp=$(date -d now +'%d%m%y_%H%M%S')
+
     for i in ${!AI_DATA_DIR_PATHS[*]}; do
       data_dir_path=${AI_DATA_DIR_PATHS[$i]}
+      that_dir=${data_dir_path}-${timestamp}
       info "$i--->${data_dir_path}"
-      if [ ! -d ${data_dir_path} ]; then
-        sudo mkdir -p ${data_dir_path}
-        sudo chown -R $(id -un):$(id -gn) ${data_dir_path}
+      info "$i--->${that_dir}"
+
+      ## re-enterant check: if link exists, don't do any changes
+      if [ -L ${data_dir_path} ]; then
+        info "Symlink already exists: ${data_dir_path}"
+      else
+        ## for old workflow, change dir to link
+        if [ -d ${data_dir_path} ]; then
+          mv ${data_dir_path} ${that_dir}
+          ln -s ${that_dir} ${data_dir_path}
+        else
+          ## if it's not a link and not a directory - first time creation
+          ## => if [ ! -d ${data_dir_path} ] && [ ! -L ${data_dir_path} ]; then
+
+          ## create dir and then move it to the link based on timestamped
+          sudo mkdir -p ${data_dir_path}
+          sudo chown -R $(id -un):$(id -gn) ${data_dir_path}
+
+          mv ${data_dir_path} ${that_dir}
+          ln -s ${that_dir} ${data_dir_path}
+        fi
+
+        ## mongodb dir permission changes to the mongodbuser
+        ## TODO: after changing to the link, side-effect on the permission needs to be tested
+        local match="mongodb"
+        if [[ ${data_dir_path} =~ ${match} ]];then
+          info "Changing ownership for: ${data_dir_path} to ${MONOGODB_USER}:${MONOGODB_GROUP}"
+          sudo chown -R ${MONOGODB_USER}:${MONOGODB_GROUP} ${data_dir_path}
+        fi
       fi
 
-      local match="mongodb"
-      if [[ ${data_dir_path} =~ ${match} ]];then
-        sudo chown -R mongodb:mongodb ${data_dir_path}
-      fi
     done
   }
 
@@ -308,6 +342,7 @@ function aimldl_main() {
     create_base_paths "doc"
     create_base_paths "rpt"
     create_base_paths "kbk"
+    create_base_paths "vm"
   }
 
 
@@ -461,6 +496,9 @@ function aimldl_main() {
 
 
   function create_config_files() {
+    ## generate config files
+    create_config_files_aimldl
+    ## copy files to required path
     __copy_config_files__
   }
 
