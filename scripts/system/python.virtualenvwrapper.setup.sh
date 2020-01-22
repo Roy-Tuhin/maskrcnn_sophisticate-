@@ -36,8 +36,6 @@
 
 function python_virtualenvwrapper_setup() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
-  # local _BUILD_FOR_CUDA_VER=9.0
-  local _BUILD_FOR_CUDA_VER=10.0
 
   if [ ! -z $1 ]; then
     local pyVer=$1
@@ -48,7 +46,7 @@ function python_virtualenvwrapper_setup() {
     echo "Using pyEnvName: ${pyEnvName}"
   fi
 
-  source ${LSCRIPTS}/lscripts.config.sh ${_BUILD_FOR_CUDA_VER}
+  source ${LSCRIPTS}/lscripts.config.sh
 
   if [ -z "${PY_VENV_PATH}" ]; then
     PY_VENV_PATH=${HOME}/virtualmachines/virtualenvs
