@@ -90,10 +90,14 @@ local AI_KBANK_BASE_PATH="/${AI_DIR_PREFIX}-kbank"
 
 ## ----------IMP--------------------##
 ## This has to be changed manually, and aimldl.setup.sh needs to be executed again!
-AI_PYVER=3
-AI_PY_VENV_NAME="py_3-6-9_2019-12-21"
+local AI_PYVER=3
+local AI_PY_VENV_NAME="py_3-6-9_2019-12-21"
 ## for 'alpha' system
-AI_PY_VENV_NAME="py_3-6-8_2019-12-25"
+local AI_PY_VENV_NAME="py_3-6-8_2019-12-25"
+
+## 'alpha' - docker container env
+# local AI_PY_VENV_NAME="py_3_20200122_1504"
+
 
 local AI_WSGIPythonPath="${AI_PY_VENV_NAME}/bin"
 local AI_WSGIPythonHome="${AI_PY_VENV_NAME}/lib/python3.6/site-packages/"

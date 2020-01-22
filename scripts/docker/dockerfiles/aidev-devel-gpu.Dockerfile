@@ -59,6 +59,11 @@ ARG OTHR_BASE_PATHS="${OTHR_BASE_PATHS}"
 ## Needed for string substitution
 SHELL ["/bin/bash", "-c"]
 
+## https://github.com/phusion/baseimage-docker/issues/58#issuecomment-449220374
+
+## RUN DEBIAN_FRONTEND=noninteractive; \ ## this did not work
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
       build-essential \
       ca-certificates \
