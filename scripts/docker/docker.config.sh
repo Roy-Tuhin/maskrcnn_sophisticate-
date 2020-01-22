@@ -64,7 +64,7 @@ local DUSER_HOME="/home/${DUSER}"
 
 local DOCKER_PREFIX="codehub"
 #
-local MAINTAINER='"mangalbhaskar <mangalbhaskar@gmail.com>"'
+local MAINTAINER='"mangalbhaskar"'
 #
 local DOCKER_BASEPATH="/external4docker"
 local DOCKER_SETUP_PATH="/docker-installer"

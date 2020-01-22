@@ -71,22 +71,40 @@ from bson import json_util
 class JsonEncoder(json.JSONEncoder):
     def default(self, obj): return json_util.default(obj)
 
-def tbl_classinfo(cfg, db):
+def tbl_classinfo(db):
   log.info("-----------------------------")
   tblname = annonutils.get_tblname('CLASSINFO')
 
   classinfo = db.get_collection(tblname)
   cur = classinfo.find()
+
+  rpt = {
+    'total_items': 0
+    ,'unique_lbl_ids': set()
+    ,'lbl_ids': []
+    ,'total_unique_lbl_ids': 0
+    ,'total_lbl_ids': 0
+  }
+
   lbl_ids = []
   for item in cur:
-    lbl_ids.append(item['lbl_id'])
+    rpt['unique_lbl_ids'].add(item['lbl_id'])
+    rpt['lbl_ids'].append(item['lbl_id'])
+    rpt['total_items'] += 1
 
-  log.debug('len(lbl_ids): {}'.format(len(lbl_ids)))
-  log.debug('lbl_ids: {}'.format(lbl_ids))
+  rpt['total_unique_lbl_ids'] = len(rpt['unique_lbl_ids'])
+  rpt['total_lbl_ids'] = len(rpt['lbl_ids'])
+
+  log.debug("=> len(unique_lbl_ids): {}".format(len(rpt['unique_lbl_ids'])))
+  log.debug("=> total_unique_lbl_ids: {}".format(rpt['total_unique_lbl_ids']))
+  log.debug("total_lbl_ids: {}".format(rpt['total_lbl_ids']))
+  log.debug("total_items: {}".format(rpt['total_items']))
   log.debug("---x---x---x---\n")
 
+  return rpt
 
-def tbl_errors(cfg, db):
+
+def tbl_errors(db):
   log.debug("\nErrors::")
   log.debug("--------")
   tblname = annonutils.get_tblname('ERRORS')
@@ -153,7 +171,7 @@ def tbl_errors(cfg, db):
 
   return rpt
 
-def tbl_log(cfg, db):
+def tbl_log(db):
   log.info("-----------------------------")
   tblname = annonutils.get_tblname('LOG')
   logs = db.get_collection(tblname)
@@ -184,7 +202,7 @@ def tbl_log(cfg, db):
   return rpt
 
 
-def tbl_stats(cfg, db):
+def tbl_stats(db):
   log.info("-----------------------------")
   tblname = annonutils.get_tblname('STATS')
 
@@ -246,7 +264,7 @@ def tbl_stats(cfg, db):
   return rpt
 
 
-def tbl_images(cfg, db):
+def tbl_images(db):
   log.info("-----------------------------")
   tblname = annonutils.get_tblname('IMAGES')
   images = db.get_collection(tblname)
@@ -258,8 +276,6 @@ def tbl_images(cfg, db):
     ,'total_unique_rel_filenames': 0
     ,'unique_images': set()
     ,'total_images': set()
-    ,'total_ant_from_images': 0
-    ,'total_labels_from_images': 0
     ,'total_img': 0
   }
 
@@ -267,8 +283,6 @@ def tbl_images(cfg, db):
     rpt['unique_rel_filenames'].add(item['rel_filename'])
     rpt['unique_images'].add(item['filename'])
     rpt['total_images'].add(item['img_id'])
-    rpt['total_ant_from_images'] += len(item['annotations'])
-    rpt['total_labels_from_images'] += len(item['lbl_ids'])
     rpt['total_img'] += 1
     rpt['total_items'] += 1
 
@@ -278,9 +292,7 @@ def tbl_images(cfg, db):
 
   log.debug("=> len(unique_rel_filenames): {}".format(len(rpt['unique_rel_filenames'])))
   log.debug("=> total_unique_rel_filenames: {}".format(rpt['total_unique_rel_filenames']))
-  log.debug('* total_ant_from_images: {}'.format(rpt['total_ant_from_images']))
   log.debug('** total_img: {}'.format(rpt['total_img']))
-  log.debug('total_labels_from_images: {}'.format(rpt['total_labels_from_images']))
 
   log.debug("len(unique_images): {}".format(rpt['unique_images']))
   log.debug("len(total_images): {}".format(rpt['total_images']))
@@ -289,7 +301,7 @@ def tbl_images(cfg, db):
   return rpt
 
 
-def tbl_annotations(cfg, db):
+def tbl_annotations(db):
   log.info("-----------------------------")
   tblname = annonutils.get_tblname('ANNOTATIONS')
 
@@ -330,7 +342,7 @@ def tbl_annotations(cfg, db):
   return rpt
 
 
-def tbl_release(cfg, db):
+def tbl_release(db):
   log.info("-----------------------------")
   tblname = annonutils.get_tblname('RELEASE')
   logs = db.get_collection(tblname)
@@ -360,7 +372,7 @@ def tbl_release(cfg, db):
   return rpt
 
 
-def tbl_modelinfo(cfg, db):
+def tbl_modelinfo(db):
   log.info("-----------------------------")
   tblname = annonutils.get_tblname('MODELINFO')
   modelinfo = db.get_collection(tblname)
@@ -387,7 +399,7 @@ def tbl_modelinfo(cfg, db):
   return rpt
 
 
-def tbl_aids(cfg, db):
+def tbl_aids(db):
   """
   TODO
   - cmd as user input which can be train, evaluate, predict, publish, report
@@ -441,25 +453,17 @@ def tbl_aids(cfg, db):
   return rpt
 
 
-def verify_anndb(cfg, args):
+def verify_anndb(db, tbls):
   log.info("-----------------------------")
-  DBCFG = cfg['DBCFG']
-  ANNONCFG = DBCFG['ANNONCFG']
-  mclient = MongoClient('mongodb://'+ANNONCFG['host']+':'+str(ANNONCFG['port']))
-  dbname = ANNONCFG['dbname']
-  log.info("ANNONCFG['dbname']: {}".format(dbname))
-  db = mclient[dbname]
 
   rpt_summary = {}
-  tbls = ['stats','log','images','annotations','errors','classinfo','release','modelinfo','aids']
   for tbl in tbls:
     fname = 'tbl_'+tbl
     log.info('fname: {}'.format(fname))
     fn = getattr(this, fname)
-    rpt = fn(cfg, db)
+    rpt = fn(db)
     rpt_summary[tbl] = rpt
 
-  mclient.close()
 
   # log.info("rpt_summary:{}".format(rpt_summary))
 
@@ -469,25 +473,37 @@ def verify_anndb(cfg, args):
 def get_annotation_data(cfg, dbname):
   log.info("-----------------------------")
   DBCFG = cfg['DBCFG']
-  ANNONCFG = DBCFG['ANNONCFG']
-  mclient = MongoClient('mongodb://'+ANNONCFG['host']+':'+str(ANNONCFG['port']))
+  PXLCFG = DBCFG['PXLCFG']
+  mclient = MongoClient('mongodb://'+PXLCFG['host']+':'+str(PXLCFG['port']))
   db = mclient[dbname]
 
-  tbls = ['ANNOTATIONS', 'IMAGES', 'CLASSINFO', 'STATS']
+  # tbls = ['ANNOTATIONS', 'IMAGES', 'CLASSINFO', 'STATS']
+  tbls_with_split = PXLCFG['tbls_with_split']
+
   aids_splits_criteria = cfg['AIDS_SPLITS_CRITERIA'][cfg['AIDS_SPLITS_CRITERIA']['USE']]
   splits = aids_splits_criteria[0]
 
   stats = {}
   aidsdata = {}
+  for tbl in tbls_with_split:
+    collection = db.get_collection(tbl)
+    if collection:
+      for split in splits:
+        data = list(collection.find({'subset':split},{'_id':0}))
+        if split not in aidsdata:
+          aidsdata[split] = {}
+          stats[split] = {}
+        aidsdata[split][tbl] = data
+        stats[split][tbl] = len(data)
+  
+  tbls = PXLCFG['tbls']
   for tbl in tbls:
     collection = db.get_collection(tbl)
-    for split in splits:
-      data = list(collection.find({'subset':split},{'_id':0}))
-      if split not in aidsdata:
-        aidsdata[split] = {}
-        stats[split] = {}
-      aidsdata[split][tbl] = data
-      stats[split][tbl] = len(data)
+    if collection:
+      for split in splits:
+        data = list(collection.find({'_id':0}))
+        aidsdata[tbl] = data
+        stats[tbl] = len(data)
 
   mclient.close()
 
@@ -511,20 +527,22 @@ def write_rpt_summary_annon(cfg, args, rpt_summary):
   DBCFG = cfg['DBCFG']
   ANNONCFG = DBCFG['ANNONCFG']
   dbname = ANNONCFG['dbname']
+  filepath_errors = None
 
   filepath = os.path.join(logs_basepath, dbname+'-summary-'+timestamp+'.json')
-  filepath_errors = os.path.join(logs_basepath, dbname+'-errors-'+timestamp+'.json')
-
+  log.debug("filepath: {}".format(filepath))
   with open(filepath,'w') as fw:
     # json_str = JSONEncoder().encode(rpt_summary)
     # json_str = json.encode(rpt_summary, cls=JSONEncoder)
-
     json_str = dumps(rpt_summary)
     # fw.write(json.dumps(json_str))
     # https://stackoverflow.com/questions/45539242/write-json-to-a-file-without-writing-escape-backslashes-to-file
     json.dump(json.loads(json_str), fw)
 
-  if rpt_summary['errors']['errors_for_reporting'] and len(rpt_summary['errors']['errors_for_reporting']) > 0:
+  ## write filepath_errors
+  if 'errors' in rpt_summary and rpt_summary['errors']['errors_for_reporting'] and len(rpt_summary['errors']['errors_for_reporting']) > 0:
+    filepath_errors = os.path.join(logs_basepath, dbname+'-errors-'+timestamp+'.json')
+    log.debug("filepath_errors: {}".format(filepath_errors))
     with open(filepath_errors,'w') as fw:
       json_str = dumps(rpt_summary['errors']['errors_for_reporting'])
       json.dump(json.loads(json_str), fw)
@@ -535,34 +553,28 @@ def write_rpt_summary_annon(cfg, args, rpt_summary):
 def write_aids_to_file(cfg, args, rpt_summary):
   log.info("-----------------------------")
 
-  from bson.json_util import dumps
-
-  dbnames = rpt_summary['aids']['dbnames']
   filepaths = {}
+  if 'aids' not in rpt_summary:
+    return filepaths
+
+  from bson.json_util import dumps
+  dbnames = rpt_summary['aids']['dbnames']
   if dbnames and len(dbnames) > 0:
     for dbname in dbnames:
       aidsdata = get_annotation_data(cfg, dbname)
 
       timestamp = ("{:%d%m%y_%H%M%S}").format(datetime.datetime.now())
       logs_basepath = os.path.join(os.getenv('AI_LOGS'), 'annon', dbname)
-
       ## create logs_basepath if does not exists 
       common.mkdir_p(logs_basepath)
-
-      for split in aidsdata.keys():
-        classinfo = aidsdata[split]['CLASSINFO']
-
+      aidsdata_keys = aidsdata.keys()
+      log.info("aidsdata.keys: {}".format(aidsdata_keys))
+      for split in aidsdata_keys:
         filepath = os.path.join(logs_basepath,split+'-'+timestamp+'.json')
-        filepath_ci = os.path.join(logs_basepath,split+'-classinfo-'+timestamp+'.json')
-
-        filepaths[split] = [filepath, filepath_ci]
-        log.debug("filepath, filepath_ci: {}, {}".format(filepath, filepath_ci))
+        filepaths[split] = [filepath]
         with open(filepath,'w') as fw:
           json_str = dumps(aidsdata[split])
           json.dump(json.loads(json_str), fw)
-        
-        with open(filepath_ci,'w') as fw:
-          json.dump(json.loads(dumps(classinfo)), fw)
 
   return filepaths
 
@@ -571,9 +583,24 @@ def main(cfg, args):
   tic = time.time()
   log.info("-----------------------------")
 
-  rpt_summary = verify_anndb(cfg, args)
+  DBCFG = cfg['DBCFG']
+  ANNONCFG = DBCFG['ANNONCFG']
+  mclient = MongoClient('mongodb://'+ANNONCFG['host']+':'+str(ANNONCFG['port']))
+  dbname = ANNONCFG['dbname']
+  log.info("ANNONCFG['dbname']: {}".format(dbname))
+  db = mclient[dbname]
+
+  # tbls = ['stats','log','images','annotations','errors','classinfo','release','aids']
+  # tbls = ['classinfo']
+  tbls = [ tbl.lower() for tbl in ANNONCFG['tbls'] ]
+
+  ## Generated the report summary
+  rpt_summary = verify_anndb(db, tbls)
+
+  mclient.close()
 
   filepath_annon = write_rpt_summary_annon(cfg, args, rpt_summary)
+
   filepaths_aids = write_aids_to_file(cfg, args, rpt_summary)
   log.info("filepath_annon: {}\nfilepaths_aids: {}\n".format(filepath_annon, filepaths_aids))
   
