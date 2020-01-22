@@ -9,7 +9,7 @@ function docker_createcontainer_aidev() {
 
   ## change image name
   if [ ! -z $1 ]; then
-    DOCKER_CONTAINER_IMG=$1
+    local DOCKER_CONTAINER_IMG=$1
   fi
 
   create_container_aidev

@@ -1,14 +1,15 @@
 #!/bin/bash
 
 function cuda_install_dockerfile() {
-  sudo apt -s purge 'cuda*'
-  sudo apt -s purge 'cudnn*'
+  ## Un-comment for removing previsous versions
+  # sudo apt -s purge 'cuda*'
+  # sudo apt -s purge 'cudnn*'
 
   sudo apt-get update && sudo apt-get install -y --no-install-recommends \
-  gnupg2 curl ca-certificates && \
-      curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub | sudo apt-key add - && \
-      echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64 /" | sudo tee /etc/apt/sources.list.d/cuda.list && \
-      echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64 /" | sudo tee /etc/apt/sources.list.d/nvidia-ml.list
+      gnupg2 curl ca-certificates && \
+    curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub | sudo apt-key add - && \
+    echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64 /" | sudo tee /etc/apt/sources.list.d/cuda.list && \
+    echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64 /" | sudo tee /etc/apt/sources.list.d/nvidia-ml.list
 
   local CUDA_VER="10.0"
   local CUDA_REL="10-0" # echo $CUDA_VER | tr . -
@@ -26,14 +27,14 @@ function cuda_install_dockerfile() {
 
   # For libraries in the cuda-compat-* package: https://docs.nvidia.com/cuda/eula/index.html#attachment-a
   sudo apt-get update && sudo apt-get install -y --no-install-recommends \
-          cuda-cudart-$CUDA_PKG_VERSION \
-  cuda-compat-$CUDA_VER
+    cuda-cudart-$CUDA_PKG_VERSION \
+    cuda-compat-$CUDA_VER
 
   sudo ln -s cuda-$CUDA_VER /usr/local/cuda
 
   # Required for nvidia-docker v1
   sudo echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf && \
-      sudo echo "/usr/local/nvidia/lib64" >> /etc/ld.so.conf.d/nvidia.conf
+    sudo echo "/usr/local/nvidia/lib64" >> /etc/ld.so.conf.d/nvidia.conf
 
   export PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:$PATH
   export LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64:$LD_LIBRARY_PATH
@@ -45,25 +46,26 @@ function cuda_install_dockerfile() {
 
   sudo apt-get update && sudo apt-get install -y --no-install-recommends \
       cuda-libraries-$CUDA_PKG_VERSION \
-  cuda-nvtx-$CUDA_PKG_VERSION \
-  libnccl2=$NCCL_VERSION-1+cuda$CUDA_VER && \
-      sudo apt-mark hold libnccl2
+      cuda-nvtx-$CUDA_PKG_VERSION \
+      libnccl2=$NCCL_VERSION-1+cuda$CUDA_VER && \
+    sudo apt-mark hold libnccl2
 
   sudo apt-get update && sudo apt-get install -y --no-install-recommends \
-      libcudnn7=$CUDNN_VERSION-1+cuda$CUDA_VER
+    libcudnn7=$CUDNN_VERSION-1+cuda$CUDA_VER
 
   sudo apt-get update && sudo apt-get install -y --no-install-recommends \
-          cuda-nvml-dev-$CUDA_PKG_VERSION \
-          cuda-command-line-tools-$CUDA_PKG_VERSION \
-  cuda-libraries-dev-$CUDA_PKG_VERSION \
-          cuda-minimal-build-$CUDA_PKG_VERSION \
-          libnccl-dev=$NCCL_VERSION-1+cuda$CUDA_VER
+    cuda-nvml-dev-$CUDA_PKG_VERSION \
+    cuda-command-line-tools-$CUDA_PKG_VERSION \
+    cuda-libraries-dev-$CUDA_PKG_VERSION \
+    cuda-minimal-build-$CUDA_PKG_VERSION \
+    cuda-samples-$CUDA_PKG_VERSION \
+    libnccl-dev=$NCCL_VERSION-1+cuda$CUDA_VER
 
   export LIBRARY_PATH=/usr/local/cuda/lib64/stubs:$LIBRARY_PATH
 
   sudo apt-get update && sudo apt-get install -y --no-install-recommends \
-      libcudnn7=$CUDNN_VERSION-1+cuda$CUDA_VER \
-  libcudnn7-dev=$CUDNN_VERSION-1+cuda$CUDA_VER
+    libcudnn7=$CUDNN_VERSION-1+cuda$CUDA_VER \
+    libcudnn7-dev=$CUDNN_VERSION-1+cuda$CUDA_VER
 
 
   ## Link the libcuda stub to the location where tensorflow is searching for it and reconfigure
@@ -73,8 +75,8 @@ function cuda_install_dockerfile() {
   sudo ldconfig
 
   sudo apt-get install -y --no-install-recommends \
-      libnvinfer${TENSORRT_VER}=${LIBNVINFER_VER} \
-      libnvinfer-dev=${LIBNVINFER_VER}
+    libnvinfer${TENSORRT_VER}=${LIBNVINFER_VER} \
+    libnvinfer-dev=${LIBNVINFER_VER}
 
   ## Tensorflow specific configuration
   ## https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/dockerfiles/dockerfiles/devel-gpu-jupyter.Dockerfile
