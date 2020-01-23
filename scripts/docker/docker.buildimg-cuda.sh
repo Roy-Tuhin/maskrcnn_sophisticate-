@@ -23,6 +23,12 @@ function docker_buildimg_cuda() {
     export CUDA_VERSION="10.0"
     local CUDNN_VERSION="7.6.4.38"
     local CUDNN_MAJOR_VERSION=7
+  elif [[ ${BUILD_FOR_CUDA_VER} == "10.2" ]]; then
+    export IMAGE_NAME="nvidia/cuda"
+    export OS="ubuntu18.04"
+    export CUDA_VERSION="10.2"
+    local CUDNN_VERSION="7.6.5.32"
+    local CUDNN_MAJOR_VERSION=7
   else
     echo "Unsupported CUDA version: ${BUILD_FOR_CUDA_VER}"
     return
