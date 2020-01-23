@@ -105,7 +105,7 @@ tags: ubuntu, linuxscripts, docker, aimldl, android, raspberry-pi
   * [How to configure api using loadbalancer](readme/how_to_configure_api_using_loadbalancer.md)
   * [How to deploy AI API in production](readme/how_to_deploy_ai_api_in_production.md)
   * [How to deploy AI models](readme/how_to_deploy_ai_models.md)
-  * [How to update the production system](how_to_update_the_production_system.md)
+  * [How to update the production system](readme/how_to_update_the_production_system.md)
 * **archives - only for references; deprecated**
   * [How to setup lanenet and api port](readme/how_to_setup_lanenet_and_api_port.md)
 
