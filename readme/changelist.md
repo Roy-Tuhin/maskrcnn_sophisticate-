@@ -24,6 +24,7 @@
 * software stack installation for photogrammetry, gis using `lscripts` upgraded - opencv-4.2, new versions and softwares added
 
 
+
 ### **Major Changes in workflow**
 
 * `/codehub/config` is moved to system root at `/codehub-config` to work seamlessly with docker containers and the host at the same time on the same system
