@@ -14,6 +14,8 @@ pip install IPython[all] jupyter_nbextensions_configurator
 pip install pymongo easydict
 pip install arrow pandas
 pip install scikit-image
+pip uninstall numpy
+pip install numpy==1.17.5
 
 
 cd /codehub/apps

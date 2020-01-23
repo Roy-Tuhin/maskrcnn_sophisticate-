@@ -22,10 +22,12 @@ from easydict import EasyDict as edict
 
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
+from detectron2.modeling import build_model
 
 #prediction
 from detectron2.engine import DefaultPredictor
 from detectron2.utils.visualizer import ColorMode
+from detectron2.checkpoint import DetectionCheckpointer
 
 AI_CODE_BASE_PATH = '/codehub'
 BASE_PATH_CONFIG = os.path.join(AI_CODE_BASE_PATH,'config')
@@ -62,19 +64,19 @@ from detectron2.engine import DefaultTrainer
 this = sys.modules[__name__]
 
 
-def visualize_predictions(im, outputs, metadata):
-    v = visualizer.Visualizer(im[:, :, ::-1],
-                   metadata=metadata, 
-                   scale=0.8, 
-                   instance_mode=ColorMode.SEGMENTATION   # remove the colors of unsegmented pixels
-    )
-    v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-    cv2.imshow('', v.get_image()[:, :, ::-1])
-    cv2.waitKey(0)
+# def visualize_predictions(im, outputs, metadata):
+#     v = visualizer.Visualizer(im[:, :, ::-1],
+#                    metadata=metadata, 
+#                    scale=0.8, 
+#                    instance_mode=ColorMode.SEGMENTATION   # remove the colors of unsegmented pixels
+#     )
+#     v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+#     cv2.imshow('', v.get_image()[:, :, ::-1])
+#     cv2.waitKey(0)
 
 
 def get_dataset_name(name, subset):
-    return name + '_' + subset
+    return name + "_" + subset
 
 
 def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode):
@@ -206,8 +208,31 @@ def load_and_register_dataset(name, subset, _appcfg):
 
 ###----------
 
+def visualize(args, mode, _appcfg):
+    name = "hmd"
+    subset = "train"
+    dataset_name = get_dataset_name(name, subset)
+    metadata = load_and_register_dataset(name, subset, _appcfg)
+    dataset_dicts = DatasetCatalog.get(dataset_name)
+
+    N = 10
+    for d in random.sample(dataset_dicts, N):
+            image_filepath = d["file_name"]
+            # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114342_16718_zed_l_057.jpg"
+            # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114252_16716_zed_l_099.jpg"
+            im = cv2.imread(image_filepath)
+         
+            # visualize_predictions(im, outputs, metadata)
+            v = visualizer.Visualizer(im[:, :, ::-1],
+                   metadata=metadata)
+
+            v = v.draw_dataset_dict(d)
+            cv2.imshow('', v.get_image()[:, :, ::-1])
+            cv2.waitKey(0)
+
+
 def train(args, mode, _appcfg):
-    name = 'hmd'
+    name = "hmd"
     for subset in ["train", "val"]:
         metadata = load_and_register_dataset(name, subset, _appcfg)
 
@@ -244,20 +269,29 @@ def train(args, mode, _appcfg):
 
 def predict(args, mode, _appcfg):
     name = "hmd"
-    subset = "train"
+    subset = "val"
     dataset_name = get_dataset_name(name, subset)
 
     cfg = config.get_cfg()
     cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+
+    cfg.DATALOADER.NUM_WORKERS = 2
+    cfg.SOLVER.IMS_PER_BATCH = 2
+    cfg.SOLVER.BASE_LR = 0.00025
+    # cfg.SOLVER.MAX_ITER = 300    # 300 iterations seems good enough, but you can certainly train longer
+    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset
+    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3
+    
 
     cfg.OUTPUT_DIR = "/codehub/apps/detectron2/release"
     cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
 
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7   # set the testing threshold for this model
     cfg.DATASETS.TEST = (dataset_name)
-    print("cfg: {}".format(cfg))
     
-    metadata = load_and_register_dataset(name, subset)
+    print("cfg: {}".format(cfg.dump()))
+    
+    metadata = load_and_register_dataset(name, subset, _appcfg)
     dataset_dicts = DatasetCatalog.get(dataset_name)
 
     predictor = DefaultPredictor(cfg)
@@ -265,7 +299,7 @@ def predict(args, mode, _appcfg):
 
     output_pred_filepath = os.path.join(cfg.OUTPUT_DIR, 'pred.json')
 
-    N = 1
+    N = 10
     with open(output_pred_filepath,'a') as fw:
         # for i, d in enumerate(dataset_dicts):
         for d in random.sample(dataset_dicts, N):
@@ -274,8 +308,8 @@ def predict(args, mode, _appcfg):
             # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114252_16716_zed_l_099.jpg"
             im = cv2.imread(image_filepath)
          
-            # outputs = predictor(im)
-            outputs = predictor.model(im)
+            outputs = predictor(im)
+            # outputs = predictor.model(im)
 
             one = { 'result' : outputs, 'filepath': image_filepath}
             fw.write(json.dumps(str(one)))
@@ -284,8 +318,7 @@ def predict(args, mode, _appcfg):
             print(one)
             # visualize_predictions(im, outputs, metadata)
             v = visualizer.Visualizer(im[:, :, ::-1],
-                   metadata=metadata, 
-                   scale=0.8, 
+                   metadata=metadata,
                    instance_mode=ColorMode.SEGMENTATION
             )
             v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
@@ -295,21 +328,32 @@ def predict(args, mode, _appcfg):
 
 def evaluate(args, mode, _appcfg):
     name = "hmd"
+    
+    #uncomment if using trainer.model
+    # for subset in ["train", "val"]:
+    #     metadata = load_and_register_dataset(name, subset, _appcfg)
+    
     subset = "test"
+    metadata = load_and_register_dataset(name, subset, _appcfg)    
+    
     dataset_name = get_dataset_name(name, subset)
 
-    metadata = load_and_register_dataset(name, subset, _appcfg)
+    dataset_dicts = DatasetCatalog.get(dataset_name)
 
 
     cfg = config.get_cfg()
     cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    cfg.DATASETS.TRAIN = ("hmd_train","hmd_val")
     cfg.DATASETS.TEST = (dataset_name)
+
 
     cfg.OUTPUT_DIR = "/codehub/apps/detectron2/release"
     cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
 
-    cfg.DATALOADER.NUM_WORKERS = 1
-    cfg.SOLVER.IMS_PER_BATCH = 1
+    cfg.DATALOADER.NUM_WORKERS = 2
+    cfg.SOLVER.IMS_PER_BATCH = 2
+    cfg.SOLVER.BASE_LR = 0.00025
+
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7
@@ -319,11 +363,28 @@ def evaluate(args, mode, _appcfg):
     evaluator = COCOEvaluator(dataset_name, cfg, False, output_dir=cfg.OUTPUT_DIR)
 
     # trainer = DefaultTrainer(cfg)
-    # trainer.resume_or_load(resume=False)
-    # trainer.model
+    # trainer.resume_or_load(resume=True)
+    # model = trainer.model
 
-    predictor = DefaultPredictor(cfg)
-    model = predictor.model
+    # predictor = DefaultPredictor(cfg)
+    # model = predictor.model
+    
+    file_path = cfg.MODEL.WEIGHTS
+    model = build_model(cfg)
+    DetectionCheckpointer(model).load(file_path)
+
+    # N=10
+    # for d in random.sample(dataset_dicts, N):    
+    #     im = cv2.imread(d["file_name"])
+    #     outputs = predictor(im)
+    #     v = visualizer.Visualizer(im[:, :, ::-1],
+    #                    metadata=metadata, 
+    #                    scale=0.8, 
+    #                    instance_mode=ColorMode.SEGMENTATION   # remove the colors of unsegmented pixels
+    #     )
+    #     v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+    #     cv2.imshow('', v.get_image()[:, :, ::-1])
+    #     cv2.waitKey(0)
 
     inference_on_dataset(model, _loader, evaluator)
 
