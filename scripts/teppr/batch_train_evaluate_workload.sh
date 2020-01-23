@@ -11,7 +11,7 @@ declare -a aids_dbs=(
 
 
 declare -a archcfg=(
-  "${AI_CFG}/arch/140120_194329-AIE1-43-mask_rcnn.yml"
+  "${AI_CFG}/arch/170120_175319-AIE1-44-mask_rcnn.yml"
 )
 
 # declare -a experiment_ids=(

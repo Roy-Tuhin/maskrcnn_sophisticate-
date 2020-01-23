@@ -43,13 +43,12 @@ train:
     - mrcnn_bbox_fc
     - mrcnn_bbox
     - mrcnn_mask
-  initial_epoch: 0
   schedules:
-  - epochs: 10
+  - epochs: 2
     initial_epoch: 0
     layers: heads
     learning_rate: 0.001
-  - epochs: 10
+  - epochs: 4
     layers: 4+
     learning_rate: 0.001
 evaluate:

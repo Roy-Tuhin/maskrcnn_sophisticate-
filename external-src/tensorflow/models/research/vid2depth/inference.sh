@@ -34,3 +34,8 @@ python inference.py \
   --output_dir /aimldl-dat/logs/vid2depth \
   --kitti_video 2011_09_26/2011_09_26_drive_0009_sync \
   --model_ckpt /aimldl-dat/release/vid2depth/model_model-119496/model-119496
+
+# LANG=C
+# ENV LANG en_US.UTF-8
+# ENV LANGUAGE en_US:en
+# ENV LC_ALL en_US.UTF-8

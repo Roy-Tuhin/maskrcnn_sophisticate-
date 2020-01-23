@@ -11,9 +11,7 @@
 
 ## https://github.com/tensorflow/tensorflow/tree/master/tensorflow/tools/dockerfiles
 
-local BUILD_FOR_CUDA_VER=10.0
-
-source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/lscripts/lscripts.config.sh ${BUILD_FOR_CUDA_VER}
+source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/system/lscripts.config.sh
 source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/aimldl.config.sh
 
 local CODEHUB_ENV_FILE=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/config/codehub.env.sh

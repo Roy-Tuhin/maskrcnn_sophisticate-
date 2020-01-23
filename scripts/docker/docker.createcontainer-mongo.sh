@@ -49,9 +49,9 @@ function docker_createcontainer_mongo() {
   ${DOCKER_CMD} --version
 
   if [ ! -z $1 ]; then
-    MONGO_DOCKER_IMG=$1
+    local MONGO_DOCKER_IMG=$1
   fi
-  MONGO_DOCKER_CONTAINER_NAME="${MONGO_DOCKER_PREFIX}-${MONGO_DOCKER_IMG}"
+  local MONGO_DOCKER_CONTAINER_NAME="${MONGO_DOCKER_PREFIX}-${MONGO_DOCKER_IMG}"
 
   ${DOCKER_CMD} ps -a --format "{{.Names}}" | grep "${MONGO_DOCKER_CONTAINER_NAME}" 1>/dev/null
 

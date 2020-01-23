@@ -1,0 +1,38 @@
+checkpoint_path: /aimldl-dat/logs/mask_rcnn/170120_180807/train_hmd_170120_180818/mask_rcnn_hmd_{epoch:04d}.h5
+classes:
+- BG
+- signage
+- traffic_light
+- traffic_sign
+classinfo: null
+config:
+  DETECTION_MIN_CONFIDENCE: 0.9
+  GPU_COUNT: 1
+  IMAGES_PER_GPU: 1
+  IMAGE_MAX_DIM: 1024
+  IMAGE_MIN_DIM: 800
+  STEPS_PER_EPOCH: 1000
+creator: AIE1
+dataset: PXL-301219_174758
+dbname: PXL-301219_174758
+dnnarch: mask_rcnn
+framework_type: keras
+id: null
+load_weights:
+  by_name: true
+  exclude:
+  - mrcnn_class_logits
+  - mrcnn_bbox_fc
+  - mrcnn_bbox
+  - mrcnn_mask
+log_dir: /aimldl-dat/logs/mask_rcnn/170120_180807/train_hmd_170120_180818
+mode: inference
+model_info: vidteq-hmd-170120_180818-mask_rcnn.yml
+name: hmd
+num_classes: 4
+org_name: vidteq
+problem_id: ods
+rel_num: '170120_180818'
+timestamp: '170120_180818'
+weights: null
+weights_path: mask_rcnn/170120_180807/train_hmd_170120_180818/mask_rcnn_hmd_0200.h5
