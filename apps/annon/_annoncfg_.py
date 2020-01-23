@@ -188,6 +188,8 @@ DBCFG['ANNONCFG'] = {
   ,'class_ids': None
   ,'return_hmd': None
   ,'data_read_threshold': -1
+  ## Introducted for verifydb, only in annon workflow for now; TODO: use for annon creation and similar concept for other DB creations
+  ,'tbls': ['STATS','LOG','IMAGES','ANNOTATIONS','ERRORS','CLASSINFO','RELEASE','AIDS']
 }
 
 ## AI Datasets (AIDS) Database configuration
@@ -204,6 +206,8 @@ DBCFG['PXLCFG'] = {
   ,'class_ids': None
   ,'return_hmd': None
   ,'data_read_threshold': -1
+  ,'tbls_with_split': ['ANNOTATIONS', 'IMAGES']
+  ,'tbls': ['CLASSINFO', 'STATS', 'AIDS', 'TRAIN', 'EVALUATE']
 }
 
 ## Release Model Database configuration

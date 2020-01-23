@@ -10,7 +10,7 @@ function exec_container_mongo() {
   source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/docker.config.mongo.sh
 
   if [ ! -z $1 ]; then
-    MONGO_DOCKER_CONTAINER_NAME=$1
+    local MONGO_DOCKER_CONTAINER_NAME=$1
   fi
 
   xhost +local:root 1>/dev/null 2>&1

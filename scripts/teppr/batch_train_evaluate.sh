@@ -78,10 +78,10 @@ function run_batch_train_evaluate(){
     local expid_evaluate=$(grep "CFG(Annotation Database) res:" ${prog_log} | rev | cut -d' ' -f1 | rev | tail -n 1)
 
     info "sno,count,uuid,cmd,eval_on,username,aids_db_name,expid,prog_log,iou,rpt_imagelist_filepath,rpt_metric_filepath,rpt_summary_filepath"
-    info "$__RUN_BATCH_CMD_COUNT__,${index},${uuid},'train',,${username},${aids_db_name},${expid},${prog_log},,,,"
+    info "$__RUN_BATCH_CMD_COUNT__,${index},${uuid},train,,${username},${aids_db_name},${expid},${prog_log},,,,"
 
     export __RUN_BATCH_CMD_COUNT__=$(($__RUN_BATCH_CMD_COUNT__+1))
-    echo "$__RUN_BATCH_CMD_COUNT__,${index},${uuid},'train',,${username},${aids_db_name},${expid},${prog_log},,,," >> ${summary_filepath}
+    echo "$__RUN_BATCH_CMD_COUNT__,${index},${uuid},train,,${username},${aids_db_name},${expid},${prog_log},,,," >> ${summary_filepath}
 
     ##-----------Evaluate
     for eval_on in "${on_param[@]}"; do
@@ -101,7 +101,7 @@ function run_batch_train_evaluate(){
       fi
 
       export __RUN_BATCH_CMD_COUNT__=$(($__RUN_BATCH_CMD_COUNT__+1))
-      echo "$__RUN_BATCH_CMD_COUNT__,${index},${uuid},'evaluate',${eval_on},${username},${aids_db_name},${expid_evaluate},${prog_log},${iou},${rpt_imagelist_filepath},${rpt_metric_filepath},${rpt_summary_filepath}" >> ${summary_filepath}
+      echo "$__RUN_BATCH_CMD_COUNT__,${index},${uuid},evaluate,${eval_on},${username},${aids_db_name},${expid_evaluate},${evaluate_prog_log},${iou},${rpt_imagelist_filepath},${rpt_metric_filepath},${rpt_summary_filepath}" >> ${summary_filepath}
 
       info "===x==x==x==="
 

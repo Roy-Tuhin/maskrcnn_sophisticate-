@@ -38,16 +38,11 @@ train:
     STEPS_PER_EPOCH: 1000
   load_weights:
     by_name: true
-    exclude:
-    - mrcnn_class_logits
-    - mrcnn_bbox_fc
-    - mrcnn_bbox
-    - mrcnn_mask
+    exclude: null
   schedules:
-  - epochs: 300
-    initial_epoch: 0
-    layers: head
-    learning_rate: 0.00001
+  - epochs: 250
+    layers: all
+    learning_rate: 0.0001
 evaluate:
   allowed_file_type:
   - .txt
@@ -76,7 +71,7 @@ evaluate:
   mode: inference
   device: /gpu:0
   weights: null
-  model_info: 
+  model_info: EVALUATE_MODEL_INFO
   dnnarch: mask_rcnn
   config:
     DETECTION_MIN_CONFIDENCE: 0.9

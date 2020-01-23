@@ -92,6 +92,12 @@ local AI_KBANK_BASE_PATH="/${AI_DIR_PREFIX}-kbank"
 ## This has to be changed manually, and aimldl.setup.sh needs to be executed again!
 local AI_PYVER=3
 local AI_PY_VENV_NAME="py_3-6-9_2019-12-21"
+## for 'alpha' system
+local AI_PY_VENV_NAME="py_3-6-8_2019-12-25"
+
+## 'alpha' - docker container env
+# local AI_PY_VENV_NAME="py_3_20200122_1504"
+
 
 local AI_WSGIPythonPath="${AI_PY_VENV_NAME}/bin"
 local AI_WSGIPythonHome="${AI_PY_VENV_NAME}/lib/python3.6/site-packages/"
@@ -104,10 +110,11 @@ local AI_ANNON_DB_TEST="/aimldl-dat/data-gaze/AIML_Database_Test"
 local AI_AIDS_DB="/aimldl-dat/data-gaze/AIML_Aids"
 # local AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation"
 # local AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/*/annotations"
-# local AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719"
+local AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719"
 local AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_290719"
 local AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_240919_121321"
-local AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_050719"
+local AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_job_181219"
+local AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_281219_125647"
 # local AI_ANNON_DATA_HOME="${AI_ANNON_DATA_HOME_LOCAL}"
 
 ## Inspired by:

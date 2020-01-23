@@ -2,15 +2,20 @@
 
 ##----------------------------------------------------------
 ### docker-ce
-## Tested on Ubuntu Ubuntu 18.04 LTS
+## Tested on Ubuntu 18.04 LTS
 #
 ## https://docs.docker.com/install/linux/docker-ce/ubuntu/#prerequisites
 ## https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository
 #
+## auto installation script - just for reference
+# https://get.docker.com/
+#
 ##----------------------------------------------------------
 
 ## uninstall
-sudo apt -y remove docker docker-engine docker.io
+sudo apt -y  remove docker docker-engine docker.io containerd runc
+# sudo apt -y remove docker docker-engine docker.io
+
 sudo apt update
 ## Install packages to allow apt to use a repository over HTTPS:
 sudo apt -q -y install \
@@ -38,8 +43,14 @@ apt-cache madison docker-ce
 # sudo apt-get install docker-ce=<VERSION>
 #
 ##  installs the highest possible version
-sudo -E apt -q -y install docker-ce
+# sudo -E apt -q -y install docker-ce
 #
+sudo -E apt -q -y install docker-ce docker-ce-cli containerd.io
+
+## OR
+## Install a specific version using the version string from the second column, for example, 5:18.09.1~3-0~ubuntu-xenial.
+# sudo apt-get install docker-ce=<VERSION_STRING> docker-ce-cli=<VERSION_STRING> containerd.io
+
 ## Verify that Docker CE is installed correctly by running the hello-world image
 sudo docker run hello-world
 
@@ -59,3 +70,5 @@ sudo gpasswd -a $USER docker
 ## sudo reboot
 # ## verify
 docker run hello-world
+
+docker version

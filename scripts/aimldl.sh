@@ -145,7 +145,7 @@ function aimldl_main() {
     AI_ENVVARS['AI_APP']="${AI_ENVVARS['AI_HOME']}/apps"
     AI_ENVVARS['AI_ANNON_HOME']="${AI_ENVVARS['AI_HOME']}/apps/annon"
 
-    AI_ENVVARS['AI_CONFIG']="${AI_ENVVARS['AI_HOME']}/config"
+    AI_ENVVARS['AI_CONFIG']="${AI_ENVVARS['AI_HOME']}-config"
 
     AI_ENVVARS['AI_WEB_APP']="${AI_ENVVARS['AI_HOME']}/apps/www"
     AI_ENVVARS['AI_WEB_APP_LOGS']="${AI_ENVVARS['AI_LOGS']}/www"

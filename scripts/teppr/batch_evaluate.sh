@@ -45,7 +45,7 @@ function run_evaluate() {
       fi
 
       export __RUN_BATCH_CMD_COUNT__=$(($__RUN_BATCH_CMD_COUNT__+1))
-      echo "$__RUN_BATCH_CMD_COUNT__,${index},${uuid},'evaluate',${eval_on},${username},${aids_db_name},${expid_evaluate},${prog_log},${iou},${rpt_imagelist_filepath},${rpt_metric_filepath},${rpt_summary_filepath}" >> ${summary_filepath}
+      echo "$__RUN_BATCH_CMD_COUNT__,${index},${uuid},evaluate,${eval_on},${username},${aids_db_name},${expid_evaluate},${prog_log},${iou},${rpt_imagelist_filepath},${rpt_metric_filepath},${rpt_summary_filepath}" >> ${summary_filepath}
 
       info "===x==x==x==="
 

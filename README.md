@@ -42,7 +42,7 @@ tags: ubuntu, linuxscripts, docker, aimldl, android, raspberry-pi
     * Before setting up AI environment, ensure that the python is installed and virtualenv is properly configured. Default path of virtualenv would be: `/codehub/virtualmachines/virtualenvs`. This is to ensure maximum portability.
 3. **Setup AI environment**
     * Ref: [How to Setup AI Environment](readme/how_to_setup_env.md)
-4. **Setup AI API**
+4. **Setup AI API, deploy AI models**
     * Ref: [How to Setup AI API](readme/apps.www.od.md)
 5. **Configure AI API to auto-start on system boot**
     * Ref: [How to deploy start api automatically on system boot](readme/how_to_start_api_automatically_on_system_boot.md)
@@ -95,13 +95,19 @@ tags: ubuntu, linuxscripts, docker, aimldl, android, raspberry-pi
   * [How to Setup AI Environment](readme/how_to_setup_env.md)
   * [How to Setup AI API](readme/apps.www.od.md)
   * [How to debug setup, workflow and apps](readme/how_to_debug_setup_workflow_and_apps.md)
-  * [How to deploy start api automatically on system boot](readme/how_to_start_api_automatically_on_system_boot.md)
-  * [How to configure api using loadbalancer](readme/how_to_configure_api_using_loadbalancer.md)
-  * [How to deploy AI API in production](readme/how_to_deploy_ai_api_in_production.md)
-  * [How to setup lanenet and api port](readme/how_to_setup_lanenet_and_api_port.md)
+  * [How to create new model info for deploying AI models](readme/how_to_create_new_model_info.md)
+  * [How to integrate new DNN arch with the teppr workflow](readme/how_to_integrate_new_dnn_arch_with_the_teppr_workflow.md)
 * **How to setup pipeline for `aimldl`?**
   * [How to create Annotation Datasets](readme/how_to_create_annotation_datasets.md)
   * [How to execute TEPPr workflow](readme/how_to_run_teppr_workflow.md)
+* **System code/model release, updates, upgrades and testing**
+  * [How to deploy start api automatically on system boot](readme/how_to_start_api_automatically_on_system_boot.md)
+  * [How to configure api using loadbalancer](readme/how_to_configure_api_using_loadbalancer.md)
+  * [How to deploy AI API in production](readme/how_to_deploy_ai_api_in_production.md)
+  * [How to deploy AI models](readme/how_to_deploy_ai_models.md)
+  * [How to update the production system](readme/how_to_update_the_production_system.md)
+* **archives - only for references; deprecated**
+  * [How to setup lanenet and api port](readme/how_to_setup_lanenet_and_api_port.md)
 
 
 ### Design & Specifications 

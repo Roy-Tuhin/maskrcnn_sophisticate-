@@ -23,6 +23,7 @@
 function python_virtualenvwrapper_install() {
   local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
   source ${LSCRIPTS}/lscripts.config.sh
+  source ${LSCRIPTS}/python.config.sh
 
   if [ ! -z $1 ]; then
     local pyVer=$1
@@ -114,7 +115,7 @@ function python_virtualenvwrapper_install() {
 
   install_py_env ${pyVer}
 
-  # cd ${LSCRIPTS}
+  cd ${LSCRIPTS}
 
   source ${LSCRIPTS}/python.virtualenvwrapper.setup.sh ${pyVer} $2
 }
