@@ -57,10 +57,14 @@
     * uploaded logs are generated here for each model: `/aimldl-dat/logs/annon`
       ```bash
       cd /codehub/scripts/annon
-      source run_release_modelinfo.sh <annon_db>
+      source run_release_modelinfo.sh <modelinfo_db>
       ## Example:
       source run_release_modelinfo.sh oasis
       ```
+    * **NOTE:**
+      * `oasis` is the modelinfo database name
+      * This script release all the modelinfo to database which are available in `/codehub/cfg/model/release` directory. Models already in database will NOT be re-created and only new modelinfo will be created
+      * If all the modelinfo needs to be re-created; delete the database and run the script
 4. Verify if modelinfo is loaded in the database
     * check the database directly using mongoclient
     * use annon workflow for verification:
