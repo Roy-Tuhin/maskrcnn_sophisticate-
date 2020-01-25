@@ -17,7 +17,19 @@
 cd /codehub/external/tensorflow/models/research/object_detection/dataset_tools
 export PYTHONPATH=/codehub/external/tensorflow/models/research
 python -m create_coco_tf_record.py
+
+export PYTHONPATH=$PYTHONPATH:/codehub/external/tensorflow/models/research/slim
+cd /codehub/scripts/data-public
+source tf_ods_train.sh
 ```
+
+
+```bash
+tensorflow.python.framework.errors_impl.NotFoundError: Unsuccessful TensorSliceReader constructor: Failed to find any matching files for /aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco/model.ckpt
+```
+
+wget -c http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v2_coco_2018_03_29.tar.gz
+/aimldl-dat/data-mobile/ssd_mobilenet_v2_coco_2018_03_29
 
 ## Fixes for tf >= 2
 
@@ -39,6 +51,31 @@ AttributeError: module 'tensorflow' has no attribute 'logging'
 
 ```
 
+https://stackoverflow.com/questions/58628439/upgrading-tf-contrib-slim-manually-to-tf-2-0
+
+
+WARNING: The TensorFlow contrib module will not be included in TensorFlow 2.0.
+For more information, please see:
+  * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+  * https://github.com/tensorflow/addons
+If you depend on functionality not listed there, please file an issue.
+
+Traceback (most recent call last):
+  File "object_detection/model_main.py", line 26, in <module>
+    from object_detection import model_lib
+  File "/codehub/external/tensorflow/models/research/object_detection/model_lib.py", line 28, in <module>
+    from object_detection import exporter as exporter_lib
+  File "/codehub/external/tensorflow/models/research/object_detection/exporter.py", line 24, in <module>
+    from object_detection.builders import model_builder
+  File "/codehub/external/tensorflow/models/research/object_detection/builders/model_builder.py", line 35, in <module>
+    from object_detection.models import faster_rcnn_inception_resnet_v2_feature_extractor as frcnn_inc_res
+  File "/codehub/external/tensorflow/models/research/object_detection/models/faster_rcnn_inception_resnet_v2_feature_extractor.py", line 30, in <module>
+    from nets import inception_resnet_v2
+ModuleNotFoundError: No module named 'nets'
+
+
+
+
 ### pascal VOC
 
 app = tf.app
@@ -49,6 +86,8 @@ flags = app.flags
   File "object_detection/dataset_tools/create_pascal_tf_record.py", line 41, in <module>
     flags = tf.app.flags
 AttributeError: module 'tensorflow' has no attribute 'app'
+
+/codehub/external/tensorflow/models/research/object_detection/model_main.py
 ```
 
 python_io = tf.python_io
@@ -76,6 +115,8 @@ AttributeError: module 'tensorflow' has no attribute 'gfile'
   File "object_detection/dataset_tools/create_pascal_tf_record.py", line 91, in dict_to_tf_example
     with tf.gfile.GFile(full_path, 'rb') as fid:
 ```
+
+
 
 ### Oxford-IIIT pet
 

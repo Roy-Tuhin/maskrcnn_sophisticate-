@@ -8,9 +8,11 @@
 timestamp=$(date -d now +'%d%m%y_%H%M%S')
 tfcfg_name=ssd_mobilenet_v2_coco
 ## path to pipeline config file
+## /codehub/cfg/tf_ods_config/ssd_mobilenet_v2_coco.config
 PIPELINE_CONFIG_PATH=/codehub/cfg/tf_ods_config/${tfcfg_name}.config
 ## path to model directory
-MODEL_DIR=/aimldl-dat/logs/tf_ods/${tfcfg_name}-${timestamp}
+## /aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco
+MODEL_DIR=/aimldl-dat/logs/tf_ods/${tfcfg_name}
 
 NUM_TRAIN_STEPS=50000
 SAMPLE_1_OF_N_EVAL_EXAMPLES=1
@@ -27,3 +29,6 @@ python object_detection/model_main.py \
     --num_train_steps=${NUM_TRAIN_STEPS} \
     --sample_1_of_n_eval_examples=${SAMPLE_1_OF_N_EVAL_EXAMPLES} \
     --alsologtostderr
+
+# /codehub/scripts/data-public/tf_ods_train.sh
+# source tf_ods_train.sh 1>${AI_LOGS}/tf_ods/tf_ods_train-$(date -d now +'%d%m%y_%H%M%S').log 2>&1
