@@ -12,6 +12,10 @@ function local_volumes() {
     -v /usr/src:/usr/src \
     -v /lib/modules:/lib/modules"
 
+    ## Ref: /codehub/external/tensorflow/tensorflow/tensorflow/tools/dockerfiles/README.md
+    ## If you're BUILDING OR DEPLOYING DOCKER IMAGES, run as root with docker.sock:
+    # -v /var/run/docker.sock:/var/run/docker.sock
+
   echo "${volumes}"
 }
 

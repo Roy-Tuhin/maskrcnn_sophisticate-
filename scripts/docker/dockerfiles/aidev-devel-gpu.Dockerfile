@@ -64,6 +64,9 @@ SHELL ["/bin/bash", "-c"]
 ## RUN DEBIAN_FRONTEND=noninteractive; \ ## this did not work
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
+## To be tested, Ref: /codehub/external/tensorflow/tensorflow/tensorflow/tools/ci_build/Dockerfile.rbe.cuda10.1-cudnn7-ubuntu16.04-manylinux2010
+# ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
       build-essential \
       ca-certificates \
