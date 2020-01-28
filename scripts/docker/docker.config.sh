@@ -8,7 +8,7 @@
 local __TIMESTAMP__=$(date +%Y%m%d_%H%M)
 local timestamp=${__TIMESTAMP__}
 
-local VERSION=7
+local VERSION=8
 local WHICHONE
 
 WHICHONE="aidevmin-devel-gpu"
@@ -121,4 +121,5 @@ local DOCKER_CMD="docker"
 local DOCKER_VERSION=$(docker --version | cut -d',' -f1 | cut -d' ' -f3)
 # local DOCKER_CMD="docker-compose"
 
-local DOCKER_CONTAINER_IMG="mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-4-20191128_1444"
+# local DOCKER_CONTAINER_IMG="mangalbhaskar/aimldl:10.0-cudnn-7.6.4.38-devel-ubuntu18.04-aidev-v7-20200122_1504"
+local DOCKER_CONTAINER_IMG=${TAG}

@@ -1,0 +1,17 @@
+classes: 
+- BG
+- lane
+classinfo: null
+config: null
+dataset: lnd-291119_174355
+dnnarch: lanenet
+framework_type: tensorflow
+id: rod
+mode: inference
+name: rod
+num_classes: null
+org_name: vidteq
+problem_id: rod
+rel_num: 1
+weights: null
+weights_path: vidteq/rod/1/lanenet/weights/vidteq-rod-1.pb
