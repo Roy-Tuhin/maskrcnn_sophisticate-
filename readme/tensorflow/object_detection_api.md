@@ -28,6 +28,9 @@ source tf_ods_train.sh
 tensorflow.python.framework.errors_impl.NotFoundError: Unsuccessful TensorSliceReader constructor: Failed to find any matching files for /aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco/model.ckpt
 ```
 
+https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
+
+
 wget -c http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v2_coco_2018_03_29.tar.gz
 /aimldl-dat/data-mobile/ssd_mobilenet_v2_coco_2018_03_29
 
