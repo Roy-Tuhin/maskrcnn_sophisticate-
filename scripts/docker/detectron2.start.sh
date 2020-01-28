@@ -15,3 +15,9 @@ apt install vim sshfs
 
 
 # jupyter notebook --ip 0.0.0.0 --port 8888 --no-browser --allow-root
+
+
+## Open multiple bash terminal for already running container
+docker exec -it container_name bash
+## Example
+docker exec -it detectron2 bash
