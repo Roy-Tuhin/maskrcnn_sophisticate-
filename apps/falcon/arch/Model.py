@@ -301,7 +301,7 @@ def predict(args, mode, appcfg):
   log.debug("predict---------------------------->")
 
   archcfg = apputil.get_archcfg(appcfg)
-  log.debug("archcfg: {}".format(archcfg))
+  log.debug("cmdcfg/archcfg: {}".format(archcfg))
   cmdcfg = archcfg
 
   if 'save_viz_and_json' not in cmdcfg:
@@ -331,6 +331,8 @@ def predict(args, mode, appcfg):
 
   dnnmod = apputil.get_module(cmdcfg.dnnarch)
 
+  ## todo: hard-coding clear up
+  cmdcfg['log_dir'] = 'predict'
   log_dir_path = apputil.get_abs_path(appcfg, cmdcfg, 'AI_LOGS')
   cmdcfg['log_dir_path'] = log_dir_path
 
@@ -345,6 +347,7 @@ def predict(args, mode, appcfg):
   for t in ["images", "videos"]:
     if path_dtls[t] and len(path_dtls[t]) > 0:
       fname = "detect_from_"+t
+      log.info("fname: {}".format(fname))
       fn = getattr(this, fname)
       if fn:
         file_names, res = fn(appcfg, dnnmod, path_dtls[t], path_dtls['path'], model, class_names, cmdcfg, api_model_key)
@@ -715,10 +718,12 @@ def detect_from_images(appcfg, dnnmod, images, path, model, class_names, cmdcfg,
   DBCFG = appcfg['APP']['DBCFG']
   CBIRCFG = DBCFG['CBIRCFG']
 
-  mclient = motor.motor_asyncio.AsyncIOMotorClient('mongodb://'+CBIRCFG['host']+':'+str(CBIRCFG['port']))
-  dbname = CBIRCFG['dbname']
-  db = mclient[dbname]
-  collection = db['IMAGES']
+  # mclient = motor.motor_asyncio.AsyncIOMotorClient('mongodb://'+CBIRCFG['host']+':'+str(CBIRCFG['port']))
+  # dbname = CBIRCFG['dbname']
+  # db = mclient[dbname]
+  # collection = db['IMAGES']
+
+  # _create_res(detect, filepath, images, path, model, class_names, cmdcfg, api_model_key)
 
   loop = asyncio.new_event_loop()
   asyncio.set_event_loop(loop)
@@ -796,15 +801,17 @@ def detect_from_videos(appcfg, dnnmod, videos, path, model, class_names, cmdcfg,
 
     if save_viz_and_json:
       ## oframe - original image frame from the video
-      ## pframe - annotations visualization frame from the video
+      ## pframe or viz - annotations visualization frame from the video
       ## annotations - annotations json per frame
-      path_oframe = os.path.join(filepath,vname,"oframe")
-      path_pframe = os.path.join(filepath,vname,"pframe")
-      path_sframe = os.path.join(filepath,vname,"splash")
-      path_mframe = os.path.join(filepath,vname,"mask")
-      path_viz = os.path.join(filepath,vname,"viz")
-      path_annotations = os.path.join(filepath,vname,"annotations")
-      for d in [path_oframe, path_pframe, path_annotations, path_sframe, path_mframe]:
+      video_viz_basepath = os.path.join(filepath,vname) 
+      path_oframe = os.path.join(video_viz_basepath,"oframe")
+      path_pframe = os.path.join(video_viz_basepath,"pframe")
+      path_sframe = os.path.join(video_viz_basepath,"splash")
+      path_mframe = os.path.join(video_viz_basepath,"mask")
+      path_mmframe = os.path.join(video_viz_basepath,"mmask")
+      path_viz = os.path.join(video_viz_basepath,"viz")
+      path_annotations = os.path.join(video_viz_basepath,"annotations")
+      for d in [path_oframe, path_pframe, path_annotations, path_sframe, path_mframe, path_mmframe, path_viz]:
         log.debug("videos dirs: {}".format(d))
         common.mkdir_p(d)
 
@@ -856,7 +863,8 @@ def detect_from_videos(appcfg, dnnmod, videos, path, model, class_names, cmdcfg,
         t1 = time.time()
 
         if save_viz_and_json:
-          pframe_im, jsonres = viz.get_display_instances(oframe_im_rgb, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'], colors=cc, show_bbox=False)
+          # pframe_im, jsonres = viz.get_display_instances(oframe_im_rgb, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'], colors=cc, show_bbox=False)
+          jsonres = viz.get_display_instances(oframe_im_rgb, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'], colors=cc, show_bbox=False, auto_show=False, filepath=video_viz_basepath, filename=oframe_name)
         else:
           jsonres = viz.get_detections(oframe_im_rgb, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'], colors=cc)
 
@@ -896,22 +904,23 @@ def detect_from_videos(appcfg, dnnmod, videos, path, model, class_names, cmdcfg,
           ## Color Mask Effect
           ## Save vframe and video buffer
           ##---------------------------------------------
-          mframe_im = viz.color_mask(oframe_im_rgb, r['masks'])
-          ## RGB -> BGR to save image to video
-          ## mframe_im = mframe_im[..., ::-1]
-          filepath_mframe = os.path.join(path_mframe, oframe_name)
-          viz.imsave(filepath_mframe, mframe_im)
+
+          # mframe_im = viz.color_mask(oframe_im_rgb, r['masks'])
+          # ## RGB -> BGR to save image to video
+          # ## mframe_im = mframe_im[..., ::-1]
+          # filepath_mframe = os.path.join(path_mframe, oframe_name)
+          # viz.imsave(filepath_mframe, mframe_im)
 
           ## Annotation Visualisation
           ## Save vframe and video buffer
           ##---------------------------------------------
 
-          filepath_pframe = os.path.join(path_pframe, oframe_name)
-          viz.imsave(filepath_pframe, pframe_im)
+          # filepath_pframe = os.path.join(path_pframe, oframe_name)
+          # viz.imsave(filepath_pframe, pframe_im)
 
-          filepath_oframe = os.path.join(path_oframe, oframe_name)
-          viz.imsave(filepath_oframe, oframe_im_rgb)
-          # size_oframe = os.path.getsize(filepath_oframe)
+          # filepath_oframe = os.path.join(path_oframe, oframe_name)
+          # viz.imsave(filepath_oframe, oframe_im_rgb)
+          # # size_oframe = os.path.getsize(filepath_oframe)
 
           filepath_jsonres = os.path.join(path_annotations, oframe_name+".json")
           log.debug("filepath_jsonres: {}".format(filepath_jsonres))

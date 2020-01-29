@@ -127,10 +127,13 @@ def load_archcfg(cmd, appcfg, dbname, exp_id, eval_on=None):
       archcfg = load_yaml(exp_id)
       log.debug("loaded: archcfg.keys(): {}".format(archcfg.keys()))
       log.debug("archcfg: {}".format(archcfg))
+      log.debug("archcfg['{}'']: {}".format(cmd, archcfg[cmd]))
+
 
       item_name = exp_id.split(os.path.sep)[-1].split('.')[0]
-      
-      _set_item(item_name, archcfg)
+      log.info("item_name: {}".format(item_name))
+      _set_item_in_appcfg(appcfg, item_name=item_name, item_cfg=archcfg[cmd], item='ARCH')
+      # _set_item(item_name, archcfg)
       appcfg['ACTIVE']['ARCH'] = item_name
   else:
     AI_DATASET_TBLNAME = 'AIDS'
@@ -159,10 +162,10 @@ def load_archcfg(cmd, appcfg, dbname, exp_id, eval_on=None):
     # assert exp_id == archcfg['uuid']
     mclient.close()
 
-  log.debug("archcfg: {}".format(archcfg))
-  if archcfg:
-    _set_item_in_appcfg(appcfg, item_name=exp_id, item_cfg=archcfg, item='ARCH')
+    if archcfg:
+      _set_item_in_appcfg(appcfg, item_name=exp_id, item_cfg=archcfg, item='ARCH')
 
+  log.debug("archcfg: {}".format(archcfg))
   return archcfg
 
 
@@ -228,10 +231,13 @@ def loadcfg(cmd, dbname, exp_id=None, eval_on=None):
   appcfg = load_appcfg(BASE_PATH_CFG)
   appcfg = edict(appcfg)
 
-  datacfg = load_datacfg(cmd, appcfg, dbname, exp_id, eval_on)
-
-  if not datacfg:
-    raise Exception('datacfg is corrupted: {}'.format(datacfg))
+  ## TODO: might be breaking changes; quick hack for expo for video predictions
+  if os.path.exists(exp_id) and os.path.isfile(exp_id):
+    print("exp_id is a file; skipping datacfg load from db")
+  else:
+    datacfg = load_datacfg(cmd, appcfg, dbname, exp_id, eval_on)
+    if not datacfg:
+      raise Exception('datacfg is corrupted: {}'.format(datacfg))
 
   load_archcfg(cmd, appcfg, dbname, exp_id, eval_on)
 
