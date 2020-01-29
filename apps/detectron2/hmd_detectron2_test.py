@@ -26,6 +26,7 @@ from easydict import EasyDict as edict
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
 from detectron2.modeling import build_model
+from detectron2 import model_zoo
 
 #prediction
 from detectron2.engine import DefaultPredictor
