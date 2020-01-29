@@ -16,6 +16,12 @@ from detectron2.utils import visualizer
 from detectron2.utils.visualizer import ColorMode
 import itertools
 
+from detectron2.utils.logger import setup_logger
+setup_logger()
+
+from detectron2.evaluation import COCOEvaluator, inference_on_dataset
+from detectron2.data import build_detection_test_loader
+
 # write a function that loads the dataset into detectron2's standard format
 def get_balloon_dicts(img_dir):
     json_file = os.path.join(img_dir, "via_region_data.json")
@@ -42,7 +48,8 @@ def get_balloon_dicts(img_dir):
             px = anno["all_points_x"]
             py = anno["all_points_y"]
             poly = [(x + 0.5, y + 0.5) for x, y in zip(px, py)]
-            poly = list(itertools.chain.from_iterable(poly))
+            # poly = list(itertools.chain.from_iterable(poly))
+            poly = [p for x in poly for p in x]
 
             obj = {
                 "bbox": [np.min(px), np.min(py), np.max(px), np.max(py)],
@@ -85,15 +92,22 @@ def train():
 def predict():
     balloon_metadata = MetadataCatalog.get("balloon_val")
     cfg = get_cfg()
-    cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    # cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
+    cfg.DATALOADER.NUM_WORKERS = 2
+    cfg.SOLVER.IMS_PER_BATCH = 2
+    cfg.SOLVER.BASE_LR = 0.00025
+    cfg.SOLVER.MAX_ITER = 500    # 300 iterations seems good enough, but you can certainly train longer
+    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset
+    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
     cfg.OUTPUT_DIR = './output_baloon'
     cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7   # set the testing threshold for this model
     cfg.DATASETS.TEST = ("balloon_val", )
     predictor = DefaultPredictor(cfg)
 
-    # dataset_dicts = get_balloon_dicts("balloon/val")
-    dataset_dicts = DatasetCatalog.get("balloon_val")
+    dataset_dicts = get_balloon_dicts("/aimldl-dat/data-public/balloon_dataset/balloon/val")
+    # dataset_dicts = DatasetCatalog.get("balloon_val")
     for d in random.sample(dataset_dicts, 3):    
         im = cv2.imread(d["file_name"])
         outputs = predictor(im)
@@ -106,7 +120,32 @@ def predict():
         cv2.imshow('', v.get_image()[:, :, ::-1])
         cv2.waitKey(0)
 
+def evaluate():
+    cfg = get_cfg()
+    cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
+    cfg.DATALOADER.NUM_WORKERS = 2
+    cfg.SOLVER.IMS_PER_BATCH = 2
+    cfg.SOLVER.BASE_LR = 0.00025
+    cfg.SOLVER.MAX_ITER = 500    # 300 iterations seems good enough, but you can certainly train longer
+    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset
+    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
+    cfg.OUTPUT_DIR = './output_baloon'
+    cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
+    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7   # set the testing threshold for this model
+    cfg.DATASETS.TEST = ("balloon_val", )
+
+    evaluator = COCOEvaluator("balloon_val", cfg, False, output_dir="./output/")
+    val_loader = build_detection_test_loader(cfg, "balloon_val")
+
+    predictor = DefaultPredictor(cfg)
+    model = predictor.model
+
+    # inference_on_dataset(trainer.model, val_loader, evaluator)
+    inference_on_dataset(model, val_loader, evaluator)
+
+
 if __name__ == '__main__':
     register_dataset()
-    train()
-    predict()
+    # train()
+    # predict()
+    evaluate()

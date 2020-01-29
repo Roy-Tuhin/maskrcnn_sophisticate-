@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+__author__ = 'saqibmobin'
+__version__ = '1.0'
+
 import os
 import sys
 import json
@@ -23,6 +26,7 @@ from easydict import EasyDict as edict
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
 from detectron2.modeling import build_model
+from detectron2 import model_zoo
 
 #prediction
 from detectron2.engine import DefaultPredictor
@@ -48,7 +52,8 @@ appcfg = _cfg_.load_appcfg(BASE_PATH_CONFIG)
 appcfg = edict(appcfg)
 
 HOST = "10.4.71.69"
-AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119"
+# AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119"
+AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_281219_125647"
 appcfg['APP']['DBCFG']['PXLCFG']['host'] = HOST
 appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'] = AI_ANNON_DATA_HOME_LOCAL
 
@@ -62,18 +67,6 @@ from detectron2.config import config
 from detectron2.engine import DefaultTrainer
 
 this = sys.modules[__name__]
-
-
-# def visualize_predictions(im, outputs, metadata):
-#     v = visualizer.Visualizer(im[:, :, ::-1],
-#                    metadata=metadata, 
-#                    scale=0.8, 
-#                    instance_mode=ColorMode.SEGMENTATION   # remove the colors of unsegmented pixels
-#     )
-#     v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-#     cv2.imshow('', v.get_image()[:, :, ::-1])
-#     cv2.waitKey(0)
-
 
 def get_dataset_name(name, subset):
     return name + "_" + subset
@@ -93,45 +86,76 @@ def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode):
     ann_keys = ["iscrowd", "bbox", "keypoints", "category_id", "lbl_id"] + (extra_annotation_keys or [])
     num_instances_without_valid_segmentation = 0
 
+    # print("imgs_anns: {}".format(imgs_anns[:2]))
+
     for (img_dict, anno_dict_list) in imgs_anns:
-        image_path = apputil.get_abs_path(cfg, img_dict, 'AI_ANNON_DATA_HOME_LOCAL') ##image_root
-        filepath = os.path.join(image_path, img_dict['filename'])
-        record = {}
-        record["file_name"] = filepath
-        record["height"] = img_dict["height"]
-        record["width"] = img_dict["width"]
-        image_id = record["image_id"] = img_dict["img_id"] ## coco: id
+        # print("img_dict: {}".format(img_dict))
+        # print("anno_dict_list: {}".format(len(anno_dict_list)))
 
-        objs = []
-        for anno in anno_dict_list:
-            assert anno["img_id"] == image_id ## image_id
-            obj = {key: anno[key] for key in ann_keys if key in anno}
-            ##TODO: convert bbbox to coco format
-            _bbox = obj['bbox']
+        filtered_anns = []
+        for key in anno_dict_list:
+            if key["ant_type"]=="polygon":
+                filtered_anns.append(key)
 
-            ##TODO: verify what is BoxMode.XYWH_ABS
-            coco_frmt_bbox = [_bbox['xmin'], _bbox['ymin'], _bbox['width'], _bbox['height'] ]
-            #print("coco_frmt_bbox: {}".format(coco_frmt_bbox))
-            obj['bbox'] = coco_frmt_bbox
-            ## TODO: get polygon from shape_attributes and conver to coco format
-            #segm = anno.get("segmentation", None)
-            segm = None
-            if segm:  # either list[list[float]] or dict(RLE)
-                if not isinstance(segm, dict):
-                    # filter out invalid polygons (< 3 points)
-                    segm = [poly for poly in segm if len(poly) % 2 == 0 and len(poly) >= 6]
-                    if len(segm) == 0:
-                        num_instances_without_valid_segmentation += 1
-                        continue  # ignore this instance
-                    obj["segmentation"] = segm
+        # print("img_dict: {}".format(img_dict))
+        # print("anno_dict_list: {}".format(len(anno_dict_list)))
+        # print("filtered_anns: {}".format(len(filtered_anns)))
+        # print("filtered_anns: {}".format(filtered_anns))
+        # print("anno_dict_list: {}".format(anno_dict_list))
+        if len(filtered_anns)!=0:
+            image_path = apputil.get_abs_path(cfg, img_dict, 'AI_ANNON_DATA_HOME_LOCAL') ##image_root
+            filepath = os.path.join(image_path, img_dict['filename'])
+            record = {}
+            record["file_name"] = filepath
+            record["height"] = img_dict["height"]
+            record["width"] = img_dict["width"]
+            image_id = record["image_id"] = img_dict["img_id"] ## coco: id
 
-            obj["bbox_mode"] = bbox_mode
-            obj["category_id"] = id_map[obj["lbl_id"]] ## category_id
-            # obj["segmentation"] = None
-            objs.append(obj)
+            objs = []
+            # for anno in anno_dict_list:
+            for anno in filtered_anns:
+                if anno["ant_type"]=="polygon":
+                    assert anno["img_id"] == image_id ## image_id
+                    obj = {key: anno[key] for key in ann_keys if key in anno}
+                    ##TODO: convert bbbox to coco format
+                    _bbox = obj['bbox']
 
-        record["annotations"] = objs
-        dataset_dicts.append(record)
+                    ##TODO: verify what is BoxMode.XYWH_ABS
+                    coco_frmt_bbox = [_bbox['xmin'], _bbox['ymin'], _bbox['width'], _bbox['height'] ]
+                    #print("coco_frmt_bbox: {}".format(coco_frmt_bbox))
+                    obj['bbox'] = coco_frmt_bbox
+                    ## TODO: get polygon from shape_attributes and convert to coco format
+                    #segm = anno.get("segmentation", None)
+
+
+                    # assert not anno["region_attributes"]
+                    # segm=None
+
+                    # if anno["ant_type"]=="polygon":
+                    anno = anno["shape_attributes"]
+                    # print("anno: {}".format(anno))
+                    px = anno["all_points_x"]
+                    py = anno["all_points_y"]
+                    poly = [(x + 0.5, y + 0.5) for x, y in zip(px, py)]
+                    poly = [p for x in poly for p in x]
+
+                    segm = [poly]
+
+                    if segm:  # either list[list[float]] or dict(RLE)
+                        if not isinstance(segm, dict):
+                            # filter out invalid polygons (< 3 points)
+                            segm = [poly for poly in segm if len(poly) % 2 == 0 and len(poly) >= 6]
+                            if len(segm) == 0:
+                                num_instances_without_valid_segmentation += 1
+                                continue  # ignore this instance
+                            obj["segmentation"] = segm
+
+                    obj["bbox_mode"] = bbox_mode
+                    obj["category_id"] = id_map[obj["lbl_id"]] ## category_id
+                    objs.append(obj)
+
+            record["annotations"] = objs
+            dataset_dicts.append(record)
 
     return dataset_dicts
 
@@ -140,8 +164,10 @@ def get_data(subset, _appcfg):
     ## TODO: to be passed through cfg
 
     cmd = "train"
-    dbname = "PXL-291119_180404"
-    exp_id = "train-422d30b0-f518-4203-9c4d-b36bd8796c62"
+    # dbname = "PXL-291119_180404"
+    dbname = "PXL-301219_174758"
+    # exp_id = "train-422d30b0-f518-4203-9c4d-b36bd8796c62"
+    exp_id = "train-d79fe253-60c8-43f7-a3f5-42a4abf97b6c"
     eval_on = subset
     # log.debug(_appcfg)
     # log.info(_appcfg['APP']['DBCFG']['PXLCFG'])
@@ -206,7 +232,8 @@ def load_and_register_dataset(name, subset, _appcfg):
     return metadata
 
 
-###----------
+###--------------------------------------->
+
 
 def visualize(args, mode, _appcfg):
     name = "hmd"
@@ -215,8 +242,11 @@ def visualize(args, mode, _appcfg):
     metadata = load_and_register_dataset(name, subset, _appcfg)
     dataset_dicts = DatasetCatalog.get(dataset_name)
 
-    N = 10
+    N = 30
     for d in random.sample(dataset_dicts, N):
+            # print("d: {}".format(d))
+            # print("annos: {}".format(d.get("annotations", None)))
+            # print("annos: {}".format(d.get("annotations", None)[0]))
             image_filepath = d["file_name"]
             # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114342_16718_zed_l_057.jpg"
             # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114252_16716_zed_l_099.jpg"
@@ -236,19 +266,6 @@ def train(args, mode, _appcfg):
     for subset in ["train", "val"]:
         metadata = load_and_register_dataset(name, subset, _appcfg)
 
-    # N = 20
-    # for d in random.sample(dataset_dicts, N):
-    # #     print(d)
-    #     img = cv2.imread(d["file_name"])
-    #     viz = visualizer.Visualizer(img[:, :, ::-1], metadata=metadata, scale=1)
-    #     # viz = visualizer.Visualizer(img, metadata=metadata, scale=1)
-    #     vis = viz.draw_dataset_dict(d)
-    #     # vis.save("/aimldl-dat/temp/det02.jpg")
-    #     # cv2.imwrite("/aimldl-dat/temp/det01.jpg", vis.get_image()[:, :, ::-1])
-    #     # plt.imshow(vis.get_image()[:, :, ::-1])
-    #     cv2.imshow('', vis.get_image()[:, :, ::-1])
-    #     cv2.waitKey(0)
-
     cfg = config.get_cfg()
     cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
     cfg.DATASETS.TRAIN = ("hmd_train","hmd_val")
@@ -257,10 +274,10 @@ def train(args, mode, _appcfg):
     cfg.MODEL.WEIGHTS = "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl"  # initialize from model zoo
     cfg.SOLVER.IMS_PER_BATCH = 2
     cfg.SOLVER.BASE_LR = 0.00025
-    cfg.SOLVER.MAX_ITER = 30000    # 300 iterations seems good enough, but you can certainly train longer
+    # cfg.SOLVER.MAX_ITER = 300    # 300 iterations seems good enough, but you can certainly train longer
     # cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset
-    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
-    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3
+    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512   # faster, and good enough for this toy dataset
+    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3  # only has one class (ballon)
 
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
     trainer = DefaultTrainer(cfg) 
@@ -271,10 +288,18 @@ def train(args, mode, _appcfg):
 def predict(args, mode, _appcfg):
     name = "hmd"
     subset = "val"
+    BASE_IMAGE_PATH = "/aimldl-dat/samples/Trafic_Signs"
+
+    if args.path:
+        BASE_IMAGE_PATH = args.path
+    
+    print("BASE_IMAGE_PATH: {}".format(BASE_IMAGE_PATH))
+
     dataset_name = get_dataset_name(name, subset)
 
     cfg = config.get_cfg()
-    cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    # cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
 
     cfg.DATALOADER.NUM_WORKERS = 2
     cfg.SOLVER.IMS_PER_BATCH = 2
@@ -289,42 +314,66 @@ def predict(args, mode, _appcfg):
 
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7   # set the testing threshold for this model
     cfg.DATASETS.TEST = (dataset_name)
+    # print("cfg: {}".format(cfg.dump()))
     
-    print("cfg: {}".format(cfg.dump()))
-    
-    metadata = load_and_register_dataset(name, subset, _appcfg)
-    dataset_dicts = DatasetCatalog.get(dataset_name)
+    #Predict from a directory
+    metadata = MetadataCatalog.get(dataset_name).set(thing_classes=['signage', 'traffic_light', 'traffic_sign'])
+    # print("Metadata: {}".format(metadata))
+
 
     predictor = DefaultPredictor(cfg)
 
+    for image in os.listdir(BASE_IMAGE_PATH):
 
-    output_pred_filepath = os.path.join(cfg.OUTPUT_DIR, 'pred.json')
+        image_filepath = os.path.join(BASE_IMAGE_PATH, image)
 
-    N = 10
-    with open(output_pred_filepath,'a') as fw:
-        # for i, d in enumerate(dataset_dicts):
-        for d in random.sample(dataset_dicts, N):
-            image_filepath = d["file_name"]
-            # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114342_16718_zed_l_057.jpg"
-            # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114252_16716_zed_l_099.jpg"
-            im = cv2.imread(image_filepath)
+        # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114342_16718_zed_l_057.jpg"
+        # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114252_16716_zed_l_099.jpg"
+        # print("image_filepath: {}".format(image_filepath))
+        
+        im = cv2.imread(image_filepath)
+        
+        outputs = predictor(im)
+
+        # visualize_predictions(im, outputs, metadata)
+        v = visualizer.Visualizer(im[:, :, ::-1],
+               metadata=metadata,
+               instance_mode=ColorMode.SEGMENTATION)
+        v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+        cv2.imshow('', v.get_image()[:, :, ::-1])
+        cv2.waitKey(0)
+
+    ##Predict from dataset
+    # metadata = load_and_register_dataset(name, subset, _appcfg)
+    # dataset_dicts = DatasetCatalog.get(dataset_name)
+
+    # output_pred_filepath = os.path.join(cfg.OUTPUT_DIR, 'pred.json')
+
+    # N = 10
+    # with open(output_pred_filepath,'a') as fw:
+    #     # for i, d in enumerate(dataset_dicts):
+    #     for d in random.sample(dataset_dicts, N):
+    #         image_filepath = d["file_name"]
+    #         # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114342_16718_zed_l_057.jpg"
+    #         # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114252_16716_zed_l_099.jpg"
+    #         im = cv2.imread(image_filepath)
          
-            outputs = predictor(im)
-            # outputs = predictor.model(im)
+    #         outputs = predictor(im)
+    #         # outputs = predictor.model(im)
 
-            one = { 'result' : outputs, 'filepath': image_filepath}
-            fw.write(json.dumps(str(one)))
-            fw.write('\n')
+    #         one = { 'result' : outputs, 'filepath': image_filepath}
+    #         fw.write(json.dumps(str(one)))
+    #         fw.write('\n')
 
-            print(one)
-            # visualize_predictions(im, outputs, metadata)
-            v = visualizer.Visualizer(im[:, :, ::-1],
-                   metadata=metadata,
-                   instance_mode=ColorMode.SEGMENTATION
-            )
-            v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-            cv2.imshow('', v.get_image()[:, :, ::-1])
-            cv2.waitKey(0)
+    #         print(one)
+    #         # visualize_predictions(im, outputs, metadata)
+    #         v = visualizer.Visualizer(im[:, :, ::-1],
+    #                metadata=metadata,
+    #                instance_mode=ColorMode.SEGMENTATION
+    #         )
+    #         v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+    #         cv2.imshow('', v.get_image()[:, :, ::-1])
+    #         cv2.waitKey(0)
 
 
 def evaluate(args, mode, _appcfg):
@@ -374,19 +423,6 @@ def evaluate(args, mode, _appcfg):
     model = build_model(cfg)
     DetectionCheckpointer(model).load(file_path)
 
-    # N=10
-    # for d in random.sample(dataset_dicts, N):    
-    #     im = cv2.imread(d["file_name"])
-    #     outputs = predictor(im)
-    #     v = visualizer.Visualizer(im[:, :, ::-1],
-    #                    metadata=metadata, 
-    #                    scale=0.8, 
-    #                    instance_mode=ColorMode.SEGMENTATION   # remove the colors of unsegmented pixels
-    #     )
-    #     v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-    #     cv2.imshow('', v.get_image()[:, :, ::-1])
-    #     cv2.waitKey(0)
-
     inference_on_dataset(model, _loader, evaluator)
 
 
@@ -432,6 +468,12 @@ def parse_args(commands):
   parser.add_argument("command",
     metavar="<command>",
     help="{}".format(', '.join(commands)))
+
+  parser.add_argument('--from',
+                      dest='path',
+                      metavar="/path/to/image(s)",
+                      required=False,
+                      help='image filepath for prediction')
 
   args = parser.parse_args()    
 
