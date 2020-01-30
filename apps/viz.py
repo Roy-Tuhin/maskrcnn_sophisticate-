@@ -206,7 +206,12 @@ def get_display_instances(image, boxes, masks, class_ids, class_names, scores,
       ## TODO: put area_bbox in the Label text
       if not captions:
         x = random.randint(x1, (x1 + x2) // 2)
-        caption = "{} {:.3f}".format(label, score) if score else label
+
+        ## label with score
+        # caption = "{} {:.3f}".format(label, score) if score else label
+
+        ## label without score
+        caption = "{}".format(label)
       else:
         caption = captions[i]
     
@@ -244,8 +249,20 @@ def get_display_instances(image, boxes, masks, class_ids, class_names, scores,
     ax.set_title(filename)
     masked_image_from_canvas = color_mask(masked_image.astype(np.uint8), masks)
     if masked_image_from_canvas is not None:
-      skimage.io.imsave(os.path.join(filepath, 'viz', filename), masked_image)
-      skimage.io.imsave(os.path.join(filepath, 'mask', filename), masked_image_from_canvas)
+      ## pframe and viz and same; viz, mask folders are used for images; hence retaining the same names for video
+      # skimage.io.imsave(os.path.join(filepath, 'pframe', filename), masked_image.astype(np.uint8))
+      skimage.io.imsave(os.path.join(filepath, 'viz', filename), masked_image.astype(np.uint8))
+
+      # ## Color Splash Effect
+      # splash = color_splash(image, masks)
+      # skimage.io.imsave(os.path.join(filepath, 'splash', filename), splash)
+
+      ## mask with annotation overlay
+      skimage.io.imsave(os.path.join(filepath, 'mmask', filename), masked_image_from_canvas)
+
+      ## rgb mask
+      mframe_im = color_mask(image, masks)
+      skimage.io.imsave(os.path.join(filepath, 'mask', filename), mframe_im)
 
   if auto_show:
     ax.imshow(masked_image.astype(np.uint8))

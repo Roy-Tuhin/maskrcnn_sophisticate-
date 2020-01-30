@@ -127,8 +127,6 @@ def parse_args(commands):
     args.iou = float(args.iou)
     mode = "inference"
   elif cmd == "predict":
-    assert args.dataset,\
-           "Provide --dataset"
     assert args.exp,\
            "Provide --exp"
     assert args.path,\
