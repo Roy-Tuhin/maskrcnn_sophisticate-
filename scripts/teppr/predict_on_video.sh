@@ -30,6 +30,10 @@ python falcon.py predict --exp /codehub/cfg/arch/road_asphalt-1-mask_rcnn.yml --
 ## white-marking with traffic sign
 python falcon.py predict --exp /codehub/cfg/arch/tsdr-1-mask_rcnn.yml --path /aimldl-dat/samples/video/MAH04240.mp4 --save_viz
 
+## test
+# python falcon.py predict --exp /codehub/cfg/arch/road_asphalt-1-mask_rcnn.yml --path /aimldl-dat/samples/video/predict-300120_112426/MAH04240/viz --save_viz
+
+
 ## hmd-1
 python falcon.py predict --exp /codehub/cfg/arch/hmd-1-mask_rcnn.yml --path /aimldl-dat/samples/video/MAH04240.mp4 --save_viz
 
