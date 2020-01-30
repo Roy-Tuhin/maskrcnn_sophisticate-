@@ -92,6 +92,10 @@ def parse_args(commands):
     ,dest='save_viz'
     ,help='Save the visualization for `predict`'
     ,action='store_true')
+  parser.add_argument('--show_bbox'
+    ,dest='show_bbox'
+    ,help='Save the bbox for `predict`'
+    ,action='store_true')
 
   parser.add_argument('--modelinfo'
     ,dest='create_modelinfo'

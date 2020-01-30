@@ -196,7 +196,11 @@ def get_display_instances(image, boxes, masks, class_ids, class_names, scores,
       if res_bbox is not None:
         result.append(res_bbox)
       
+      log.info("show_bbox: {}".format(show_bbox))
       if show_bbox:
+        ## added for testing: bbox, label and scores are showing
+        # masked_image = apply_mask(masked_image, res_bbox, color)
+
         p = patches.Rectangle((x1, y1), x2 - x1, y2 - y1, linewidth=2,
                               alpha=0.7, linestyle="dashed",
                               edgecolor=color, facecolor='none')
@@ -208,10 +212,10 @@ def get_display_instances(image, boxes, masks, class_ids, class_names, scores,
         x = random.randint(x1, (x1 + x2) // 2)
 
         ## label with score
-        # caption = "{} {:.3f}".format(label, score) if score else label
+        caption = "{} {:.3f}".format(label, score) if score else label
 
         ## label without score
-        caption = "{}".format(label)
+        # caption = "{}".format(label)
       else:
         caption = captions[i]
     
@@ -241,28 +245,37 @@ def get_display_instances(image, boxes, masks, class_ids, class_names, scores,
           p = Polygon(verts, facecolor=color, edgecolor=color, alpha=0.5)
           # log.debug("polygon: {}".format(p))
           ax.add_patch(p)
-      
+
+  ## there's problem with extracting image
   masked_image_from_canvas = fig2rgb_array(fig)
-  ## log.debug("masked_image_from_canvas: {}".format(masked_image_from_canvas))
+  log.debug("masked_image_from_canvas: {}".format(masked_image_from_canvas))
 
   if filepath and filename:
     ax.set_title(filename)
-    masked_image_from_canvas = color_mask(masked_image.astype(np.uint8), masks)
+
     if masked_image_from_canvas is not None:
       ## pframe and viz and same; viz, mask folders are used for images; hence retaining the same names for video
-      # skimage.io.imsave(os.path.join(filepath, 'pframe', filename), masked_image.astype(np.uint8))
+
+      # skimage.io.imsave(os.path.join(filepath, 'viz', filename), masked_image)
       skimage.io.imsave(os.path.join(filepath, 'viz', filename), masked_image.astype(np.uint8))
+      # skimage.io.imsave(os.path.join(filepath, 'viz', 'canvas-'+filename), masked_image_from_canvas.astype(np.uint8))
+      # skimage.io.imsave(os.path.join(filepath, 'viz', filename), masked_image_from_canvas) ## washout
+      # skimage.io.imsave(os.path.join(filepath, 'viz', filename), masked_image_from_canvas.astype(np.uint8)) ##error
 
       # ## Color Splash Effect
       # splash = color_splash(image, masks)
       # skimage.io.imsave(os.path.join(filepath, 'splash', filename), splash)
 
-      ## mask with annotation overlay
-      skimage.io.imsave(os.path.join(filepath, 'mmask', filename), masked_image_from_canvas)
+      # ## mask with annotation overlay
+      # masked_image_from_canvas = color_mask(masked_image_from_canvas.astype(np.uint8), masks)
+      # skimage.io.imsave(os.path.join(filepath, 'mmask', filename), masked_image_from_canvas)
 
       ## rgb mask
       mframe_im = color_mask(image, masks)
       skimage.io.imsave(os.path.join(filepath, 'mask', filename), mframe_im)
+
+      ## oframe => original frame of videos or original image
+      skimage.io.imsave(os.path.join(filepath, 'oframe', filename), image)
 
   if auto_show:
     ax.imshow(masked_image.astype(np.uint8))

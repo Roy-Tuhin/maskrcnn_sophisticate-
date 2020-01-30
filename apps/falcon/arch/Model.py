@@ -308,6 +308,7 @@ def predict(args, mode, appcfg):
     cmdcfg.save_viz_and_json = False
   
   save_viz = args.save_viz
+  show_bbox = args.show_bbox
   log.debug("save_viz: {}".format(save_viz))
   cmdcfg.save_viz_and_json = save_viz
 
@@ -350,7 +351,7 @@ def predict(args, mode, appcfg):
       log.info("fname: {}".format(fname))
       fn = getattr(this, fname)
       if fn:
-        file_names, res = fn(appcfg, dnnmod, path_dtls[t], path_dtls['path'], model, class_names, cmdcfg, api_model_key)
+        file_names, res = fn(appcfg, dnnmod, path_dtls[t], path_dtls['path'], model, class_names, cmdcfg, api_model_key, show_bbox)
         # log.debug("len(file_names), file_names: {}, {}".format(len(file_names), file_names))
       else:
         log.error("Unkown fn: {}".format(fname))
@@ -527,7 +528,7 @@ async def do_save_to_file(filepath, data, feature_vector=None):
     await afw.write(json.dumps(data))
 
 
-async def _create_res(detect, filepath, images, path, model, class_names, cmdcfg, api_model_key):
+async def _create_res(detect, filepath, images, path, model, class_names, cmdcfg, api_model_key, show_bbox=False):
   save_viz_and_json = cmdcfg.save_viz_and_json if 'save_viz_and_json' in cmdcfg else False
   ## TODO: move to cmdcfg configuration
   get_mask = True
@@ -554,7 +555,10 @@ async def _create_res(detect, filepath, images, path, model, class_names, cmdcfg
     ##------------------------------
     ## TODO: file or filepath or url
     filepath_image_in = os.path.join(path, image_filename)
-    
+    fext = ".png"
+    # file_name = image_filename
+    file_name = image_filename+fext
+
     t0 = time.time()
     ## TODO: 3. to verify
     # im = skimage.io.imread(filepath_image_in)
@@ -588,9 +592,13 @@ async def _create_res(detect, filepath, images, path, model, class_names, cmdcfg
 
     t4 = time.time()
     ## TODO: batchify
+    time_taken_save_viz_and_json = -1
     if save_viz_and_json:
-      imgviz, jsonres = viz.get_display_instances(im, pred_boxes, pred_masks, pred_class_ids, class_names, pred_scores,
-                                                     colors=cc, show_bbox=False, get_mask=get_mask)
+      jsonres = viz.get_display_instances(im, pred_boxes, pred_masks, pred_class_ids, class_names, pred_scores,
+                                                     colors=cc, show_bbox=show_bbox, get_mask=get_mask, filepath=filepath, filename=file_name)
+   
+      t7 = time.time()
+      time_taken_save_viz_and_json = (t4 - t7)
     else:
       jsonres = viz.get_detections(im, pred_boxes, pred_masks, pred_class_ids, class_names, pred_scores,
                                      colors=cc, get_mask=get_mask)
@@ -612,7 +620,6 @@ async def _create_res(detect, filepath, images, path, model, class_names, cmdcfg
     # via_jsonres[image_filename+str(size_image)] = jsonres
     json_str = common.numpy_to_json(via_jsonres)
     # log.debug("json_str:\n{}".format(json_str))
-    file_name = image_filename
     # file_names.append(file_name)
 
     t5 = time.time()
@@ -622,28 +629,25 @@ async def _create_res(detect, filepath, images, path, model, class_names, cmdcfg
     ## Create Visualisations & Save output
     ## TODO: resize the annotation and match with the original image size and not the min or max image dimenion form cfg
     ##---------------------------------------------
-    time_taken_save_viz_and_json = -1
-    if save_viz_and_json:
-      t6 = time.time()
-      
-      fext = ".png"
-      file_name = image_filename+fext
+    # time_taken_save_viz_and_json = -1
+    # if save_viz_and_json:
+    #   t6 = time.time()
 
-      ## Color Splash Effect & Save image
-      ##---------------------------------------------
-      viz.imsave(os.path.join(filepath, 'splash', file_name), viz.color_splash(im, pred_masks))
+    #   ## Color Splash Effect & Save image
+    #   ##---------------------------------------------
+    #   # viz.imsave(os.path.join(filepath, 'splash', file_name), viz.color_splash(im, pred_masks))
 
-      ## Color Mask Effect & Save image
-      ##---------------------------------------------
-      viz.imsave(os.path.join(filepath, 'mask', file_name), viz.color_mask(im, pred_masks))
+    #   ## Color Mask Effect & Save image
+    #   ##---------------------------------------------
+    #   # viz.imsave(os.path.join(filepath, 'mask', file_name), viz.color_mask(im, pred_masks))
 
-      ## Annotation Visualisation & Save image
-      ##---------------------------------------------
-      viz.imsave(os.path.join(filepath, 'viz', file_name), imgviz)
+    #   ## Annotation Visualisation & Save image
+    #   ##---------------------------------------------
+    #   # viz.imsave(os.path.join(filepath, 'viz', file_name), imgviz)
 
-      t7 = time.time()
-      time_taken_save_viz_and_json = (t6 - t7)
-      log.debug('Total time taken in save_viz_and_json: %f seconds' %(time_taken_save_viz_and_json))
+    #   t7 = time.time()
+    #   time_taken_save_viz_and_json = (t6 - t7)
+    #   log.debug('Total time taken in save_viz_and_json: %f seconds' %(time_taken_save_viz_and_json))
 
     t8 = time.time()
     tt_turnaround = (t8 - t0)
@@ -688,7 +692,7 @@ async def _create_res(detect, filepath, images, path, model, class_names, cmdcfg
   log.debug("-------")
 
 
-def detect_from_images(appcfg, dnnmod, images, path, model, class_names, cmdcfg, api_model_key):
+def detect_from_images(appcfg, dnnmod, images, path, model, class_names, cmdcfg, api_model_key, show_bbox=False):
   """detections from the images
   Convention:
     image - image filename
@@ -710,7 +714,7 @@ def detect_from_images(appcfg, dnnmod, images, path, model, class_names, cmdcfg,
   timestamp = "{:%d%m%y_%H%M%S}".format(datetime.datetime.now())
   filepath = os.path.join(path, "predict-"+timestamp)
   common.mkdir_p(filepath)
-  for d in ['splash', 'mask', 'annotations', 'viz']:
+  for d in ['splash', 'mask', 'annotations', 'viz', 'mmask', 'oframe']:
     common.mkdir_p(os.path.join(filepath,d))
 
   detect = apputil.get_module_fn(dnnmod, "detect")
@@ -729,7 +733,7 @@ def detect_from_images(appcfg, dnnmod, images, path, model, class_names, cmdcfg,
   asyncio.set_event_loop(loop)
 
   try:
-    loop.run_until_complete(_create_res(detect, filepath, images, path, model, class_names, cmdcfg, api_model_key))
+    loop.run_until_complete(_create_res(detect, filepath, images, path, model, class_names, cmdcfg, api_model_key, show_bbox=show_bbox))
   finally:
     # shutting down and closing fil descriptors after interupt
     loop.run_until_complete(loop.shutdown_asyncgens())
@@ -740,7 +744,7 @@ def detect_from_images(appcfg, dnnmod, images, path, model, class_names, cmdcfg,
   return file_names,res
 
 
-def detect_from_videos(appcfg, dnnmod, videos, path, model, class_names, cmdcfg, api_model_key):
+def detect_from_videos(appcfg, dnnmod, videos, path, model, class_names, cmdcfg, api_model_key, show_bbox=False):
   """detect_from_videos
   Code adopted from:
   
@@ -955,7 +959,7 @@ def detect_from_videos(appcfg, dnnmod, videos, path, model, class_names, cmdcfg,
   return file_names,res
 
 
-def detect_from_webcam(appcfg, dnnmod, videos, path, model, class_names, cmdcfg, api_model_key):
+def detect_from_webcam(appcfg, dnnmod, videos, path, model, class_names, cmdcfg, api_model_key, show_bbox=False):
   """TODO: stub for detect_from_webcam
 
   Ref:
