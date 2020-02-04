@@ -164,9 +164,11 @@ def get_data(subset, _appcfg):
 
     cmd = "train"
     # dbname = "PXL-291119_180404"
-    dbname = "PXL-301219_174758"
+    # dbname = "PXL-301219_174758"
+    dbname = "PXL-310120_175129"
     # exp_id = "train-422d30b0-f518-4203-9c4d-b36bd8796c62"
-    exp_id = "train-d79fe253-60c8-43f7-a3f5-42a4abf97b6c"
+    # exp_id = "train-d79fe253-60c8-43f7-a3f5-42a4abf97b6c"
+    exp_id = "train-887c2e82-1faa-4353-91d4-2f4cdc9285c1"
     eval_on = subset
     # log.debug(_appcfg)
     # log.info(_appcfg['APP']['DBCFG']['PXLCFG'])
@@ -270,10 +272,11 @@ def train(args, mode, _appcfg):
     cfg.DATASETS.TRAIN = ("hmd_train","hmd_val")
     cfg.DATASETS.TEST = ()
     cfg.DATALOADER.NUM_WORKERS = 2
-    cfg.MODEL.WEIGHTS = "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl"  # initialize from model zoo
+    # cfg.MODEL.WEIGHTS = "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl"  # initialize from model zoo
+    cfg.MODEL.WEIGHTS = "/codehub/apps/detectron2/release/model_final.pth"
     cfg.SOLVER.IMS_PER_BATCH = 2
     cfg.SOLVER.BASE_LR = 0.00025
-    # cfg.SOLVER.MAX_ITER = 300    # 300 iterations seems good enough, but you can certainly train longer
+    cfg.SOLVER.MAX_ITER = 350000    # 300 iterations seems good enough, but you can certainly train longer
     # cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512   # faster, and good enough for this toy dataset
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3  # only has one class (ballon)
@@ -381,7 +384,8 @@ def evaluate(args, mode, _appcfg):
     # for subset in ["train", "val"]:
     #     metadata = load_and_register_dataset(name, subset, _appcfg)
     
-    subset = "test"
+    # subset = "test"
+    subset = "val"
     metadata = load_and_register_dataset(name, subset, _appcfg)    
     
     dataset_name = get_dataset_name(name, subset)
