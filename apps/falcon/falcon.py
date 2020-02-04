@@ -92,6 +92,10 @@ def parse_args(commands):
     ,dest='save_viz'
     ,help='Save the visualization for `predict`'
     ,action='store_true')
+  parser.add_argument('--show_bbox'
+    ,dest='show_bbox'
+    ,help='Save the bbox for `predict`'
+    ,action='store_true')
 
   parser.add_argument('--modelinfo'
     ,dest='create_modelinfo'
@@ -127,8 +131,6 @@ def parse_args(commands):
     args.iou = float(args.iou)
     mode = "inference"
   elif cmd == "predict":
-    assert args.dataset,\
-           "Provide --dataset"
     assert args.exp,\
            "Provide --exp"
     assert args.path,\

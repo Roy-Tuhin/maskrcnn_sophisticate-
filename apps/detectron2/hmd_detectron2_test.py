@@ -26,6 +26,7 @@ from easydict import EasyDict as edict
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
 from detectron2.modeling import build_model
+from detectron2 import model_zoo
 
 #prediction
 from detectron2.engine import DefaultPredictor
@@ -300,7 +301,8 @@ def predict(args, mode, _appcfg):
     dataset_name = get_dataset_name(name, subset)
 
     cfg = config.get_cfg()
-    cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    # cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
 
     cfg.DATALOADER.NUM_WORKERS = 2
     cfg.SOLVER.IMS_PER_BATCH = 2

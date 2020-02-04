@@ -39,8 +39,10 @@ predict:
     DETECTION_MIN_CONFIDENCE: 0.9
     GPU_COUNT: 1
     IMAGES_PER_GPU: 1
-    IMAGE_MAX_DIM: 1920
-    IMAGE_MIN_DIM: 1080
+    IMAGE_MAX_DIM: 1280
+    IMAGE_MIN_DIM: 720
+    # IMAGE_MAX_DIM: 1920
+    # IMAGE_MIN_DIM: 1080
   device: /gpu:0
   dnnarch: mask_rcnn
   load_weights:

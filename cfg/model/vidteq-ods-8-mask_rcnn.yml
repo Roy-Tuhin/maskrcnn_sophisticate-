@@ -31,4 +31,4 @@ problem_id: ods
 rel_num: 8
 timestamp: 020120_200759
 weights: null
-weights_path: mask_rcnn/ods/8/mask_rcnn_hmd_0200.h5
+weights_path: vidteq/ods/8/mask_rcnn_hmd_0200.h5
