@@ -53,7 +53,8 @@ appcfg = edict(appcfg)
 
 HOST = "10.4.71.69"
 # AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119"
-AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_281219_125647"
+# AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_281219_125647"
+AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_310120_114556"
 appcfg['APP']['DBCFG']['PXLCFG']['host'] = HOST
 appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'] = AI_ANNON_DATA_HOME_LOCAL
 
@@ -166,10 +167,12 @@ def get_data(subset, _appcfg):
     cmd = "train"
     # dbname = "PXL-291119_180404"
     # dbname = "PXL-301219_174758"
-    dbname = "PXL-310120_175129"
+    # dbname = "PXL-310120_175129"
+    dbname = "PXL-040220_183906"
     # exp_id = "train-422d30b0-f518-4203-9c4d-b36bd8796c62"
     # exp_id = "train-d79fe253-60c8-43f7-a3f5-42a4abf97b6c"
-    exp_id = "train-887c2e82-1faa-4353-91d4-2f4cdc9285c1"
+    # exp_id = "train-887c2e82-1faa-4353-91d4-2f4cdc9285c1"
+    exp_id = "train-34d3a679-ae92-451b-b1c5-11552065dec8"
     eval_on = subset
     # log.debug(_appcfg)
     # log.info(_appcfg['APP']['DBCFG']['PXLCFG'])
@@ -269,7 +272,8 @@ def train(args, mode, _appcfg):
         metadata = load_and_register_dataset(name, subset, _appcfg)
 
     cfg = config.get_cfg()
-    cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
+    # cfg.merge_from_file("/codehub/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
     cfg.DATASETS.TRAIN = ("hmd_train","hmd_val")
     cfg.DATASETS.TEST = ()
     cfg.DATALOADER.NUM_WORKERS = 2
