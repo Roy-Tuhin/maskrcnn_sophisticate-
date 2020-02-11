@@ -17,10 +17,9 @@ function run_batch_train_evaluate(){
 
   workon ${pyenv}
 
-  local timestamp=$(date -d now +'%d%m%y_%H%M%S')
-
   for config in "${configs[@]}"; do
 
+    local timestamp=$(date -d now +'%d%m%y_%H%M%S')
     ##-----------Train
     local prog_log=$base_log_dir/train/lanenet-$timestamp.log
     info "Executing this command... train"
@@ -33,24 +32,24 @@ function run_batch_train_evaluate(){
     info "These ${prog_train} pids will be killed: ${pids}"
     pkill -f ${prog_train}
 
-    local ckpt_path=$(ls -t ${ckpt_basepath} | head -n 1) 
-    local ckpt=$(ls -t ${ckpt_basepath}/${ckpt_path} | head -1 | cut -d. -f1-2) 
+    # local ckpt_path=$(ls -t ${ckpt_basepath} | head -n 1) 
+    # local ckpt=$(ls -t ${ckpt_basepath}/${ckpt_path} | head -1 | cut -d. -f1-2) 
 
-    local model=${ckpt_basepath}/${ckpt_path}/${ckpt}
-    info "Model to be evaluated on: ${model}"
-    echo "sed -i 's:EVALUATE_MODEL_INFO:${model}/g' ${config}"
-    sed -i "s:EVALUATE_MODEL_INFO:${model}:g" ${config}
+    # local model=${ckpt_basepath}/${ckpt_path}/${ckpt}
+    # info "Model to be evaluated on: ${model}"
+    # echo "sed -i 's:EVALUATE_MODEL_INFO:${model}/g' ${config}"
+    # sed -i "s:EVALUATE_MODEL_INFO:${model}:g" ${config}
 
-    #-----------Evaluate
-    info "Executing this command... evaluate"
+    # #-----------Evaluate
+    # info "Executing this command... evaluate"
 
-    echo "python ${prog_evaluate} evaluate --cfg ${config} --orientation ${orientation}" 
-    python ${prog_evaluate} evaluate --cfg ${config} --orientation ${orientation}
+    # echo "python ${prog_evaluate} evaluate --cfg ${config} --orientation ${orientation}" 
+    # python ${prog_evaluate} evaluate --cfg ${config} --orientation ${orientation}
 
-    ## Kill exisiting python programs before starting new
-    local pids=$(pgrep -f ${prog_evaluate})
-    info "These ${prog_evaluate} pids will be killed: ${pids}"
-    pkill -f ${prog_evaluate}
+    # ## Kill exisiting python programs before starting new
+    # local pids=$(pgrep -f ${prog_evaluate})
+    # info "These ${prog_evaluate} pids will be killed: ${pids}"
+    # pkill -f ${prog_evaluate}
 
     info "===x==x==x==="
   done
