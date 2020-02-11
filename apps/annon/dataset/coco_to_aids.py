@@ -71,8 +71,6 @@ def get_data_coco(cfg, args, datacfg):
     raise Exception("--{} not defined".format('from'))
   if not args.task:
     raise Exception("--{} not defined".format('task'))
-  if not args.subset:
-    raise Exception("--{} not defined".format('subset'))
   if not args.year:
     raise Exception("--{} not defined".format('year'))
 
@@ -84,40 +82,102 @@ def get_data_coco(cfg, args, datacfg):
   log.info("base_from_path: {}".format(base_from_path))
   cfg['TIMESTAMP'] = ("{:%d%m%y_%H%M%S}").format(datetime.datetime.now())
 
+  ## TODO: as user input
+  splits = ['train','val','test']
+  aids = {}
+  stats = {}
+  total_stats = {
+    'total_images':0
+    ,'total_annotations':0
+    ,'total_labels':0
+  }
+
   task = args.task
-  subset = args.subset
   year = args.year
 
-  dataset = None
-  if task == "panoptic":
-    annotation_file = os.path.join(base_from_path, 'annotations', "{}_{}{}.json".format(task+"_instances", subset, year))
-    subset = task+"_"+subset
-  else:
-    annotation_file = os.path.join(base_from_path, 'annotations', "{}_{}{}.json".format(task, subset, year))
+  datacfg['id'] = 'coco'
+  datacfg['name'] = 'coco'
+  datacfg['problem_id'] = 'coco'
+  datacfg['annon_type'] = 'coco'
+  datacfg['splits'] = splits
 
-  log.info("annotation_file: {}".format(annotation_file))
-  
-  if subset == "minival" or subset == "valminusminival":
-    subset = "val"
-  
-  image_dir = "{}/{}{}".format(base_from_path, subset, year)
-  log.info("image_dir: {}".format(image_dir))
+  for i, subset in enumerate(splits):
+    if subset not in aids:
+      aids[subset] = {
+        'IMAGES':None
+        ,'ANNOTATIONS': None
+        ,'CLASSINFO':None
+        # ,'CLASSINFO_SPLIT':None
+        ,'STATS':None
+      }
+    if subset not in stats:
+      stats[subset] = {
+        'labels':None
+        ,"classinfo": None
+        ,"total_labels": 0
+        ,'total_annotations':0
+        ,"total_images": 0
+        # ,"total_unique_images": set()
+        ,"total_unique_images": 0
+        ,"labels": []
+        ,"annotation_per_img": []
+        ,"label_per_img": []
+        ,"maskarea": []
+        ,"bboxarea": []
+        ,"colors": None
+        ,"annotation_file": None
+        ,"annotation_filepath": None
+        ,"image_dir": None
+      }
 
-  log.info('loading annotations into memory...')
-  tic = time.time()
-  with open(annotation_file, 'r') as fr:
-    dataset = json.load(fr)
-    assert type(dataset)==dict, 'annotation file format {} not supported'.format(type(dataset))
-    log.info('Done (t={:0.2f}s)'.format(time.time()- tic))
-    log.info("dataset.keys(): {}".format(dataset.keys()))
+    ## TODO: fix the subset issue
+    if task == "panoptic":
+      annotation_file = 'annotations', "{}_{}{}.json".format(task+"_instances", subset, year)
+      subset = task+"_"+subset
+    else:
+      annotation_file = 'annotations', "{}_{}{}.json".format(task, subset, year)
 
-  return dataset
+    annotation_filepath = os.path.join(base_from_path, annotation_file)
+    log.info("annotation_filepath: {}".format(annotation_filepath))
+    if not os.path.exists(annotation_filepath):
+      raise Exception("File: {} does not exists!".format(annotation_filepath))
 
 
-def coco_to_annon(cfg, args, datacfg, dataset):
-  timestamp = created_on = common.now()
-  uuid_aids = common.createUUID('aids')
-  subset = args.subset
+    if subset == "minival" or subset == "valminusminival":
+      subset = "val"
+
+    image_dir = "{}/{}{}".format(base_from_path, subset, year)
+    log.info("image_dir: {}".format(image_dir))
+
+    stats[subset]['task'] = task
+    stats[subset]['year'] = year
+    stats[subset]['base_from_path'] = base_from_path
+    stats[subset]['annotation_file'] = annotation_file
+    stats[subset]['annotation_filepath'] = annotation_filepath
+    stats[subset]['image_dir'] = image_dir
+
+    log.info('loading annotations into memory...')
+    tic = time.time()
+    with open(annotation_filepath, 'r') as fr:
+      dataset = json.load(fr)
+      assert type(dataset)==dict, 'annotation file format {} not supported'.format(type(dataset))
+      log.info('Done (t={:0.2f}s)'.format(time.time()- tic))
+      log.info("dataset.keys(): {}".format(dataset.keys()))
+
+      aids[subset]['dataset'] = dataset
+      coco_to_annon(subset, stats, dataset)
+
+  datacfg['stats'] = stats
+  datacfg['summary'] = total_stats
+  datacfg['classinfo'] = None
+
+  return aids, datacfg
+
+
+def coco_to_annon(subset, stats, dataset):
+  stats = stats[subset]
+  image_dir = stats['image_dir']
+  annotation_file = stats['annotation_file']
 
   images = dataset['images']
   for i, image in enumerate(images):
@@ -181,14 +241,14 @@ def coco_to_annon(cfg, args, datacfg, dataset):
     annotation['dir'] = None
     annotation['file_id'] = annotation['image_id']
     annotation['filepath'] = None
-    annotation['rel_filename'] = None
+    annotation['rel_filename'] = annotation_file
     annotation['image_name'] = None
+    annotation['image_dir'] = image_dir
     annotation['file_attributes'] = {
       'id': annotation['id']
       ,'img_id': annotation['image_id']
       ,'uuid': uuid_ant
     }
-
 
   categories = { cat['name']: cat for cat in dataset['categories'] }
   log.info("categories: {}".format(categories))
@@ -213,41 +273,15 @@ def coco_to_annon(cfg, args, datacfg, dataset):
     class_info.append(category)
 
 
-def release_coco(cfg, args, datacfg):
-
-  dataset = get_data_coco(cfg, args, datacfg)
-
-  coco_to_annon(cfg, args, datacfg, dataset)
-
-  DBCFG = cfg['DBCFG']
-  mclient = MongoClient('mongodb://'+DBCFG['host']+':'+str(DBCFG['port']))
-  rel_timestamp = cfg['TIMESTAMP']
-  DBNAME = 'PXL-'+rel_timestamp+'_'+cfg['TIMESTAMP']
-  log.info("DBNAME: {}".format(DBNAME))
-  db = mclient[DBNAME]
-
-  ## IMAGES
-  tblname = annonutils.get_tblname('IMAGES')
-  collection = db.get_collection(tblname)
-  annonutils.write2db(db, tblname, dataset['images'], idx_col='img_id')
-
-  ## ANNOTATIONS
-  tblname = annonutils.get_tblname('ANNOTATIONS')
-  collection = db.get_collection(tblname)
-  annonutils.write2db(db, tblname, dataset['annotations'], idx_col='ant_id')
-
-  ## CLASSINFO
-  tblname = annonutils.get_tblname('CLASSINFO')
-  collection = db.get_collection(tblname)
-  annonutils.write2db(db, tblname, dataset['categories'], idx_col='lbl_id')
-
-  mclient.close()
-  return
-
-
 def create_db(cfg, args, datacfg):
-  dataset = get_data_coco(cfg, args, datacfg)
-  coco_to_annon(cfg, args, datacfg, dataset)
+  aids, datacfg = get_data_coco(cfg, args, datacfg)
+
+  timestamp = created_on = common.now()
+  uuid_aids = common.createUUID('aids')
+
+  _dataset['timestamp'] = timestamp
+  _dataset['uuid_aids'] = uuid_aids
+
 
   DBCFG = cfg['DBCFG']
   PXLCFG = DBCFG['PXLCFG']
@@ -271,6 +305,31 @@ def create_db(cfg, args, datacfg):
   collection = db.get_collection(tblname)
   annonutils.write2db(db, tblname, dataset['categories'], idx_col='lbl_id')
 
+
+
+  created_on = common.now()
+  uuid_rel = common.createUUID('rel')
+
+  datacfg['dbid'] = uuid_aids
+  datacfg['dbname'] = dbname
+  datacfg['created_on'] = created_on
+  datacfg['modified_on'] = None
+  datacfg['anndb_id'] = dbname
+  datacfg['timestamp'] = cfg['TIMESTAMP']
+  datacfg['anndb_rel_id'] = None
+  datacfg['rel_id'] = uuid_rel
+  datacfg['log_dir'] = dbname
+  datacfg['rel_type'] = 'aids'
+  datacfg['creator'] = by.upper()
+  tblname = annonutils.get_tblname('AIDS')
+  annonutils.create_unique_index(db, tblname, 'created_on')
+  collection = db.get_collection(tblname)
+  collection.update_one(
+    {'created_on': datacfg['created_on']}
+    ,{'$setOnInsert': datacfg}
+    ,upsert=True
+  )
+
   mclient.close()
 
-  return dataset
+  return _dataset
