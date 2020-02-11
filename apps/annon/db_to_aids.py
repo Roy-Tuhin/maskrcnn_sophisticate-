@@ -316,10 +316,10 @@ def create_dataset_hmd(cfg, args, datacfg):
 
 
 def create_dataset_coco(cfg, args, datacfg):
-  """coco to database
+  """coco to AI Datasets (AIDS)
   """
-  import coco_to_db as c2db
-  dataset = c2db.create_db(cfg, args, datacfg)
+  import coco_to_aids as c2aids
+  dataset = c2aids.create_db(cfg, args, datacfg)
 
   return dataset
 
@@ -442,7 +442,7 @@ def parse_args(commands):
 
   parser.add_argument('--year'
     ,dest='year'
-    ,help='year of publiccatin of the dataset'
+    ,help='year of publication of the dataset'
     ,required=False)
 
   args = parser.parse_args()

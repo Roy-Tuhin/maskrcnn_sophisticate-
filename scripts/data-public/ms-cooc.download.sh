@@ -11,3 +11,10 @@ cd /aimldl-dat/data-public/mscoco
 ## 2014
 wget -c http://images.cocodataset.org/zips/test2014.zip
 wget -c http://images.cocodataset.org/annotations/image_info_test2014.zip
+
+
+wget -c http://images.cocodataset.org/zips/test2017.zip
+wget -c http://images.cocodataset.org/zips/test2015.zip
+wget -c http://images.cocodataset.org/annotations/image_info_test2015.zip
+wget -c http://images.cocodataset.org/annotations/image_info_test2017.zip
+

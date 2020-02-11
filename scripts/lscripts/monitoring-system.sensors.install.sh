@@ -14,15 +14,15 @@
 
 
 ## System Sensor monitors - temperature
-sudo apt install lm-sensors hddtemp
-sudo apt install psensor
+sudo apt -y install lm-sensors hddtemp
+sudo apt -y install psensor
 
 # sudo sensors-detect
 # watch -n 2 sensors
 # watch -n 2 nvidia-smi
 
 ## System Resource Monitoring
-sudo apt install htop atop dstat
+sudo apt -y install htop atop dstat
 
 # dstat -ta --top-cpu
 # dstat -tcmndylp --top-cpu

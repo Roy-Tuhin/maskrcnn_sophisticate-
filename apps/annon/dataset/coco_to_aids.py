@@ -27,6 +27,7 @@ import sys
 
 import json
 import time
+import datetime
 
 import numpy as np
 
@@ -59,6 +60,12 @@ from pycocotools import mask as maskUtils
 def get_data_coco(cfg, args, datacfg):
   """Loads the coco json annotation file
   Refer: pycocotools/coco.py
+
+  Mandatory arguments:
+  args.from_path => directory name where annotations directory contains all the annotation json files
+  args.task => None, panoptic
+  args.subset => test, train, val, minival, valminusminival
+  args.year => year of publication
   """
   if not args.from_path:
     raise Exception("--{} not defined".format('from'))
@@ -69,7 +76,6 @@ def get_data_coco(cfg, args, datacfg):
   if not args.year:
     raise Exception("--{} not defined".format('year'))
 
-  dataset = None
   from_path = args.from_path
   if not os.path.exists(from_path) and os.path.isfile(from_path):
       raise Exception('--from needs to be directory path')
@@ -78,10 +84,11 @@ def get_data_coco(cfg, args, datacfg):
   log.info("base_from_path: {}".format(base_from_path))
   cfg['TIMESTAMP'] = ("{:%d%m%y_%H%M%S}").format(datetime.datetime.now())
 
-
   task = args.task
   subset = args.subset
   year = args.year
+
+  dataset = None
   if task == "panoptic":
     annotation_file = os.path.join(base_from_path, 'annotations', "{}_{}{}.json".format(task+"_instances", subset, year))
     subset = task+"_"+subset
@@ -98,10 +105,11 @@ def get_data_coco(cfg, args, datacfg):
 
   log.info('loading annotations into memory...')
   tic = time.time()
-  dataset = json.load(open(annotation_file, 'r'))
-  assert type(dataset)==dict, 'annotation file format {} not supported'.format(type(dataset))
-  log.info('Done (t={:0.2f}s)'.format(time.time()- tic))
-  log.info("dataset.keys(): {}".format(dataset.keys()))
+  with open(annotation_file, 'r') as fr:
+    dataset = json.load(fr)
+    assert type(dataset)==dict, 'annotation file format {} not supported'.format(type(dataset))
+    log.info('Done (t={:0.2f}s)'.format(time.time()- tic))
+    log.info("dataset.keys(): {}".format(dataset.keys()))
 
   return dataset
 
@@ -115,19 +123,17 @@ def coco_to_annon(cfg, args, datacfg, dataset):
   for i, image in enumerate(images):
     uuid_img = common.createUUID('img')
     image['dbid'] = uuid_aids
-    image['img_id'] = uuid_img
+    image['img_id'] = image['id']
     image['created_on'] = created_on
     image['filename'] = image['file_name']
     image['subset'] = subset
     image['file_attributes'] = {
-      'img_id': image['id']
+      'id': image['id']
       ,'uuid': uuid_img
     }
     image['timestamp'] = timestamp
     image['size'] = 0
     image['modified_on'] = None
-    image['annotations'] = []
-    image['lbl_ids'] = []
     image['base_dir'] = None
     image['dir'] = None
     image['file_id'] = None
@@ -135,11 +141,22 @@ def coco_to_annon(cfg, args, datacfg, dataset):
     image['rel_filename'] = None
 
   annotations = dataset['annotations']
+
+  boxmode = 'XYWH_ABS'
   for i, annotation in enumerate(annotations):
     uuid_ant = common.createUUID('ant')
-    
+    ##TODO: verify what is BoxMode.XYWH_ABS
+    coco_frmt_bbox = [_bbox['xmin'], _bbox['ymin'], _bbox['width'], _bbox['height'] ]
+    _bbox = {
+      "ymin": annotation['bbox'][1],
+      "xmin": annotation['bbox'][0],
+      "ymax": None,
+      "xmax": None,
+      "width": annotation['bbox'][2],
+      "height": annotation['bbox'][3]
+    }
     annotation['dbid'] = uuid_aids
-    annotation['ant_id'] = uuid_ant
+    annotation['ant_id'] = annotation['id']
     annotation['annon_index'] = -1
     annotation['annotation_rel_date'] = None
     annotation['annotation_tool'] = 'coco'
@@ -148,20 +165,28 @@ def coco_to_annon(cfg, args, datacfg, dataset):
     # annotation['ant_type'] = 'polygon'
     annotation['created_on'] = created_on
     annotation['timestamp'] = timestamp
-    annotation['filename'] = uuid_ant
+    annotation['filename'] = annotation['id']
     annotation['subset'] = subset
     annotation['modified_on'] = None
     annotation['lbl_id'] = annotation['category_id']
     annotation['maskarea'] = 0
+    annotation['_bbox'] = _bbox
+    annotation['boxmode'] = boxmode
     annotation['bboxarea'] = annotation['area']
-    annotation['region_attributes'] = annotation['area']
+    annotation['region_attributes'] = {
+      'area': annotation['area']
+      ,'iscrowd': annotation['iscrowd']
+    }
     annotation['img_id'] = annotation['image_id']
     annotation['dir'] = None
     annotation['file_id'] = annotation['image_id']
     annotation['filepath'] = None
+    annotation['rel_filename'] = None
     annotation['image_name'] = None
     annotation['file_attributes'] = {
-      'img_id': annotation['image_id']
+      'id': annotation['id']
+      ,'img_id': annotation['image_id']
+      ,'uuid': uuid_ant
     }
 
 
@@ -221,12 +246,12 @@ def release_coco(cfg, args, datacfg):
 
 
 def create_db(cfg, args, datacfg):
-
   dataset = get_data_coco(cfg, args, datacfg)
   coco_to_annon(cfg, args, datacfg, dataset)
 
   DBCFG = cfg['DBCFG']
-  mclient = MongoClient('mongodb://'+DBCFG['host']+':'+str(DBCFG['port']))
+  PXLCFG = DBCFG['PXLCFG']
+  mclient = MongoClient('mongodb://'+PXLCFG['host']+':'+str(PXLCFG['port']))
   DBNAME = 'PXL-'+cfg['TIMESTAMP']
   log.info("DBNAME: {}".format(DBNAME))
   db = mclient[DBNAME]

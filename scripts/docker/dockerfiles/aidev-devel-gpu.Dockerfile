@@ -17,7 +17,7 @@ ARG BASE_IMAGE_NAME=${BASE_IMAGE_NAME}
 # FROM nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
 FROM ${BASE_IMAGE_NAME}
 
-LABEL maintainer "mangalbhaskar <mangalbhaskar@gmail.com>"
+LABEL maintainer "mangalbhaskar"
 
 ## See http://bugs.python.org/issue19846
 ## format changes required for asammdf v3.4.0
@@ -174,7 +174,11 @@ ENV TF_CUDNN_VERSION=${CUDNN_MAJOR_VERSION}
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV FORCE_CUDA="1"
+## This will build detectron2 for all common cuda architectures and take a lot more time,
+## because inside `docker build`, there is no way to tell which architecture will be used.
 ENV TORCH_CUDA_ARCH_LIST="Kepler;Kepler+Tesla;Maxwell;Maxwell+Tegra;Pascal;Volta;Turing"
+## Set a fixed model cache directory.
+ENV FVCORE_CACHE="/tmp"
 
 ARG PY_VENV_NAME=${PY_VENV_NAME}
 RUN chmod a+rwx ${BASH_FILE} && \
