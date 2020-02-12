@@ -137,15 +137,17 @@ def create_db(cfg, args, datacfg, aids):
             data = aids[split][tbl]
 
 
-          log.info("tblname, type(data): {}, {}".format(tblname, type(data)))
-          for doc in data:
-            doc['dbid'] = uuid_aids
-            doc['timestamp'] = cfg['TIMESTAMP']
-            doc['subset'] = split
+          log.info("tblname, type(data), len(data): {}, {}, {}".format(tblname, type(data), len(data)))
+          if len(data) > 0:
+            for doc in data:
+              doc['dbid'] = uuid_aids
+              doc['timestamp'] = cfg['TIMESTAMP']
+              doc['subset'] = split
 
-            if tblname == 'STATS':
-              log.info('doc: {}'.format(doc))
-            annonutils.write2db(db, tblname, doc)
+              if tblname == 'STATS':
+                log.info('doc: {}'.format(doc))
+              # log.debug('doc: {}'.format(doc))
+              annonutils.write2db(db, tblname, doc)
 
     created_on = common.now()
     uuid_rel = common.createUUID('rel')
@@ -161,6 +163,8 @@ def create_db(cfg, args, datacfg, aids):
     datacfg['log_dir'] = dbname
     datacfg['rel_type'] = 'aids'
     datacfg['creator'] = by.upper()
+
+    log.info("datacfg: {}".format(datacfg))
 
     tblname = annonutils.get_tblname('AIDS')
     annonutils.create_unique_index(db, tblname, 'created_on')
