@@ -5,7 +5,7 @@ import logging.config
 from _annoncfg_ import appcfg as cfg
 from _aidbcfg_ import dbcfg as datacfg
 
-import datasplit
+import dataset.datasplit
 from dataset.Annon import ANNON
 
 from _log_ import logcfg

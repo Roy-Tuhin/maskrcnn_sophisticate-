@@ -41,8 +41,7 @@ class ANNON(object):
     self.dataset, self.anns, self.imgs = dict(), dict(), dict()
     
     self.imgToAnns, self.catToImgs, self.cat_lblid_to_id, self.catToAnns = None, None, None, None
-
-    self.dbcfg = dbcfg.copy()
+    self.dbcfg = dbcfg.copy() if dbcfg else None
     self.datacfg = datacfg.copy() if datacfg else None
     self.subset = subset
     # self.cat_lblid_to_id = defaultdict(list)
@@ -58,11 +57,13 @@ class ANNON(object):
   def load_data(self, images_data=None, annotations_data=None, classinfo=None):
     log.info("-------------------------------->")
     if images_data and annotations_data and classinfo:
-      self.dataset['images'] = images_data
-      self.dataset['annotations'] = annotations_data
-      self.dataset['categories'] = classinfo
       self.dataset['release'] = None
-      self.load_data_from_file()
+      if type(images_data)==str and type(annotations_data)==str and type(classinfo)==str:
+        self.load_data_from_file(images_data, annotations_data, classinfo)
+      else:
+        self.dataset['images'] = images_data
+        self.dataset['annotations'] = annotations_data
+        self.dataset['categories'] = classinfo
     else:
       self.load_data_from_db()
 
@@ -135,7 +136,7 @@ class ANNON(object):
     mclient.close()
 
 
-  def load_data_from_file(self):
+  def load_data_from_file(self, images_data=None, annotations_data=None, classinfo=None):
     """Load the annotation data from the files
     TODO:
     - load from csv file data. Default extension supported is .json;
@@ -143,23 +144,17 @@ class ANNON(object):
     log.info("-------------------------------->")
     import json
 
-    if self.datacfg['images']:
-      images_filepath = self.datacfg['images']
-      log.info("images_filepath: {}".format(images_filepath))
-      with open(images_filepath,'r') as fr:
-        self.dataset['images'] = json.load(fr)
+    def _load_data_from_filepath(d, t):
+      fp = d if d else self.datacfg[t]
+      log.info("{}_filepath: {}".format(t, fp))
+      if not os.path.exists(fp):
+        raise Exception("{} filepath: {} does not exists!".format(t, fp))
+      with open(fp,'r') as fr:
+        self.dataset[t] = json.load(fr)
 
-    if self.datacfg['annotations']:
-      annotation_filepath = self.datacfg['annotations']
-      log.info("annotation_filepath: {}".format(annotation_filepath))
-      with open(annotation_filepath,'r') as fr:
-        self.dataset['annotations'] = json.load(fr)
-
-    if self.datacfg['categories']:
-      classinfo_filepath = self.datacfg['categories']
-      log.info("classinfo_filepath: {}".format(classinfo_filepath))
-      with open(classinfo_filepath,'r') as fr:
-        self.dataset['categories'] = json.load(fr)
+    _load_data_from_filepath(images_data, 'images')
+    _load_data_from_filepath(annotations_data, 'annotations')
+    _load_data_from_filepath(classinfo, 'categories')
 
 
   def createIndex(self):

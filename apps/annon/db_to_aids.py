@@ -1,5 +1,5 @@
 __author__ = 'mangalbhaskar'
-__version__ = '2.0'
+__version__ = '3.0'
 """
 ## Description:
 # --------------------------------------------------------
@@ -30,18 +30,18 @@ __version__ = '2.0'
 import os
 import sys
 import time
-import datetime
-import json
 
-import numpy as np
-import glob
+# import json
 
-import pandas as pd
-import skimage.io
-import requests
-import arrow
+# import numpy as np
+# import glob
 
-import pymongo
+# import pandas as pd
+# import skimage.io
+# import requests
+# import arrow
+
+# import pymongo
 from pymongo import MongoClient
 
 import logging
@@ -75,116 +75,38 @@ from _aidbcfg_ import dbcfg
 import common
 import annonutils
 
-import datasplit, annondata
 
-
-def prepare_split_datasets(cfg, args, datacfg):
-  """Create AI Datasets and returns the actual data to be further processed and to persists on file-system or DB
-
-  TODO:
-  other stats like area, per label stats
+def save_to_annon_db(cfg, aidsdata):
+  """Save to Annotation DB
   """
-  annon, images, annotations, classinfo, lbl_ids, img_lbl_arr = annondata.get_annon_data(cfg, args, datacfg)
-  log.info("-----------------lbl_ids: {}".format(lbl_ids))
+  DBCFG = cfg['DBCFG']
+  ANNONCFG = DBCFG['ANNONCFG']
+  mclient = MongoClient('mongodb://'+ANNONCFG['host']+':'+str(ANNONCFG['port']))
+  dbname = ANNONCFG['dbname']
+  log.info("ANNONCFG['dbname']: {}".format(dbname))
+  db = mclient[dbname]
 
-  ## split the images using splitting algorithm
-  images_splits, splited_indices, splited_indices_per_label = datasplit.do_data_split(cfg, images, lbl_ids, img_lbl_arr)
-  log.info("len(images_splits): {}".format(len(images_splits)))
-  for split in images_splits:
-    log.info("images_splits: len(split): {}".format(len(split)))
+  tblname = annonutils.get_tblname('AIDS')
+  annonutils.create_unique_index(db, tblname, 'created_on')
+  collection = db.get_collection(tblname)
+  collection.update_one(
+    {'created_on': aidsdata['created_on']}
+    ,{'$setOnInsert': aidsdata}
+    ,upsert=True
+  )
 
-  ## Create AIDS - AI Datasets data strcutre
-  aids_splits_criteria = cfg['AIDS_SPLITS_CRITERIA'][cfg['AIDS_SPLITS_CRITERIA']['USE']]
-  # splits, prcntg = aids_splits_criteria[0], aids_splits_criteria[1]
-  splits = aids_splits_criteria[0] ## directory names
-  aids = {}
-  stats = {}
-  total_stats = {
-    'total_images':0
-    ,'total_annotations':0
-    ,'total_labels':0
-  }
-
-  for i, fnn in enumerate(images_splits):
-    total_images = 0
-    total_annotations = 0
-    total_labels = 0
-
-    log.info("\nTotal Images in: {}, {}, {}".format(splits[i], len(fnn), type(fnn)))
-    imgIds = list(fnn)
-    annIds = annon.getAnnIds(imgIds=imgIds, catIds=lbl_ids)
-    catIds = annon.getCatIds(catIds=lbl_ids)
-    classinfo_split = annon.loadCats(ids=catIds)
-
-    log.info("catIds: {}".format(catIds))
-    log.info("classinfo_split: {}".format(classinfo_split))
-
-    if splits[i] not in aids:
-      aids[splits[i]] = {
-        'IMAGES':None
-        ,'ANNOTATIONS': None
-        ,'CLASSINFO_SPLIT':None
-        ,'STATS':None
-      }
-
-    if splits[i] not in stats:
-      stats[splits[i]] = {
-        'labels':None
-        ,"classinfo": None
-        ,"total_labels": 0
-        ,'total_annotations':0
-        ,"total_images": 0
-        # ,"total_unique_images": set()
-        ,"total_unique_images": 0
-        ,"labels": []
-        ,"annotation_per_img": []
-        ,"label_per_img": []
-        ,"maskarea": []
-        ,"bboxarea": []
-        ,"colors": None
-      }
-
-    total_labels += len(classinfo_split)
-    total_annotations += len(annIds)
-    total_images += len(imgIds)
-
-    ## update total stats object
-    total_stats['total_labels'] += total_labels
-    total_stats['total_annotations'] += total_annotations
-    total_stats['total_images'] += total_images
-
-    ## update stats object
-    stats[splits[i]]['labels'] = catIds.copy()
-    stats[splits[i]]['classinfo'] = classinfo_split.copy()
-    stats[splits[i]]['total_labels'] += total_labels
-    stats[splits[i]]['total_annotations'] += total_annotations
-    stats[splits[i]]['total_images'] += total_images
-
-    ## create ai dataset data
-    aids[splits[i]]['IMAGES'] = annon.loadImgs(ids=imgIds)
-    aids[splits[i]]['ANNOTATIONS'] = annon.loadAnns(ids=annIds)
-    # aids[splits[i]]['CLASSINFO_SPLIT'] = classinfo_split
-    aids[splits[i]]['STATS'] = [stats[splits[i]]]
-
-    log.info("stats: {}".format(stats))
-    log.info("aids: {}".format(aids))
-
-  datacfg['stats'] = stats
-  datacfg['summary'] = total_stats
-  datacfg['classinfo'] = classinfo
-
-  return aids, datacfg
+  mclient.close()
 
 
-def create_db(cfg, args, datacfg):
+def create_db(cfg, args, datacfg, aids):
   """release the AIDS database i.e. creates the PXL DB (AI Datasets)
   and create respective entries in AIDS table in annon database
   """
   log.info("-----------------------------")
 
   by = args.by
-  
-  aids, datacfg = prepare_split_datasets(cfg, args, datacfg)
+
+  splits = datacfg['splits']
 
   DBCFG = cfg['DBCFG']
   PXLCFG = DBCFG['PXLCFG']
@@ -196,11 +118,6 @@ def create_db(cfg, args, datacfg):
   uuid_aids = None
   if len(aids) > 0:
     uuid_aids = common.createUUID('aids')
-
-    AIDS_SPLITS_CRITERIA = cfg['AIDS_SPLITS_CRITERIA'][cfg['AIDS_SPLITS_CRITERIA']['USE']]
-    splits = AIDS_SPLITS_CRITERIA[0] ## directory names
-    datacfg['splits'] = splits
-
     ## Save aids - AI Datasets
     for split in splits:
       for tbl in aids[split]:
@@ -268,45 +185,27 @@ def create_db(cfg, args, datacfg):
   return dbname
 
 
-def save_to_annon_db(cfg, aidsdata):
-  """Save to Annotation DB
-  """
-  DBCFG = cfg['DBCFG']
-  ANNONCFG = DBCFG['ANNONCFG']
-  mclient = MongoClient('mongodb://'+ANNONCFG['host']+':'+str(ANNONCFG['port']))
-  dbname = ANNONCFG['dbname']
-  log.info("ANNONCFG['dbname']: {}".format(dbname))
-  db = mclient[dbname]
-
-  tblname = annonutils.get_tblname('AIDS')
-  annonutils.create_unique_index(db, tblname, 'created_on')
-  collection = db.get_collection(tblname)
-  collection.update_one(
-    {'created_on': aidsdata['created_on']}
-    ,{'$setOnInsert': aidsdata}
-    ,upsert=True
-  )
-
-  mclient.close()
-
-
 def create_dataset_hmd(cfg, args, datacfg):
   """Release HD Map Dataset (AI Dataset).
   Execute all the steps from creation to saving AI Dataset from the Annotation Database.
   Every AI Datasets is creates as a new database AIDS_<ddmmyy_hhmmss> ready to be consumed for AI Training without dependency.
   This is further used in the TEPPr (Training, Evaluate, Prediction, Publish with reporting) workflow
   """
-  tic = time.time()
-  log.info("\ncreate_dataset_hmd:-----------------------------")
-  cfg['TIMESTAMP'] = ("{:%d%m%y_%H%M%S}").format(datetime.datetime.now())
+  log.info("-----------------------------")
 
-  createdb = False
-  ## Check required args
-  if not args.from_path or not args.to_path:
-    createdb = True
-  
-  log.info("createdb: {}".format(createdb))
-  res = create_db(cfg, args, datacfg)
+  import dataset.hmd_to_aids as hmd2aids
+
+  tic = time.time()
+  cfg['TIMESTAMP'] = common.timestamp()
+
+  # createdb = False
+  # ## Check required args
+  # if not args.from_path or not args.to_path:
+  #   createdb = True
+  # log.info("createdb: {}".format(createdb))
+
+  aids, datacfg = hmd2aids.prepare_datasets(cfg, args, datacfg)
+  res = create_db(cfg, args, datacfg, aids)
   
   toc = time.time()
   total_exec_time = '{:0.2f}s'.format(toc - tic)
@@ -317,11 +216,78 @@ def create_dataset_hmd(cfg, args, datacfg):
 
 def create_dataset_coco(cfg, args, datacfg):
   """coco to AI Datasets (AIDS)
-  """
-  import coco_to_aids as c2aids
-  dataset = c2aids.create_db(cfg, args, datacfg)
 
-  return dataset
+  args.from_path should be: "/aimldl-dat/data-public/ms-coco-1/annotations"
+
+  /aimldl-dat/data-public/ms-coco-1/annotations
+      ├── all-datasets
+      │   ├── 2014
+      │   └── 2017
+      ├── annotations
+      │   ├── captions_train2014.json
+      │   ├── captions_train2017.json
+      │   ├── captions_val2014.json
+      │   ├── captions_val2017.json
+      │   ├── coco_viz.py
+      │   ├── image_info_test2014.json
+      │   ├── instances_minival2014.json
+      │   ├── instances_train2014.json
+      │   ├── instances_train2017.json
+      │   ├── instances_val2014.json
+      │   ├── instances_val2017.json
+      │   ├── instances_valminusminival2014.json
+      │   ├── panoptic_instances_val2017.json
+      │   ├── panoptic_train2017.json
+      │   ├── panoptic_val2017.json
+      │   ├── person_keypoints_train2014.json
+      │   ├── person_keypoints_train2017.json
+      │   ├── person_keypoints_val2014.json
+      │   ├── person_keypoints_val2017.json
+      │   ├── stuff_train2017.json
+      │   └── stuff_val2017.json
+      ├── cocostuff
+      │   └── models
+      │       └── deeplab
+      │           ├── cocostuff
+      │           │   ├── config
+      │           │   │   ├── deeplabv2_resnet101
+      │           │   │   └── deeplabv2_vgg16
+      │           │   ├── data
+      │           │   ├── features
+      │           │   ├── list
+      │           │   ├── log
+      │           │   └── model
+      │           │       └── deeplabv2_vgg16
+      │           └── deeplab-v2
+      ├── instances_valminusminival2014.json
+      ├── panoptic_train2017
+      ├── panoptic_val2017
+      ├── stuffthingmaps_trainval2017
+      │   ├── train2017
+      │   └── val2017
+      ├── test2014
+      ├── tfrecord
+      ├── train2014
+      ├── train2017
+      ├── val2014
+      └── val2017
+  """
+  log.info("-----------------------------")
+
+  import dataset.coco_to_aids as coco2aids
+
+  tic = time.time()
+
+  cfg['TIMESTAMP'] = common.timestamp()
+  aids, datacfg = coco2aids.prepare_datasets(cfg, args, datacfg)
+
+  res = create_db(cfg, args, datacfg, aids)
+  
+  toc = time.time()
+  total_exec_time = '{:0.2f}s'.format(toc - tic)
+  log.info("\n Done: total_exec_time: {}".format(total_exec_time))
+
+  return res
 
 
 def tdd(cfg, args, datacfg):
@@ -465,6 +431,16 @@ def parse_args(commands):
     assert args.did,\
            "Provide --did"
 
+  if args.did == "coco":
+    if not args.from_path:
+      raise Exception("--{} not defined".format('from'))
+    if not args.task:
+      raise Exception("--{} not defined".format('task'))
+    if not args.year:
+      raise Exception("--{} not defined".format('year'))
+    from_path = args.from_path
+    if not os.path.exists(from_path) and os.path.isfile(from_path):
+        raise Exception('--from needs to be directory path')
 
   if args.include_labels:
     ## https://www.tutorialspoint.com/How-to-remove-all-special-characters-punctuation-and-spaces-from-a-string-in-Python
@@ -482,6 +458,11 @@ def parse_args(commands):
 
 
 if __name__ == '__main__':
+  """
+  Usage Examples:
+
+  python db_to_aids.py create --by AIE3 --did coco --from /aimldl-dat/data-public/ms-coco-1/annotations --task instances --year 2014
+  """
   commands = ['create', 'verify', 'tdd']
   args = parse_args(commands)
 
