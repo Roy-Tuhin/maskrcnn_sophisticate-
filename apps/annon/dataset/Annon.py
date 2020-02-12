@@ -170,11 +170,6 @@ class ANNON(object):
       ,"total_img_per_label": defaultdict()
       ,"label_per_img": defaultdict(list)
       ,"total_annotation_per_label": defaultdict()
-      ,"total_bboxarea_per_label": defaultdict(list)
-      ,"total_maskarea_per_label": defaultdict(list)
-      ,"total_annotation_per_img": defaultdict()
-      ,"total_maskarea_per_img": defaultdict()
-      ,"total_bboxarea_per_img": defaultdict()
     }
 
     unique_images = set()
@@ -186,29 +181,18 @@ class ANNON(object):
         imgToAnns[ann['img_id']].append(ann)
         anns[ann['ant_id']] = ann
         stats['total_annotations'] += 1
-        stats['label_per_img'][str(ann['img_id'])].append(ann['lbl_id'])
 
         # catToImgs[ann['lbl_id']].append(ann['img_id'])
         if 'categories' in self.dataset:
           catToImgs[ann['lbl_id']].append(ann['img_id'])
           catToAnns[ann['lbl_id']].append(ann['ant_id'])
-          if 'bboxarea' in ann and ann['bboxarea'] > -1:
-            stats['total_bboxarea_per_label'][ann['lbl_id']].append(ann['bboxarea'])
-          if 'maskarea' in ann and ann['maskarea'] > -1:
-            stats['total_maskarea_per_label'][ann['lbl_id']].append(ann['maskarea'])
 
     if 'images' in self.dataset:
         for img in self.dataset['images']:
           imgs[img['img_id']] = img
           stats['total_images'] += 1
           _ann = imgToAnns[img['img_id']]
-          stats['total_annotation_per_img'][str(img['img_id'])] = len(_ann)
-          stats['total_label_per_img'][str(img['img_id'])] = len(set(stats['label_per_img'][str(img['img_id'])]))
 
-          if 'bboxarea' in _ann and ann['bboxarea'] > -1:
-            stats['total_bboxarea_per_img'][str(img['img_id'])] = ann['bboxarea']
-          if 'maskarea' in _ann and ann['maskarea'] > -1:
-            stats['total_bboxarea_per_img'][str(img['img_id'])] = ann['maskarea']
 
     # if 'annotations' in self.dataset and 'categories' in self.dataset:
     #   for ann in self.dataset['annotations']:
@@ -228,6 +212,7 @@ class ANNON(object):
         stats['total_img_per_label'][cat['lbl_id']] = len(catToImgs[cat['lbl_id']])
 
     log.info('index created!')
+    log.info("stats: {}".format(stats))
 
     # create class members
     self.anns = anns
@@ -236,11 +221,72 @@ class ANNON(object):
     self.catToAnns = catToAnns
     self.imgs = imgs
     self.cats = cats
-    self.stats = stats
+    self.minstats = stats
 
 
   def getStats(self):
-    return self.stats.copy()
+    return self.minstats.copy()
+
+
+  def calcStats(self):
+    """calculate all the stats for the dataset
+    """
+    log.info("-------------------------------->")
+    stats = {
+      'total_labels': 0
+      ,'total_annotations': 0
+      ,'total_images': 0
+      ,'total_unique_images': 0
+      ,"total_label_per_img": defaultdict(list)
+      ,"total_img_per_label": defaultdict()
+      ,"label_per_img": defaultdict(list)
+      ,"total_annotation_per_label": defaultdict()
+      ,"total_bboxarea_per_label": defaultdict(list)
+      ,"total_maskarea_per_label": defaultdict(list)
+      ,"total_annotation_per_img": defaultdict()
+      ,"total_maskarea_per_img": defaultdict()
+      ,"total_bboxarea_per_img": defaultdict()
+    }
+
+    unique_images = set()
+
+    imgToAnns = self.imgToAnns
+    catToImgs = self.catToImgs
+    catToAnns = self.catToAnns
+
+    if 'annotations' in self.dataset:
+      for ann in self.dataset['annotations']:
+        stats['total_annotations'] += 1
+        stats['label_per_img'][str(ann['img_id'])].append(ann['lbl_id'])
+
+        if 'categories' in self.dataset:
+          if 'bboxarea' in ann and ann['bboxarea'] > -1:
+            stats['total_bboxarea_per_label'][ann['lbl_id']].append(ann['bboxarea'])
+          if 'maskarea' in ann and ann['maskarea'] > -1:
+            stats['total_maskarea_per_label'][ann['lbl_id']].append(ann['maskarea'])
+
+    if 'images' in self.dataset:
+        for img in self.dataset['images']:
+          stats['total_images'] += 1
+          _ann = imgToAnns[img['img_id']]
+          stats['total_annotation_per_img'][str(img['img_id'])] = len(_ann)
+          stats['total_label_per_img'][str(img['img_id'])] = len(set(stats['label_per_img'][str(img['img_id'])]))
+
+          if 'bboxarea' in _ann and ann['bboxarea'] > -1:
+            stats['total_bboxarea_per_img'][str(img['img_id'])] = ann['bboxarea']
+          if 'maskarea' in _ann and ann['maskarea'] > -1:
+            stats['total_bboxarea_per_img'][str(img['img_id'])] = ann['maskarea']
+
+    ## categories and labels are synonymous and are used to mean the same thing
+    if 'categories' in self.dataset:
+      for cat in self.dataset['categories']:
+        stats['total_labels'] += 1
+        stats['total_annotation_per_label'][cat['lbl_id']] = len(catToAnns[cat['lbl_id']])
+        stats['total_img_per_label'][cat['lbl_id']] = len(catToImgs[cat['lbl_id']])
+
+    log.info('stats created!')
+
+    return stats
 
 
   def getAnnIds(self, imgIds=[], catIds=[], areaRng=[]):

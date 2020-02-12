@@ -320,9 +320,6 @@ def prepare_datasets(cfg, args, datacfg):
         ,'STATS':None
       }
 
-    if subset not in stats:
-      stats[subset] = None
-
     dataset, metadata = load_coco_data(from_path, task, subset, year)
     coco_to_annon(subset, metadata, dataset)
     annon = ANNON(datacfg=datacfg, subset=subset, images_data=dataset['images'], annotations_data=dataset['annotations'], classinfo=dataset['categories'])
@@ -330,17 +327,6 @@ def prepare_datasets(cfg, args, datacfg):
     annon_stats = annon.getStats()
     annon_stats['metadata'] = metadata
     annon_stats['colors'] = None
-
-    # ,"maskarea": []
-    # ,"bboxarea": []
-    # # ,"total_labels": 0
-    # # ,'total_annotations':0
-    # # ,"total_images": 0
-    # # ,"total_unique_images": set()
-    # # ,"total_unique_images": 0
-    # # ,"annotation_per_img": []
-    # # ,"label_per_img": []
-
 
     lbl_ids = annon.getCatIds()
     catIds = annon.getCatIds(catIds=lbl_ids)
@@ -356,7 +342,6 @@ def prepare_datasets(cfg, args, datacfg):
 
     aids[subset]['IMAGES'] = annon.loadImgs(ids=imgIds)
     aids[subset]['ANNOTATIONS'] = annon.loadAnns(ids=annIds)
-    aids[subset]['STATS'] = [stats[subset]]
 
     ## classinfo / categories should be unique names for all the splits taken together
     ## and should not to be differentiated splitwise - the differences should be captured in the per split stats
@@ -377,7 +362,10 @@ def prepare_datasets(cfg, args, datacfg):
     annon_stats['labels'] = catIds.copy()
     annon_stats['classinfo'] = classinfo.copy()
 
-    stats[subset] = annon_stats
+    if subset not in stats:
+      stats[subset] = annon_stats
+
+    aids[subset]['STATS'] = [stats[subset]]
 
     # log.info("stats: {}".format(stats))
     # log.info("aids: {}".format(aids))
