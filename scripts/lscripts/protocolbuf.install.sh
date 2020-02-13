@@ -5,6 +5,9 @@
 ## https://github.com/google/protobuf
 ## https://github.com/google/protobuf/blob/master/src/README.md
 #
+## zip version: https://github.com/google/protobuf/releases/download/v3.0.0/protoc-3.0.0-linux-x86_64.zip
+## https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md
+#
 # make[2]: Entering directory '/home/thanos/softwares/protobuf/src'
 # make[3]: Entering directory '/home/thanos/softwares/protobuf/src'
 # PASS: google/protobuf/io/gzip_stream_unittest.sh
@@ -52,6 +55,30 @@
 # make[2]: Leaving directory '/home/thanos/softwares/protobuf/src'
 # make[1]: Leaving directory '/home/thanos/softwares/protobuf/src'
 
+# libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/sbin" ldconfig -n /usr/local/lib
+# ----------------------------------------------------------------------
+# Libraries have been installed in:
+#    /usr/local/lib
+
+# If you ever happen to want to link against installed libraries
+# in a given directory, LIBDIR, you must either use libtool, and
+# specify the full pathname of the library, or use the '-LLIBDIR'
+# flag during linking and do at least one of the following:
+#    - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+#      during execution
+#    - add LIBDIR to the 'LD_RUN_PATH' environment variable
+#      during linking
+#    - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+#    - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+
+# See any operating system documentation about shared libraries for
+# more information, such as the ld(1) and ld.so(8) manual pages.
+# ----------------------------------------------------------------------
+#  /bin/mkdir -p '/usr/local/bin'
+#   /bin/bash ../libtool   --mode=install /usr/bin/install -c protoc '/usr/local/bin'
+# libtool: install: /usr/bin/install -c .libs/protoc /usr/local/bin/protoc
+# make[2]: Leaving directory '/codehub/external/protobuf/src'
+# make[1]: Leaving directory '/codehub/external/protobuf/src'
 ##----------------------------------------------------------
 
 
