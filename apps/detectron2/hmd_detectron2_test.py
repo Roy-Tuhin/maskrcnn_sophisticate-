@@ -53,7 +53,9 @@ appcfg = edict(appcfg)
 
 HOST = "10.4.71.69"
 # AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119"
-AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_281219_125647"
+# AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_281219_125647"
+# AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_310120_114556"
+AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_100220_181246"
 appcfg['APP']['DBCFG']['PXLCFG']['host'] = HOST
 appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'] = AI_ANNON_DATA_HOME_LOCAL
 
@@ -165,9 +167,13 @@ def get_data(subset, _appcfg):
 
     cmd = "train"
     # dbname = "PXL-291119_180404"
-    dbname = "PXL-301219_174758"
+    # dbname = "PXL-301219_174758"
+    # dbname = "PXL-310120_175129"
+    dbname = "PXL-100220_192533"
+    exp_id = "train-eee128cb-d7a1-493a-9819-95531f507092"
     # exp_id = "train-422d30b0-f518-4203-9c4d-b36bd8796c62"
-    exp_id = "train-d79fe253-60c8-43f7-a3f5-42a4abf97b6c"
+    # exp_id = "train-d79fe253-60c8-43f7-a3f5-42a4abf97b6c"
+    # exp_id = "train-887c2e82-1faa-4353-91d4-2f4cdc9285c1"
     eval_on = subset
     # log.debug(_appcfg)
     # log.info(_appcfg['APP']['DBCFG']['PXLCFG'])
@@ -272,9 +278,10 @@ def train(args, mode, _appcfg):
     cfg.DATASETS.TEST = ()
     cfg.DATALOADER.NUM_WORKERS = 2
     cfg.MODEL.WEIGHTS = "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl"  # initialize from model zoo
+    # cfg.MODEL.WEIGHTS = "/codehub/apps/detectron2/release/model_final.pth"
     cfg.SOLVER.IMS_PER_BATCH = 2
     cfg.SOLVER.BASE_LR = 0.00025
-    # cfg.SOLVER.MAX_ITER = 300    # 300 iterations seems good enough, but you can certainly train longer
+    # cfg.SOLVER.MAX_ITER = 350000    # 300 iterations seems good enough, but you can certainly train longer
     # cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512   # faster, and good enough for this toy dataset
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3  # only has one class (ballon)
@@ -292,6 +299,8 @@ def predict(args, mode, _appcfg):
 
     if args.path:
         BASE_IMAGE_PATH = args.path
+
+    PREDICTION_OUTPUT_PATH = "/aimldl-dat/samples/Predictions"
     
     print("BASE_IMAGE_PATH: {}".format(BASE_IMAGE_PATH))
 
@@ -326,6 +335,7 @@ def predict(args, mode, _appcfg):
     for image in os.listdir(BASE_IMAGE_PATH):
 
         image_filepath = os.path.join(BASE_IMAGE_PATH, image)
+        output_path = PREDICTION_OUTPUT_PATH + "/" + image
 
         # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114342_16718_zed_l_057.jpg"
         # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114252_16716_zed_l_099.jpg"
@@ -340,8 +350,9 @@ def predict(args, mode, _appcfg):
                metadata=metadata,
                instance_mode=ColorMode.SEGMENTATION)
         v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-        cv2.imshow('', v.get_image()[:, :, ::-1])
-        cv2.waitKey(0)
+        cv2.imwrite(output_path, v.get_image()[:, :, ::-1])
+        # cv2.imshow('', v.get_image()[:, :, ::-1])
+        # cv2.waitKey(0)
 
     ##Predict from dataset
     # metadata = load_and_register_dataset(name, subset, _appcfg)
@@ -383,7 +394,8 @@ def evaluate(args, mode, _appcfg):
     # for subset in ["train", "val"]:
     #     metadata = load_and_register_dataset(name, subset, _appcfg)
     
-    subset = "test"
+    # subset = "test"
+    subset = "val"
     metadata = load_and_register_dataset(name, subset, _appcfg)    
     
     dataset_name = get_dataset_name(name, subset)

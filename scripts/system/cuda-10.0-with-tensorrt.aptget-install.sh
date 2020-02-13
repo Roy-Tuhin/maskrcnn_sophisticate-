@@ -5,12 +5,6 @@ function cuda_install_dockerfile() {
   # sudo apt -s purge 'cuda*'
   # sudo apt -s purge 'cudnn*'
 
-  sudo apt-get update && sudo apt-get install -y --no-install-recommends \
-      gnupg2 curl ca-certificates && \
-    curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub | sudo apt-key add - && \
-    echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64 /" | sudo tee /etc/apt/sources.list.d/cuda.list && \
-    echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64 /" | sudo tee /etc/apt/sources.list.d/nvidia-ml.list
-
   local CUDA_VER="10.0"
   local CUDA_REL="10-0" # echo $CUDA_VER | tr . -
   local CUDA_VERSION=$CUDA_VER.130
@@ -24,6 +18,18 @@ function cuda_install_dockerfile() {
 
   local TENSORRT_VER=5
   local LIBNVINFER_VER=5.1.5-1+cuda$CUDA_VER
+
+  # local OS="1604"
+  local OS="1804"
+
+  ## https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/
+  ## https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/
+
+  sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+      gnupg2 curl ca-certificates && \
+    curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${OS}/x86_64/7fa2af80.pub | sudo apt-key add - && \
+    echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${OS}/x86_64 /" | sudo tee /etc/apt/sources.list.d/cuda.list && \
+    echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu${OS}/x86_64 /" | sudo tee /etc/apt/sources.list.d/nvidia-ml.list
 
   # For libraries in the cuda-compat-* package: https://docs.nvidia.com/cuda/eula/index.html#attachment-a
   sudo apt-get update && sudo apt-get install -y --no-install-recommends \

@@ -9,13 +9,16 @@
 ## https://github.com/moby/moby/issues/29110
 ## https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b
 
+## Enable ssh for the docker container
+## https://sean.lane.sh/posts/2019/07/Running-the-Real-Time-Voice-Cloning-project-in-Docker/
+
 ## aidev minimum development docker enviroment with python virtualenv and virtualwrapper
 
 ARG BASE_IMAGE_NAME=${BASE_IMAGE_NAME}
 # FROM nvidia/cuda:10.0-cudnn-7.6.4.38-devel-ubuntu18.04
 FROM ${BASE_IMAGE_NAME}
 
-LABEL maintainer "mangalbhaskar <mangalbhaskar@gmail.com>"
+LABEL maintainer "mangalbhaskar"
 
 ## See http://bugs.python.org/issue19846
 ## format changes required for asammdf v3.4.0
@@ -55,6 +58,14 @@ ARG DOCKER_SETUP_PATH="${DOCKER_SETUP_PATH}"
 ## Needed for string substitution
 SHELL ["/bin/bash", "-c"]
 
+## https://github.com/phusion/baseimage-docker/issues/58#issuecomment-449220374
+
+## RUN DEBIAN_FRONTEND=noninteractive; \ ## this did not work
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+## To be tested, Ref: /codehub/external/tensorflow/tensorflow/tensorflow/tools/ci_build/Dockerfile.rbe.cuda10.1-cudnn7-ubuntu16.04-manylinux2010
+# ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
       build-essential \
       ca-certificates \
@@ -76,9 +87,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       ${PYTHON} \
       ${PYTHON}-dev \
       ${PYTHON}-pip \
+      ${PYTHON}-tk \
       swig \
       grep \
       vim \
+      feh \
+      uuid-runtime \
       sudo \
       libpng-dev \
       libjpeg-dev \
@@ -134,7 +148,24 @@ RUN chown -R ${DUSER}:${DUSER} ${PY_VENV_PATH} \
 ## Run processes as non-root user
 USER ${DUSER}
 
+## Tensorflow specific configuration
+## https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/dockerfiles/dockerfiles/devel-gpu-jupyter.Dockerfile
+# Configure the build for our CUDA configuration.
+ENV TF_NEED_CUDA 1
 ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+ENV CI_BUILD_PYTHON ${PYTHON}
+ENV TF_NEED_TENSORRT 1
+ENV TF_CUDA_COMPUTE_CAPABILITIES=3.5,5.2,6.0,6.1,7.0
+ENV TF_CUDA_VERSION=${CUDA_VERSION}
+ENV TF_CUDNN_VERSION=${CUDNN_MAJOR_VERSION}
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV FORCE_CUDA="1"
+## This will build detectron2 for all common cuda architectures and take a lot more time,
+## because inside `docker build`, there is no way to tell which architecture will be used.
+ENV TORCH_CUDA_ARCH_LIST="Kepler;Kepler+Tesla;Maxwell;Maxwell+Tegra;Pascal;Volta;Turing"
+## Set a fixed model cache directory.
+ENV FVCORE_CACHE="/tmp"
 
 ARG PY_VENV_NAME=${PY_VENV_NAME}
 RUN chmod a+rwx ${BASH_FILE} && \

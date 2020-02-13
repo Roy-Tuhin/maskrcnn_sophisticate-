@@ -302,6 +302,26 @@ def merge_dict(o, keys_to_uppercase=False):
   return dict(zip(K,V))
 
 
+def merge_dicts(*dict_args):
+    """
+    Credits: https://stackoverflow.com/a/26853961
+    Ref: https://stackoverflow.com/questions/38987/how-do-i-merge-two-dictionaries-in-a-single-expression
+
+    Given any number of dicts, shallow copy and merge into a new dict,
+    precedence goes to key value pairs in latter dicts.
+
+    Performance Analysis:
+
+    import timeit
+    min(timeit.repeat(lambda: merge_dicts(x, y)))
+    """
+    result = {}
+    for dictionary in dict_args:
+        # result.update(dictionary) @@ original
+        result.update(dictionary.copy())
+    return result
+
+
 def merge_json(files):
   """Merge the json files.
   It uses python way which is tricky to do so, by separating keys and values of json file into separate data structure

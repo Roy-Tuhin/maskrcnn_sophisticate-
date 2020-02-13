@@ -1,4 +1,3 @@
-
 declare -a configs=(
-  "${AI_CFG}/arch/181019_173500-AIE2-1-lanenet.yml"
+  "${AI_CFG}/arch/050220_105542-AIE2-35-lanenet.yml"
 )

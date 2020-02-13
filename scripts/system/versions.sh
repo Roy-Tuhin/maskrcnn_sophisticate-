@@ -11,6 +11,7 @@
 
 local BUILD_FOR_CUDA_VER="9.0"
 local BUILD_FOR_CUDA_VER="10.0"
+# local BUILD_FOR_CUDA_VER="10.2"
 
 ##----------------------------------------------------------
 ## Nvidia GPU Driver
