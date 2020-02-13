@@ -32,9 +32,14 @@ function mount_remote_on_local_paths() {
   # echo "Enter the LOCAL path where you want to mount (default, should not change): ${ai_local_path}"
   # read ai_mach_path
 
-  local mode=rw
+  local mode
+  echo "Enter the mode: [rw | ro]"
+  read mode
+  echo "mode: ${mode}"
 
-  echo "CAREFUL: mounting in write mode, any deletion will delete it from the remote system!!!"
+  if [[ ${mode} == 'rw' ]]; then
+    echo "CAREFUL: mounting in write mode, any deletion will delete it from the remote system!!!"
+  fi
 
   echo "Mouting...using the following command:"
   echo "sudo sshfs -o transform_symlinks,nonempty,${mode},allow_other,default_permissions,uid=$(id -u),gid=$(id -g) ${ai_mach_user}@${ai_mach_ip}:${ai_mach_path}/ ${ai_local_path}"
