@@ -834,7 +834,7 @@ def detect_from_videos(appcfg, dnnmod, videos, path, model, class_names, cmdcfg,
     from_frame = 0
     while success:
       log.debug("-------")
-      log.debug("frame: ", count)
+      log.debug("frame: {}".format(count))
 
       if frame_cutoff and count >= frame_cutoff:
         break

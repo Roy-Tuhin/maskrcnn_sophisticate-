@@ -4,7 +4,7 @@ git clone https://github.com/mangalbhaskar/cloudy_vision.git
 git clone https://github.com/mangalbhaskar/cloudy_vision_web.git
 git clone https://github.com/mangalbhaskar/semantic-search.git
 git clone https://github.com/mangalbhaskar/Mask_RCNN.git
-git clone https://github.com/mangalbhaskar/keras-retinanet
+git clone https://github.com/mangalbhaskar/keras-retinanet.git
 #
 git clone https://github.com/mangalbhaskar/Android-Meetup-Basic.git
 ##
@@ -47,6 +47,8 @@ git clone https://gitlab.com/calledbymountains/DetectionDatasetManagement.git
 git clone https://github.com/facebookresearch/maskrcnn-benchmark.git
 git clone https://github.com/pfjaeger/medicaldetectiontoolkit.git
 git clone https://github.com/ClementPinard/SfmLearner-Pytorch.git
+##
+git clone https://github.com/sulc/tfrecord-viewer.git
 ##
 git clone https://github.com/r9y9/Tacotron-2.git
 git clone https://github.com/r9y9/wavenet_vocoder.git

@@ -270,9 +270,9 @@ def get_display_instances(image, boxes, masks, class_ids, class_names, scores,
       # masked_image_from_canvas = color_mask(masked_image_from_canvas.astype(np.uint8), masks)
       # skimage.io.imsave(os.path.join(filepath, 'mmask', filename), masked_image_from_canvas)
 
-      ## rgb mask
-      mframe_im = color_mask(image, masks)
-      skimage.io.imsave(os.path.join(filepath, 'mask', filename), mframe_im)
+      # ## rgb mask
+      # mframe_im = color_mask(image, masks)
+      # skimage.io.imsave(os.path.join(filepath, 'mask', filename), mframe_im)
 
       ## oframe => original frame of videos or original image
       skimage.io.imsave(os.path.join(filepath, 'oframe', filename), image)

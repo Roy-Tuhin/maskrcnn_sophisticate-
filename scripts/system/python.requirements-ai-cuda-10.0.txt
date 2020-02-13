@@ -9,7 +9,8 @@ git+https://github.com/crowdai/coco.git#subdirectory=PythonAPI
 ## https://github.com/matterport/Mask_RCNN/issues/1808
 
 ## for cuda-10.0
-tensorflow-gpu==2.0.0
+##tensorflow-gpu==2.0.0
+tensorflow-gpu==1.15.0
 
 
 torch>=1.1.0

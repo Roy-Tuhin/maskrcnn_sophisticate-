@@ -41,8 +41,7 @@ class ANNON(object):
     self.dataset, self.anns, self.imgs = dict(), dict(), dict()
     
     self.imgToAnns, self.catToImgs, self.cat_lblid_to_id, self.catToAnns = None, None, None, None
-
-    self.dbcfg = dbcfg.copy()
+    self.dbcfg = dbcfg.copy() if dbcfg else None
     self.datacfg = datacfg.copy() if datacfg else None
     self.subset = subset
     # self.cat_lblid_to_id = defaultdict(list)
@@ -58,11 +57,13 @@ class ANNON(object):
   def load_data(self, images_data=None, annotations_data=None, classinfo=None):
     log.info("-------------------------------->")
     if images_data and annotations_data and classinfo:
-      self.dataset['images'] = images_data
-      self.dataset['annotations'] = annotations_data
-      self.dataset['categories'] = classinfo
       self.dataset['release'] = None
-      self.load_data_from_file()
+      if type(images_data)==str and type(annotations_data)==str and type(classinfo)==str:
+        self.load_data_from_file(images_data, annotations_data, classinfo)
+      else:
+        self.dataset['images'] = images_data
+        self.dataset['annotations'] = annotations_data
+        self.dataset['categories'] = classinfo
     else:
       self.load_data_from_db()
 
@@ -135,7 +136,7 @@ class ANNON(object):
     mclient.close()
 
 
-  def load_data_from_file(self):
+  def load_data_from_file(self, images_data=None, annotations_data=None, classinfo=None):
     """Load the annotation data from the files
     TODO:
     - load from csv file data. Default extension supported is .json;
@@ -143,29 +144,35 @@ class ANNON(object):
     log.info("-------------------------------->")
     import json
 
-    if self.datacfg['images']:
-      images_filepath = self.datacfg['images']
-      log.info("images_filepath: {}".format(images_filepath))
-      with open(images_filepath,'r') as fr:
-        self.dataset['images'] = json.load(fr)
+    def _load_data_from_filepath(d, t):
+      fp = d if d else self.datacfg[t]
+      log.info("{}_filepath: {}".format(t, fp))
+      if not os.path.exists(fp):
+        raise Exception("{} filepath: {} does not exists!".format(t, fp))
+      with open(fp,'r') as fr:
+        self.dataset[t] = json.load(fr)
 
-    if self.datacfg['annotations']:
-      annotation_filepath = self.datacfg['annotations']
-      log.info("annotation_filepath: {}".format(annotation_filepath))
-      with open(annotation_filepath,'r') as fr:
-        self.dataset['annotations'] = json.load(fr)
-
-    if self.datacfg['categories']:
-      classinfo_filepath = self.datacfg['categories']
-      log.info("classinfo_filepath: {}".format(classinfo_filepath))
-      with open(classinfo_filepath,'r') as fr:
-        self.dataset['categories'] = json.load(fr)
+    _load_data_from_filepath(images_data, 'images')
+    _load_data_from_filepath(annotations_data, 'annotations')
+    _load_data_from_filepath(classinfo, 'categories')
 
 
   def createIndex(self):
     """Create Index for annotation, categories and images
     """
     log.info("-------------------------------->")
+    stats = {
+      'total_labels': 0
+      ,'total_annotations': 0
+      ,'total_images': 0
+      ,'total_unique_images': 0
+      ,"total_label_per_img": defaultdict(list)
+      ,"total_img_per_label": defaultdict()
+      ,"label_per_img": defaultdict(list)
+      ,"total_annotation_per_label": defaultdict()
+    }
+
+    unique_images = set()
     anns, cats, imgs = {}, {}, {}
     imgToAnns, catToImgs, cat_lblid_to_id, catToAnns = defaultdict(list), defaultdict(list), defaultdict(list), defaultdict(list)
 
@@ -173,27 +180,39 @@ class ANNON(object):
       for ann in self.dataset['annotations']:
         imgToAnns[ann['img_id']].append(ann)
         anns[ann['ant_id']] = ann
+        stats['total_annotations'] += 1
 
-        catToImgs[ann['lbl_id']].append(ann['img_id'])
+        # catToImgs[ann['lbl_id']].append(ann['img_id'])
+        if 'categories' in self.dataset:
+          catToImgs[ann['lbl_id']].append(ann['img_id'])
+          catToAnns[ann['lbl_id']].append(ann['ant_id'])
 
     if 'images' in self.dataset:
         for img in self.dataset['images']:
-            imgs[img['img_id']] = img
+          imgs[img['img_id']] = img
+          stats['total_images'] += 1
+          _ann = imgToAnns[img['img_id']]
 
+
+    # if 'annotations' in self.dataset and 'categories' in self.dataset:
+    #   for ann in self.dataset['annotations']:
+    #     # catid = cat_lblid_to_id[ann['lbl_id']]
+    #     # catToImgs[catid].append(ann['img_id'])
+    #     catToImgs[ann['lbl_id']].append(ann['img_id'])
+    #     catToAnns[ann['lbl_id']].append(ann['ant_id'])
+
+    ## categories and labels are synonymous and are used to mean the same thing
     if 'categories' in self.dataset:
       for cat in self.dataset['categories']:
         cats[cat['lbl_id']] = cat
         # cats[cat['id']] = cat
-        ## self.cat_lblid_to_id[cat['lbl_id']] = cat['id']
-
-    if 'annotations' in self.dataset and 'categories' in self.dataset:
-      for ann in self.dataset['annotations']:
-        # catid = cat_lblid_to_id[ann['lbl_id']]
-        # catToImgs[catid].append(ann['img_id'])
-        catToImgs[ann['lbl_id']].append(ann['img_id'])
-        catToAnns[ann['lbl_id']].append(ann['ant_id'])
+        # self.cat_lblid_to_id[cat['lbl_id']] = cat['id']
+        stats['total_labels'] += 1
+        stats['total_annotation_per_label'][cat['lbl_id']] = len(catToAnns[cat['lbl_id']])
+        stats['total_img_per_label'][cat['lbl_id']] = len(catToImgs[cat['lbl_id']])
 
     log.info('index created!')
+    log.info("stats: {}".format(stats))
 
     # create class members
     self.anns = anns
@@ -202,6 +221,72 @@ class ANNON(object):
     self.catToAnns = catToAnns
     self.imgs = imgs
     self.cats = cats
+    self.minstats = stats
+
+
+  def getStats(self):
+    return self.minstats.copy()
+
+
+  def calcStats(self):
+    """calculate all the stats for the dataset
+    """
+    log.info("-------------------------------->")
+    stats = {
+      'total_labels': 0
+      ,'total_annotations': 0
+      ,'total_images': 0
+      ,'total_unique_images': 0
+      ,"total_label_per_img": defaultdict(list)
+      ,"total_img_per_label": defaultdict()
+      ,"label_per_img": defaultdict(list)
+      ,"total_annotation_per_label": defaultdict()
+      ,"total_bboxarea_per_label": defaultdict(list)
+      ,"total_maskarea_per_label": defaultdict(list)
+      ,"total_annotation_per_img": defaultdict()
+      ,"total_maskarea_per_img": defaultdict()
+      ,"total_bboxarea_per_img": defaultdict()
+    }
+
+    unique_images = set()
+
+    imgToAnns = self.imgToAnns
+    catToImgs = self.catToImgs
+    catToAnns = self.catToAnns
+
+    if 'annotations' in self.dataset:
+      for ann in self.dataset['annotations']:
+        stats['total_annotations'] += 1
+        stats['label_per_img'][str(ann['img_id'])].append(ann['lbl_id'])
+
+        if 'categories' in self.dataset:
+          if 'bboxarea' in ann and ann['bboxarea'] > -1:
+            stats['total_bboxarea_per_label'][ann['lbl_id']].append(ann['bboxarea'])
+          if 'maskarea' in ann and ann['maskarea'] > -1:
+            stats['total_maskarea_per_label'][ann['lbl_id']].append(ann['maskarea'])
+
+    if 'images' in self.dataset:
+        for img in self.dataset['images']:
+          stats['total_images'] += 1
+          _ann = imgToAnns[img['img_id']]
+          stats['total_annotation_per_img'][str(img['img_id'])] = len(_ann)
+          stats['total_label_per_img'][str(img['img_id'])] = len(set(stats['label_per_img'][str(img['img_id'])]))
+
+          if 'bboxarea' in _ann and ann['bboxarea'] > -1:
+            stats['total_bboxarea_per_img'][str(img['img_id'])] = ann['bboxarea']
+          if 'maskarea' in _ann and ann['maskarea'] > -1:
+            stats['total_bboxarea_per_img'][str(img['img_id'])] = ann['maskarea']
+
+    ## categories and labels are synonymous and are used to mean the same thing
+    if 'categories' in self.dataset:
+      for cat in self.dataset['categories']:
+        stats['total_labels'] += 1
+        stats['total_annotation_per_label'][cat['lbl_id']] = len(catToAnns[cat['lbl_id']])
+        stats['total_img_per_label'][cat['lbl_id']] = len(catToImgs[cat['lbl_id']])
+
+    log.info('stats created!')
+
+    return stats
 
 
   def getAnnIds(self, imgIds=[], catIds=[], areaRng=[]):

@@ -186,3 +186,28 @@ Prediction:
 1. Ubuntu 16.04 LTS vs Ubuntu 18.04 LTS Flag creation in configuration file
   - to enable Ubuntu version specific installation
 
+
+
+## Technotes
+
+https://ersanpreet.wordpress.com/2019/03/02/road-map-for-custom-object-detection-with-tensorflow-api/
+https://ersanpreet.wordpress.com/2019/03/27/creating-your-own-custom-model-for-object-detection-tensorflow-api-part-6/
+https://ersanpreet.wordpress.com/2019/04/13/testing-custom-object-detection-model-part-7/
+
+https://cv-tricks.com/tensorflow-tutorial/save-restore-tensorflow-models-quick-complete-tutorial/
+http://www-personal.umich.edu/~timtu/site/share/Tensorflow_03_saveRestore/
+
+https://nbviewer.jupyter.org/github/tensorflow/tensorflow/blob/master/tensorflow/examples/tutorials/deepdream/deepdream.ipynb
+
+https://github.com/tensorflow/examples/blob/master/community/en/r1/deepdream.ipynb
+
+https://stackoverflow.com/questions/33759623/tensorflow-how-to-save-restore-a-model
+
+
+
+
+https://stackoverflow.com/questions/11092511/python-list-of-unique-dictionaries
+
+[{'id': 1, 'name': 'john', 'age': 34}, {'id': 1, 'name': 'john', 'age': 34}, {'id': 2, 'name': 'hanna', 'age': 30}]
+list({v['name']:v for v in L}.values())
+list({v['id']:v for v in L}.values())
