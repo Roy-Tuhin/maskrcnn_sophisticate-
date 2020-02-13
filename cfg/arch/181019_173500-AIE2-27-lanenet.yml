@@ -93,7 +93,7 @@ evaluate:
   train_mode: training
   test_mode: inference
   dbname: null
-  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-251119_114944/testing/test-tusimple.json 
+  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-291119_174355/testing/test-tusimple.json 
   splits: 
   - train
   - val
@@ -105,7 +105,7 @@ evaluate:
   mode: inference
   device: /gpu:0
   weights: null
-  weights_path: EVALUATE_MODEL_INFO
+  weights_path: /aimldl-dat/logs/lanenet/model/020120_125735/tusimple_lanenet_vgg_2020-01-02-12-57-45.ckpt-62001
   model_info: null
   dnnarch: lanenet
   config: 
@@ -116,7 +116,7 @@ evaluate:
     # Set the test batch size
     BATCH_SIZE: 2
   load_weights: null
-  save_viz_and_json: True
+  save_viz_and_json: False
   evaluate_no_of_result: -1
   iou_threshold: null
   output_image_dir: null
@@ -150,7 +150,7 @@ predict:
   dnnarch: lanenet
   config: null
   load_weights: null
-  save_viz_and_json: True
+  save_viz_and_json: False
   iou_threshold: null
   iou_threshold: null
   output_image_dir: null
