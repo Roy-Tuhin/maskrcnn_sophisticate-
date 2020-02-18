@@ -1,0 +1,93 @@
+class_ids:
+(['signage', 'traffic_light', 'traffic_sign'],)
+
+id_map:
+({'signage': 0, 'traffic_light': 1, 'traffic_sign': 2},)
+
+image:
+{
+  "img_id": "img-000053d7-9301-41a2-9491-c629daa29b37",
+  "annon_dir": "None",
+  "base_dir": "images-p2-050219_AT2",
+  "created_on": "2019-11-28 16:11:11 +05:30",
+  "dir": "images/images-p2-050219_AT2",
+  "file_attributes": {
+    "billboard": "billboard",
+    "traffic_light": "traffic_light",
+    "flyover_pillar": "flyover_pillar",
+    "reflector": "reflector"
+  },
+  "file_id": "291018_114342_16718_zed_l_057.jpg1014569",
+  "filename": "291018_114342_16718_zed_l_057.jpg",
+  "filepath": "/aimldl-dat/data-gaze/AIML_Annotation/ods_selected_jobs/ods_job_230119/images/images-p2-050219_AT2/291018_114342_16718_zed_l_057.jpg",
+  "height": 1080,
+  "modified_on": "None",
+  "rel_filename": "images-p2-050219_AT2_via205_190219.json",
+  "size": 1014569,
+  "width": 1920,
+  "dbid": "aids-25e7236b-91e7-423d-b62d-1301604324a3",
+  "timestamp": "291119_180404",
+  "subset": "train"
+}
+
+
+##TODO: verify what is BoxMode.XYWH_ABS
+coco_frmt_bbox = [_bbox['xmin'], _bbox['ymin'], _bbox['width'], _bbox['height'] ]
+ann_keys = ["iscrowd", "bbox", "keypoints", "category_id", "lbl_id"]
+
+annotation:
+[
+  {
+    "ant_id": "ant-101c6060-85a3-48a7-9af9-f9f6e4cdc18b",
+    "anndb_id": "281119_154804",
+    "annon_index": 4,
+    "annotation_rel_date": "190219",
+    "annotation_tool": "via205",
+    "annotator_id": "AT2",
+    "ant_type": "rect",
+    "bbox": {
+      "ymin": 476,
+      "xmin": 1403,
+      "ymax": 480,
+      "xmax": 1419,
+      "width": 16,
+      "height": 4
+    },
+    "bboxarea": 64,
+    "created_on": "2019-11-28 16:11:11 +05:30",
+    "dir": "281119_154804/annon_data",
+    "file_id": "291018_114342_16718_zed_l_057.jpg1014569",
+    "filename": "ant-101c6060-85a3-48a7-9af9-f9f6e4cdc18b",
+    "filepath": "281119_154804/annon_data/ant-101c6060-85a3-48a7-9af9-f9f6e4cdc18b",
+    "image_dir": "images/images-p2-050219_AT2",
+    "image_filepath": "/aimldl-dat/data-gaze/AIML_Annotation/ods_selected_jobs/ods_job_230119/images/images-p2-050219_AT2/291018_114342_16718_zed_l_057.jpg",
+    "image_name": "291018_114342_16718_zed_l_057.jpg",
+    "image_part": "images-p2",
+    "image_rel_date": "050219",
+    "img_id": "img-000053d7-9301-41a2-9491-c629daa29b37",
+    "lbl_id": "traffic_light",
+    "maskarea": 64,
+    "modified_on": "None",
+    "region_attributes": {
+      "Object": "traffic_light",
+      "Text": {},
+      "Occulusion": {},
+      "Truncated": {},
+      "Collection_Type": "single",
+      "Position": "off_road",
+      "ant_id": "ant-101c6060-85a3-48a7-9af9-f9f6e4cdc18b"
+    },
+    "rel_filename": "images-p2-050219_AT2_via205_190219.json",
+    "shape_attributes": {
+      "name": "rect",
+      "x": 1403,
+      "y": 476,
+      "width": 16,
+      "height": 4,
+      "ant_id": "ant-101c6060-85a3-48a7-9af9-f9f6e4cdc18b"
+    },
+    "dbid": "aids-25e7236b-91e7-423d-b62d-1301604324a3",
+    "timestamp": "291119_180404",
+    "subset": "train"
+  }
+]

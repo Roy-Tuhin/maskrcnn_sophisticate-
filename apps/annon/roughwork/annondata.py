@@ -53,30 +53,30 @@ def get_annon_data(cfg, args, datacfg):
 
   log.info("lbl_ids: {}".format(lbl_ids))
 
-  images = annon.getImgIds(catIds=lbl_ids)
-  # annotations = annon.getAnnIds(imgIds=images, catIds=lbl_ids, areaRng=[])
-  annotations = annon.getAnnIds(imgIds=images, catIds=lbl_ids)
+  images_imgIds = annon.getImgIds(catIds=lbl_ids)
+  # annotations = annon.getAnnIds(imgIds=images_imgIds, catIds=lbl_ids, areaRng=[])
+  annotations = annon.getAnnIds(imgIds=images_imgIds, catIds=lbl_ids)
   classinfo = annon.loadCats(ids=lbl_ids)
 
   ## make sure that the K have a fixed order before shuffling
   ## https://cs230-stanford.github.io/train-dev-test-split.html
-  T = len(images)
-  log.info("Images Size: => {}".format(T))
+  T = len(images_imgIds)
+  log.info("images_imgIds Size: => {}".format(T))
 
   cfg_aids_randomizer = cfg['AIDS_RANDOMIZER']
   if cfg_aids_randomizer['ENABLE']:
     if cfg_aids_randomizer['USE_SEED']:
       np.random.seed(T) ## provides consistent shuffle given that 'T' is same between two different execution of the script
     ## Shuffle K
-    np.random.shuffle(images)
+    np.random.shuffle(images_imgIds)
 
-  img_lbl_arr = np.zeros([len(images), len(lbl_ids)], int)
+  img_lbl_arr = np.zeros([len(images_imgIds), len(lbl_ids)], int)
   for j, lbl_id in enumerate(lbl_ids):
     img_col = img_lbl_arr[:,j]
     img_ids = annon.getImgIds(catIds=lbl_id)
     log.info("lbl_id, len(img_ids): {}, {}".format(lbl_id, len(img_ids)))
     if img_ids and len(img_ids) > 0:
-      img_col[np.where(np.in1d(images, img_ids))] += 1
+      img_col[np.where(np.in1d(images_imgIds, img_ids))] += 1
 
-  return annon, images, annotations, classinfo, lbl_ids, img_lbl_arr
+  return annon, images_imgIds, annotations, classinfo, lbl_ids, img_lbl_arr
 

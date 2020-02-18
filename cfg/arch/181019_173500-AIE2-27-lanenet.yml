@@ -17,7 +17,7 @@ train:
   train_mode: training
   test_mode: inference
   dbname: null
-  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-160120_180410/training
+  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-251119_114944/training
   splits:   
   - train
   - val
@@ -29,13 +29,13 @@ train:
   mode: training
   device: /gpu:0
   weights: null
-  weights_path: null
+  weights_path: /codehub/external/lanenet-lane-detection/model/tusimple_lanenet_vgg/tusimple_lanenet_vgg.ckpt
   model: null
   model_info: null
   dnnarch: lanenet
   config: 
     # Set the shadownet training epochs
-    EPOCHS: 62000
+    EPOCHS: 100
     # Set the display step
     DISPLAY_STEP: 1
     # Set the test display step during training process
@@ -93,19 +93,19 @@ evaluate:
   train_mode: training
   test_mode: inference
   dbname: null
-  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-160120_180410/testing/test-tusimple.json 
+  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-291119_174355/testing/test-tusimple.json 
   splits: 
   - train
   - val
   - test
   annon_type: tusimple
   dataclass: AnnonDataset
-  name: rod
+  name: rld
   framework_type: tensorflow
   mode: inference
   device: /gpu:0
   weights: null
-  weights_path: /aimldl-dat/logs/lanenet/model/160120_191731/gaze_lanenet_vgg_16-01-2020-19-17-31.ckpt-60001
+  weights_path: /aimldl-dat/logs/lanenet/model/020120_125735/tusimple_lanenet_vgg_2020-01-02-12-57-45.ckpt-62001
   model_info: null
   dnnarch: lanenet
   config: 
@@ -146,7 +146,7 @@ predict:
   mode: inference
   device: /gpu:0
   weights: null
-  model_info: null
+  model_info: maybeshewill-rld-1-lanenet.yml
   dnnarch: lanenet
   config: null
   load_weights: null

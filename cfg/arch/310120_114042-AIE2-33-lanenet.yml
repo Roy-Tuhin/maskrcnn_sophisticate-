@@ -17,7 +17,7 @@ train:
   train_mode: training
   test_mode: inference
   dbname: null
-  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-160120_180410/training
+  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-310120_122833/training
   splits:   
   - train
   - val
@@ -35,7 +35,7 @@ train:
   dnnarch: lanenet
   config: 
     # Set the shadownet training epochs
-    EPOCHS: 62000
+    EPOCHS: 83000
     # Set the display step
     DISPLAY_STEP: 1
     # Set the test display step during training process
@@ -43,7 +43,7 @@ train:
     # Set the momentum parameter of the optimizer
     MOMENTUM: 0.9
     # Set the initial learning rate
-    LEARNING_RATE: 0.0005
+    LEARNING_RATE: 0.00055
     # Set the GPU resource used during training process
     GPU_MEMORY_FRACTION: 0.95
     # Set the GPU allow growth parameter during tensorflow training process
@@ -93,7 +93,7 @@ evaluate:
   train_mode: training
   test_mode: inference
   dbname: null
-  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-160120_180410/testing/test-tusimple.json 
+  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-310120_122833/testing/test-tusimple.json
   splits: 
   - train
   - val
@@ -105,7 +105,7 @@ evaluate:
   mode: inference
   device: /gpu:0
   weights: null
-  weights_path: /aimldl-dat/logs/lanenet/model/160120_191731/gaze_lanenet_vgg_16-01-2020-19-17-31.ckpt-60001
+  weights_path: /aimldl-dat/logs/lanenet/model/020220_075727/gaze_lanenet_vgg_02-02-2020-07-57-27.ckpt-82001
   model_info: null
   dnnarch: lanenet
   config: 

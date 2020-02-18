@@ -17,7 +17,7 @@ train:
   train_mode: training
   test_mode: inference
   dbname: null
-  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-160120_180410/training
+  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-310120_122833/training
   splits:   
   - train
   - val
@@ -35,7 +35,7 @@ train:
   dnnarch: lanenet
   config: 
     # Set the shadownet training epochs
-    EPOCHS: 62000
+    EPOCHS: 83000
     # Set the display step
     DISPLAY_STEP: 1
     # Set the test display step during training process
@@ -49,15 +49,15 @@ train:
     # Set the GPU allow growth parameter during tensorflow training process
     TF_ALLOW_GROWTH: True
     # Set the shadownet training batch size
-    BATCH_SIZE: 4
+    BATCH_SIZE: 1
     # Set the shadownet validation batch size
-    VAL_BATCH_SIZE: 4
+    VAL_BATCH_SIZE: 1
     # Set the class numbers
     CLASSES_NUMS: 2
     # Set the image height
-    IMG_HEIGHT: 256
+    IMG_HEIGHT: 512
     # Set the image width
-    IMG_WIDTH: 512
+    IMG_WIDTH: 1024
     # Set the embedding features dims
     EMBEDDING_FEATS_DIMS: 4
     # Set the random crop pad size
@@ -93,7 +93,7 @@ evaluate:
   train_mode: training
   test_mode: inference
   dbname: null
-  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-160120_180410/testing/test-tusimple.json 
+  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-310120_122833/testing/test-tusimple.json
   splits: 
   - train
   - val
@@ -105,7 +105,7 @@ evaluate:
   mode: inference
   device: /gpu:0
   weights: null
-  weights_path: /aimldl-dat/logs/lanenet/model/160120_191731/gaze_lanenet_vgg_16-01-2020-19-17-31.ckpt-60001
+  weights_path: /aimldl-dat/logs/lanenet/model/050220_110944/gaze_lanenet_vgg_05-02-2020-11-09-44.ckpt-82001
   model_info: null
   dnnarch: lanenet
   config: 

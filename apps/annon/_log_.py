@@ -59,8 +59,8 @@ logcfg = {
             # 'level': 'CRITICAL',
             # 'level': 'ERROR',
             # 'level': 'WARNING',
-            # 'level': 'INFO',
-            'level': 'DEBUG',
+            'level': 'INFO',
+            # 'level': 'DEBUG',
             # 'level': 'NOTSET',
             'propagate': False
         }

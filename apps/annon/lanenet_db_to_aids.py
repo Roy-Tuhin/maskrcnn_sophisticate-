@@ -81,13 +81,17 @@ def process_json_file(json_file_path, src_dir, ori_dst_dir, binary_dst_dir, inst
                         lane_y.append(pty)
                 if not lane_x:
                     continue
-                lane_pts = np.vstack((lane_x, lane_y)).transpose()
+                # lane_pts = np.vstack((lane_x, lane_y)).transpose()
+                ## Uncomment the above line for vertical lines
+                lane_pts = np.vstack((lane_y, lane_x)).transpose()
                 lane_pts = np.array([lane_pts], np.int64)
 
                 cv2.polylines(dst_binary_image, lane_pts, isClosed=False,
                               color=255, thickness=5)
+                # cv2.polylines(dst_instance_image, lane_pts, isClosed=False,
+                #               color=lane_index * 50 + 20, thickness=5)
                 cv2.polylines(dst_instance_image, lane_pts, isClosed=False,
-                              color=lane_index * 50 + 20, thickness=5)
+                              color=lane_index * 50 + 30, thickness=5)
 
             dst_binary_image_path = ops.join(binary_dst_dir, image_name_new)
             dst_instance_image_path = ops.join(instance_dst_dir, image_name_new)
@@ -129,6 +133,7 @@ def gen_train_sample(to_dir, b_gt_image_dir, i_gt_image_dir, image_dir):
 
             if b_gt_image is None or image is None or i_gt_image is None:
                 print('图像对: {:s}损坏'.format(image_name))
+                print('Image pair: {:s} damage'.format(image_name))
                 continue
             else:
                 info = '{:s} {:s} {:s}'.format(image_path, binary_gt_image_path, instance_gt_image_path)

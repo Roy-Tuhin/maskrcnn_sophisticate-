@@ -116,7 +116,7 @@ evaluate:
     # Set the test batch size
     BATCH_SIZE: 2
   load_weights: null
-  save_viz_and_json: True
+  save_viz_and_json: False
   evaluate_no_of_result: -1
   iou_threshold: null
   output_image_dir: null
@@ -150,7 +150,7 @@ predict:
   dnnarch: lanenet
   config: null
   load_weights: null
-  save_viz_and_json: True
+  save_viz_and_json: False
   iou_threshold: null
   iou_threshold: null
   output_image_dir: null

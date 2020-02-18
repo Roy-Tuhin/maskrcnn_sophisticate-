@@ -2,9 +2,10 @@
 
 ##----------------------------------------------------------
 ### openshot
-# Video Editor
+## Video Editor
+## https://www.openshot.org/
+## https://www.openshot.org/ppa/
 ##----------------------------------------------------------
-# https://www.openshot.org/
 
 sudo -E add-apt-repository -y ppa:openshot.developers/ppa
 sudo -E apt -y update
