@@ -211,3 +211,79 @@ https://stackoverflow.com/questions/11092511/python-list-of-unique-dictionaries
 [{'id': 1, 'name': 'john', 'age': 34}, {'id': 1, 'name': 'john', 'age': 34}, {'id': 2, 'name': 'hanna', 'age': 30}]
 list({v['name']:v for v in L}.values())
 list({v['id']:v for v in L}.values())
+
+
+/codehub/external/tensorflow/models/research/slim/nets/mobilenet/README.md
+
+MACs, also sometimes known as MADDs - the number of multiply-accumulates needed
+to compute an inference on a single image is a common metric to measure the
+efficiency of the model.
+
+Full size Mobilenet V3 on image size 224 uses ~215
+Million MADDs (MMadds) while achieving accuracy 75.1%, while Mobilenet V2 uses
+~300MMadds and achieving accuracy 72%. By comparison ResNet-50 uses
+approximately 3500 MMAdds while achieving 76% accuracy.
+
+All mobilenet V3 checkpoints were trained with image resolution 224x224
+
+https://www.tensorflow.org/lite/performance/post_training_quantization
+
+quantization-aware training
+However, doing so requires some model modifications to add fake   quantization nodes, whereas the post-training quantization techniquesuse an existing pre-trained model.
+
+https://github.com/tensorflow/tensorflow/tree/r1.14/tensorflow/contrib/quantize
+
+https://www.tensorflow.org/lite/guide/inference
+
+https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/python/lite_test.py
+
+https://medium.com/@prasadpal107/saving-freezing-optimizing-for-inference-restoring-of-tensorflow-models-b4146deb21b5
+
+.pbtxt: This holds a network of nodes, each representing one operation, connected to each other as inputs and outputs. We will use it for freezing our graph. You can open this file and check if some nodes are missing for debugging purpose.
+
+.meta files holds ,more than just the structure of the graph like MetaInfoDef , GraphDef SaverDef , CollectionDef . Whereas .pbtxt files holds only the structure of the graph.
+
+This file contains a serialized MetaGraphDef protocol buffer. The MetaGraphDef is designed as a serialization format that includes all of the information required to restore a training or inference process (including the GraphDef that describes the dataflow, and additional annotations that describe the variables, input pipelines, and other relevant information). For example, the MetaGraphDef is used by TensorFlow Serving to start an inference service based on your trained model. We are investigating other tools that could use the MetaGraphDef for training.
+
+Assuming that you still have the Python code for your model, you do not need the MetaGraphDef to restore the model, because you can reconstruct all of the information in the MetaGraphDef by re-executing the Python code that builds the model. To restore from a checkpoint, you only need the checkpoint files that contain the trained weights, which are written periodically to the same directory.
+
+
+Freezing the graph
+why we need it?
+
+
+When we need to keep all the values of the variables and the Graph in a single file we do it with freezing the graphs.
+
+
+
+https://stackoverflow.com/questions/55757380/get-input-and-output-node-name-from-ckpt-and-meta-files-tensorflow
+https://stackoverflow.com/questions/36195454/what-is-the-tensorflow-checkpoint-meta-file
+
+
+```python
+from tensorflow.summary import FileWriter
+
+sess = tf.Session()
+tf.train.import_meta_graph("/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco/model.ckpt-3125.meta")
+FileWriter("/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco/__tb", sess.graph)
+```
+
+
+https://github.com/akimach/tfgraphviz
+https://medium.com/@afetulhak/how-to-find-input-and-output-node-names-for-yolov3-from-tensorflow-pb-file-using-google-colab-2dc0f9e73258
+
+https://developer.arm.com/solutions/machine-learning-on-arm/developer-material/how-to-guides/optimizing-neural-networks-for-mobile-and-embedded-devices-with-tensorflow/determine-the-names-of-input-and-output-nodes
+
+
+
+https://github.com/tensorflow/models/issues/6892
+
+https://www.easy-tensorflow.com/tf-tutorials/basics/graph-and-session
+
+http://web.stanford.edu/class/cs20si/lectures/notes_02.pdf
+https://cs224d.stanford.edu/lectures/CS224d-Lecture7.pdf
+
+https://codelabs.developers.google.com/codelabs/recognize-flowers-with-tensorflow-on-android/#7
+
+
+

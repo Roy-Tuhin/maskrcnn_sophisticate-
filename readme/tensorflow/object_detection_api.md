@@ -9,6 +9,9 @@
 * https://github.com/tensorflow/models/tree/master/research/object_detection/dataset_tools
 * https://www.tensorflow.org/datasets/catalog/coco
 
+cd /codehub/external/tensorflow/models/research/object_detection/
+jupyter-notebook object_detection_tutorial-Copy1.ipynb
+
 
 * **dataset_tools**
   * /codehub/external/tensorflow/models/research/object_detection/dataset_tools
@@ -147,3 +150,216 @@ I0125 14:10:12.275494 139845631825728 create_pascal_tf_record.py:179] On image 0
 /codehub/external/tensorflow/models/research/object_detection/utils/dataset_util.py:81: FutureWarning: The behavior of this method will change in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
   if not xml:
 ```
+
+
+## Error logs
+
+
+```bash
+## https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi
+## https://github.com/tensorflow/models/blob/master/research/object_detection/samples/configs/ssd_mobilenet_v2_quantized_300x300_coco.config
+
+## set CONFIG_FILE=C:\\tensorflow1\models\research\object_detection\training\ssd_mobilenet_v2_quantized_300x300_coco.config
+## set CHECKPOINT_PATH=C:\\tensorflow1\models\research\object_detection\training\model.ckpt-XXXX
+## set OUTPUT_DIR=C:\\tensorflow1\models\research\object_detection\TFLite_model
+
+# import sys
+# print(sys.path)
+# sys.path.append('/codehub/external/tensorflow/models/research')
+
+export PYTHONPATH=/codehub/external/tensorflow/models/research:${PYTHONPATH}
+export PYTHONPATH=/codehub/external/tensorflow/models/research/slim:${PYTHONPATH}
+cd /codehub/external/tensorflow/models/research
+# model.ckpt-3126
+CHECKPOINT_PATH=/aimldl-dat/logs/tf_ods/model.ckpt-3126
+OUTPUT_DIR=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco/TFLite_model
+mkdir -p ${OUTPUT_DIR}
+
+python object_detection/export_tflite_ssd_graph.py \
+  --pipeline_config_path=${PIPELINE_CONFIG_PATH} \
+  --trained_checkpoint_prefix=${CHECKPOINT_PATH} \
+  --output_directory=${OUTPUT_DIR} \
+  --add_postprocessing_op=true
+
+
+
+# MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_512_depthwise/BatchNorm/beta not found in checkpoint
+
+# https://github.com/tensorflow/models/issues/4156
+```
+
+https://github.com/tensorflow/models/issues/4137
+
+How to quantize Mobilenet v2 ?
+https://github.com/tensorflow/tensorflow/issues/19014
+
+
+```
+2020-02-24 17:00:26.733141: W tensorflow/core/framework/op_kernel.cc:1401] OP_REQUIRES failed at save_restore_v2_ops.cc:184 : Not found: Key FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_512_depthwise/BatchNorm/beta not found in checkpoint
+Traceback (most recent call last):
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1334, in _do_call
+    return fn(*args)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1319, in _run_fn
+    options, feed_dict, fetch_list, target_list, run_metadata)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1407, in _call_tf_sessionrun
+    run_metadata)
+tensorflow.python.framework.errors_impl.NotFoundError: Key FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_512_depthwise/BatchNorm/beta not found in checkpoint
+   [[{{node save/RestoreV2}}]]
+   [[{{node save/RestoreV2}}]]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 1276, in restore
+    {self.saver_def.filename_tensor_name: save_path})
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 929, in run
+    run_metadata_ptr)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1152, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1328, in _do_run
+    run_metadata)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1348, in _do_call
+    raise type(e)(node_def, op, message)
+tensorflow.python.framework.errors_impl.NotFoundError: Key FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_512_depthwise/BatchNorm/beta not found in checkpoint
+   [[node save/RestoreV2 (defined at /codehub/external/tensorflow/models/research/object_detection/export_tflite_ssd_graph_lib.py:292) ]]
+   [[node save/RestoreV2 (defined at /codehub/external/tensorflow/models/research/object_detection/export_tflite_ssd_graph_lib.py:292) ]]
+
+Caused by op 'save/RestoreV2', defined at:
+  File "object_detection/export_tflite_ssd_graph.py", line 143, in <module>
+    tf.app.run(main)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/platform/app.py", line 125, in run
+    _sys.exit(main(argv))
+  File "object_detection/export_tflite_ssd_graph.py", line 139, in main
+    FLAGS.max_classes_per_detection, use_regular_nms=FLAGS.use_regular_nms)
+  File "/codehub/external/tensorflow/models/research/object_detection/export_tflite_ssd_graph_lib.py", line 292, in export_tflite_graph
+    saver = tf.train.Saver(**saver_kwargs)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 832, in __init__
+    self.build()
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 844, in build
+    self._build(self._filename, build_save=True, build_restore=True)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 881, in _build
+    build_save=build_save, build_restore=build_restore)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 513, in _build_internal
+    restore_sequentially, reshape)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 332, in _AddRestoreOps
+    restore_sequentially)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 580, in bulk_restore
+    return io_ops.restore_v2(filename_tensor, names, slices, dtypes)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/ops/gen_io_ops.py", line 1572, in restore_v2
+    name=name)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py", line 788, in _apply_op_helper
+    op_def=op_def)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/util/deprecation.py", line 507, in new_func
+    return func(*args, **kwargs)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/framework/ops.py", line 3300, in create_op
+    op_def=op_def)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/framework/ops.py", line 1801, in __init__
+    self._traceback = tf_stack.extract_stack()
+
+NotFoundError (see above for traceback): Key FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_512_depthwise/BatchNorm/beta not found in checkpoint
+   [[node save/RestoreV2 (defined at /codehub/external/tensorflow/models/research/object_detection/export_tflite_ssd_graph_lib.py:292) ]]
+   [[node save/RestoreV2 (defined at /codehub/external/tensorflow/models/research/object_detection/export_tflite_ssd_graph_lib.py:292) ]]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 1286, in restore
+    names_to_keys = object_graph_key_mapping(save_path)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 1591, in object_graph_key_mapping
+    checkpointable.OBJECT_GRAPH_PROTO_KEY)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/pywrap_tensorflow_internal.py", line 370, in get_tensor
+    status)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/framework/errors_impl.py", line 528, in __exit__
+    c_api.TF_GetCode(self.status.status))
+tensorflow.python.framework.errors_impl.NotFoundError: Key _CHECKPOINTABLE_OBJECT_GRAPH not found in checkpoint
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "object_detection/export_tflite_ssd_graph.py", line 143, in <module>
+    tf.app.run(main)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/platform/app.py", line 125, in run
+    _sys.exit(main(argv))
+  File "object_detection/export_tflite_ssd_graph.py", line 139, in main
+    FLAGS.max_classes_per_detection, use_regular_nms=FLAGS.use_regular_nms)
+  File "/codehub/external/tensorflow/models/research/object_detection/export_tflite_ssd_graph_lib.py", line 306, in export_tflite_graph
+    initializer_nodes='')
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/tools/freeze_graph.py", line 151, in freeze_graph_with_def_protos
+    saver.restore(sess, input_checkpoint)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 1292, in restore
+    err, "a Variable name or other graph key that is missing")
+tensorflow.python.framework.errors_impl.NotFoundError: Restoring from checkpoint failed. This is most likely due to a Variable name or other graph key that is missing from the checkpoint. Please ensure that you have not altered the graph expected based on the checkpoint. Original error:
+
+Key FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_512_depthwise/BatchNorm/beta not found in checkpoint
+   [[node save/RestoreV2 (defined at /codehub/external/tensorflow/models/research/object_detection/export_tflite_ssd_graph_lib.py:292) ]]
+   [[node save/RestoreV2 (defined at /codehub/external/tensorflow/models/research/object_detection/export_tflite_ssd_graph_lib.py:292) ]]
+
+Caused by op 'save/RestoreV2', defined at:
+  File "object_detection/export_tflite_ssd_graph.py", line 143, in <module>
+    tf.app.run(main)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/platform/app.py", line 125, in run
+    _sys.exit(main(argv))
+  File "object_detection/export_tflite_ssd_graph.py", line 139, in main
+    FLAGS.max_classes_per_detection, use_regular_nms=FLAGS.use_regular_nms)
+  File "/codehub/external/tensorflow/models/research/object_detection/export_tflite_ssd_graph_lib.py", line 292, in export_tflite_graph
+    saver = tf.train.Saver(**saver_kwargs)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 832, in __init__
+    self.build()
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 844, in build
+    self._build(self._filename, build_save=True, build_restore=True)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 881, in _build
+    build_save=build_save, build_restore=build_restore)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 513, in _build_internal
+    restore_sequentially, reshape)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 332, in _AddRestoreOps
+    restore_sequentially)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/training/saver.py", line 580, in bulk_restore
+    return io_ops.restore_v2(filename_tensor, names, slices, dtypes)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/ops/gen_io_ops.py", line 1572, in restore_v2
+    name=name)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py", line 788, in _apply_op_helper
+    op_def=op_def)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/util/deprecation.py", line 507, in new_func
+    return func(*args, **kwargs)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/framework/ops.py", line 3300, in create_op
+    op_def=op_def)
+  File "/codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/framework/ops.py", line 1801, in __init__
+    self._traceback = tf_stack.extract_stack()
+
+NotFoundError (see above for traceback): Restoring from checkpoint failed. This is most likely due to a Variable name or other graph key that is missing from the checkpoint. Please ensure that you have not altered the graph expected based on the checkpoint. Original error:
+
+Key FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_512_depthwise/BatchNorm/beta not found in checkpoint
+   [[node save/RestoreV2 (defined at /codehub/external/tensorflow/models/research/object_detection/export_tflite_ssd_graph_lib.py:292) ]]
+   [[node save/RestoreV2 (defined at /codehub/external/tensorflow/models/research/object_detection/export_tflite_ssd_graph_lib.py:292) ]]
+
+(py_3-6-8_2020-01-23) @alpha@alpha-Precision-3630-Tower:17:00:27:data-public$
+```
+
+```bash
+NETWORK_NAME="ssd_mobilenet_v2_coco"
+OUTPUT_FILE=/aimldl-dat/logs/tf_ods/${timestamp}_inf_graph.pb
+python object_detection/export_inference_graph.py \
+  --alsologtostderr \
+  --pipeline_config_path=${PIPELINE_CONFIG_PATH} \
+  --trained_checkpoint_prefix=${CHECKPOINT_PATH} \
+  --batch_size=1 \
+  --output_directory=${OUTPUT_DIR} \
+  --model_name=${NETWORK_NAME} \
+  --output_file=${OUTPUT_FILE} \
+  --quantize
+```
+
+```
+WARNING:tensorflow:From /codehub/external/tensorflow/models/research/object_detection/exporter.py:539: print_model_analysis (from tensorflow.contrib.tfprof.model_analyzer) is deprecated and will be removed after 2018-01-01.
+Instructions for updating:
+Use `tf.profiler.profile(graph, run_meta, op_log, cmd, options)`. Build `options` with `tf.profiler.ProfileOptionBuilder`. See README.md for details
+WARNING:tensorflow:From /codehub/virtualmachines/virtualenvs/py_3-6-8_2020-01-23/lib/python3.6/site-packages/tensorflow/python/profiler/internal/flops_registry.py:142: tensor_shape_from_node_def_name (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.compat.v1.graph_util.remove_training_nodes
+422 ops no flops stats due to incomplete shapes.
+Parsing Inputs...
+Incomplete shape.
+```
+/codehub/external/tensorflow/models/research/slim/nets/mobilenet_v1.md
+/codehub/external/tensorflow/models/research/slim/nets/mobilenet/README.md
