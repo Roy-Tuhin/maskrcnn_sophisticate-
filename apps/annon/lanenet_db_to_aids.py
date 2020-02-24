@@ -8,6 +8,7 @@
 """
 generate tusimple training dataset
 """
+
 import argparse
 import glob
 import json
@@ -27,8 +28,7 @@ def init_args():
     :return:
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('--src_dir', type=str, help='The origin path of unzipped tusimple dataset')
-
+    parser.add_argument('--src_dir', type=str, help='The origin path of AIML_Database')
     return parser.parse_args()
 
 
@@ -58,7 +58,6 @@ def process_json_file(json_file_path, src_dir, ori_dst_dir, binary_dst_dir, inst
             image_path = ops.join(src_dir, info_dict['raw_file'])
             assert ops.exists(image_path), '{:s} not exist'.format(image_path)
 
-            h_samples = info_dict['h_samples']
             lanes = info_dict['lanes']
 
             image_name_new = '{:s}.png'.format('{:d}'.format(line_index + image_nums).zfill(4))
@@ -68,30 +67,61 @@ def process_json_file(json_file_path, src_dir, ori_dst_dir, binary_dst_dir, inst
             dst_instance_image = np.zeros([src_image.shape[0], src_image.shape[1]], np.uint8)
 
             for lane_index, lane in enumerate(lanes):
-                assert len(h_samples) == len(lane)
-                lane_x = []
-                lane_y = []
-                for index in range(len(lane)):
-                    if lane[index] == -2:
+                if not len(lane) == 2:
+                    h_samples = info_dict['h_samples']
+                    assert len(h_samples) == len(lane)
+                    lane_x = []
+                    lane_y = []
+                    for index in range(len(lane)):
+                        if lane[index] == -2:
+                            continue
+                        else:
+                            ptx = lane[index]
+                            pty = h_samples[index]
+                            lane_x.append(ptx)
+                            lane_y.append(pty)
+                    if not lane_x:
                         continue
-                    else:
-                        ptx = lane[index]
-                        pty = h_samples[index]
+                    # lane_pts = np.vstack((lane_x, lane_y)).transpose()
+                    ## Uncomment the above line for vertical lines
+                    lane_pts = np.vstack((lane_y, lane_x)).transpose()
+                    lane_pts = np.array([lane_pts], np.int64)
+
+                    cv2.polylines(dst_binary_image, lane_pts, isClosed=False,
+                                  color=255, thickness=5)
+                    # cv2.polylines(dst_instance_image, lane_pts, isClosed=False,
+                    #               color=lane_index * 50 + 20, thickness=5)
+                    cv2.polylines(dst_instance_image, lane_pts, isClosed=False,
+                                  color=lane_index * 50 + 30, thickness=5)
+                else:
+                    assert len(lane[0]) == len(lane[1])
+                    lane_x = []
+                    lane_y = []
+                    for k in range(len(lane[0])-1):
+                        ptx = lane[0][k]
+                        pty = lane[1][k]
                         lane_x.append(ptx)
                         lane_y.append(pty)
-                if not lane_x:
-                    continue
-                # lane_pts = np.vstack((lane_x, lane_y)).transpose()
-                ## Uncomment the above line for vertical lines
-                lane_pts = np.vstack((lane_y, lane_x)).transpose()
-                lane_pts = np.array([lane_pts], np.int64)
+                    if not lane_x:
+                        continue
+                    lane_pts = np.vstack((lane_x, lane_y)).transpose()
+                    lane_pts = np.array([lane_pts], np.int64)
 
-                cv2.polylines(dst_binary_image, lane_pts, isClosed=False,
-                              color=255, thickness=5)
-                # cv2.polylines(dst_instance_image, lane_pts, isClosed=False,
-                #               color=lane_index * 50 + 20, thickness=5)
-                cv2.polylines(dst_instance_image, lane_pts, isClosed=False,
-                              color=lane_index * 50 + 30, thickness=5)
+                    cv2.polylines(dst_binary_image, lane_pts, isClosed=False,
+                                  color=255, thickness=5)
+                    cv2.polylines(dst_instance_image, lane_pts, isClosed=False,
+                                  color=lane_index * 45 + 20, thickness=5)
+
+                dst_binary_image_path = ops.join(binary_dst_dir, image_name_new)
+                dst_instance_image_path = ops.join(instance_dst_dir, image_name_new)
+                dst_rgb_image_path = ops.join(ori_dst_dir, image_name_new)
+
+                cv2.imwrite(dst_binary_image_path, dst_binary_image)
+                cv2.imwrite(dst_instance_image_path, dst_instance_image)
+                cv2.imwrite(dst_rgb_image_path, src_image)
+
+                print('Process {:s} success'.format(image_name))
+
 
             dst_binary_image_path = ops.join(binary_dst_dir, image_name_new)
             dst_instance_image_path = ops.join(instance_dst_dir, image_name_new)
