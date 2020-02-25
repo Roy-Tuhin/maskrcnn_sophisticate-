@@ -1,0 +1,171 @@
+logdir: /aimldl-dat/logs
+creator: 'AIE2'
+train:
+  allowed_file_type:
+  - .txt
+  - .csv
+  - .yml
+  - .json
+  allowed_image_type:
+  - .pdf
+  - .png
+  - .jpg
+  - .jpeg
+  - .gif
+  allowed_video_type:
+  - .mp4
+  train_mode: training
+  test_mode: inference
+  dbname: null
+  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-240220_190623/training
+  splits:   
+  - train
+  - val
+  - test
+  annon_type: tusimple
+  dataclass: AnnonDataset
+  name: tusimple
+  framework_type: tensorflow
+  mode: training
+  device: /gpu:0
+  weights: null
+  weights_path: null
+  model: null
+  model_info: null
+  dnnarch: lanenet
+  config: 
+    # Set the shadownet training epochs
+    EPOCHS: 13000
+    # Set the display step
+    DISPLAY_STEP: 1
+    # Set the test display step during training process
+    VAL_DISPLAY_STEP: 1000
+    # Set the momentum parameter of the optimizer
+    MOMENTUM: 0.9
+    # Set the initial learning rate
+    LEARNING_RATE: 0.0005
+    # Set the GPU resource used during training process
+    GPU_MEMORY_FRACTION: 0.95
+    # Set the GPU allow growth parameter during tensorflow training process
+    TF_ALLOW_GROWTH: True
+    # Set the shadownet training batch size
+    BATCH_SIZE: 4
+    # Set the shadownet validation batch size
+    VAL_BATCH_SIZE: 4
+    # Set the class numbers
+    CLASSES_NUMS: 2
+    # Set the image height
+    IMG_HEIGHT: 384
+    # Set the image width
+    IMG_WIDTH: 768
+    # Set the embedding features dims
+    EMBEDDING_FEATS_DIMS: 4
+    # Set the random crop pad size
+    CROP_PAD_SIZE: 32
+    # Set cpu multi process thread nums
+    CPU_MULTI_PROCESS_NUMS: 6
+    # Set the train moving average decay
+    MOVING_AVERAGE_DECAY: 0.9999
+    # Set the GPU nums
+    # GPU_NUM: 2
+    GPU_NUM: 1
+  load_weights: null
+  schedules: null
+  output_dir: null
+  model_save_dir: null
+  tboard_save_dir: null
+  model_save_path: null
+  tboard_save_path: null
+evaluate:
+  allowed_file_type:
+  - .txt
+  - .csv
+  - .yml
+  - .json
+  allowed_image_type:
+  - .pdf
+  - .png
+  - .jpg
+  - .jpeg
+  - .gif
+  allowed_video_type:
+  - .mp4
+  train_mode: training
+  test_mode: inference
+  dbname: null
+  dataset_dir: /aimldl-dat/data-gaze/AIML_Aids/lnd-240220_190623/testing/test-tusimple.json
+  splits: 
+  - train
+  - val
+  - test
+  annon_type: tusimple
+  dataclass: AnnonDataset
+  name: rod
+  framework_type: tensorflow
+  mode: inference
+  device: /gpu:0
+  weights: null
+  weights_path: /aimldl-dat/logs/lanenet/model/240220_192403/gaze_lanenet_vgg_24-02-2020-19-24-03.ckpt-12001
+  model_info: null
+  dnnarch: lanenet
+  config: 
+    # Set the GPU resource used during testing process
+    GPU_MEMORY_FRACTION: 0.8
+    # Set the GPU allow growth parameter during tensorflow testing process
+    TF_ALLOW_GROWTH: True
+    # Set the test batch size
+    BATCH_SIZE: 2
+  load_weights: null
+  save_viz_and_json: True
+  evaluate_no_of_result: -1
+  iou_threshold: null
+  output_image_dir: null
+  source_image_path: null
+  binary_mask_path: null  
+  instance_mask_path: null
+  pred_json_path: null
+  eval_json_path: null
+predict:
+  allowed_file_type:
+  - .txt
+  - .csv
+  - .yml
+  - .json
+  allowed_image_type:
+  - .pdf
+  - .png
+  - .jpg
+  - .jpeg
+  - .gif
+  allowed_video_type:
+  - .mp4
+  train_mode: training
+  test_mode: inference
+  dbname: null
+  framework_type: tensorflow
+  mode: inference
+  device: /gpu:0
+  weights: null
+  model_info: null
+  dnnarch: lanenet
+  config: null
+  load_weights: null
+  save_viz_and_json: True
+  iou_threshold: null
+  iou_threshold: null
+  output_image_dir: null
+  source_image_path: null
+  binary_mask_path: null
+  instance_mask_path: null
+  pred_json_path: null
+  eval_json_path: null
+postprocess:
+  config: 
+    # Set the post process connect components analysis min area threshold
+    # MIN_AREA_THRESHOLD: 100
+    MIN_AREA_THRESHOLD: 300
+    # Set the post process dbscan search radius threshold
+    # DBSCAN_EPS: 0.35
+    DBSCAN_EPS: 0.50
+    # Set the post process dbscan min samples threshold
+    DBSCAN_MIN_SAMPLES: 1000
