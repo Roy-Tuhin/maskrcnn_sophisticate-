@@ -203,8 +203,15 @@ https://github.com/tensorflow/examples/blob/master/community/en/r1/deepdream.ipy
 
 https://stackoverflow.com/questions/33759623/tensorflow-how-to-save-restore-a-model
 
+----
+https://towardsdatascience.com/custom-object-detection-using-tensorflow-from-scratch-e61da2e10087
+https://github.com/bourdakos1/Custom-Object-Detection
+https://www.freecodecamp.org/news/tracking-the-millenium-falcon-with-tensorflow-c8c86419225e/
 
-
+https://medium.com/@iKhushPatel/convert-video-to-images-images-to-video-using-opencv-python-db27a128a481
+https://www.skcript.com/svr/why-every-tensorflow-developer-should-know-about-tfrecord/
+https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
+----
 
 https://stackoverflow.com/questions/11092511/python-list-of-unique-dictionaries
 

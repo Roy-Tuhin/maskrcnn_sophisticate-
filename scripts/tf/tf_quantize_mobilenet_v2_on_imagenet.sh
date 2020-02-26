@@ -24,6 +24,11 @@
 # Usage:
 # cd slim
 # ./slim/scripts/quantize_mobilenet_v2_on_imagenet.sh
+
+## Ref:
+## https://github.com/parvizp/models/blob/b097785bbc5fc96ecf59605cb4a6d04e8b65e017/research/slim/scripts/quantize_mobilenet_v2_on_imagenet.sh
+
+
 set -e
 
 # Which model.
