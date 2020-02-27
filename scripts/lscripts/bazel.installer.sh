@@ -65,6 +65,17 @@ function bazel_install() {
     sudo ${PROG_DIR}/installer-${BAZEL_VER}.sh
   fi
 
+  ## for multiple version
+  sudo mv /usr/local/lib/bazel /usr/local/lib/bazel-${BAZEL_VER}
+  sudo ln -s /usr/local/lib/bazel-${BAZEL_VER} /usr/local/lib/bazel
+
+  sudo update-alternatives --install /usr/local/bin/bazel bazel /usr/local/lib/bazel-${BAZEL_VER}/bin/bazel 200
+  # sudo update-alternatives --config bazel
+  echo "To configure multiple versions of bazel, Ref: ${SCRIPTS_DIR}/bazel-update-alternatives.sh"
+
+  which bazel
+  bazel version
+
 }
 
 bazel_install
