@@ -245,6 +245,44 @@ def get_dataset_instance(appcfg, dbcfg, datacfg, subset):
   return dataset, num_classes, num_images, class_names, total_stats, total_verify
 
 
+def get_data(appcfg, subset=None, dbname=None):
+  from annon.dataset import Annon
+
+  ## datacfg and dbcfg
+  datacfg = get_datacfg(appcfg)
+  dbcfg = get_dbcfg(appcfg)
+  dataset, num_classes, num_images, class_names, total_stats, total_verify = get_dataset_instance(appcfg, dbcfg, datacfg, subset)
+
+  log.info("class_names: {}".format(class_names))
+  log.info("len(class_names): {}".format(len(class_names)))
+  log.info("num_classes: {}".format(num_classes))
+  log.info("num_images: {}".format(num_images))
+
+  name = dataset.name
+  datacfg.name = name
+  datacfg.classes = class_names
+  datacfg.num_classes = num_classes
+
+  annon = Annon.ANNON(dbcfg, datacfg, subset=subset)
+
+  class_ids = datacfg.class_ids if 'class_ids' in datacfg and datacfg['class_ids'] else []
+  class_ids = annon.getCatIds(catIds=class_ids) ## cat_ids
+  classinfo = annon.loadCats(class_ids) ## cats
+  id_map = {v: i for i, v in enumerate(class_ids)}
+
+  img_ids = sorted(list(annon.imgs.keys()))
+
+  imgs = annon.loadImgs(img_ids)
+  anns = [annon.imgToAnns[img_id] for img_id in img_ids]
+
+  log.info("class_ids: {}".format(class_ids))
+  log.info("id_map: {}".format(id_map))
+  log.info("len(imgs): {}".format(len(imgs)))
+  log.info("len(anns): {}".format(len(anns)))
+
+  return class_ids, id_map, imgs, anns
+
+
 def get_augmentation_imgaug(cmdcfg):
   """
   returns the instance of augmentation using imgaug based on input cmdcfg configuration

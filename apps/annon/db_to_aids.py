@@ -407,6 +407,7 @@ def parse_args(commands):
 
   parser.add_argument('--subset'
     ,dest='subset'
+    ,metavar="[train | val | test]"
     ,help='name of the subset. Options: train, val'
     ,required=False)
 

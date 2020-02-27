@@ -14,6 +14,7 @@ import sys
 import time
 import datetime
 import json
+import hashlib
 
 from importlib import import_module
 
@@ -51,7 +52,25 @@ import _cfg_
 import common
 import apputil
 
-from dataset.Annon import ANNON
+
+def int64_feature(value):
+  return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
+
+
+def int64_list_feature(value):
+  return tf.train.Feature(int64_list=tf.train.Int64List(value=value))
+
+
+def bytes_feature(value):
+  return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
+
+
+def bytes_list_feature(value):
+  return tf.train.Feature(bytes_list=tf.train.BytesList(value=value))
+
+
+def float_list_feature(value):
+  return tf.train.Feature(float_list=tf.train.FloatList(value=value))
 
 
 ## Credits: /codehub/external/tensorflow/models/research/object_detection/dataset_tools/tf_record_creation_util.py
@@ -83,7 +102,7 @@ def open_sharded_output_tfrecords(exit_stack, base_path, num_shards):
   return tfrecords
 
 
-def get_appcfg(ai_annon_data_home_local='/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119', host='localhost', base_path_config=None):
+def get_appcfg(ai_annon_data_home_local=None, host=None, base_path_config=None, cmd=None, subset=None, dbname=None, exp_id=None):
   """
   load the appcfg and overrides default values to the custom inputs
   """
@@ -92,70 +111,28 @@ def get_appcfg(ai_annon_data_home_local='/aimldl-dat/data-gaze/AIML_Annotation/o
 
   appcfg = _cfg_.load_appcfg(base_path_config)
   appcfg = edict(appcfg)
-  appcfg['APP']['DBCFG']['PXLCFG']['host'] = host
-  appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'] = ai_annon_data_home_local
+  if host:
+    appcfg['APP']['DBCFG']['PXLCFG']['host'] = host
+
+  if ai_annon_data_home_local:
+    appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'] = ai_annon_data_home_local
+
+  _cfg_.load_datacfg(cmd, appcfg, dbname, exp_id, subset)
+
+  # log.info("datacfg: {}".format(datacfg))
+  # log.info("dbcfg: {}".format(dbcfg))
+
+  # _cfg_.load_archcfg(cmd, appcfg, dbname, exp_id, subset)
+
+  # log.debug(appcfg)
+  # log.info(appcfg['APP']['DBCFG']['PXLCFG'])
+  log.info(appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'])
 
   return appcfg
 
 
 def get_dataset_name(name, subset):
     return name + "_" + subset
-
-
-def get_data(_appcfg, subset='train', dbname="PXL-291119_180404", exp_id="train-422d30b0-f518-4203-9c4d-b36bd8796c62"):
-    cmd = "train"
-    eval_on = subset
-    # log.debug(_appcfg)
-    # log.info(_appcfg['APP']['DBCFG']['PXLCFG'])
-    # log.info(_appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'])
-
-    ## datacfg and dbcfg
-    _cfg_.load_datacfg(cmd, _appcfg, dbname, exp_id, eval_on)
-    datacfg = apputil.get_datacfg(_appcfg)
-    dbcfg = apputil.get_dbcfg(_appcfg)
-    # log.info("datacfg: {}".format(datacfg))
-    # log.info("dbcfg: {}".format(dbcfg))
-
-    ## archcfg, cmdcfg
-    _cfg_.load_archcfg(cmd, _appcfg, dbname, exp_id, eval_on)
-    archcfg = apputil.get_archcfg(_appcfg)
-    log.debug("archcfg: {}".format(archcfg))
-    cmdcfg = archcfg
-
-    dataset, num_classes, num_images, class_names, total_stats, total_verify = apputil.get_dataset_instance(_appcfg, dbcfg, datacfg, subset)
-
-    log.info("class_names: {}".format(class_names))
-    log.info("len(class_names): {}".format(len(class_names)))
-    log.info("num_classes: {}".format(num_classes))
-    log.info("num_images: {}".format(num_images))
-
-    name = dataset.name
-    datacfg.name = name
-    datacfg.classes = class_names
-    datacfg.num_classes = num_classes
-
-    cmdcfg.name = name
-    cmdcfg.config.NAME = name
-    cmdcfg.config.NUM_CLASSES = num_classes
-
-    annon = ANNON(dbcfg, datacfg, subset=subset)
-
-    class_ids = datacfg.class_ids if 'class_ids' in datacfg and datacfg['class_ids'] else []
-    class_ids = annon.getCatIds(catIds=class_ids) ## cat_ids
-    classinfo = annon.loadCats(class_ids) ## cats
-    id_map = {v: i for i, v in enumerate(class_ids)}
-
-    img_ids = sorted(list(annon.imgs.keys()))
-
-    imgs = annon.loadImgs(img_ids)
-    anns = [annon.imgToAnns[img_id] for img_id in img_ids]
-
-    log.info("class_ids: {}".format(class_ids))
-    log.info("id_map: {}".format(id_map))
-    log.info("len(imgs): {}".format(len(imgs)))
-    log.info("len(anns): {}".format(len(anns)))
-
-    return class_ids, id_map, imgs, anns
 
 
 def _create_tf_record_from_coco_annotations():
@@ -218,7 +195,7 @@ def create_tf_example(image, annotations_list, image_dir, category_index, includ
   encoded_mask_png = []
   num_annotations_skipped = 0
   for object_annotations in annotations_list:
-    (x, y, width, height) = tuple(object_annotations['bbox'])
+    (x, y, width, height) = tuple(object_annotations['_bbox'])
     if width <= 0 or height <= 0:
       num_annotations_skipped += 1
       continue
@@ -230,10 +207,13 @@ def create_tf_example(image, annotations_list, image_dir, category_index, includ
     ymin.append(float(y) / image_height)
     ymax.append(float(y + height) / image_height)
     is_crowd.append(object_annotations['iscrowd'])
-    category_id = int(object_annotations['category_id'])
+    # category_id = int(object_annotations['category_id'])
+    category_id = object_annotations['lbl_id']
     category_ids.append(category_id)
-    category_names.append(category_index[category_id]['name'].encode('utf8'))
-    area.append(object_annotations['area'])
+    # category_names.append(category_index[category_id]['name'].encode('utf8'))
+    category_names.append(category_id.encode('utf8'))
+    # area.append(object_annotations['area'])
+    area.append(object_annotations['bboxarea'])
 
     if include_masks:
       run_len_encoding = mask.frPyObjects(object_annotations['segmentation'],
@@ -247,33 +227,33 @@ def create_tf_example(image, annotations_list, image_dir, category_index, includ
       encoded_mask_png.append(output_io.getvalue())
   feature_dict = {
       'image/height':
-          dataset_util.int64_feature(image_height),
+          int64_feature(image_height),
       'image/width':
-          dataset_util.int64_feature(image_width),
+          int64_feature(image_width),
       'image/filename':
-          dataset_util.bytes_feature(filename.encode('utf8')),
+          bytes_feature(filename.encode('utf8')),
       'image/source_id':
-          dataset_util.bytes_feature(str(img_id).encode('utf8')),
+          bytes_feature(str(img_id).encode('utf8')),
       'image/key/sha256':
-          dataset_util.bytes_feature(key.encode('utf8')),
+          bytes_feature(key.encode('utf8')),
       'image/encoded':
-          dataset_util.bytes_feature(encoded_jpg),
+          bytes_feature(encoded_jpg),
       'image/format':
-          dataset_util.bytes_feature('jpeg'.encode('utf8')),
+          bytes_feature('jpeg'.encode('utf8')),
       'image/object/bbox/xmin':
-          dataset_util.float_list_feature(xmin),
+          float_list_feature(xmin),
       'image/object/bbox/xmax':
-          dataset_util.float_list_feature(xmax),
+          float_list_feature(xmax),
       'image/object/bbox/ymin':
-          dataset_util.float_list_feature(ymin),
+          float_list_feature(ymin),
       'image/object/bbox/ymax':
-          dataset_util.float_list_feature(ymax),
+          float_list_feature(ymax),
       'image/object/class/text':
-          dataset_util.bytes_list_feature(category_names),
+          bytes_list_feature(category_names),
       'image/object/is_crowd':
-          dataset_util.int64_list_feature(is_crowd),
+          int64_list_feature(is_crowd),
       'image/object/area':
-          dataset_util.float_list_feature(area),
+          float_list_feature(area),
   }
   if include_masks:
     feature_dict['image/object/mask'] = (
@@ -370,29 +350,34 @@ def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode):
     return dataset_dicts
 
 
-def create_tfr(args, _appcfg):
+def create_tfr(args, appcfg):
   """
   create tf record data compatible with object detection API of tensorflow and for tensorflow training in general
   """
-  name = "hmd"
-  subset = "train"
-  dbname = "PXL-291119_180404"
-  exp_id = "train-422d30b0-f518-4203-9c4d-b36bd8796c62"
-  output_dir = name+"-"+dbname
+  name = args.did
+  subset = args.subset
+  dbname = args.dataset
+
+  output_dir = dbname
+  if name:
+    output_dir = name+"-"+dbname
 
   ## TODO: create a standard path in aimldl workflow
-  output_path = os.path.join("/aimldl-dat/tfrecords", output_dir)
+  output_basepath = os.path.join("/aimldl-dat/tfrecords", output_dir)
+  log.info("output_path: {}".format(output_basepath))
+  common.mkdir_p(output_basepath)
+  output_path = os.path.join(output_basepath, output_dir)
+  log.info("output_path: {}".format(output_path))
   num_shards = 100
 
-  ai_annon_data_home_local = _appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL']
-
-
   # dataset_name = get_dataset_name(name, subset)
-  class_ids, id_map, imgs, anns = get_data(_appcfg)
-  # class_ids, id_map, imgs, anns = get_data(_appcfg, subset, dbname, exp_id)
+  class_ids, id_map, imgs, anns = apputil.get_data(appcfg, subset=subset, dbname=dbname)
+  log.info("class_ids, id_map: {}, {}".format(class_ids, id_map))
+
+  category_index = id_map
 
   include_masks = False
-  common.mkdir_p(output_path)
+  total_num_annotations_skipped = 0
   with contextlib2.ExitStack() as tf_record_close_stack:
     output_tfrecords = open_sharded_output_tfrecords(tf_record_close_stack, output_path, num_shards)
 
@@ -433,9 +418,15 @@ def main(args):
   """
   try:
     log.info("----------------------------->\nargs:{}".format(args))
-    
-    host = '10.4.71.69'
-    appcfg = get_appcfg(host=host)
+
+    exp_id = args.exp_id
+    name = args.did
+    subset = args.subset
+    dbname = args.dataset
+    host = args.host
+    ai_annon_data_home_local = args.ai_annon_data_home_local
+
+    appcfg = get_appcfg(ai_annon_data_home_local=ai_annon_data_home_local, host=host, cmd=None, subset=subset, dbname=dbname, exp_id=exp_id)
 
     cmd = 'create'+'_'+'tfr'
 
@@ -463,13 +454,68 @@ def parse_args():
   parser = argparse.ArgumentParser(
     description='Annon data loader\n * and converter.\n\n',formatter_class=RawTextHelpFormatter)
 
+  # host = '10.4.71.69'
+  # ai_annon_data_home_local = '/aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns'
+
+  parser.add_argument('--dataset'
+    ,dest='dataset'
+    ,metavar="/path/to/<name>.yml or AIDS (AI Dataset) database name"
+    ,required=True
+    # ,default='PXL-270220_175734'
+    ,help='Path to AIDS (AI Dataset) yml or AIDS ID/DatabaseName available in database`')
+
+  parser.add_argument('--host'
+    ,dest='host'
+    ,required=False
+    ,default='localhost'
+    ,help='Database host')
+
+  parser.add_argument('--ai_annon_data_home_local'
+    ,dest='ai_annon_data_home_local'
+    ,required=False
+    ,default='/aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns'
+    ,help='overrides AI_ANNON_DATA_HOME_LOCAL')
+
+  parser.add_argument('--subset'
+    ,dest='subset'
+    ,metavar="[train | val | test]"
+    ,help='name of the subset. Options: train, val'
+    ,default='train'
+    ,required=False)
+
+  parser.add_argument('--did'
+    ,dest='did'
+    ,help='public or private dataset id. Options: hmd, coco, mvd, bdd, idd, adek.\n Only hmd, coco is supprted for now'
+    ,default='hmd'
+    ,required=False)
+
+  parser.add_argument('--exp'
+    ,dest='exp_id'
+    ,metavar="/path/to/<name>.yml or Experiment Id in AIDS for the TEPPr"
+    ,required=False
+    ,default=None
+    ,help='Arch specific yml file or Experiment Id for the given AI Dataset for the TEPPr')
+
   args = parser.parse_args()    
 
   return args
 
 
 if __name__ == '__main__':
-    args = parse_args()
-    log.debug("args: {}".format(args))
-    main(args)
+  """
+  Example:
+  python create_via_tf_record.py --dataset PXL-270220_175734
+
+  # name = "hmd"
+  # subset = "train"
+
+  # dbname = "PXL-291119_180404"
+  # exp_id = "train-422d30b0-f518-4203-9c4d-b36bd8796c62"
+
+  # dbname = "PXL-270220_175734"
+  # exp_id = None
+  """
+  args = parse_args()
+  log.debug("args: {}".format(args))
+  main(args)
 
