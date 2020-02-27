@@ -38,3 +38,6 @@ export CMAKE_PREFIX_PATH=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}
 
 ## Specify TORCH_CUDA_ARCH_LIST based on compute capability of GPU. Can be found in deviceQuery in cuda samples.
 TORCH_CUDA_ARCH_LIST="3.5" python setup.py install
+
+##Torchvision build from source
+source /codehub/scripts/lscripts/torchvision.install.sh
