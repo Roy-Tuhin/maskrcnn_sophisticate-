@@ -210,7 +210,7 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
     ## - calculate area of polygon
     maskstats = annonutils.complute_bbox_maskstats_from_via_annotations(shape_attributes, im_height, im_width)
     # log.info("maskstats: {}".format(maskstats))
-
+    segmentation = None
     for i in range(0,len(shape_attributes)):
       ant_type = shape_attributes[i]['name']
       
@@ -262,6 +262,10 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
           total_error_ant += 1
           continue
 
+        if ant_type=="polygon":
+          segmentation = annonutils.convert_viapoly_to_cocopoly(shape_attributes[i])
+
+
       if 'ant_id' in region_attributes[i]:
         uuid_ant = region_attributes[i]['ant_id']
       else:
@@ -274,17 +278,27 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
       annon_dir = os.path.join(cfg['TIMESTAMP'], cfg["BASEDIR_NAME"]["ANNON"])
       filepath_ant = os.path.join(annon_dir, uuid_ant)
 
-      bbox, bboxarea, maskarea = annonutils.get_from_maskstats(maskstats[i])
+      bbox_XYWH_ABS, boxmode, bbox, bboxarea, maskarea = annonutils.get_from_maskstats(maskstats[i])
 
       ## TODO:
       ## 1. change file_id to image_file_id
+
+      ## compatibility changes to coco format
+      ## keys added: 'image_file_id','id','image_id', 'category_id','boxmode','segmentation','_bbox','iscrowd'
+      ## TODO: migration to coco format
+      ## 1. _bbox to dict and bbox to default list of coco format
+      ## 2. iscrowd to be popullated from region_attributes based on our spec
       annotation_info = {
         'ant_id': uuid_ant
+        ,'id': uuid_ant
         ,'img_id': uuid_img
+        ,'image_id': uuid_img
         ,'image_name': av['filename']
         ,'file_id': ak
+        ,'image_file_id': ak
         ,'ant_type': ant_type
         ,'lbl_id': None
+        ,'category_id': None
         ,"image_rel_date": ref['image_rel_date']
         ,"image_part": ref['image_part']
         ,'image_dir': imgpath
@@ -301,24 +315,40 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
         ,'shape_attributes': shape_attributes[i]
         ,'region_attributes': region_attributes[i]
         ,"bbox": bbox
+        ,"boxmode": boxmode
+        ,"_bbox": bbox_XYWH_ABS
+        ,'segmentation': segmentation
+        ,"iscrowd": 0
         ,"bboxarea": bboxarea
         ,"maskarea": maskarea
         ,"created_on": common.now()
         ,"modified_on": None
       }
 
-
       ## TODO: normalize to common format and optimize for high throughput I/O storage for the shape and region attribute
+
+      ## compatibility changes to coco format
+      ## TODO: migration to coco format
+      ## 1. _bbox to dict and bbox to default list of coco format
+      ## 2. iscrowd to be popullated from region_attributes based on our spec
       annotation_data = {
         'ant_id': uuid_ant
+        ,'id': uuid_ant
         ,'img_id': uuid_img
+        ,'image_id': uuid_img
         ,'file_id': ak
+        ,'image_file_id': ak
         ,'rel_filename': annon_filename
         ,'ant_type': ant_type
         ,'lbl_id': None
+        ,'category_id': None
         ,'shape_attributes': shape_attributes[i]
         ,'region_attributes': region_attributes[i]
         ,"bbox": bbox
+        ,"boxmode": boxmode
+        ,"_bbox": bbox_XYWH_ABS
+        ,'segmentation': segmentation
+        ,"iscrowd": 0
         ,"maskarea": maskarea
         ,"anndb_id": cfg['TIMESTAMP']
       }

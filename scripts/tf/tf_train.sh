@@ -1,15 +1,19 @@
 #!/bin/bash
 
-
+##----------------------------------------------------------
+## TF Object Detection API - training
+##----------------------------------------------------------
+#
 ## TRAINING
 ## https://towardsdatascience.com/custom-object-detection-using-tensorflow-from-scratch-e61da2e10087
 ## https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
+## https://github.com/tensorflow/models/issues/6100
 #
 ## /codehub/external/tensorflow/models/research/object_detection/samples/configs
-
-
+#
 ## https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md
 ## https://github.com/tensorflow/models/tree/master/research/object_detection/g3doc
+##----------------------------------------------------------
 
 ## From the tensorflow/models/research/ directory
 timestamp=$(date -d now +'%d%m%y_%H%M%S')
@@ -41,6 +45,8 @@ python object_detection/model_main.py \
 # source tf_ods_train.sh 1>${AI_LOGS}/tf_ods/tf_ods_train-$(date -d now +'%d%m%y_%H%M%S').log 2>&1
 
 
-## Logs & Errors
+##----------------------------------------------------------
+## Errors & Logs
+##----------------------------------------------------------
 
 ## https://github.com/tensorflow/models/issues/6028#issuecomment-453775336
