@@ -40,4 +40,10 @@ export CMAKE_PREFIX_PATH=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}
 TORCH_CUDA_ARCH_LIST="3.5" python setup.py install
 
 ##Torchvision build from source
+
+cd /
+source ~/.bashrc
+
 source /codehub/scripts/lscripts/torchvision.install.sh
+
+source ~/.bashrc
