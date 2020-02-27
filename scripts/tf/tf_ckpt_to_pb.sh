@@ -21,9 +21,15 @@ PIPELINE_CONFIG_PATH=/codehub/cfg/tf_ods_config/${tfcfg_name}.config
 export PYTHONPATH=/codehub/external/tensorflow/models/research:${PYTHONPATH}
 export PYTHONPATH=/codehub/external/tensorflow/models/research/slim:${PYTHONPATH}
 cd /codehub/external/tensorflow/models/research
-# model.ckpt-3126
-CHECKPOINT_PATH=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco/model.ckpt-3125
-OUTPUT_DIR=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco/TFLite_model
+
+CHECKPOINT_BASEPATH=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco
+CHECKPOINT_BASEPATH=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco-25022020_175950
+
+model=model.ckpt-3125
+model=model.ckpt-3126
+
+CHECKPOINT_PATH=${CHECKPOINT_BASEPATH}/${model}
+OUTPUT_DIR=${CHECKPOINT_BASEPATH}/TFLite_model/${timestamp}
 mkdir -p ${OUTPUT_DIR}
 
 python object_detection/export_tflite_ssd_graph.py \

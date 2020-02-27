@@ -378,5 +378,25 @@ def get_from_maskstats(mstats):
   bboxarea = mstats[6]
   maskarea = mstats[7]
 
-  return bbox, bboxarea, maskarea
-  
+  ## coco_frmt_bbox
+  boxmode = "XYWH_ABS"
+  bbox_XYWH_ABS = [bbox['xmin'], bbox['ymin'], bbox['width'], bbox['height'] ]
+
+  return bbox_XYWH_ABS, boxmode, bbox, bboxarea, maskarea
+
+
+def convert_viapoly_to_cocopoly(anno):
+  """
+  Ref: /codehub/apps/detectron2/hmd_detectron2_test.py
+  """
+  # print("anno: {}".format(anno))
+  segmentation = None
+  px = anno["all_points_x"]
+  py = anno["all_points_y"]
+  poly = [(x + 0.5, y + 0.5) for x, y in zip(px, py)]
+  poly = [p for x in poly for p in x]
+  if len(poly) % 2 == 0 and len(poly) >= 6:
+    segmentation = [poly]
+
+  return segmentation
+
