@@ -195,7 +195,8 @@ def create_tf_example(image, annotations_list, image_dir, category_index, includ
   encoded_mask_png = []
   num_annotations_skipped = 0
   for object_annotations in annotations_list:
-    (x, y, width, height) = tuple(object_annotations['_bbox'])
+    bbox = object_annotations['bbox'] if type(object_annotations['bbox']) == list else object_annotations['_bbox']
+    (x, y, width, height) = tuple(bbox)
     if width <= 0 or height <= 0:
       num_annotations_skipped += 1
       continue
@@ -206,14 +207,20 @@ def create_tf_example(image, annotations_list, image_dir, category_index, includ
     xmax.append(float(x + width) / image_width)
     ymin.append(float(y) / image_height)
     ymax.append(float(y + height) / image_height)
-    is_crowd.append(object_annotations['iscrowd'])
+
+    iscrowd = object_annotations['iscrowd'] if 'iscrowd' in object_annotations else 0
+    is_crowd.append(iscrowd)
+
     # category_id = int(object_annotations['category_id'])
-    category_id = object_annotations['lbl_id']
+    category_id = object_annotations['lbl_id'] if 'lbl_id' in object_annotations else int(object_annotations['category_id'])
     category_ids.append(category_id)
-    # category_names.append(category_index[category_id]['name'].encode('utf8'))
-    category_names.append(category_id.encode('utf8'))
-    # area.append(object_annotations['area'])
-    area.append(object_annotations['bboxarea'])
+
+    # lbl_id = category_index[category_id]['name']
+    lbl_id = category_index[category_id]['name'] if 'name' in category_index[category_id] else category_id
+    category_names.append(lbl_id.encode('utf8'))
+
+    bboxarea = object_annotations['bboxarea'] if 'bboxarea' in object_annotations else object_annotations['area']
+    area.append(bboxarea)
 
     if include_masks:
       run_len_encoding = mask.frPyObjects(object_annotations['segmentation'],
@@ -225,6 +232,7 @@ def create_tf_example(image, annotations_list, image_dir, category_index, includ
       output_io = io.BytesIO()
       pil_image.save(output_io, format='PNG')
       encoded_mask_png.append(output_io.getvalue())
+
   feature_dict = {
       'image/height':
           int64_feature(image_height),
@@ -357,18 +365,20 @@ def create_tfr(args, appcfg):
   name = args.did
   subset = args.subset
   dbname = args.dataset
+  num_shards = args.num_shards
+  output_basepath = args.output_basepath
 
   output_dir = dbname
   if name:
     output_dir = name+"-"+dbname
 
   ## TODO: create a standard path in aimldl workflow
-  output_basepath = os.path.join("/aimldl-dat/tfrecords", output_dir)
+  output_basepath = os.path.join(output_basepath, output_dir)
   log.info("output_path: {}".format(output_basepath))
   common.mkdir_p(output_basepath)
-  output_path = os.path.join(output_basepath, output_dir)
+  # output_path = os.path.join(output_basepath, output_dir)
+  output_path = output_basepath
   log.info("output_path: {}".format(output_path))
-  num_shards = 100
 
   # dataset_name = get_dataset_name(name, subset)
   class_ids, id_map, imgs, anns = apputil.get_data(appcfg, subset=subset, dbname=dbname)
@@ -382,7 +392,7 @@ def create_tfr(args, appcfg):
     output_tfrecords = open_sharded_output_tfrecords(tf_record_close_stack, output_path, num_shards)
 
     for idx, image in enumerate(imgs):
-      if idx % 100 == 0:
+      if idx % num_shards == 0:
         logging.info('On image %d of %d', idx, len(imgs))
       
       image_dir = os.path.dirname(image['filepath'])
@@ -496,6 +506,18 @@ def parse_args():
     ,default=None
     ,help='Arch specific yml file or Experiment Id for the given AI Dataset for the TEPPr')
 
+  parser.add_argument('--shards'
+    ,dest='num_shards'
+    ,help='number of shards'
+    ,default='100'
+    ,required=False)
+
+  parser.add_argument('--to'
+    ,dest='output_basepath'
+    ,help='output_basepath'
+    ,default='/aimldl-dat/tfrecords'
+    ,required=False)
+
   args = parser.parse_args()    
 
   return args
@@ -504,7 +526,9 @@ def parse_args():
 if __name__ == '__main__':
   """
   Example:
-  python create_via_tf_record.py --dataset PXL-270220_175734
+  python aids_to_tf_record.py --dataset PXL-270220_175734
+  python aids_to_tf_record.py --dataset PXL-130220_034525 --ai_annon_data_home_local /aimldl-dat/data-public/ms-coco-1/val2014
+  python aids_to_tf_record.py --dataset PXL-130220_034525
 
   # name = "hmd"
   # subset = "train"
