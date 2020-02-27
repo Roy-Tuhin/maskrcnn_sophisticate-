@@ -9,6 +9,7 @@ source $( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )/ps1.sh
 alias lt='ls -lrth'
 alias l='ls -lrth'
 alias gccselect='source ${LINUX_SCRIPT_HOME}/utils/gcc-select.sh'
+alias bazelselect='source ${LINUX_SCRIPT_HOME}/utils/bazel-select.sh'
 alias getip='source ${LINUX_SCRIPT_HOME}/utils/ip.sh'
 alias pykill="bash ${AI_HOME}/scripts/utils/pykill.sh"
 

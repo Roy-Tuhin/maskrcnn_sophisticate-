@@ -1,6 +1,9 @@
 #!/bin/bash
 
 ## https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md
+
+## Export frozen inference graph for TensorFlow Lite
+
 ## From the tensorflow/models/research/ directory
 timestamp=$(date -d now +'%d%m%y_%H%M%S')
 tfcfg_name=ssd_mobilenet_v2_coco
