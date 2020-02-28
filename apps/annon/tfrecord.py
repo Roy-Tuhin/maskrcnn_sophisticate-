@@ -180,7 +180,7 @@ def create_tf_example_annon(image, annotations_list, image_dir, category_index, 
     ## https://stackoverflow.com/questions/18425225/getting-the-name-of-a-variable-as-a-string
     _fd = {}
     localitems = locals().items()
-    log.info("localitems.keys: {}".format(dict(localitems).keys()))
+    log.debug("localitems.keys: {}".format(dict(localitems).keys()))
     for item in feature_dict_schema:
       fn = getattr(TFProtobuf, item[1][0]+'_feature')
       # log.info("item[1][1]: {}".format(item[1][1]))
@@ -197,7 +197,7 @@ def create_tf_example_annon(image, annotations_list, image_dir, category_index, 
       if _val:
         _fd[item[0]] = fn(_val)
       else:
-        log.info("_key, _val: {}, {}".format(_key, _val))
+        log.debug("_key, _val: {}, {}".format(_key, _val))
 
 
     feature_dict = _fd

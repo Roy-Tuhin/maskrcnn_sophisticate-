@@ -51,14 +51,16 @@ import _cfg_
 import common
 import apputil
 
-import tfrecord
-
 
 class TFRConfig:
-  def __init__(self, args, appcfg):
+  def __init__(self, args, appcfg, subset, timestamp=None):
+    self.subset = subset
+
+    ## TODO: labelmap_filename from the user input
+    self.labelmap_filename = 'labelmap'
+    self.tf_od_api_path = args.tf_od_api_path
     self.appcfg = appcfg
     self.name = args.did
-    self.subset = args.subset
     self.dbname = args.dataset
     self.num_shards = int(args.num_shards)
     self.output_basepath = args.output_basepath
@@ -68,7 +70,8 @@ class TFRConfig:
     if self.name:
       self.output_dir = self.name+"-"+self.dbname
 
-    self.timestamp = common.timestamp()
+    if timestamp:
+      self.timestamp = timestamp
 
     self.output_basepath = os.path.join(self.output_basepath, self.output_dir, self.timestamp)
     self.output_path = os.path.join(self.output_basepath, self.subset)
@@ -122,14 +125,35 @@ def get_appcfg(ai_annon_data_home_local=None, host=None, base_path_config=None, 
   return appcfg
 
 
-def create_tfr(args, appcfg):
+def create_tfl(class_ids, tfrconfig):
+  """
+  create tfrecord label
+  Ref: https://github.com/tensorflow/models/issues/1601#issuecomment-533659942
+
+  NOTE:
+  * tensorflow object_detection module should be in the PYTHONPATH
+  """
+  tf_od_api_path = tfrconfig.tf_od_api_path
+  if tf_od_api_path not in sys.path:
+    sys.path.append(tf_od_api_path)
+
+  import tflabel
+
+  ## labelmaps should be same irrespective of the subset
+  labelmap_filepath = os.path.join(tfrconfig.output_basepath, tfrconfig.subset+'-'+tfrconfig.labelmap_filename)
+  # labelmap_filepath = os.path.join(tfrconfig.output_basepath, tfrconfig.labelmap_filename)
+  tflabel.main(class_ids, labelmap_filepath)
+
+
+def create_tfr(args, appcfg, subset, timestamp=None):
   """
   create tf record data compatible with object detection API of tensorflow and for tensorflow training in general
   """
-  subset = args.subset
+  import tfrecord
+
   dbname = args.dataset
 
-  tfrconfig = TFRConfig(args, appcfg)
+  tfrconfig = TFRConfig(args, appcfg, subset, timestamp)
 
   # dataset_name = get_dataset_name(name, subset)
   class_ids, id_map, imgs, anns = apputil.get_data(appcfg, subset=subset, dbname=dbname)
@@ -137,7 +161,24 @@ def create_tfr(args, appcfg):
 
   tfrecord.main(imgs, anns, id_map, tfrconfig)
 
+  create_tfl(class_ids, tfrconfig)
+
   return class_ids, id_map, imgs, anns
+
+
+def create_tfr_dataset(args, subset, timestamp=None):
+  """
+  create tensorflow record
+  """
+  exp_id = args.exp_id
+  name = args.did
+  dbname = args.dataset
+  host = args.host
+  ai_annon_data_home_local = args.ai_annon_data_home_local
+
+  appcfg = get_appcfg(ai_annon_data_home_local=ai_annon_data_home_local, host=host, cmd=None, subset=subset, dbname=dbname, exp_id=exp_id)
+  # log.info(appcfg)
+  create_tfr(args, appcfg, subset, timestamp)
 
 
 def main(args):
@@ -147,27 +188,11 @@ def main(args):
   """
   try:
     log.info("----------------------------->\nargs:{}".format(args))
+    timestamp = common.timestamp()
+    # subset = args.subset
+    for subset in ['train','val','test']:
+      create_tfr_dataset(args, subset=subset, timestamp=timestamp)
 
-    exp_id = args.exp_id
-    name = args.did
-    subset = args.subset
-    dbname = args.dataset
-    host = args.host
-    ai_annon_data_home_local = args.ai_annon_data_home_local
-
-    appcfg = get_appcfg(ai_annon_data_home_local=ai_annon_data_home_local, host=host, cmd=None, subset=subset, dbname=dbname, exp_id=exp_id)
-
-    cmd = 'create'+'_'+'tfr'
-
-    fn = getattr(this, cmd)
-
-    log.debug("fn: {}".format(fn))
-    log.debug("cmd: {}".format(cmd))
-    log.debug("---x---x---x---")
-    if fn:
-      fn(args, appcfg)
-    else:
-      log.error("Unknown fn:{}".format(cmd))
   except Exception as e:
     log.error("Exception occurred", exc_info=True)
 
@@ -232,6 +257,12 @@ def parse_args():
     ,default='/aimldl-dat/tfrecords'
     ,required=False)
 
+  parser.add_argument('--tfods'
+    ,dest='tf_od_api_path'
+    ,help='tensorflow object detection api module base path'
+    ,default='/codehub/external/tensorflow/models/research'
+    ,required=False)
+
   parser.add_argument('--mask'
     ,dest='include_masks'
     ,help='include_masks'
@@ -248,11 +279,7 @@ if __name__ == '__main__':
   # ai_annon_data_home_local = '/aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns'
 
   Example:
-  python aids_to_tf_record.py --dataset PXL-270220_175734
-  python aids_to_tf_record.py --dataset PXL-130220_034525 --ai_annon_data_home_local /aimldl-dat/data-public/ms-coco-1/train2014
-  python aids_to_tf_record.py --dataset PXL-130220_151926 --ai_annon_data_home_local /aimldl-dat/data-public/ms-coco-1/train2014
-  python aids_to_tf_record.py --dataset PXL-130220_034525
-  python aids_to_tf_record.py --dataset PXL-270220_175734 --ai_annon_data_home_local /aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns
+  python aids_to_tf_record.py --dataset PXL-270220_175734 --ai_annon_data_home_local /aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns --shards 5
 
   # name = "hmd"
   # subset = "train"

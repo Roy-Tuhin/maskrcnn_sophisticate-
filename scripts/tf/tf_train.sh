@@ -17,15 +17,20 @@
 
 ## From the tensorflow/models/research/ directory
 timestamp=$(date -d now +'%d%m%y_%H%M%S')
-tfcfg_name=ssd_mobilenet_v2_coco
-## path to pipeline config file
+
+
 ## /codehub/cfg/tf_ods_config/ssd_mobilenet_v2_coco.config
+# /codehub/cfg/tf_ods_config/ssd_mobilenet_v2_annon-280220_172500.config
+
+# tfcfg_name=ssd_mobilenet_v2_coco
+tfcfg_name=ssd_mobilenet_v2_annon-280220_172500
+## path to pipeline config file
 PIPELINE_CONFIG_PATH=/codehub/cfg/tf_ods_config/${tfcfg_name}.config
 ## path to model directory
 ## /aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco
 MODEL_DIR=/aimldl-dat/logs/tf_ods/${tfcfg_name}
 # NUM_TRAIN_STEPS=50000
-NUM_TRAIN_STEPS=500
+NUM_TRAIN_STEPS=5
 SAMPLE_1_OF_N_EVAL_EXAMPLES=1
 mkdir -p ${MODEL_DIR}
 
