@@ -58,7 +58,7 @@ class TFRConfig:
 
     ## TODO: labelmap_filename from the user input
     self.labelmap_filename = 'labelmap'
-    self.tf_od_api_path = args.tf_od_api_path
+    self.ai_tf_od_api_path = args.ai_tf_od_api_path
     self.appcfg = appcfg
     self.name = args.did
     self.dbname = args.dataset
@@ -130,12 +130,22 @@ def create_tfl(class_ids, tfrconfig):
   create tfrecord label
   Ref: https://github.com/tensorflow/models/issues/1601#issuecomment-533659942
 
+  If error: ModuleNotFoundError: No module named 'object_detection'
+
+  Excecute on shell prompt:
+  ```bash
+  cd /codehub/external/tensorflow/models/research
+  protoc object_detection/protos/*.proto --python_out=.
+  ```
+
   NOTE:
   * tensorflow object_detection module should be in the PYTHONPATH
   """
-  tf_od_api_path = tfrconfig.tf_od_api_path
-  if tf_od_api_path not in sys.path:
-    sys.path.append(tf_od_api_path)
+  ai_tf_od_api_path = tfrconfig.ai_tf_od_api_path
+  log.debug("ai_tf_od_api_path: {}".format(ai_tf_od_api_path))
+  if ai_tf_od_api_path not in sys.path:
+    sys.path.append(ai_tf_od_api_path)
+  log.debug("sys.path: {}".format(sys.path))
 
   import tflabel
 
@@ -154,6 +164,7 @@ def create_tfr(args, appcfg, subset, timestamp=None):
   dbname = args.dataset
 
   tfrconfig = TFRConfig(args, appcfg, subset, timestamp)
+  class_ids = None
 
   # dataset_name = get_dataset_name(name, subset)
   class_ids, id_map, imgs, anns = apputil.get_data(appcfg, subset=subset, dbname=dbname)
@@ -174,7 +185,6 @@ def create_tfr_dataset(args, subset, ai_annon_data_home_local, timestamp=None):
   name = args.did
   dbname = args.dataset
   host = args.host
-  # ai_annon_data_home_local = args.ai_annon_data_home_local
 
   appcfg = get_appcfg(ai_annon_data_home_local=ai_annon_data_home_local, host=host, cmd=None, subset=subset, dbname=dbname, exp_id=exp_id)
   # log.info(appcfg)
@@ -182,23 +192,18 @@ def create_tfr_dataset(args, subset, ai_annon_data_home_local, timestamp=None):
 
 
 def main(args):
-  """
-  TODO: JSON RESPONSE
-
-  All errors and json response needs to be JSON compliant and with proper HTTP Response code
-  A common function should take responsibility to convert into API response
-  """
   try:
     log.info("----------------------------->\nargs:{}".format(args))
     image_basepath = args.image_basepath
-    timestamp = common.timestamp()
+    out_path = args.out_path
+    if not out_path:
+      out_path = common.timestamp()
+    log.info("out_path: {}".format(out_path))
     for i, subset in enumerate(args.subset):
       ai_annon_data_home_local = image_basepath[i]
-      create_tfr_dataset(args, subset=subset, ai_annon_data_home_local=ai_annon_data_home_local, timestamp=timestamp)
-
+      create_tfr_dataset(args, subset=subset, ai_annon_data_home_local=ai_annon_data_home_local, timestamp=out_path)
   except Exception as e:
     log.error("Exception occurred", exc_info=True)
-
   return
 
 
@@ -260,17 +265,23 @@ def parse_args():
     ,required=False
     ,default=100)
 
+  ## os.getenv('AI_TFR')
   parser.add_argument('--to'
     ,dest='output_basepath'
     ,help='output_basepath'
     ,required=False
     ,default='/aimldl-dat/tfrecords')
 
+  parser.add_argument('--out'
+    ,dest='out_path'
+    ,help='to override the timestamp director and to reuse previous dir'
+    ,required=False)
+
   parser.add_argument('--tfods'
-    ,dest='tf_od_api_path'
+    ,dest='ai_tf_od_api_path'
     ,help='tensorflow object detection api module base path'
     ,required=False
-    ,default='/codehub/external/tensorflow/models/research')
+    ,default=os.getenv('AI_TF_OD_API_PATH'))
 
   parser.add_argument('--mask'
     ,dest='include_masks'

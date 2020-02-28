@@ -3,11 +3,10 @@
 ## NOTE:
 ## 1. tensorflow object_detection module should be in the PYTHONPATH
 
-import logging
-
 from google.protobuf import text_format
 from object_detection.protos.string_int_label_map_pb2 import StringIntLabelMap, StringIntLabelMapItem
 
+import logging
 log = logging.getLogger('__main__.'+__name__)
 
 
