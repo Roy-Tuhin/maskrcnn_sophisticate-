@@ -166,7 +166,7 @@ def create_tfr(args, appcfg, subset, timestamp=None):
   return class_ids, id_map, imgs, anns
 
 
-def create_tfr_dataset(args, subset, timestamp=None):
+def create_tfr_dataset(args, subset, ai_annon_data_home_local, timestamp=None):
   """
   create tensorflow record
   """
@@ -174,7 +174,7 @@ def create_tfr_dataset(args, subset, timestamp=None):
   name = args.did
   dbname = args.dataset
   host = args.host
-  ai_annon_data_home_local = args.ai_annon_data_home_local
+  # ai_annon_data_home_local = args.ai_annon_data_home_local
 
   appcfg = get_appcfg(ai_annon_data_home_local=ai_annon_data_home_local, host=host, cmd=None, subset=subset, dbname=dbname, exp_id=exp_id)
   # log.info(appcfg)
@@ -182,21 +182,30 @@ def create_tfr_dataset(args, subset, timestamp=None):
 
 
 def main(args):
-  """TODO: JSON RESPONSE
+  """
+  TODO: JSON RESPONSE
+
   All errors and json response needs to be JSON compliant and with proper HTTP Response code
   A common function should take responsibility to convert into API response
   """
   try:
     log.info("----------------------------->\nargs:{}".format(args))
+    image_basepath = args.image_basepath
     timestamp = common.timestamp()
-    # subset = args.subset
-    for subset in ['train','val','test']:
-      create_tfr_dataset(args, subset=subset, timestamp=timestamp)
+    for i, subset in enumerate(args.subset):
+      ai_annon_data_home_local = image_basepath[i]
+      create_tfr_dataset(args, subset=subset, ai_annon_data_home_local=ai_annon_data_home_local, timestamp=timestamp)
 
   except Exception as e:
     log.error("Exception occurred", exc_info=True)
 
   return
+
+
+def get_ai_annon_data_home_local():
+  ai_annon_data_home_local = os.getenv('AI_ANNON_DATA_HOME_LOCAL')
+  ai_annon_data_home_local if ai_annon_data_home_local else '/aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns'
+  return ai_annon_data_home_local
 
 
 def parse_args():
@@ -205,63 +214,63 @@ def parse_args():
   
   ## Parse command line arguments
   parser = argparse.ArgumentParser(
-    description='Annon data loader\n * and converter.\n\n',formatter_class=RawTextHelpFormatter)
+    description='AI Dataset to tensorflow TF Record converter.\n\n',formatter_class=RawTextHelpFormatter)
 
   parser.add_argument('--dataset'
     ,dest='dataset'
     ,metavar="/path/to/<name>.yml or AIDS (AI Dataset) database name"
-    ,required=True
-    ,help='Path to AIDS (AI Dataset) yml or AIDS ID/DatabaseName available in database`')
+    ,help='Path to AIDS (AI Dataset) yml or AIDS ID/DatabaseName available in database'
+    ,required=True)
 
   parser.add_argument('--host'
     ,dest='host'
+    ,help='Database host'
     ,required=False
-    ,default='localhost'
-    ,help='Database host')
+    ,default='localhost')
 
-  parser.add_argument('--ai_annon_data_home_local'
-    ,dest='ai_annon_data_home_local'
+  parser.add_argument('--image_basepath'
+    ,dest='image_basepath'
+    ,help='image basepath and for multiple subset use paths with comma separated. \n Environment variable: AI_ANNON_DATA_HOME_LOCAL is used as default value.'
     ,required=False
-    ,default='/aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns'
-    ,help='overrides AI_ANNON_DATA_HOME_LOCAL')
+    ,default=get_ai_annon_data_home_local())
 
   parser.add_argument('--subset'
     ,dest='subset'
-    ,metavar="[train | val | test]"
-    ,help='name of the subset. Options: train, val'
-    ,default='train'
-    ,required=False)
+    ,metavar="[train | val | test | 'train,val' | 'train,val,test']"
+    ,help='name of the subset or multiple subset using comma separated values.'
+    ,required=False
+    ,default='train,val')
 
   parser.add_argument('--did'
     ,dest='did'
-    ,help='public or private dataset id. Options: hmd, coco, mvd, bdd, idd, adek.\n Only hmd, coco is supprted for now'
-    ,default='hmd'
-    ,required=False)
+    ,help='public or private dataset id. Options: hmd, coco, mvd, bdd, idd, adek.\n Only hmd, coco is supported for now'
+    ,required=False
+    ,default='hmd')
 
   parser.add_argument('--exp'
     ,dest='exp_id'
     ,metavar="/path/to/<name>.yml or Experiment Id in AIDS for the TEPPr"
+    ,help='Arch specific yml file or Experiment Id for the given AI Dataset for the TEPPr'
     ,required=False
-    ,default=None
-    ,help='Arch specific yml file or Experiment Id for the given AI Dataset for the TEPPr')
+    ,default=None)
 
   parser.add_argument('--shards'
     ,dest='num_shards'
     ,help='number of shards'
-    ,default=100
-    ,required=False)
+    ,required=False
+    ,default=100)
 
   parser.add_argument('--to'
     ,dest='output_basepath'
     ,help='output_basepath'
-    ,default='/aimldl-dat/tfrecords'
-    ,required=False)
+    ,required=False
+    ,default='/aimldl-dat/tfrecords')
 
   parser.add_argument('--tfods'
     ,dest='tf_od_api_path'
     ,help='tensorflow object detection api module base path'
-    ,default='/codehub/external/tensorflow/models/research'
-    ,required=False)
+    ,required=False
+    ,default='/codehub/external/tensorflow/models/research')
 
   parser.add_argument('--mask'
     ,dest='include_masks'
@@ -270,16 +279,28 @@ def parse_args():
 
   args = parser.parse_args()    
 
+  args.subset = common.str2list(args.subset)
+  args.image_basepath = common.str2list(args.image_basepath)
+
+  if len(args.image_basepath) != len(args.subset):
+    args.image_basepath = args.image_basepath*len(args.subset)
+
+  assert len(args.image_basepath) == len(args.subset)
+
   return args
 
 
 if __name__ == '__main__':
   """
   # host = '10.4.71.69'
-  # ai_annon_data_home_local = '/aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns'
+  # image_basepath = '/aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns'
 
   Example:
-  python aids_to_tf_record.py --dataset PXL-270220_175734 --ai_annon_data_home_local /aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns --shards 5
+  python aids_to_tf_record.py --dataset PXL-270220_175734 --image_basepath /aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns --shards 5 --subset 'train,val'
+  python aids_to_tf_record.py --dataset PXL-270220_175734 --image_basepath /aimldl-dat/data-gaze/AIML_Annotation/ods_job_trafficsigns --shards 5 --subset 'train,val,test'
+
+  ## for annon coco dataset
+  python aids_to_tf_record.py --dataset PXL-130220_034525 --image_basepath '/aimldl-dat/data-public/ms-coco-1/train2014,/aimldl-dat/data-public/ms-coco-1/val2014' --subset 'train,val'
 
   # name = "hmd"
   # subset = "train"
@@ -295,6 +316,6 @@ if __name__ == '__main__':
   python tfviewer.py /aimldl-dat/data-public/ms-coco-1/tfrecord/coco_train.record-00063-of-00100
   """
   args = parse_args()
-  log.debug("args: {}".format(args))
+  log.info("args: {}".format(args))
   main(args)
 

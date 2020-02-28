@@ -419,6 +419,25 @@ def dict_keys_to_lowercase(d):
   return d_mod
 
 
+def str2list(word, dl=','):
+  """
+  Test cases:
+  'train'               =>  ['train']
+  'train,val,test'      =>  ['train', 'val', 'test']
+  'train,   val, test'  =>  ['train', 'val', 'test']
+  'train,   val, ,test' =>  ['train', 'val', 'test']
+  'train,   val, ,'     =>  ['train', 'val']
+  """
+  import re
+  regexp = re.compile(r'['+dl+']')
+  if regexp.search(word):
+    x = word.split(',')
+    x = [i.strip() for i in x if i.strip() ]
+  else:
+    x = [word]
+  return x
+
+
 def raise_error(error_type, msg):
   """TODO: custom error handler
   """
