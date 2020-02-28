@@ -404,7 +404,7 @@ class AnnonDataset(Dataset):
 
           self.add_image(
             name,
-            image_id=name+'-'+img_id,
+            image_id=name+'-'+str(img_id),
             path=filepath,
             width=width,
             height=height,
@@ -412,6 +412,7 @@ class AnnonDataset(Dataset):
             annotations=annotations)
         except:
           log.info("Error Reading file or adding annotation: {}".format(filepath))
+          log.error("Exception occurred", exc_info=True)
       else:
         log.info("file does not exists: {}".format(filepath))
 
