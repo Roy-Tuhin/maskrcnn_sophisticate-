@@ -74,8 +74,9 @@ class TFRConfig:
       self.timestamp = timestamp
 
     self.output_basepath = os.path.join(self.output_basepath, self.output_dir, self.timestamp)
+    ## its weird how tensorflow record creation takes the output_path as a filename
     self.output_path = os.path.join(self.output_basepath, self.subset)
-    log.info("output_basepath: {}".format(self.output_basepath))
+    log.info("TFRecord::output_basepath: {}".format(self.output_basepath))
     log.info("output_path: {}".format(self.output_path))
 
     self.init()
@@ -170,11 +171,15 @@ def create_tfr(args, appcfg, subset, timestamp=None):
   class_ids, id_map, imgs, anns = apputil.get_data(appcfg, subset=subset, dbname=dbname)
   log.info("class_ids, id_map: {}, {}".format(class_ids, id_map))
 
+  ## create tfrecord files
   tfrecord.main(imgs, anns, id_map, tfrconfig)
 
+  ## create labels
   create_tfl(class_ids, tfrconfig)
 
-  return class_ids, id_map, imgs, anns
+  ## return the output path
+  output_basepath = tfrconfig.output_basepath
+  return output_basepath
 
 
 def create_tfr_dataset(args, subset, ai_annon_data_home_local, timestamp=None):
@@ -188,7 +193,9 @@ def create_tfr_dataset(args, subset, ai_annon_data_home_local, timestamp=None):
 
   appcfg = get_appcfg(ai_annon_data_home_local=ai_annon_data_home_local, host=host, cmd=None, subset=subset, dbname=dbname, exp_id=exp_id)
   # log.info(appcfg)
-  create_tfr(args, appcfg, subset, timestamp)
+
+  res = create_tfr(args, appcfg, subset, timestamp)
+  return res
 
 
 def main(args):
@@ -204,7 +211,6 @@ def main(args):
       create_tfr_dataset(args, subset=subset, ai_annon_data_home_local=ai_annon_data_home_local, timestamp=out_path)
   except Exception as e:
     log.error("Exception occurred", exc_info=True)
-  return
 
 
 def get_ai_annon_data_home_local():
