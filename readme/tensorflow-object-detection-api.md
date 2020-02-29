@@ -1,13 +1,33 @@
 # Tensorflow Object Detection API
+> **Work in Progress**
 
 
-* Clone Tensorflow models
+## Steps
+
+* Pre-requisite: Clone Tensorflow models github repo
     ```bash
     mkdir -p /codehub/external/tensorflow
     cd /codehub/external/tensorflow
     git clone https://github.com/tensorflow/models.git
     ```
-* Data Preparation - create dataset in the TFRecord format
+
+
+1. **Data Preparation**
+  * create dataset in the TFRecord format
+2. **Training**
+  * create training configuration
+  * execute training: [`tf_train.sh`](../scripts/tf/tf_train.sh)
+3. **Post-training processing**
+  * a) ckpt to pb for ssd mobilenet: [tf_ckpt_to_pb_ssdmobilenet.sh](../scripts/tf/tf_ckpt_to_pb_ssdmobilenet.sh)
+  * b) covert to `.tflite` format using TOCO: [tf_pb_to_tflite.sh](../scripts/tf/tf_pb_to_tflite.sh)
+4. **test the `.tflite` model on sample images**
+  * copy the label files from the tfrecord directory to the model directory
+  * run the prediction: [tfl_pred.sh](../scripts/tf/tfl_pred.sh)
+
+
+**NOTE:**
+* open the scripts and change the paths and parameters accordingly
+
 
 ## Utility Scripts: [`/codehub/scripts/tf`](../scripts/tf)
 
@@ -16,7 +36,6 @@
 ├── create_coco_tf_record.sh
 ├── pb_to_tflite_keras_retinanet.sh
 ├── pb_to_tflite_mask_rcnn.sh
-├── pb_to_tflite.sh
 ├── tf_ckpt_to_pb_ssdmobilenet.sh
 ├── tf-get-modelzoo.sh
 ├── tfl_pred.sh
@@ -26,9 +45,9 @@
 ```
 
 
-## AIDS to TFRecord
+## Data Preparation
 
-* Utility script: [`/codehub/scripts/tf/aids_to_tf_record.sh`](../scripts/tf/aids_to_tf_record.sh)
+* Utility script: [`aids_to_tf_record.sh`](../scripts/tf/aids_to_tf_record.sh)
   * AIDS to TFRecord
   * COCO from AIDS to TFRecord
 * **NOTE:**
@@ -36,9 +55,9 @@
   * ANNON and AIDS database is now compatible with 2014 coco format; though does not have the compatibility of RLE and panoptic dataset as it's not required as this moment
 
 
-## Convert Original COCO to TFRecord
+### Convert Original COCO to TFRecord
 
-* Utility script: [`/codehub/scripts/tf/create_coco_tf_record.sh`](../scripts/tf/create_coco_tf_record.sh)
+* Utility script: [`create_coco_tf_record.sh`](../scripts/tf/create_coco_tf_record.sh)
     ```bash
     python object_detection/dataset_tools/create_coco_tf_record.py --logtostderr \
     --train_image_dir="/aimldl-dat/data-public/ms-coco-1/train2014" \
@@ -51,7 +70,7 @@
     ```
 
 
-## TFRecord Viewer
+### TFRecord Viewer
 
 * Sample the TFRecord dataset & Visualize them once created using TFViewer
     ```bash
@@ -66,7 +85,7 @@
 
 ## Training
 
-* Utility script: [`/codehub/scripts/tf/tf_train.sh`](../scripts/tf/tf_train.sh)
+* Utility script: [`tf_train.sh`](../scripts/tf/tf_train.sh)
 * Sample object detection configurations are under directory:
   * `/codehub/external/tensorflow/models/research/object_detection/samples/configs`
 * Custom configs - Tensorflow Object Detection API

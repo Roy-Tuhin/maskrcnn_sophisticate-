@@ -1,18 +1,34 @@
 #!/bin/bash
 
+##----------------------------------------------------------
+## TF ckpt to pb ssd mobilenet for tflite
+##----------------------------------------------------------
+#
+#
+## https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi
+## https://github.com/tensorflow/models/blob/master/research/object_detection/samples/configs/ssd_mobilenet_v2_quantized_300x300_coco.config
 ## https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md
+#
+##----------------------------------------------------------
+
 
 ## Export frozen inference graph for TensorFlow Lite
 
 ## From the tensorflow/models/research/ directory
 timestamp=$(date -d now +'%d%m%y_%H%M%S')
-tfcfg_name=ssd_mobilenet_v2_coco
+
+
 ## path to pipeline config file
 ## /codehub/cfg/tf_ods_config/ssd_mobilenet_v2_coco.config
-PIPELINE_CONFIG_PATH=/codehub/cfg/tf_ods_config/${tfcfg_name}.config
+## /codehub/cfg/tf_ods_config/ssd_mobilenet_v2_annon-280220_172500.config
+## /codehub/cfg/tf_ods_config/ssd_mobilenet_v2_quantized_300x300_coco-290220_133017.config
 
-## https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi
-## https://github.com/tensorflow/models/blob/master/research/object_detection/samples/configs/ssd_mobilenet_v2_quantized_300x300_coco.config
+
+# tfcfg_name=ssd_mobilenet_v2_coco
+tfcfg_name=ssd_mobilenet_v2_annon-280220_172500
+# tfcfg_name=ssd_mobilenet_v2_quantized_300x300_coco-290220_133017
+
+PIPELINE_CONFIG_PATH=/codehub/cfg/tf_ods_config/${tfcfg_name}.config
 
 ## set CONFIG_FILE=C:\\tensorflow1\models\research\object_detection\training\ssd_mobilenet_v2_quantized_300x300_coco.config
 ## set CHECKPOINT_PATH=C:\\tensorflow1\models\research\object_detection\training\model.ckpt-XXXX
@@ -20,17 +36,23 @@ PIPELINE_CONFIG_PATH=/codehub/cfg/tf_ods_config/${tfcfg_name}.config
 
 export PYTHONPATH=/codehub/external/tensorflow/models/research:${PYTHONPATH}
 export PYTHONPATH=/codehub/external/tensorflow/models/research/slim:${PYTHONPATH}
-cd /codehub/external/tensorflow/models/research
 
-CHECKPOINT_BASEPATH=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco
-CHECKPOINT_BASEPATH=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco-25022020_175950
+# CHECKPOINT_BASEPATH=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco
+# CHECKPOINT_BASEPATH=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco-25022020_175950
+CHECKPOINT_BASEPATH=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_annon-280220_172500
 
-model=model.ckpt-3125
-model=model.ckpt-3126
+# model=model.ckpt-3125
+# model=model.ckpt-3126
+model=model.ckpt-5000
 
 CHECKPOINT_PATH=${CHECKPOINT_BASEPATH}/${model}
 OUTPUT_DIR=${CHECKPOINT_BASEPATH}/TFLite_model/${timestamp}
 mkdir -p ${OUTPUT_DIR}
+
+# export PYTHONPATH=/codehub/external/tensorflow/models/research:${PYTHONPATH}
+# export PYTHONPATH=/codehub/external/tensorflow/models/research/slim:${PYTHONPATH}
+
+cd /codehub/external/tensorflow/models/research
 
 python object_detection/export_tflite_ssd_graph.py \
   --pipeline_config_path=${PIPELINE_CONFIG_PATH} \
@@ -38,10 +60,6 @@ python object_detection/export_tflite_ssd_graph.py \
   --output_directory=${OUTPUT_DIR} \
   --add_postprocessing_op=true
 
-
-# MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_512_depthwise/BatchNorm/beta not found in checkpoint
-
-# https://github.com/tensorflow/models/issues/4156
 
 
 
@@ -70,3 +88,10 @@ python object_detection/export_tflite_ssd_graph.py \
 #   --output_file=${TRAIN_DIR}/${NETWORK_NAME}_inf_graph.pb \
 #   --quantize
 
+
+##----------------------------------------------------------
+## Errors & Logs
+# ##----------------------------------------------------------
+
+## MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_512_depthwise/BatchNorm/beta not found in checkpoint
+## https://github.com/tensorflow/models/issues/4156
