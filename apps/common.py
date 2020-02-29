@@ -7,7 +7,7 @@ __version__ = '2.0'
 # - Uses 3rd paty lib `arrow` for timezone and timestamp handling
 #   - http://zetcode.com/python/arrow/  
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------
@@ -19,6 +19,7 @@ import json
 import uuid
 import random
 import colorsys
+import string
 
 import numpy as np
 import pandas as pd
@@ -88,17 +89,19 @@ def timestamp():
   return ts
 
 
-def modified_on(filepath):
+def modified_on(filepath, ts=False):
   """returns the last modified timestamp with timezone.
   
   Ref:
   * https://stackoverflow.com/questions/237079/how-to-get-file-creation-modification-date-times-in-python
   """
   modified_on = arrow.Arrow.fromtimestamp(os.stat(filepath).st_mtime).format(_date_format_)
+  if ts:
+    modified_on = timestamp_from_datestring(modified_on)
   return modified_on
 
 
-def fromtimestamp(ts):
+def date_from_timestamp(ts):
   """returns the date object from the given string date in the `_date_format_`
 
   TODO: some warning to the call to get function for api change in the future release
@@ -436,6 +439,30 @@ def str2list(word, dl=','):
   else:
     x = [word]
   return x
+
+
+def id_generator(size=5, chars=string.ascii_uppercase + string.digits):
+  """
+  generator expression
+
+  Credit:
+  https://stackoverflow.com/users/20862/ignacio-vazquez-abrams
+  https://stackoverflow.com/a/2257449
+  """
+  # s = ''.join(random.choices(chars, k=size))
+  s = ''.join(random.SystemRandom().choice(chars) for _ in range(size))
+  return s
+
+
+def chain(_cb, *args, **kwargs):
+  """
+  The proper way to check properties of duck-typed objects is to ask them if they quack, not to see if they fit in a duck-sized container. 
+  Ref:
+  https://realpython.com/python-kwargs-and-args/
+  https://stackoverflow.com/questions/624926/how-do-i-detect-whether-a-python-variable-is-a-function
+  """
+  if _cb and callable(_cb):
+    return _cb(*args, **kwargs)
 
 
 def raise_error(error_type, msg):

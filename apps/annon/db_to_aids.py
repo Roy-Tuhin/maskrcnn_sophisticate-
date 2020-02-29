@@ -12,7 +12,7 @@ __version__ = '3.0'
 * https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html
 #
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------

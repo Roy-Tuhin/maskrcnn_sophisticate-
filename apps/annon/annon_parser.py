@@ -7,7 +7,7 @@ __version__ = '2.0'
 # It uses the annotations created by VGG VIA tool v2.03 (not tested), v2.05 (tested).
 
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------
@@ -85,9 +85,9 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
   Annotation_Data = {}
   Error = {}
 
-  annon_filename = os.path.basename(annon_filepath)
+  ref = annonutils.parse_annon_filename(annon_filepath)
+  annon_filename = ref['rel_filename']
   log.info("annon_filename: {}".format(annon_filename))
-  ref = annonutils.parse_annon_filename(annon_filename)
 
   total_stats = {
     "image_rel_date":ref['image_rel_date']
@@ -106,11 +106,14 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
   AICATS = cfg['AICATS']
   VALID_ANNON_TYPE = cfg['VALID_ANNON_TYPE']
   ERROR_TYPES = cfg['ERROR_TYPES']
+  EMPTY_ANT = cfg['EMPTY_ANT']
+  log.debug("EMPTY_ANT: {}".format(EMPTY_ANT))
 
   ## Error Table Structure for different error type
   if annon_filename not in Error:
     Error[annon_filename] = {
       'rel_filename': annon_filename
+      ,'rel_filepath': annon_filepath
       ,"created_on": common.now()
       ,"has_error": False
       ,"modified_on": None
@@ -197,6 +200,7 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
       ,'width': im_width
       ,'height': im_height
       ,'rel_filename': annon_filename
+      ,'rel_filepath': annon_filepath
       ,"created_on": common.now()
       ,"modified_on": None
     }
@@ -307,6 +311,7 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
         ,"annotation_rel_date": ref['annotation_rel_date']
         ,"annotation_tool": ref['annotation_tool']
         ,'rel_filename': annon_filename
+        ,'rel_filepath': annon_filepath
         ,'dir': annon_dir
         ,'annon_index': i
         ,'filepath': filepath_ant
@@ -339,6 +344,7 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
         ,'file_id': ak
         ,'image_file_id': ak
         ,'rel_filename': annon_filename
+        ,'rel_filepath': annon_filepath
         ,'ant_type': ant_type
         ,'lbl_id': None
         ,'category_id': None
@@ -363,7 +369,7 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
       ## case-2 when region_attributes[i] is non-empty but AICATS have not been assigned value
 
       ## magic happens in  this function call - this is tricky
-      v = create_label(region_attributes[i], AICATS, labels)
+      v = create_label(region_attributes[i], AICATS, labels, empty_ant=EMPTY_ANT)
 
       for j in v:
         if annotation_info['lbl_id'] == None:
@@ -418,7 +424,7 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
         if 'unlabeled_annotation' not in Error[annon_filename]:
           Error[annon_filename]['unlabeled_annotation'] = []
 
-        wanted_keys = ['ant_id','img_id','image_name','file_id','ant_type','lbl_id',"image_rel_date","image_part",'image_dir','image_filepath',"annotator_id","annotation_rel_date","annotation_tool",'rel_filename','annon_index','filepath','filename',"anndb_id","created_on","modified_on"]
+        wanted_keys = ['ant_id','img_id','image_name','file_id','ant_type','lbl_id',"image_rel_date","image_part",'image_dir','image_filepath',"annotator_id","annotation_rel_date","annotation_tool",'rel_filename','rel_filepath','annon_index','filepath','filename',"anndb_id","created_on","modified_on"]
         unlabeled_annotation = {k: annotation_info[k] for k in set(wanted_keys) & set(annotation_info.keys())}
         Error[annon_filename]['unlabeled_annotation'].append(unlabeled_annotation)
         Error[annon_filename]['has_error'] = True
@@ -458,7 +464,7 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
 
   log.info("Total Stats: {}".format(total_stats))
 
-  Stats = generate_stats_from_labels(labels, annon_filename)
+  Stats = generate_stats_from_labels(labels, annon_filepath)
 
   annondata = {
     'Dataset':annotations
@@ -476,7 +482,7 @@ def get_annon(cfg, annotations, annon_filepath, base_from_path):
   return annondata
 
 
-def create_label(ra, AICATS, labels, filter_by=None):
+def create_label(ra, AICATS, labels, filter_by=None, empty_ant=None):
   # log.info("create_label: {}".format(ra.items()))
   if ra:
     for k,v in ra.items():
@@ -492,9 +498,14 @@ def create_label(ra, AICATS, labels, filter_by=None):
             labels[v] = {}
             # log.info("k,v:{} {}".format(k,v))
         yield v
+  else:
+    if empty_ant:
+      v = empty_ant
+      labels[v] = {}
+      yield v
 
 
-def generate_stats_from_labels(labels, annon_filename):
+def generate_stats_from_labels(labels, annon_filepath):
   """Creates Label-wise information and save them into `label-<labelName>.json` and `image-<labelName>.txt` files.
 
   TODO:
@@ -505,9 +516,10 @@ def generate_stats_from_labels(labels, annon_filename):
   """
   total = 0
   total_str = ''
-  ref = annonutils.parse_annon_filename(annon_filename)
+  ref = annonutils.parse_annon_filename(annon_filepath)
   stats = {
-    "rel_filename": annon_filename
+    "rel_filename": ref['rel_filename']
+    ,'rel_filepath': annon_filepath
     ,"image_rel_date": str(ref['image_rel_date'])
     ,"image_part": ref['image_part']
     ,"annotator_id": ref['annotator_id'] 

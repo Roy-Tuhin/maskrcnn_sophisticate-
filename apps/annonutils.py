@@ -6,7 +6,7 @@ __version__ = '2.0'
 # Annon workflow specific utility functions.
 #
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------
@@ -94,7 +94,7 @@ def write2db(db, tblname, tbldata, idx_col=None):
   # log.info("--x--x--x--")
 
 
-def parse_annon_filename(name):
+def parse_annon_filename(filepath):
   """Annotation file names are semantically named such that it empowers for different
   types of annotations in computer vision tasks to be carried out without duplicating
   the images on the filesystem. And, different annotators can annotate same image for
@@ -122,16 +122,31 @@ def parse_annon_filename(name):
       'p1' => part ID of the images
       '230191' => date on which the images cut was taken and assigned to the annotators
   """
-  ref = os.path.splitext(name)[0].split('_')
-  ref_img = ref[0].split('-')
-  name_ids = {
-    "image_rel_date": str(ref_img[2])
-    ,"image_part": "-".join(ref_img[:2])
-    ,"annotator_id": ref[1]
-    ,"annotation_rel_date": str(ref[3])
-    ,"annotation_tool": ref[2]
-    ,"image_dir": '_'.join(ref[:2])
-  }
+
+  name = os.path.basename(filepath)
+  try:
+    ref = os.path.splitext(name)[0].split('_')
+    ref_img = ref[0].split('-')
+    name_ids = {
+      "image_rel_date": str(ref_img[2])
+      ,"image_part": "-".join(ref_img[:2])
+      ,"annotator_id": ref[1]
+      ,"annotation_rel_date": str(ref[3])
+      ,"annotation_tool": ref[2]
+      ,"image_dir": '_'.join(ref[:2])
+      ,"rel_filename": name
+    }
+  except Exception as e:
+    log.info("Unable to parse annontation filename, hence falling back to defaults", exc_info=True)
+    name_ids = {
+      "image_rel_date": common.modified_on(filepath, True)
+      ,"image_part": None
+      ,"annotator_id": common.id_generator(5)
+      ,"annotation_rel_date": common.timestamp()
+      ,"annotation_tool": None
+      ,"image_dir": os.path.dirname(filepath)
+      ,"rel_filename": name
+    }
 
   log.info("name_ids: {}".format(name_ids))
 

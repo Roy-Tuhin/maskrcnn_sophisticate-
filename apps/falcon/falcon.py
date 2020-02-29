@@ -4,7 +4,7 @@ __version__ = '1.0'
 # Falcon framework for end-to-end DNN workflow
 
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------

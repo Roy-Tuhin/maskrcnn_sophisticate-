@@ -3,9 +3,9 @@ __version__ = '1.0'
 """
 # lanenet
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar, nikhilbv
 # Licensed under [see LICENSE for details]
-# Written by mangalbhaskar, nikhil
+# Written by mangalbhaskar, nikhilbv
 # --------------------------------------------------------
 """
 import os

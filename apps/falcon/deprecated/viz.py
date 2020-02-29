@@ -22,7 +22,7 @@ Key contribution:
 * saving the annotated mask only
 * annotation results as json response for consumption in API, VGG VIA compatible results
 
-Copyright (c) 2019 Vidteq India Pvt. Ltd.
+Copyright (c) 2020 mangalbhaskar
 Licensed under [see LICENSE for details]
 Written by mangalbhaskar
 ------------------------------------------------------------

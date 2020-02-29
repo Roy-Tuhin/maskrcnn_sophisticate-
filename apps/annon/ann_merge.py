@@ -7,7 +7,7 @@ __version__ = '2.0'
 # It uses the annotations created by VGG VIA tool v2.03 (not tested), v2.05 (tested).
 
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------
@@ -110,7 +110,7 @@ def merge_ann(cfg, from_path, to_path, move_file=False):
         ## if annotations, read it fetch images from it
         if y == 'annotations':
           with open(src_filepath,'r') as fr:
-            ref = annonutils.parse_annon_filename(filename)
+            ref = annonutils.parse_annon_filename(src_filepath)
             annotations = json.load(fr)
             annon_file_name = {}
             for ak,av in annotations.items():

@@ -1,7 +1,31 @@
-## Adapted from here:
-## Credit: https://github.com/tensorflow/models/issues/1601#issuecomment-533659942
-## NOTE:
-## 1. tensorflow object_detection module should be in the PYTHONPATH
+__author__ = 'mangalbhaskar'
+__version__ = '1.0'
+"""
+## Description:
+# --------------------------------------------------------
+# Annotation Parser Interface for Annotation workflow.
+# Create the Label for TFRecord format from in a coco format for object detection and segmentation
+#
+# --------------------------------------------------------
+# Copyright (c) 2020 mangalbhaskar
+# Licensed under [see LICENSE for details]
+# Written by mangalbhaskar
+#
+# Adapted from here:
+# Credit: https://github.com/tensorflow/models/issues/1601#issuecomment-533659942
+# NOTE:
+# 1. tensorflow object_detection module should be in the PYTHONPATH
+# --------------------------------------------------------
+## Example:
+# --------------------------------------------------------
+
+## TODO:
+# --------------------------------------------------------
+
+## Future wok:
+# --------------------------------------------------------
+
+"""
 
 from google.protobuf import text_format
 from object_detection.protos.string_int_label_map_pb2 import StringIntLabelMap, StringIntLabelMapItem

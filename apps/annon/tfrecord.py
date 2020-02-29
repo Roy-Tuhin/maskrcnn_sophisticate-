@@ -1,3 +1,26 @@
+__author__ = 'mangalbhaskar'
+__version__ = '1.0'
+"""
+## Description:
+# --------------------------------------------------------
+# Annotation Parser Interface for Annotation workflow.
+# Create the TFRecord format from in a coco format for object detection and segmentation
+#
+# --------------------------------------------------------
+# Copyright (c) 2020 mangalbhaskar
+# Licensed under [see LICENSE for details]
+# Written by mangalbhaskar
+# --------------------------------------------------------
+## Example:
+# --------------------------------------------------------
+
+## TODO:
+# --------------------------------------------------------
+
+## Future wok:
+# --------------------------------------------------------
+
+"""
 import os
 import logging
 import hashlib

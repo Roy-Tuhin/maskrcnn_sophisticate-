@@ -2,9 +2,9 @@
 Pixel DNN Framework
 Base Configurations class.
 
-Copyright (c) 2019 Vidteq India Pvt. Ltd.
-Licensed under the MIT License (see LICENSE for details)
-Written by Bhaskar Mangal
+Copyright (c) 2020 mangalbhaskar
+Licensed under [see LICENSE for details]
+Written by mangalbhaskar
 """
 import os
 
