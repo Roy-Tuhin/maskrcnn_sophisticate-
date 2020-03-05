@@ -98,6 +98,8 @@ function aimldl_main() {
     local ai_doc_base_path=${AI_DOC_BASE_PATH}
     local ai_rpt_base_path=${AI_RPT_BASE_PATH}
     local ai_kbank_base_path=${AI_KBANK_BASE_PATH}
+
+    local ai_tf_od_api_path=${AI_TF_OD_API_PATH}
     ### -------
 
     declare -a ai_remote_machine_ids=(${AI_REMOTE_MACHINE_IDS[@]})
@@ -134,6 +136,9 @@ function aimldl_main() {
 
     AI_ENVVARS['AI_REPORTS']="${ai_rpt_base_path}"
     AI_ENVVARS['AI_KBANK']="${ai_kbank_base_path}"
+
+    AI_ENVVARS['AI_TF_OD_API_PATH']="${ai_tf_od_api_path}"
+    AI_ENVVARS['AI_TFR']="${ai_data_base_path}/tfrecords"
 
     AI_ENVVARS['AI_WEIGHTS_PATH']="${AI_ENVVARS['AI_DATA']}/${ai_weights_path}"
 

@@ -4,7 +4,7 @@ __version__ = '1.0'
 # Flask based web api
 # Note: Redis server should be running, before running this script
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------

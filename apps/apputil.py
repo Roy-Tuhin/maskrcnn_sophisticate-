@@ -3,7 +3,7 @@ __version__ = '1.0'
 """
 # Utility functions
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------
@@ -132,7 +132,7 @@ def get_abs_path(appcfg, param, ptype=None):
   elif ptype and ptype == 'AI_WEIGHTS_PATH':
     abs_path = os.path.join(appcfg['PATHS'][ptype], param['weights_path'])
   elif ptype and ptype == 'AI_ANNON_DATA_HOME_LOCAL':
-    abs_path = os.path.join(appcfg['PATHS'][ptype], param['dir'])
+    abs_path = os.path.join(appcfg['PATHS'][ptype], param['dir']) if param['dir'] else appcfg['PATHS'][ptype]
 
   return abs_path
 

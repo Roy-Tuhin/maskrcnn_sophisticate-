@@ -32,8 +32,9 @@ declare -a AI_DATA_DIRS=(
   "logs"
   "logs/www"
   "logs/www/uploads"
-  "samples"
   "release"
+  "samples"
+  "tfrecords"
 )
 
 ## ---------------------------------##
@@ -88,12 +89,18 @@ local AI_DOC_BASE_PATH="/${AI_DIR_PREFIX}-doc"
 local AI_RPT_BASE_PATH="/${AI_DIR_PREFIX}-rpt"
 local AI_KBANK_BASE_PATH="/${AI_DIR_PREFIX}-kbank"
 
+## for tensorflow object detection api
+local AI_TF_OD_API_PATH="${AI_CODE_BASE_PATH}/external/tensorflow/models/research"
+
 ## ----------IMP--------------------##
 ## This has to be changed manually, and aimldl.setup.sh needs to be executed again!
 local AI_PYVER=3
 local AI_PY_VENV_NAME="py_3-6-9_2019-12-21"
 ## for 'alpha' system
 local AI_PY_VENV_NAME="py_3-6-8_2019-12-25"
+## master
+local AI_PY_VENV_NAME="py_3-6-9_2020-01-28"
+# local AI_PY_VENV_NAME="py_3_20200128_1342"
 
 ## 'alpha' - docker container env
 # local AI_PY_VENV_NAME="py_3_20200122_1504"

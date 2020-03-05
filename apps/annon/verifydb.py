@@ -5,7 +5,7 @@ __version__ = '1.0'
 # --------------------------------------------------------
 # Verify and create summary report from the Database
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------

@@ -7,7 +7,7 @@ __version__ = '2.0'
 # It uses the annotations created by VGG VIA tool v2.03 (not tested), v2.05 (tested).
 
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------
@@ -313,7 +313,8 @@ def save_Stats(cfg, Stats, Total_Stats, dataset=None, annon_filepath=None, dst_d
       json.dump(dataset,fw)
   else:
     log.info("tblname: {}".format(tblname))
-    annonutils.write2db(db, tblname, [stats_total_stats_data], idx_col='rel_filename')
+    # annonutils.write2db(db, tblname, [stats_total_stats_data], idx_col='rel_filename')
+    annonutils.write2db(db, tblname, [stats_total_stats_data], idx_col='rel_filepath')
 
 
 def save_Image(cfg, Image, dst_dir=None, db=None):
@@ -392,7 +393,8 @@ def save_Error(cfg, Error, dst_dir=None, db=None):
         fw.write(json.dumps(Error))
     else:
       log.info("tblname: {}".format(tblname))
-      annonutils.write2db(db, tblname, list(Error.values()), idx_col='rel_filename')
+      # annonutils.write2db(db, tblname, list(Error.values()), idx_col='rel_filename')
+      annonutils.write2db(db, tblname, list(Error.values()), idx_col='rel_filepath')
 
 
 def save_Annotation_Data(cfg, Annotation_Data, ant_data_dir=None, db=None):
@@ -517,6 +519,7 @@ def release_files(cfg, args):
       log.info("created_on: {}".format(created_on))
 
       cfg['LOG']['COLS']['rel_filename'] = annon_filename
+      cfg['LOG']['COLS']['rel_filename'] = annon_filepath
       annondata = annon_parser.parse_annon_file(cfg, annon_filepath, base_from_path)
       total_annon_file_processed += 1
 
@@ -582,6 +585,10 @@ def release_db(cfg, args):
   if not os.path.exists(args.from_path):
     raise NotADirectoryError("{}".format(args.from_path))
 
+  dbname = None
+  if 'to_path' in args and not os.path.exists(args.to_path):
+    dbname = args.to_path
+
   from_path = args.from_path
 
   tic = time.time()
@@ -619,8 +626,8 @@ def release_db(cfg, args):
   DBCFG = cfg['DBCFG']
   ANNONCFG = DBCFG['ANNONCFG']
   mclient = MongoClient('mongodb://'+ANNONCFG['host']+':'+str(ANNONCFG['port']))
-  dbname = ANNONCFG['dbname']
-  log.info("ANNONCFG['dbname']: {}".format(dbname))
+  dbname = ANNONCFG['dbname'] if not dbname else dbname
+  log.info("dbname: {}".format(dbname))
   db = mclient[dbname]
 
   rel_tblname = annonutils.get_tblname('RELEASE')
@@ -637,7 +644,8 @@ def release_db(cfg, args):
     annon_filename = os.path.basename(annon_filepath)
 
     ## check if the file is parsed: skip the processing in normal mode of the already parsed file
-    res = log_collection.find_one({'rel_filename': annon_filename})
+    # res = log_collection.find_one({'rel_filename': annon_filename})
+    res = log_collection.find_one({'rel_filepath': annon_filepath})
     
     ## TODO: in update mode
     ## delete the entries of annotations and images before inserting the values of the same file again 
@@ -649,6 +657,7 @@ def release_db(cfg, args):
       log.info("created_on: {}".format(created_on))
 
       cfg['LOG']['COLS']['rel_filename'] = annon_filename
+      cfg['LOG']['COLS']['rel_filepath'] = annon_filepath
       annondata = annon_parser.parse_annon_file(cfg, annon_filepath, base_from_path)
       total_annon_file_processed += 1
 
@@ -709,7 +718,7 @@ def release_annon(cfg, args):
 
   createdb = False
   ## Check required args
-  if not args.to_path:
+  if not args.to_path or not os.path.exists(args.to_path):
     createdb = True
 
   log.info("createdb: {}".format(createdb))
@@ -761,6 +770,28 @@ def parse_args(commands):
     ,help='/path/to/anndb_root_OR_aids_root'
     ,required=False)
 
+  parser.add_argument('--unlabel'
+    ,dest='unlabel'
+    ,help='Give the label name for when no annotation attribute is present'
+    ,required=False)
+
+  # parser.add_argument('--informat'
+  #   ,dest='informat'
+  #   ,metavar="[annon | via | coco]"
+  #   ,help='Input data format. Default format is: annon'
+  #   ,default='annon'
+  #   ,required=False)
+
+  # parser.add_argument('--noimgapi'
+  #   ,dest='noimgapi'
+  #   ,help='Do not use Image API, overrides the _annoncfg_'
+  #   ,action='store_true')
+
+  # parser.add_argument('--image_basepath'
+  #   ,dest='image_basepath'
+  #   ,help='image basepath directory to be used.'
+  #   ,required=False)
+
   args = parser.parse_args()
   
   ## Validate arguments
@@ -783,5 +814,11 @@ def parse_args(commands):
 if __name__ == '__main__':
   commands = ['create', 'verify', 'tdd']
   args = parse_args(commands)
+
+  if 'unlabel' in args and args.unlabel:
+    unlabel = args.unlabel
+    appcfg['EMPTY_ANT'] = unlabel
+    appcfg['AICATS'] += unlabel
+    log.info("appcfg['EMPTY_ANT']: {}".format(appcfg['EMPTY_ANT']))
 
   main(appcfg, args)

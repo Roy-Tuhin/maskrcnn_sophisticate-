@@ -7,7 +7,7 @@ __version__ = '1.0'
 # It uses the annotations created by VGG VIA tool v2.03 (not tested), v2.05 (tested).
 
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------

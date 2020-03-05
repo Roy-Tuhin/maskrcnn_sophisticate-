@@ -1,3 +1,70 @@
+## TODO
+
+* https://chamaradodandeniya.wordpress.com/2019/04/16/how-to-configure-google-colab-for-object-detection-using-tensorflow/
+
+
+whereis cudnn.h
+
+cudnn: /usr/include/cudnn.h
+cat /usr/include/x86_64-linux-gnu/cudnn_v*.h | grep CUDNN_MAJOR -A 2
+
+whereis cuda
+cuda: /usr/local/cuda
+
+https://stackoverflow.com/questions/31326015/how-to-verify-cudnn-installation
+
+sudo dpkg -i libcudnn7-doc_7.6.5.32-1+cuda10.2_amd64.deb
+https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html#verify
+
+
+https://devtalk.nvidia.com/default/topic/1068031/cudnn/geforce-gtx-1660-super-cuda-not-working-in-anaconda
+python -m pip freeze | grep -i -e tensorflow -e keras
+
+
+
+https://medium.com/@adwin596/solved-error-failed-to-get-convolution-algorithm-4396982082a7
+
+sudo ldconfig -v | grep cudnn
+
+ocate libcudnn.so.7
+/usr/lib/x86_64-linux-gnu/libcudnn.so.7
+/usr/lib/x86_64-linux-gnu/libcudnn.so.7.6.4
+
+l /usr/lib/x86_64-linux-gnu/libcudnn.so.7
+lrwxrwxrwx 1 root root 17 Oct 28 04:36 /usr/lib/x86_64-linux-gnu/libcudnn.so.7 -> libcudnn.so.7.6.5
+
+https://ngc.nvidia.com/catalog/all?orderBy=modifiedDESC&pageNumber=1&query=&quickFilter=&filters=
+
+https://forum.faceswap.dev/viewtopic.php?f=4&p=1538
+
+export TF_FORCE_GPU_ALLOW_GROWTH=true
+
+2020-03-02 02:22:40.758431: W tensorflow/core/common_runtime/gpu/gpu_bfc_allocator.cc:39] Overriding allow_growth setting because the TF_FORCE_GPU_ALLOW_GROWTH environment variable is set. Original config value was 0.
+
+export TF_FORCE_ALLOW_SOFT_PLACEMENT=true
+lower the batch size and check which batch size works
+
+2020-03-02 02:30:15.201418: W tensorflow/core/framework/op_kernel.cc:1639] Invalid argument: TypeError: object of type <class 'numpy.float64'> cannot be safely interpreted as an integer.
+Traceback (most recent call last):
+
+  File "/virtualmachines/virtualenvs/py_3-6-9_2020-01-28/lib/python3.6/site-packages/numpy/core/function_base.py", line 117, in linspace
+    num = operator.index(num)
+
+TypeError: 'numpy.float64' object cannot be interpreted as an integer
+
+
+import numpy as np
+np.__version__
+'1.18.1'
+
+
+https://stackoverflow.com/questions/4888027/python-and-pip-list-all-versions-of-a-package-thats-available
+
+
+pip install yolk3k
+
+pip install numpy==
+pip install numpy==1.17.5
 
 ## TF object_detection API
 

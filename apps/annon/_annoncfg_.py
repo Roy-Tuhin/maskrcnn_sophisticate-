@@ -27,6 +27,7 @@ appcfg = {
     ,'polyline':['all_points_x','all_points_y']
     # ,'point':['cx','cy']
   }
+  ,'EMPTY_ANT':None
   ,'FILES':{
     'IMAGES':'IMAGES.json'
     ,'ANNOTATIONS':'ANNOTATIONS.json'

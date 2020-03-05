@@ -3,7 +3,7 @@ __version__ = '1.0'
 """
 # Utility functions
 # --------------------------------------------------------
-# Copyright (c) 2019 Vidteq India Pvt. Ltd.
+# Copyright (c) 2020 mangalbhaskar
 # Licensed under [see LICENSE for details]
 # Written by mangalbhaskar
 # --------------------------------------------------------
@@ -758,7 +758,7 @@ def detect_from_videos(appcfg, dnnmod, videos, path, model, class_names, cmdcfg,
   * saving the annotated mask only
   * annotation results as json response for consumption in API, VGG VIA compatible results
 
-  Copyright (c) 2019 Vidteq India Pvt. Ltd.
+  Copyright (c) 2020 mangalbhaskar
   Licensed under [see LICENSE for details]
   Written by mangalbhaskar
   ---

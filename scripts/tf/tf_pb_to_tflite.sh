@@ -12,8 +12,11 @@
 ## tf mobilenet-v2
 ##----------------------------------------------------------
 
+# model_basepath=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco-25022020_175950/TFLite_model/270220_151738
+model_basepath=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_annon-280220_172500/TFLite_model/290220_163433
+
+
 model=tflite_graph
-model_basepath=/aimldl-dat/logs/tf_ods/ssd_mobilenet_v2_coco-25022020_175950/TFLite_model/270220_151738
 input_arrays=normalized_input_image_tensor
 input_shapes='1,300,300,3'
 # output_arrays='MobilenetV2/Predictions/Reshape_1'

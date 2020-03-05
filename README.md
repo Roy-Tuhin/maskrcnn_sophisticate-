@@ -108,6 +108,9 @@ tags: ubuntu, linuxscripts, docker, aimldl, android, raspberry-pi
   * [How to update the production system](readme/how_to_update_the_production_system.md)
 * **archives - only for references; deprecated**
   * [How to setup lanenet and api port](readme/how_to_setup_lanenet_and_api_port.md)
+* **Tensorflow Object Detection API & Mobilenet**
+  * [Tensorflow Object Detection API & Mobilenet](readme/tensorflow-object-detection-api.md)
+  * [TensorFlow Lite Converter - TOCO](readme/tensorflow-toco.md)
 
 
 ### Design & Specifications 
