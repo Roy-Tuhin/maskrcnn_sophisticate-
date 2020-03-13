@@ -1,9 +1,8 @@
 __author__ = 'saqibmobin'
 __version__ = '2.0'
 
-sys.path.insert(1, '/codehub/external/detectron2')
-
 import os
+import cv2
 import sys
 import json
 import random
@@ -11,7 +10,10 @@ import yaml
 import logging
 import logging.config
 from easydict import EasyDict as edict
-import cv2
+import argparse
+from argparse import RawTextHelpFormatter
+
+sys.path.insert(1, '/codehub/external/detectron2')
 
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
@@ -26,19 +28,21 @@ from detectron2.data import MetadataCatalog, DatasetCatalog
 from detectron2.config import config
 from detectron2.engine import DefaultTrainer
 
+AI_CODE_BASE_PATH = '/codehub'
+BASE_PATH_CONFIG = os.path.join(AI_CODE_BASE_PATH,'config')
+APP_ROOT_DIR = os.path.join(AI_CODE_BASE_PATH,'apps')
+
+if APP_ROOT_DIR not in sys.path:
+  sys.path.insert(2, APP_ROOT_DIR)
+
 import _cfg_
 from annon.dataset.Annon import ANNON
 import apputil
 from _log_ import logcfg
 
-AI_CODE_BASE_PATH = '/codehub'
-BASE_PATH_CONFIG = os.path.join(AI_CODE_BASE_PATH,'config')
-APP_ROOT_DIR = os.path.join(AI_CODE_BASE_PATH,'apps')
+from importlib import import_module
+import common
 
-CONFIG = args.arch
-
-if APP_ROOT_DIR not in sys.path:
-  sys.path.insert(2, APP_ROOT_DIR)
 
 log = logging.getLogger(__name__)
 logging.config.dictConfig(logcfg)
@@ -46,14 +50,12 @@ logging.config.dictConfig(logcfg)
 appcfg = _cfg_.load_appcfg(BASE_PATH_CONFIG)
 appcfg = edict(appcfg)
 
-##TODO pass through config
-HOST = "10.4.71.69"
-# AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119"
-# AI_ANNON_DATA_HOME_LOCAL ="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_281219_125647"
-# AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_310120_114556"
-AI_ANNON_DATA_HOME_LOCAL="/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_100220_181246"
-appcfg['APP']['DBCFG']['PXLCFG']['host'] = HOST
-appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'] = AI_ANNON_DATA_HOME_LOCAL
+##DONE pass through config
+with open("config.yml", 'r') as stream:
+    hmd_detectron_config = yaml.safe_load(stream)
+
+appcfg['APP']['DBCFG']['PXLCFG']['host'] = hmd_detectron_config['ANNON']['HOST']
+appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'] = hmd_detectron_config['ANNON']['AI_ANNON_DATA_HOME_LOCAL']
 
 this = sys.modules[__name__]
 
@@ -72,7 +74,7 @@ def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode, config):
     ann_keys = ["iscrowd", "bbox", "keypoints", "category_id", "lbl_id"] + (extra_annotation_keys or [])
     num_instances_without_valid_segmentation = 0
 
-    log.debug("imgs_anns: {}".format(imgs_anns[:2]))
+    # log.debug("imgs_anns: {}".format(imgs_anns[:2]))
 
     for (img_dict, anno_dict_list) in imgs_anns:
         # log.debug("img_dict: {}".format(img_dict))
@@ -95,9 +97,9 @@ def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode, config):
                 image_path = apputil.get_abs_path(cfg, img_dict, 'AI_ANNON_DATA_HOME_LOCAL') ##image_root
                 filepath = os.path.join(image_path, img_dict['filename'])
                 record = {}
-                # record["file_name"] = filepath
-                record["file_name"] = img_dict['filename']
-                record["file_path"] = filepath
+                record["file_name"] = filepath
+                record["image_name"] = img_dict['filename']
+                # record["file_path"] = filepath
                 record["height"] = img_dict["height"]
                 record["width"] = img_dict["width"]
                 image_id = record["image_id"] = img_dict["img_id"] ## coco: id
@@ -122,8 +124,8 @@ def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode, config):
                     py = anno["all_points_y"]
                     poly = [(x + 0.5, y + 0.5) for x, y in zip(px, py)]
                     poly = [p for x in poly for p in x]
-                    segm = [poly if len(poly) % 2 == 0 and len(poly) >= 6]
-
+                    segm = [poly]
+                    segm = [poly for poly in segm if len(poly) % 2 == 0 and len(poly) >= 6]
                     obj["segmentation"] = segm
                     obj["bbox_mode"] = bbox_mode
                     obj["category_id"] = id_map[obj["lbl_id"]] ## category_id
@@ -132,12 +134,13 @@ def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode, config):
                 record["annotations"] = objs
                 dataset_dicts.append(record)
 
-        else if config.MODEL.MASK_ON==False:
+        elif config.MODEL.MASK_ON==False:
+
             image_path = apputil.get_abs_path(cfg, img_dict, 'AI_ANNON_DATA_HOME_LOCAL') ##image_root
             filepath = os.path.join(image_path, img_dict['filename'])
             record = {}
-            record["file_name"] = img_dict['filename']
-            record["file_path"] = filepath
+            record["file_name"] = filepath
+            record["image_name"] = img_dict['filename']
             record["height"] = img_dict["height"]
             record["width"] = img_dict["width"]
             image_id = record["image_id"] = img_dict["img_id"] ## coco: id
@@ -155,7 +158,7 @@ def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode, config):
                 segm = None
                 obj["bbox_mode"] = bbox_mode
                 obj["category_id"] = id_map[obj["lbl_id"]] ## category_id
-                obj["segmentation"] = segm
+                # obj["segmentation"] = segm
                 objs.append(obj)
 
             record["annotations"] = objs
@@ -164,41 +167,34 @@ def get_dataset_dicts(cfg, class_ids, id_map, imgs, anns, bbox_mode, config):
     return dataset_dicts
 
 def get_data(subset, _appcfg):
-    ## TODO: to be passed through cfg
-
-    cmd = "train"
-    # dbname = "PXL-291119_180404"
-    # dbname = "PXL-301219_174758"
-    # dbname = "PXL-310120_175129"
-    dbname = "PXL-100220_192533"
-    exp_id = "train-eee128cb-d7a1-493a-9819-95531f507092"
-    # exp_id = "train-422d30b0-f518-4203-9c4d-b36bd8796c62"
-    # exp_id = "train-d79fe253-60c8-43f7-a3f5-42a4abf97b6c"
-    # exp_id = "train-887c2e82-1faa-4353-91d4-2f4cdc9285c1"
-    eval_on = subset
+    ## DONE: to be passed through cfg
+    CMD = hmd_detectron_config['AIDS']['CMD']
+    DBNAME = hmd_detectron_config['AIDS']['DBNAME']
+    EXP_ID = hmd_detectron_config['AIDS']['EXP_ID']
+    EVAL_ON = subset
     # log.debug(_appcfg)
     # log.info(_appcfg['APP']['DBCFG']['PXLCFG'])
     # log.info(_appcfg['PATHS']['AI_ANNON_DATA_HOME_LOCAL'])
 
     ## datacfg and dbcfg
-    _cfg_.load_datacfg(cmd, _appcfg, dbname, exp_id, eval_on)
+    _cfg_.load_datacfg(CMD, _appcfg, DBNAME, EXP_ID, EVAL_ON)
     datacfg = apputil.get_datacfg(_appcfg)
     dbcfg = apputil.get_dbcfg(_appcfg)
     # log.info("datacfg: {}".format(datacfg))
     # log.info("dbcfg: {}".format(dbcfg))
 
     ## archcfg, cmdcfg
-    _cfg_.load_archcfg(cmd, _appcfg, dbname, exp_id, eval_on)
+    _cfg_.load_archcfg(CMD, _appcfg, DBNAME, EXP_ID, EVAL_ON)
     archcfg = apputil.get_archcfg(_appcfg)
-    log.debug("archcfg: {}".format(archcfg))
+    # log.debug("archcfg: {}".format(archcfg))
     cmdcfg = archcfg
 
     dataset, num_classes, num_images, class_names, total_stats, total_verify = apputil.get_dataset_instance(_appcfg, dbcfg, datacfg, subset)
 
-    log.debug("class_names: {}".format(class_names))
-    log.debug("len(class_names): {}".format(len(class_names)))
-    log.debug("num_classes: {}".format(num_classes))
-    log.debug("num_images: {}".format(num_images))
+    # log.debug("class_names: {}".format(class_names))
+    # log.debug("len(class_names): {}".format(len(class_names)))
+    # log.debug("num_classes: {}".format(num_classes))
+    # log.debug("num_images: {}".format(num_images))
 
     name = dataset.name
     datacfg.name = name
@@ -227,18 +223,111 @@ def get_data(subset, _appcfg):
 def load_and_register_dataset(name, subset, _appcfg):
     class_ids, id_map, imgs, anns = get_data(subset, _appcfg)
 
-    cfg = config.get_cfg()
-    cfg.merge_from_file(CONFIG.TRAIN)
+    conf = Config(args, config)
+    cfg = conf.merge(conf.arch, conf.cfg)
 
     dataset_name = get_dataset_name(name, subset)
     DatasetCatalog.register(dataset_name, lambda subset=subset: get_dataset_dicts(_appcfg, class_ids, id_map, imgs, anns, BoxMode.XYWH_ABS, cfg))
 
     metadata = MetadataCatalog.get(dataset_name)
     metadata.thing_classes = class_ids
+    metadata.thing_dataset_id_to_contiguous_id = id_map
 
     log.info("metadata: {}".format(metadata))
 
     return metadata
+
+def pred_viz(im, outputs, metadata, output_path):
+    v = visualizer.Visualizer(im[:, :, ::-1],
+                   metadata=metadata,
+                   instance_mode=ColorMode.SEGMENTATION
+                )
+    v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+
+    if args.save_viz:
+        cv2.imwrite(output_path, v.get_image()[:, :, ::-1])   
+
+    cv2.imshow('', v.get_image()[:, :, ::-1])
+    cv2.waitKey(0)
+
+def convert_output_to_json(outputs, image_filename, metadata):
+    reverse_id_mapping = {
+                    v: k for k, v in metadata.thing_dataset_id_to_contiguous_id.items()
+                    }
+
+    uid = common.createUUID('pred')
+
+    boxes = outputs['instances'].pred_boxes.tensor.cpu().numpy()
+    boxes = BoxMode.convert(boxes, BoxMode.XYXY_ABS, BoxMode.XYWH_ABS)
+    boxes = boxes.tolist()
+    scores = outputs['instances'].scores.tolist()
+    category_id = outputs['instances'].pred_classes.tolist()
+
+    classes = []                   
+    for cat in category_id:
+        cat_name = reverse_id_mapping[cat]
+        classes.append(cat_name)
+
+    num_instances = len(scores)
+
+    print(outputs)
+
+    if num_instances == 0:
+        return []
+
+    for k in range(num_instances):
+        if k == 0:
+            jsonres = {
+            image_filename: {
+                "filename": image_filename,
+                "size": 0,
+                "regions": [
+                      {
+                        "region_attributes": {
+                          "label": classes[k],
+                          "score": scores[k],
+                        },
+                        "shape_attributes": {
+                          "name": "rect",
+                          "y": boxes[k][0],
+                          "x": boxes[k][1],
+                          "height": boxes[k][2],
+                          "width": boxes[k][3]
+                        }
+                      },
+                    ],
+                "file_attributes": {
+                    "width": 1920,
+                    "height": 1280,
+                    "uuid": uid
+                  }
+                }
+            }
+        else:
+            jsonres[image_filename]["regions"].append({
+                        "region_attributes": {
+                          "label": classes[k],
+                          "score": scores[k],
+                        },
+                        "shape_attributes": {
+                          "name": "rect",
+                          "y": boxes[k][0],
+                          "x": boxes[k][1],
+                          "height": boxes[k][2],
+                          "width": boxes[k][3]
+                        }
+                      })
+
+    return jsonres
+
+class Config():
+    def __init__(self, args, config):
+        self.arch = args.arch
+        self.cfg = config.get_cfg()
+
+    def merge(self, arch, cfg):
+        cfg.merge_from_file(arch)
+        return cfg
 
 ###--------------------------------------->
 
@@ -257,13 +346,10 @@ def visualize(args, mode, _appcfg):
     for d in random.sample(dataset_dicts, N):
             # log.debug("d: {}".format(d))
             # log.debug("annos: {}".format(d.get("annotations", None)))
-            log.debug("annos: {}".format(d.get("annotations", None)[0]))
-            image_filepath = d["file_path"]
-            # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114342_16718_zed_l_057.jpg"
-            # image_filepath = "/aimldl-dat/data-gaze/AIML_Annotation/ods_job_230119/images/images-p2-050219_AT2/291018_114252_16716_zed_l_099.jpg"
+            # log.debug("annos: {}".format(d.get("annotations", None)[0]))
+            image_filepath = d["file_name"]
             im = cv2.imread(image_filepath)
-         
-            # visualize_predictions(im, outputs, metadata)
+
             v = visualizer.Visualizer(im[:, :, ::-1],
                    metadata=metadata)
 
@@ -276,10 +362,9 @@ def train(args, mode, _appcfg):
     for subset in ["train", "val"]:
         metadata = load_and_register_dataset(name, subset, _appcfg)
 
-    # CONFIG = args.arch
+    conf = Config(args, config)
+    cfg = conf.merge(conf.arch, conf.cfg)
 
-    cfg = config.get_cfg()
-    cfg.merge_from_file(CONFIG.TRAIN)
     cfg.DATASETS.TRAIN = ("hmd_train","hmd_val")
 
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
@@ -291,89 +376,83 @@ def predict(args, mode, _appcfg):
     name = "hmd"
     subset = "val"
 
-    PREDICTION_OUTPUT_PATH = "/aimldl-dat/samples/Predictions"
-
     if args.subset:
         subset = args.subset
+
+    dataset_name = get_dataset_name(name, subset)
+
+    PREDICTION_OUTPUT_PATH = "/aimldl-dat/samples/Predictions"
+
+    conf = Config(args, config)
+    cfg = conf.merge(conf.arch, conf.cfg)
+
+    cfg.DATASETS.TEST = (dataset_name)
+    cfg.OUTPUT_DIR = "/codehub/apps/detectron2/release"
+    cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
+
+    output_pred_filepath = os.path.join(cfg.OUTPUT_DIR, 'pred.json')
+
+    predictor = DefaultPredictor(cfg)
 
     if args.path:
         BASE_IMAGE_PATH = args.path
         
         print("BASE_IMAGE_PATH: {}".format(BASE_IMAGE_PATH))
 
-        dataset_name = get_dataset_name(name, subset)
-
-        cfg = config.get_cfg()
-        cfg.merge_from_file(CONFIG.PREDICT)
-        cfg.DATASETS.TEST = (dataset_name)
-        cfg.OUTPUT_DIR = "/codehub/apps/detectron2/release"
-        cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
-
         # log.debug("cfg: {}".format(cfg.dump()))
         
         #Predict from a directory
-        metadata = MetadataCatalog.get(dataset_name).set(thing_classes=['signage', 'traffic_light', 'traffic_sign'])
-        # log.debug("Metadata: {}".format(metadata))
+        dataset_name = "inference"
+        class_ids = ['signage', 'traffic_light', 'traffic_sign']
+        id_map = {v: i for i, v in enumerate(class_ids)}
+        metadata = MetadataCatalog.get(dataset_name).set(thing_classes=class_ids)
+        metadata.thing_dataset_id_to_contiguous_id = id_map
 
+        log.debug("Metadata: {}".format(metadata))
 
-        predictor = DefaultPredictor(cfg)
+        json_arr = []
+        for image_filename in os.listdir(BASE_IMAGE_PATH):
 
-        for image in os.listdir(BASE_IMAGE_PATH):
-
-            image_filepath = os.path.join(BASE_IMAGE_PATH, image)
-            output_path = PREDICTION_OUTPUT_PATH + "/" + image
+            image_filepath = os.path.join(BASE_IMAGE_PATH, image_filename)
+            output_path = PREDICTION_OUTPUT_PATH + "/" + image_filename
 
             im = cv2.imread(image_filepath)
             outputs = predictor(im)
 
-            # visualize_predictions(im, outputs, metadata)
-            v = visualizer.Visualizer(im[:, :, ::-1],
-                   metadata=metadata,
-                   instance_mode=ColorMode.SEGMENTATION)
-            v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+            jsonres = convert_output_to_json(outputs, image_filename, metadata)
+            json_arr.append(jsonres)
 
-            ##Uncomment to save predictions
-            # cv2.imwrite(output_path, v.get_image()[:, :, ::-1])
+            pred_viz(im, outputs, metadata, output_path)
 
-            cv2.imshow('', v.get_image()[:, :, ::-1])
-            cv2.waitKey(0)
+        if args.save_json:
+            with open(output_pred_filepath,'a') as fw:
+                fw.write(json.dumps(json_arr))
 
     else:
         #Predict from dataset
         metadata = load_and_register_dataset(name, subset, _appcfg)
         dataset_dicts = DatasetCatalog.get(dataset_name)
 
-        output_pred_filepath = os.path.join(cfg.OUTPUT_DIR, 'pred.json')
+        N = 20
+        
+        json_arr = []
+        for d in random.sample(dataset_dicts, N):
+            image_filepath = d["file_name"]
+            image_filename = d["image_name"]
+            output_path = PREDICTION_OUTPUT_PATH + "/" + image_filename
 
-        N = 10
-        with open(output_pred_filepath,'a') as fw:
-            # for i, d in enumerate(dataset_dicts):
-            for d in random.sample(dataset_dicts, N):
-                image_filepath = d["file_path"]
-                image_filename = d["file_name"]
-                output_path = PREDICTION_OUTPUT_PATH + "/" + image_filename
+            im = cv2.imread(image_filepath)
+         
+            outputs = predictor(im)
 
-                im = cv2.imread(image_filepath)
-             
-                outputs = predictor(im)
+            jsonres = convert_output_to_json(outputs, image_filename, metadata)
+            json_arr.append(jsonres)
 
-                one = { 'result' : outputs, 'filepath': image_filepath}
-                fw.write(json.dumps(str(one)))
-                fw.write('\n')
+            pred_viz(im, outputs, metadata, output_path)
 
-                print(one)
-                # visualize_predictions(im, outputs, metadata)
-                v = visualizer.Visualizer(im[:, :, ::-1],
-                       metadata=metadata,
-                       instance_mode=ColorMode.SEGMENTATION
-                )
-                v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-
-                ##Uncomment to save predictions
-                # cv2.imwrite(output_path, v.get_image()[:, :, ::-1])   
-
-                cv2.imshow('', v.get_image()[:, :, ::-1])
-                cv2.waitKey(0)
+        if args.save_json:
+            with open(output_pred_filepath,'a') as fw:
+                fw.write(json.dumps(json_arr))
 
 def evaluate(args, mode, _appcfg):
     name = "hmd"
@@ -382,17 +461,12 @@ def evaluate(args, mode, _appcfg):
     if args.subset:
         subset = args.subset
     
-    #uncomment if using trainer.model
-    # for subset in ["train", "val"]:
-    #     metadata = load_and_register_dataset(name, subset, _appcfg)
-    
     metadata = load_and_register_dataset(name, subset, _appcfg)    
     dataset_name = get_dataset_name(name, subset)
     dataset_dicts = DatasetCatalog.get(dataset_name)
 
-    cfg = config.get_cfg()
-    cfg.merge_from_file(CONFIG.EVALUATE)
-    # cfg.DATASETS.TRAIN = ("hmd_train","hmd_val")
+    conf = Config(args, config)
+    cfg = conf.merge(conf.arch, conf.cfg)
     cfg.DATASETS.TEST = (dataset_name)
 
 
@@ -401,13 +475,6 @@ def evaluate(args, mode, _appcfg):
 
     _loader = build_detection_test_loader(cfg, dataset_name)
     evaluator = COCOEvaluator(dataset_name, cfg, False, output_dir=cfg.OUTPUT_DIR)
-
-    # trainer = DefaultTrainer(cfg)
-    # trainer.resume_or_load(resume=True)
-    # model = trainer.model
-
-    # predictor = DefaultPredictor(cfg)
-    # model = predictor.model
 
     file_path = cfg.MODEL.WEIGHTS
     model = build_model(cfg)
@@ -431,9 +498,9 @@ def main(args):
 
     fn = getattr(this, cmd)
 
-    log.debug("fn: {}".format(fn))
-    log.debug("cmd: {}".format(cmd))
-    log.debug("---x---x---x---")
+    # log.debug("fn: {}".format(fn))
+    # log.debug("cmd: {}".format(cmd))
+    # log.debug("---x---x---x---")
     if fn:
       ## Within the specific command, route to python module for specific architecture
       fn(args, mode, appcfg)
@@ -446,8 +513,6 @@ def main(args):
 
 
 def parse_args(commands):
-  import argparse
-  from argparse import RawTextHelpFormatter
   
   ## Parse command line arguments
   parser = argparse.ArgumentParser(
@@ -474,6 +539,16 @@ def parse_args(commands):
                         metavar="datatset split subset",
                         required=False,
                         help='subset of dataset split')
+
+  parser.add_argument('--save_viz',
+                        dest='save_viz',
+                        help='Save the visualization for `predict`',
+                        action='store_true')
+
+  parser.add_argument('--save_json',
+                        dest='save_json',
+                        help='Save the json response for `predict`',
+                        action='store_true')
 
 
   args = parser.parse_args()    

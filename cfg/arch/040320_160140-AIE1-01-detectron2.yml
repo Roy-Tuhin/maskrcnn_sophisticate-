@@ -1,51 +1,20 @@
 # _BASE_: "../Base-RCNN-FPN.yaml"
 _BASE_: "/codehub/external/detectron2/configs/Base-RCNN-FPN.yaml"
-CREATER: "AIE1"
-TRAIN:
-  MODEL:
-    # WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
-    WEIGHTS: "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl" # initialize from model zoo
-    MASK_ON: True
-    RESNETS:
-      DEPTH: 50
-  DATALOADER:
-    NUM_WORKERS: 2
-  SOLVER:
-    IMS_PER_BATCH: 2
-    BASE_LR: 0.00025
-    STEPS: (210000, 250000)
-    MAX_ITER: 270000
-    ROI_HEADS.BATCH_SIZE_PER_IMAGE: 512
-    ROI_HEADS.NUM_CLASSES: 3
-PREDICT:
-  MODEL:
-    WEIGHTS: "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl" # initialize from model zoo
-    MASK_ON: True
-    RESNETS:
-      DEPTH: 50
-    ROI_HEADS.SCORE_THRESH_TEST: 0.7
-  DATALOADER:
-    NUM_WORKERS: 2
-  SOLVER:
-    IMS_PER_BATCH: 2
-    BASE_LR: 0.00025
-    STEPS: (210000, 250000)
-    MAX_ITER: 270000
-    ROI_HEADS.BATCH_SIZE_PER_IMAGE: 512
-    ROI_HEADS.NUM_CLASSES: 3
-EVALUATE:
-  MODEL:
-    WEIGHTS: "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl" # initialize from model zoo
-    MASK_ON: True
-    RESNETS:
-      DEPTH: 50
-    ROI_HEADS.SCORE_THRESH_TEST: 0.7
-  DATALOADER:
-    NUM_WORKERS: 2
-  SOLVER:
-    IMS_PER_BATCH: 2
-    BASE_LR: 0.00025
-    STEPS: (210000, 250000)
-    MAX_ITER: 270000
-    ROI_HEADS.BATCH_SIZE_PER_IMAGE: 512
-    ROI_HEADS.NUM_CLASSES: 3
+MODEL:
+  # WEIGHTS: "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl" # initialize from model zoo
+  WEIGHTS: "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_101_FPN_3x/138205316/model_final_a3ec72.pkl" 
+  MASK_ON: False
+  RESNETS:
+    DEPTH: 101
+  ROI_HEADS:
+    SCORE_THRESH_TEST: 0.7
+    BATCH_SIZE_PER_IMAGE: 256
+    NUM_CLASSES: 3
+DATALOADER:
+  NUM_WORKERS: 2
+SOLVER:
+  IMS_PER_BATCH: 2
+  BASE_LR: 0.00025
+  # BASE_LR: 0.00050
+  STEPS: (210000, 250000)
+  MAX_ITER: 270000
