@@ -52,7 +52,7 @@ def get_ipm_image(image, ipm_remap_file_path):
   converts given image to birds-eye-view based on the given path to the IPM matrix
   and return the re-projected image as numpy array.
 
-  Notte: re-projected images size is changed
+  Note: re-projected images size is changed
   """
   image = prepare_image(image)
 
@@ -61,7 +61,7 @@ def get_ipm_image(image, ipm_remap_file_path):
   remap_to_ipm_y = remap_file_load_ret['remap_to_ipm_y']
 
   ipm_image = cv2.remap(image, remap_to_ipm_x, remap_to_ipm_y, interpolation=cv2.INTER_NEAREST)
+  height, width = ipm_image.shape[0], ipm_image.shape[1]
   im = Image.fromarray(ipm_image)
 
-  return im
-  
+  return im, height, width

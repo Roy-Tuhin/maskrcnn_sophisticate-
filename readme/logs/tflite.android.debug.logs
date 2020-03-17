@@ -1,0 +1,132 @@
+2020-03-17 19:37:10.394 16558-16558/org.tensorflow.lite.examples.detection I/tensorflow: DetectorActivity: Initializing at size 640x480
+2020-03-17 19:37:10.398 16558-16558/org.tensorflow.lite.examples.detection D/CameraManager: mHypnusCtrl is true
+2020-03-17 19:37:10.403 16558-16558/org.tensorflow.lite.examples.detection E/libc: Access denied finding property "persist.vendor.camera.privapp.list"
+2020-03-17 19:37:10.469 16558-16558/org.tensorflow.lite.examples.detection E/tensorflow: CameraConnectionFragment: Exception!
+    android.hardware.camera2.CameraAccessException: CAMERA_DISABLED (1): validateClientPermissionsLocked:1199: Caller "org.tensorflow.lite.examples.detection" (PID 10192, UID 16558) cannot open camera "0" from background
+        at android.hardware.camera2.CameraManager.throwAsPublicException(CameraManager.java:763)
+        at android.hardware.camera2.CameraManager.openCameraDeviceUserAsync(CameraManager.java:392)
+        at android.hardware.camera2.CameraManager.openCameraForUid(CameraManager.java:577)
+        at android.hardware.camera2.CameraManager.openCamera(CameraManager.java:505)
+        at org.tensorflow.lite.examples.detection.CameraConnectionFragment.openCamera(CameraConnectionFragment.java:372)
+        at org.tensorflow.lite.examples.detection.CameraConnectionFragment.access$300(CameraConnectionFragment.java:66)
+        at org.tensorflow.lite.examples.detection.CameraConnectionFragment$3.onSurfaceTextureAvailable(CameraConnectionFragment.java:171)
+        at android.view.TextureView.getTextureLayer(TextureView.java:410)
+        at android.view.TextureView.draw(TextureView.java:353)
+        at android.view.View.updateDisplayListIfDirty(View.java:19412)
+        at android.view.View.draw(View.java:20285)
+        at android.view.ViewGroup.drawChild(ViewGroup.java:4448)
+        at android.view.ViewGroup.dispatchDraw(ViewGroup.java:4204)
+        at android.view.View.updateDisplayListIfDirty(View.java:19403)
+        at android.view.View.draw(View.java:20285)
+        at android.view.ViewGroup.drawChild(ViewGroup.java:4448)
+        at android.view.ViewGroup.dispatchDraw(ViewGroup.java:4204)
+        at android.view.View.updateDisplayListIfDirty(View.java:19403)
+        at android.view.View.draw(View.java:20285)
+        at android.view.ViewGroup.drawChild(ViewGroup.java:4448)
+        at android.view.ViewGroup.dispatchDraw(ViewGroup.java:4204)
+        at android.view.View.draw(View.java:20565)
+        at android.view.View.updateDisplayListIfDirty(View.java:19412)
+        at android.view.View.draw(View.java:20285)
+        at android.view.ViewGroup.drawChild(ViewGroup.java:4448)
+        at androidx.coordinatorlayout.widget.CoordinatorLayout.drawChild(CoordinatorLayout.java:1246)
+        at android.view.ViewGroup.dispatchDraw(ViewGroup.java:4204)
+        at android.view.View.draw(View.java:20565)
+        at android.view.View.updateDisplayListIfDirty(View.java:19412)
+        at android.view.View.draw(View.java:20285)
+        at android.view.ViewGroup.drawChild(ViewGroup.java:4448)
+        at android.view.ViewGroup.dispatchDraw(ViewGroup.java:4204)
+        at android.view.View.updateDisplayListIfDirty(View.java:19403)
+        at android.view.View.draw(View.java:20285)
+        at android.view.ViewGroup.drawChild(ViewGroup.java:4448)
+        at android.view.ViewGroup.dispatchDraw(ViewGroup.java:4204)
+        at android.view.View.updateDisplayListIfDirty(View.java:19403)
+        at android.view.View.draw(View.java:20285)
+        at android.view.ViewGroup.drawChild(ViewGroup.java:4448)
+        at android.view.ViewGroup.dispatchDraw(ViewGroup.java:4204)
+        at android.view.View.updateDisplayListIfDirty(View.java:19403)
+        at android.view.View.draw(View.java:20285)
+        at android.view.ViewGroup.drawChild(ViewGroup.java:4448)
+        at android.view.ViewGroup.dispatchDraw(ViewGroup.java:4204)
+        at android.view.View.updateDisplayListIfDirty(View.java:19403)
+        at android.view.View.draw(View.java:20285)
+        at android.view.ViewGroup.drawChild(ViewGroup.java:4448)
+        at android.view.ViewGroup.dispatchDraw(ViewGroup.java:4204)
+        at android.view.View.draw(View.java:20565)
+        at com.android.internal.policy.DecorView.draw(DecorView.java:913)
+        at android.view.View.updateDisplayListIfDirty(View.java:19412)
+        at android.view.ThreadedRenderer.updateViewTreeDisplayList(ThreadedRenderer.java:690)
+        at android.view.ThreadedRenderer.updateRootDisplayList(ThreadedRenderer.java:696)
+        at android.view.ThreadedRenderer.draw(ThreadedRenderer.java:805)
+        at android.view.ViewRootImpl.draw(ViewRootImpl.java:3861)
+        at android.view.ViewRootImpl.performDraw(ViewRootImpl.java:3621)
+        at android.view.ViewRootImpl.performTraversals(ViewRootImpl.java:2924)
+        at android.view.ViewRootImpl.doTraversal(ViewRootImpl.java:1771)
+2020-03-17 19:37:10.473 16558-16558/org.tensorflow.lite.examples.detection E/tensorflow:     at android.view.ViewRootImpl$TraversalRunnable.run(ViewRootImpl.java:8013)
+        at android.view.Choreographer$CallbackRecord.run(Choreographer.java:1084)
+        at android.view.Choreographer.doCallbacks(Choreographer.java:891)
+        at android.view.Choreographer.doFrame(Choreographer.java:818)
+        at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:1070)
+        at android.os.Handler.handleCallback(Handler.java:873)
+        at android.os.Handler.dispatchMessage(Handler.java:99)
+        at android.os.Looper.loop(Looper.java:227)
+        at android.app.ActivityThread.main(ActivityThread.java:7200)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:903)
+     Caused by: android.os.ServiceSpecificException: validateClientPermissionsLocked:1199: Caller "org.tensorflow.lite.examples.detection" (PID 10192, UID 16558) cannot open camera "0" from background (code 6)
+        at android.os.Parcel.createException(Parcel.java:1980)
+        at android.os.Parcel.readException(Parcel.java:1934)
+        at android.os.Parcel.readException(Parcel.java:1884)
+        at android.hardware.ICameraService$Stub$Proxy.connectDevice(ICameraService.java:343)
+        at android.hardware.camera2.CameraManager.openCameraDeviceUserAsync(CameraManager.java:360)
+          ... 68 more
+2020-03-17 19:37:10.622 16558-16558/org.tensorflow.lite.examples.detection I/Choreographer: Skipped 21 frames!  The application may be doing too much work on its main thread.
+2020-03-17 19:37:10.691 16558-16558/org.tensorflow.lite.examples.detection D/tensorflow: CameraActivity: onDestroy org.tensorflow.lite.examples.detection.DetectorActivity@7c132c7
+2020-03-17 19:37:10.716 16558-16558/org.tensorflow.lite.examples.detection I/Choreographer: Skipped 2 frames!  The application may be doing too much work on its main thread.
+2020-03-17 19:37:14.329 16558-16567/org.tensorflow.lite.examples.detection W/System: A resource failed to call close. 
+2020-03-17 19:37:15.928 16558-16558/org.tensorflow.lite.examples.detection W/ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@aa06ff0
+2020-03-17 19:37:15.942 16558-16615/org.tensorflow.lite.examples.detection D/libEGL: [oppo_test] for feedback 1785468: dpy=1
+2020-03-17 19:37:15.985 16558-16558/org.tensorflow.lite.examples.detection D/tensorflow: CameraActivity: onCreate org.tensorflow.lite.examples.detection.DetectorActivity@8e05fee
+2020-03-17 19:37:16.069 16558-16558/org.tensorflow.lite.examples.detection E/libc: Access denied finding property "vendor.camera.aux.packagelist"
+2020-03-17 19:37:16.077 16558-16558/org.tensorflow.lite.examples.detection I/tensorflow: CameraActivity: Camera API lv2?: true
+2020-03-17 19:37:16.084 16558-16558/org.tensorflow.lite.examples.detection D/tensorflow: CameraActivity: onStart org.tensorflow.lite.examples.detection.DetectorActivity@8e05fee
+2020-03-17 19:37:16.086 16558-16558/org.tensorflow.lite.examples.detection D/tensorflow: CameraActivity: onResume org.tensorflow.lite.examples.detection.DetectorActivity@8e05fee
+2020-03-17 19:37:16.093 16558-16558/org.tensorflow.lite.examples.detection D/WindowManager: Add to mViews: DecorView@50d6049[DetectorActivity], this = android.view.WindowManagerGlobal@23ba043,pkg=org.tensorflow.lite.examples.detection
+2020-03-17 19:37:16.138 16558-16558/org.tensorflow.lite.examples.detection I/Choreographer: Skipped 1 frames!  The application may be doing too much work on its main thread.
+2020-03-17 19:37:16.154 16558-16558/org.tensorflow.lite.examples.detection I/tensorflow: CameraConnectionFragment: Desired size: 640x480, min size: 480x480
+2020-03-17 19:37:16.155 16558-16558/org.tensorflow.lite.examples.detection I/tensorflow: CameraConnectionFragment: Valid preview sizes: [4000x3000, 4000x1840, 3840x2160, 3264x2448, 3264x1836, 3264x1552, 3264x1506, 3200x2400, 3000x3000, 2976x2976, 2880x2156, 2872x2154, 2688x1512, 2592x1944, 2592x1940, 2592x1458, 2560x1920, 2340x1080, 2304x1728, 2304x1296, 2280x1080, 2280x1052, 2192x1080, 2048x1536, 1940x1940, 1920x1440, 1920x1080, 1728x1728, 1600x1200, 1560x720, 1440x1080, 1280x960, 1280x768, 1280x720, 1080x1080, 1024x738, 1024x768, 800x600, 800x480, 720x480, 640x480]
+2020-03-17 19:37:16.155 16558-16558/org.tensorflow.lite.examples.detection I/tensorflow: CameraConnectionFragment: Rejected preview sizes: [352x288, 320x240, 176x144]
+2020-03-17 19:37:16.155 16558-16558/org.tensorflow.lite.examples.detection I/tensorflow: CameraConnectionFragment: Exact size match found.
+2020-03-17 19:37:16.157 16558-16558/org.tensorflow.lite.examples.detection W/tensorflow: TFLiteObjectDetectionAPIModel: traffic_sign
+2020-03-17 19:37:16.161 16558-16558/org.tensorflow.lite.examples.detection I/tensorflow: DetectorActivity: Camera orientation relative to screen canvas: 90
+2020-03-17 19:37:16.161 16558-16558/org.tensorflow.lite.examples.detection I/tensorflow: DetectorActivity: Initializing at size 640x480
+2020-03-17 19:37:16.162 16558-16558/org.tensorflow.lite.examples.detection D/CameraManager: mHypnusCtrl is true
+2020-03-17 19:37:16.164 16558-16558/org.tensorflow.lite.examples.detection E/libc: Access denied finding property "persist.vendor.camera.privapp.list"
+2020-03-17 19:37:16.174 16558-16577/org.tensorflow.lite.examples.detection E/libc: Access denied finding property "vendor.camera.aux.packagelist"
+2020-03-17 19:37:16.174 16558-16577/org.tensorflow.lite.examples.detection E/libc: Access denied finding property "vendor.camera.aux.packagelist"
+2020-03-17 19:37:16.177 16558-16571/org.tensorflow.lite.examples.detection E/libc: Access denied finding property "vendor.camera.aux.packagelist"
+2020-03-17 19:37:16.177 16558-16571/org.tensorflow.lite.examples.detection W/CameraManagerGlobal: ignore the torch status update of camera: 3
+2020-03-17 19:37:16.184 16558-16618/org.tensorflow.lite.examples.detection I/tensorflow: CameraConnectionFragment: Opening camera preview: 640x480
+2020-03-17 19:37:16.211 16558-16558/org.tensorflow.lite.examples.detection I/Choreographer: Skipped 3 frames!  The application may be doing too much work on its main thread.
+2020-03-17 19:37:16.558 16558-16589/org.tensorflow.lite.examples.detection D/libEGL: [oppo_test] for feedback 1785468: dpy=1
+2020-03-17 19:37:16.559 16558-16618/org.tensorflow.lite.examples.detection D/tensorflow: CameraActivity: Initializing buffer 0 at size 307200
+2020-03-17 19:37:16.560 16558-16618/org.tensorflow.lite.examples.detection D/tensorflow: CameraActivity: Initializing buffer 1 at size 153599
+2020-03-17 19:37:16.561 16558-16618/org.tensorflow.lite.examples.detection D/tensorflow: CameraActivity: Initializing buffer 2 at size 153599
+2020-03-17 19:37:16.562 16558-16618/org.tensorflow.lite.examples.detection I/tensorflow: DetectorActivity: Preparing image 1 for detection in bg thread.
+2020-03-17 19:37:16.594 16558-16617/org.tensorflow.lite.examples.detection I/tensorflow: DetectorActivity: Running detection on image 1
+2020-03-17 19:37:16.606 16558-16589/org.tensorflow.lite.examples.detection D/libEGL: [oppo_test] for feedback 1785468: dpy=1
+2020-03-17 19:37:16.639 16558-16617/org.tensorflow.lite.examples.detection E/AndroidRuntime: FATAL EXCEPTION: inference
+    Process: org.tensorflow.lite.examples.detection, PID: 16558
+    java.lang.IllegalArgumentException: Cannot convert between a TensorFlowLite buffer with 1080000 bytes and a Java Buffer with 270000 bytes.
+        at org.tensorflow.lite.Tensor.throwIfShapeIsIncompatible(Tensor.java:402)
+        at org.tensorflow.lite.Tensor.throwIfDataIsIncompatible(Tensor.java:369)
+        at org.tensorflow.lite.Tensor.setTo(Tensor.java:187)
+        at org.tensorflow.lite.NativeInterpreterWrapper.run(NativeInterpreterWrapper.java:150)
+        at org.tensorflow.lite.Interpreter.runForMultipleInputsOutputs(Interpreter.java:314)
+        at org.tensorflow.lite.examples.detection.tflite.TFLiteObjectDetectionAPIModel.recognizeImage(TFLiteObjectDetectionAPIModel.java:193)
+        at org.tensorflow.lite.examples.detection.DetectorActivity$2.run(DetectorActivity.java:181)
+        at android.os.Handler.handleCallback(Handler.java:873)
+        at android.os.Handler.dispatchMessage(Handler.java:99)
+        at android.os.Looper.loop(Looper.java:227)
+        at android.os.HandlerThread.run(HandlerThread.java:65)
+2020-03-17 19:37:16.665 16558-16617/org.tensorflow.lite.examples.detection I/Process: Sending signal. PID: 16558 SIG: 9

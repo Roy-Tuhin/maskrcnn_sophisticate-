@@ -28,4 +28,7 @@ IMAGE_API = 'http://10.4.71.121/stage/maze/vs/trackSticker.php?action=getImage&i
 
 IPM_REMAP_FILE_PATH = 'data/tusimple_ipm_remap.yml'
 
+# RESPONSE_AS_JSON = True
+RESPONSE_AS_JSON = False
+
 # DEBUG = False

@@ -1,0 +1,7 @@
+ANNON:
+  HOST: "10.4.71.69" 
+  AI_ANNON_DATA_HOME_LOCAL: "/aimldl-dat/data-gaze/AIML_Annotation/ods_merged_on_100220_181246"
+AIDS:
+  DBNAME: "PXL-100220_192533"
+  EXP_ID: "train-eee128cb-d7a1-493a-9819-95531f507092"
+  CMD: "train"
