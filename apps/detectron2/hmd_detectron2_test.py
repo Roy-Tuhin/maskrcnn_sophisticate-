@@ -350,9 +350,9 @@ def predict(args, mode, _appcfg):
                metadata=metadata,
                instance_mode=ColorMode.SEGMENTATION)
         v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-        cv2.imwrite(output_path, v.get_image()[:, :, ::-1])
-        # cv2.imshow('', v.get_image()[:, :, ::-1])
-        # cv2.waitKey(0)
+        # cv2.imwrite(output_path, v.get_image()[:, :, ::-1])
+        cv2.imshow('', v.get_image()[:, :, ::-1])
+        cv2.waitKey(0)
 
     ##Predict from dataset
     # metadata = load_and_register_dataset(name, subset, _appcfg)
@@ -394,8 +394,8 @@ def evaluate(args, mode, _appcfg):
     # for subset in ["train", "val"]:
     #     metadata = load_and_register_dataset(name, subset, _appcfg)
     
-    # subset = "test"
-    subset = "val"
+    subset = "test"
+    # subset = "val"
     metadata = load_and_register_dataset(name, subset, _appcfg)    
     
     dataset_name = get_dataset_name(name, subset)
@@ -404,7 +404,7 @@ def evaluate(args, mode, _appcfg):
 
 
     cfg = config.get_cfg()
-    cfg.merge_from_file("/aimldl-cod/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    cfg.merge_from_file("/codehub/external/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
     cfg.DATASETS.TRAIN = ("hmd_train","hmd_val")
     cfg.DATASETS.TEST = (dataset_name)
 

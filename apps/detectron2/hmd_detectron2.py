@@ -366,6 +366,7 @@ def train(args, mode, _appcfg):
     cfg = conf.merge(conf.arch, conf.cfg)
 
     cfg.DATASETS.TRAIN = ("hmd_train","hmd_val")
+    cfg.DATASETS.TEST = ()
 
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
     trainer = DefaultTrainer(cfg) 
