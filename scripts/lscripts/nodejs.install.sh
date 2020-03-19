@@ -56,6 +56,12 @@ function nodejs_install() {
 
   curl -sL https://deb.nodesource.com/setup_$NODEJS_VER.x | sudo -E bash -
   sudo -E apt -q -y install nodejs
+
+  ## Fix for Error: npm : Depends: node-gyp (>= 0.10.9) but it is not going to be installed
+  ## https://askubuntu.com/questions/1088662/npm-depends-node-gyp-0-10-9-but-it-is-not-going-to-be-installed
+  sudo -E apt -q -y install nodejs-dev node-gyp libssl1.0-dev
+  sudo -E apt -q -y install npm
+
   npm update -g npm
   npm -v
   node -v
