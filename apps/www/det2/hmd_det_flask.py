@@ -28,11 +28,10 @@ def inference(image):
   metadata.thing_dataset_id_to_contiguous_id = id_map
 
   # MODEL_WEIGHTS_DIR = "/codehub/apps/detectron2/release"
-  MODEL_WEIGHTS_DIR = "/aimldl-dat/release/detectron2/release"
+  MODEL_WEIGHTS_DIR = "/aimldl-dat/release/vidteq/detectron2"
   PROD_MODEL_WEIGHT = "model_final.pth"
   arch = "/codehub/cfg/arch/040320_160140-AIE1-01-detectron2.yml"
 
-  log.debug("Metadata: {}".format(metadata))
   cfg = config.get_cfg()
   cfg.merge_from_file(arch)
   cfg.DATASETS.TEST = (dataset_name)
@@ -67,7 +66,7 @@ app = Flask(__name__)
 #     json = inference(file)
 #     return jsonify(json)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/predict', methods=['GET', 'POST'])
 def predict():
   if request.method == 'POST':
     folder = request.form["Folder"]
