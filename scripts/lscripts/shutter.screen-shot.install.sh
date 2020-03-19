@@ -11,28 +11,31 @@
 #
 ##----------------------------------------------------------
 
-LSCRIPTS=$(pwd)
-cd $LSCRIPTS
+function shutter_install() {
+  local LSCRIPTS=$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )
+  source ${LSCRIPTS}/lscripts.config.sh
 
-source $LSCRIPTS/lscripts.config.sh
 
-if [[ $LINUX_VERSION == "16.04" ]]; then
-  sudo -E add-apt-repository -y ppa:shutter/ppa
-  sudo -E apt update
-  sudo -E apt -q -y install shutter
-fi
+  if [[ ${LINUX_VERSION} == "16.04" ]]; then
+    sudo -E add-apt-repository -y ppa:shutter/ppa
+    sudo -E apt update
+    sudo -E apt -q -y install shutter
+  fi
 
-# Ubuntu 18.04 LTS
-if [[ $LINUX_VERSION == "18.04" ]]; then
-  sudo -E add-apt-repository -y ppa:ubuntuhandbook1/shutter
-  sudo -E apt -q -y install shutter
-fi
+  # Ubuntu 18.04 LTS
+  if [[ ${LINUX_VERSION} == "18.04" ]]; then
+    sudo -E add-apt-repository -y ppa:ubuntuhandbook1/shutter
+    sudo -E apt -q -y install shutter
+  fi
 
-## To uninstall
-# sudo -E apt remove --autoremove shutter
+  ## To uninstall
+  # sudo -E apt remove --autoremove shutter
 
-## And go to Software & Updates -> Other Software to remove third-party PPA repositories.
+  ## And go to Software & Updates -> Other Software to remove third-party PPA repositories.
 
-## For kali Linux Screenshot utilities, also available on Ubuntu
-## https://blog.anantshri.info/content/uploads/2010/09/add-apt-repository.sh.txt
-sudo apt -y install scrot screengrab
+  ## For kali Linux Screenshot utilities, also available on Ubuntu
+  ## https://blog.anantshri.info/content/uploads/2010/09/add-apt-repository.sh.txt
+  sudo apt -y install scrot screengrab
+}
+
+shutter_install
