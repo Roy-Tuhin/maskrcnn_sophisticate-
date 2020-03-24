@@ -10,7 +10,7 @@ attrs==19.1.0
 Babel==2.6.0
 backcall==0.1.0
 -e git+https://github.com/MIC-DKFZ/batchgenerators@c619dc920a9cc734e12870fce1ad0f85569f92b3#egg=batchgenerators
-bleach==3.1.0
+bleach==3.1.2
 certifi==2019.3.9
 cffi==1.12.3
 chardet==3.0.4
