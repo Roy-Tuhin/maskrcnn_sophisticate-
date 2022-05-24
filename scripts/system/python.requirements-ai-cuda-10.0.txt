@@ -10,7 +10,7 @@ git+https://github.com/crowdai/coco.git#subdirectory=PythonAPI
 
 ## for cuda-10.0
 ##tensorflow-gpu==2.0.0
-tensorflow-gpu==1.15.0
+tensorflow-gpu==2.6.4
 
 
 torch>=1.1.0
